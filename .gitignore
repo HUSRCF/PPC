@@ -1,0 +1,38 @@
+# Data and generated artifacts
+data/
+features/
+runs/
+logs/
+wandb/
+__sync_incoming__/
+
+# Model weights and tensor dumps
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npz
+*.npy
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment and local settings
+.env
+.env.*
+.venv/
+venv/
+conda-meta/
+.claude/
+
+# Temporary files
+*.log
+*.tmp
+*.bak
+*.bak_*
+*.swp
+*~

@@ -1,0 +1,31 @@
+data:
+  features_root: features/protein_v4/pt
+  esm_root: null
+  label_root: features/contact_labels
+
+model:
+  d_phys: 62
+  d_spatial_scalar: 89
+  n_spatial_vectors: 8
+  n_backbone_vectors: 4
+  d_phys_encoded: 128
+  d_gvp_scalar: 256
+  n_gvp_vector_hidden: 20
+  n_gvp_layers: 3
+  d_model: 256
+  n_heads: 8
+  n_transformer_layers: 4
+  dropout: 0.1
+  classifier_dropout: 0.2
+  n_classes: 2
+  use_esm: false
+  d_esm: 1280
+  d_esm_encoded: 256
+  gvp_k_neighbors: 20
+  gvp_radius: 10.0
+
+training:
+  batch_size: 2
+  lr: 0.0001
+  weight_decay: 0.01
+  ignore_index: -100

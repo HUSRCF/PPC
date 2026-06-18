@@ -1,0 +1,44 @@
+data:
+  esm_root: features/esm2_t33_650M_UR50D/pt
+  label_root: features/contact_labels
+  manifest: features/contact_labels/manifest.csv
+  split_dir: features/contact_labels/splits_mmseq30_tmk_no_len_limit
+
+model:
+  d_esm: 1280
+  d_seq: 28
+  d_model: 64
+  d_hidden: 128
+  dropout: 0.10
+  classifier_dropout: 0.20
+  max_chains: 128
+  use_chain_embedding: true
+  use_seq_features: true
+  use_position_features: true
+  use_global_context: true
+  n_transformer_layers: 0
+
+training:
+  output_dir: runs/smoke_esm_only
+  device: cpu
+  seed: 42
+  epochs: 1
+  batch_size: 2
+  num_workers: 0
+  max_residues: 256
+  train_crop_mode: first
+  eval_crop_mode: first
+  max_train_samples: 2
+  max_val_samples: 2
+  eval_max_batches: 1
+  lr: 0.0001
+  warmup_steps: 0
+  warmup_ratio: 0.0
+  min_lr_scale: 0.0
+  weight_decay: 0.01
+  max_pos_weight: 20.0
+  grad_clip_norm: 1.0
+  grad_value_clip: 100.0
+  adam_eps: 0.0000001
+  amp: false
+  progress: false

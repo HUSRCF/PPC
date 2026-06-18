@@ -1,0 +1,50 @@
+data:
+  esm_root: features/esm2_t33_650M_UR50D/pt
+  label_root: features/contact_labels
+  manifest: features/contact_labels/manifest.csv
+  split_dir: features/contact_labels/splits_mmseq30_tmk_no_len_limit
+  sequence_feature_root: features/sequence_v2/pt
+  require_sequence_features: true
+
+model:
+  d_esm: 1280
+  d_seq: 252
+  d_model: 256
+  d_hidden: 512
+  dropout: 0.18
+  classifier_dropout: 0.35
+  max_chains: 128
+  use_chain_embedding: true
+  use_seq_features: true
+  use_position_features: true
+  use_global_context: true
+  n_transformer_layers: 0
+
+training:
+  output_dir: runs/contact_site_esm_seqv2_reg_seed42_e30_lr5e5_mmseq30_tmk
+  device: cuda:0
+  seed: 42
+  epochs: 30
+  batch_size: 64
+  num_workers: 8
+  max_residues: 0
+  train_crop_mode: none
+  eval_crop_mode: none
+  max_train_samples: null
+  max_val_samples: 0
+  eval_max_batches: null
+  lr: 0.00005
+  warmup_steps: 0
+  warmup_ratio: 0.10
+  min_lr_scale: 0.02
+  weight_decay: 0.05
+  threshold_grid: "0.01:0.99:0.01"
+  topk_fracs: "0.05,0.10"
+  selection_metric: f1_best_threshold
+  label_smoothing: 0.03
+  max_pos_weight: 20.0
+  grad_clip_norm: 1.0
+  grad_value_clip: 100.0
+  adam_eps: 0.0000001
+  amp: false
+  progress: true

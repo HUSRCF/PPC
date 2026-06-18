@@ -1,0 +1,42 @@
+data:
+  features_root: features/protein_v4/pt
+  label_root: features/contact_labels
+  esm_root: features/esm2_t33_650M_UR50D/pt
+  manifest: features/contact_labels/manifest.csv
+  split_dir: features/contact_labels/splits_mmseq30_tmk_no_len_limit_recluster
+
+model:
+  use_esm: true
+  d_esm: 1280
+  use_rmsnorm: true
+  rmsnorm_eps: 0.000001
+  freeze_norms: true
+  dropout: 0.10
+  classifier_dropout: 0.20
+  esm_dropout: 0.10
+  coord_noise_std: 0.0
+
+training:
+  output_dir: runs/contact_site_gvp_esm_t33_seed42_full_e20_lr5e5_warmup8p_mmseq30_tmk_recluster_base
+  device: cuda:0
+  seed: 42
+  epochs: 20
+  batch_size: 2
+  num_workers: 4
+  max_residues: 0
+  max_train_samples: null
+  max_val_samples: 0
+  eval_max_batches: null
+  lr: 0.00005
+  warmup_steps: 0
+  warmup_ratio: 0.08
+  min_lr_scale: 0.02
+  weight_decay: 0.01
+  max_pos_weight: 20.0
+  safe_grad_clip: true
+  grad_clip_norm: 1.0
+  grad_value_clip: 100.0
+  adam_eps: 0.0000001
+  adam_foreach: false
+  amp: false
+  progress: true

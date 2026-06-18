@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+real_mkdssp="${MKDSSP_BIN:-}"
+if [[ -z "${real_mkdssp}" ]]; then
+  self_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  if [[ -x "${self_dir}/mkdssp" ]]; then
+    real_mkdssp="${self_dir}/mkdssp"
+  else
+    real_mkdssp="$(command -v mkdssp)"
+  fi
+fi
+
+tmp_files=()
+cleanup() {
+  if [[ "${#tmp_files[@]}" -gt 0 ]]; then
+    rm -f "${tmp_files[@]}"
+  fi
+}
+trap cleanup EXIT
+
+args=()
+for arg in "$@"; do
+  case "${arg}" in
+    *.pdb|*.PDB)
+      if [[ -f "${arg}" ]]; then
+        tmp_file="$(mktemp "${TMPDIR:-/tmp}/dssp_atom_only.XXXXXX.pdb")"
+        awk '/^(ATOM  |HETATM|TER   |END   |TER|END)/ {print}' "${arg}" > "${tmp_file}"
+        args+=("${tmp_file}")
+        tmp_files+=("${tmp_file}")
+      else
+        args+=("${arg}")
+      fi
+      ;;
+    *)
+      args+=("${arg}")
+      ;;
+  esac
+done
+
+"${real_mkdssp}" "${args[@]}"

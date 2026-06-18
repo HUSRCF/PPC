@@ -1,10 +1,10 @@
 # Data and generated artifacts
-data/
-features/
-runs/
-logs/
-wandb/
-__sync_incoming__/
+/data/
+/features/
+/runs/
+/logs/
+/wandb/
+/__sync_incoming__/
 
 # Model weights and tensor dumps
 *.pt
@@ -31,6 +31,7 @@ conda-meta/
 
 # Timestamped rerun configs generated for one-off launches
 configs/*_rerun_20*.yaml
+configs/*_hpcue_20*.yaml
 
 # Temporary files
 *.log

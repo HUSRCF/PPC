@@ -27,8 +27,9 @@ training:
   seed: 42
   epochs: 30
   batch_size: 64
-  num_workers: 12
+  num_workers: 0
   pin_memory: true
+  preload: true
   max_residues: 0
   train_crop_mode: none
   eval_crop_mode: none

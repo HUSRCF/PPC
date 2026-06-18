@@ -154,6 +154,7 @@ def _build_loader(
     crop_mode: str,
     seed: int,
     shuffle: bool,
+    preload: bool = False,
 ) -> DataLoader:
     dataset = ESMProteinSiteDataset(
         esm_root=esm_root,
@@ -164,6 +165,7 @@ def _build_loader(
         max_residues=max_residues,
         crop_mode=crop_mode,
         seed=seed,
+        preload=preload,
     )
     loader_kwargs: dict[str, Any] = {
         "batch_size": batch_size,
@@ -439,6 +441,7 @@ def main() -> int:
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--pin-memory", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--prefetch-factor", type=int, default=None)
+    parser.add_argument("--preload", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--max-residues", type=int, default=0)
     parser.add_argument("--train-crop-mode", choices=["none", "first", "random"], default="none")
     parser.add_argument("--eval-crop-mode", choices=["none", "first", "random"], default="none")
@@ -494,6 +497,7 @@ def main() -> int:
         args.train_crop_mode,
         args.seed,
         True,
+        preload=args.preload,
     )
     val_loader = _build_loader(
         args.esm_root,
@@ -509,6 +513,7 @@ def main() -> int:
         args.eval_crop_mode,
         args.seed + 1,
         False,
+        preload=args.preload,
     )
 
     model = ESMSiteClassifier(model_config).to(device)

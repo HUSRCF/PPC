@@ -29,6 +29,9 @@ venv/
 conda-meta/
 .claude/
 
+# Timestamped rerun configs generated for one-off launches
+configs/*_rerun_20*.yaml
+
 # Temporary files
 *.log
 *.tmp

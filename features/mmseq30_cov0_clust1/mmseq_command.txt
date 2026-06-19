@@ -1,0 +1,1 @@
+mmseqs easy-cluster features/mmseq30/chains.fasta features/mmseq30_cov0_clust1/mmseq30_cov0_clust1 features/mmseq30_cov0_clust1/tmp --min-seq-id 0.3 -c 0.8 --cov-mode 0 --cluster-mode 1 --threads 32

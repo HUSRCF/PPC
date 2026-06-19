@@ -1,0 +1,30 @@
+{
+  "mmseq_command_file": "features/mmseq30_cov0_clust1/mmseq_command.txt",
+  "mmseq_params": {
+    "cluster_mode": 1,
+    "cov_mode": 0,
+    "coverage": 0.8,
+    "min_seq_id": 0.3
+  },
+  "n_eligible_intersection": 6146,
+  "n_keep_ids": 6146,
+  "n_positive_label_complexes": 8753,
+  "n_qc_complexes": 6150,
+  "output_dir": "features/contact_labels/splits_mmseq30_cov0_clust1_tmk_no_len_limit",
+  "qc_dataset": "data/qc/tmk_no_len_limit/dataset.csv",
+  "source_split": "features/contact_labels/splits_mmseq30_cov0_clust1",
+  "splits": {
+    "test": {
+      "kept": 669,
+      "source": 890
+    },
+    "train": {
+      "kept": 4802,
+      "source": 6973
+    },
+    "val": {
+      "kept": 675,
+      "source": 890
+    }
+  }
+}

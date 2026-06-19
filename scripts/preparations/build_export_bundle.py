@@ -139,6 +139,9 @@ def build(args: argparse.Namespace) -> Path:
         uniprot_ids = sorted({r.get("uniprot_id", "") for r in ok_chains if r.get("uniprot_id")})
         chain_statuses = sorted({r.get("status", "") for r in chains if r.get("status")})
         mapping_methods = pred.get("mapping_methods", "")
+        has_esm_final = (root / "features/esm2_t33_650M_UR50D/pt" / pid / f"{pid}_esm2.pt").exists()
+        has_esm_final_contact = (root / "features/esm2_t33_650M_UR50D_contact/pt" / pid / f"{pid}_esm2.pt").exists()
+        has_esm_mlc_contact = (root / "features/esm2_t33_650M_UR50D_mlc/pt" / pid / f"{pid}_esm2.pt").exists()
         row = {
             "pdb_id": pid,
             "split": split_of[pid],
@@ -155,8 +158,10 @@ def build(args: argparse.Namespace) -> Path:
             "predseq_available_residues": pred.get("n_available_residues", ""),
             "predseq_mapping_methods": mapping_methods,
             "has_label_pt": has_path(root, label.get("label_path")),
-            "has_esm_final_pt": (root / "features/esm2_t33_650M_UR50D/pt" / pid / f"{pid}_esm2.pt").exists(),
-            "has_esm_mlc_pt": (root / "features/esm2_t33_650M_UR50D_mlc/pt" / pid / f"{pid}_esm2.pt").exists(),
+            "has_esm_final_pt": has_esm_final,
+            "has_esm_final_contact_pt": has_esm_final_contact,
+            "has_esm_mlc_pt": has_esm_mlc_contact,
+            "has_esm_mlc_contact_pt": has_esm_mlc_contact,
             "has_predseq_pt": has_path(root, pred.get("output_path")),
             "bridge_n_chains": len(chains),
             "bridge_n_ok_chains": len(ok_chains),
@@ -164,8 +169,9 @@ def build(args: argparse.Namespace) -> Path:
             "uniprot_accs": ";".join(uniprots),
             "uniprot_ids": ";".join(uniprot_ids),
             "bridge_statuses": ";".join(chain_statuses),
-            "usable_for_final_seq_only": True,
-            "usable_for_mlc_contact": (root / "features/esm2_t33_650M_UR50D_mlc/pt" / pid / f"{pid}_esm2.pt").exists(),
+            "usable_for_final_seq_only": has_esm_final,
+            "usable_for_final_contact": has_esm_final_contact,
+            "usable_for_mlc_contact": has_esm_mlc_contact,
             "usable_for_predstruct_scalar": pred.get("status") == "OK" and has_path(root, pred.get("output_path")),
         }
         sample_rows.append(row)
@@ -174,8 +180,9 @@ def build(args: argparse.Namespace) -> Path:
         "pdb_id", "split", "label_status", "n_residues", "n_chains", "n_positive", "n_negative", "positive_fraction",
         "predseq_status", "predseq_n_features", "predseq_coverage_residue", "predseq_available_chains", "predseq_available_residues",
         "predseq_mapping_methods", "has_label_pt", "has_esm_final_pt", "has_esm_mlc_pt", "has_predseq_pt",
+        "has_esm_final_contact_pt", "has_esm_mlc_contact_pt",
         "bridge_n_chains", "bridge_n_ok_chains", "bridge_n_strict_pass_chains", "uniprot_accs", "uniprot_ids", "bridge_statuses",
-        "usable_for_final_seq_only", "usable_for_mlc_contact", "usable_for_predstruct_scalar",
+        "usable_for_final_seq_only", "usable_for_final_contact", "usable_for_mlc_contact", "usable_for_predstruct_scalar",
     ]
     write_csv(out / "tags/sample_tags.csv", sample_rows, sample_fields)
 
@@ -263,6 +270,7 @@ def build(args: argparse.Namespace) -> Path:
         "sample_tags": len(sample_rows),
         "chain_tags": len(chain_export),
         "usable_for_final_seq_only": sum(1 for r in sample_rows if r["usable_for_final_seq_only"]),
+        "usable_for_final_contact": sum(1 for r in sample_rows if r["usable_for_final_contact"]),
         "usable_for_mlc_contact": sum(1 for r in sample_rows if r["usable_for_mlc_contact"]),
         "usable_for_predstruct_scalar": sum(1 for r in sample_rows if r["usable_for_predstruct_scalar"]),
     }

@@ -1,13 +1,13 @@
 \begin{tabular}{lrrrrrrr}
 \toprule
-Model & Seeds & F1 & PR-AUC & AUROC & MCC & Top-5\% P & Top-10\% P \\
+Model & Seeds & Val F1 & Val PR-AUC & Val AUROC & Val MCC & Val Top-5\% P & Val Top-10\% P \\
 \midrule
 MLC + PS + no graph & 3 & 0.731 & 0.816 & 0.864 & 0.565 & 0.882 & 0.854 \\
 MLC + PS + contact & 3 & 0.731 & 0.821 & 0.866 & 0.570 & 0.886 & 0.858 \\
 MLC + PS + contact weak-reg & 1 & 0.728 & 0.815 & 0.862 & 0.562 & 0.890 & 0.859 \\
 MLC + no scalar + contact & 3 & 0.727 & 0.813 & 0.862 & 0.562 & 0.883 & 0.853 \\
-Final + PS + contact & 3 & 0.711 & 0.796 & 0.851 & 0.528 & 0.873 & 0.842 \\
-Final + no scalar + contact & 3 & 0.709 & 0.781 & 0.845 & 0.523 & 0.854 & 0.818 \\
+Final + PS empty graph & 3 & 0.711 & 0.796 & 0.851 & 0.528 & 0.873 & 0.842 \\
+Final + no scalar empty graph & 3 & 0.709 & 0.781 & 0.845 & 0.523 & 0.854 & 0.818 \\
 Final + PS no-context & 2 & 0.708 & 0.790 & 0.847 & 0.525 & 0.877 & 0.842 \\
 Final + no scalar no-context & 3 & 0.706 & 0.769 & 0.841 & 0.518 & 0.851 & 0.817 \\
 Final + PS + context no graph & 1 & 0.703 & 0.786 & 0.843 & 0.519 & 0.871 & 0.831 \\

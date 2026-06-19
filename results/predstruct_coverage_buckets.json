@@ -1,0 +1,29 @@
+[
+  {
+    "coverage_bucket": "eq0",
+    "n_complexes": 3644,
+    "n_residues": 5042046,
+    "n_positive": 1175460,
+    "mean_positive_fraction": 0.23882176797577262,
+    "usable_for_predstruct_scalar": 3644,
+    "mean_coverage": 0.0
+  },
+  {
+    "coverage_bucket": "gt0_lt0p5",
+    "n_complexes": 1329,
+    "n_residues": 3603852,
+    "n_positive": 1485848,
+    "mean_positive_fraction": 0.3323446870359317,
+    "usable_for_predstruct_scalar": 1329,
+    "mean_coverage": 0.2794276649962378
+  },
+  {
+    "coverage_bucket": "ge0p5",
+    "n_complexes": 1166,
+    "n_residues": 1972673,
+    "n_positive": 734580,
+    "mean_positive_fraction": 0.3284760198671601,
+    "usable_for_predstruct_scalar": 1166,
+    "mean_coverage": 0.8118918817581475
+  }
+]

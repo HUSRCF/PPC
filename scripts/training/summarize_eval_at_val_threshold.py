@@ -21,6 +21,7 @@ def _row(split: str, metrics: dict[str, Any], val_threshold: float) -> dict[str,
     at_val = _pick_threshold_item(metrics, val_threshold)
     return {
         "split": split,
+        "metric_scope": "validation" if split == "val" else "test_at_val_threshold",
         "val_selected_threshold": val_threshold,
         "threshold_used": at_val.get("threshold"),
         "f1_at_0_5": metrics.get("f1_at_0_5", metrics.get("f1")),

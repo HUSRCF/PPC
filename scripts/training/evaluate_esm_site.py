@@ -47,6 +47,7 @@ def main() -> int:
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--num-workers", type=int, default=8)
     parser.add_argument("--pin-memory", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--prefetch-factor", type=int, default=None)
     parser.add_argument("--max-samples", type=int, default=0)
     parser.add_argument("--eval-max-batches", type=int, default=None)
     parser.add_argument("--threshold-grid", default="0.01:0.99:0.01")
@@ -58,6 +59,10 @@ def main() -> int:
     parser.add_argument("--split-dir", default="features/contact_labels/splits_mmseq30_tmk_no_len_limit", type=Path)
     parser.add_argument("--sequence-feature-root", default=None, type=Path)
     parser.add_argument("--require-sequence-features", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--strict-ids", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--require-labels", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--strict-label-metadata", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--require-contact-graph", action=argparse.BooleanOptionalAction, default=None)
     parser.add_argument("--output-dir", default=None, type=Path)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--max-residues", type=int, default=0)
@@ -83,6 +88,7 @@ def main() -> int:
 
     train_ids = _read_ids(args.split_dir / "train_ids.txt")
     pos_weight, train_pos, train_neg = _class_weight_from_manifest(args.manifest, train_ids, args.max_pos_weight)
+    require_contact_graph = bool(model_config.get("use_contact_graph")) if args.require_contact_graph is None else bool(args.require_contact_graph)
 
     model = ESMSiteClassifier(model_config).to(device)
     ckpt = _load_checkpoint(checkpoint, device)
@@ -103,6 +109,10 @@ def main() -> int:
         "pos_weight": pos_weight,
         "thresholds": thresholds,
         "topk_fracs": topk_fracs,
+        "strict_ids": args.strict_ids,
+        "require_labels": args.require_labels,
+        "strict_label_metadata": args.strict_label_metadata,
+        "require_contact_graph_resolved": require_contact_graph,
         "splits": {},
     }
     for split in [x.strip() for x in str(args.splits).split(",") if x.strip()]:
@@ -117,10 +127,15 @@ def main() -> int:
             args.batch_size,
             args.num_workers,
             args.pin_memory,
+            args.prefetch_factor,
             args.max_residues,
             args.eval_crop_mode,
             args.seed + 100,
             False,
+            strict_ids=args.strict_ids,
+            require_labels=args.require_labels,
+            strict_label_metadata=args.strict_label_metadata,
+            require_contact_graph=require_contact_graph,
         )
         results["splits"][split] = _evaluate(
             model,

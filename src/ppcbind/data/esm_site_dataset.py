@@ -65,6 +65,28 @@ AA_HYDROPATHY = {
     "W": -0.9,
     "Y": -1.3,
 }
+AA3_TO_1 = {
+    "ALA": "A",
+    "ARG": "R",
+    "ASN": "N",
+    "ASP": "D",
+    "CYS": "C",
+    "GLN": "Q",
+    "GLU": "E",
+    "GLY": "G",
+    "HIS": "H",
+    "ILE": "I",
+    "LEU": "L",
+    "LYS": "K",
+    "MET": "M",
+    "PHE": "F",
+    "PRO": "P",
+    "SER": "S",
+    "THR": "T",
+    "TRP": "W",
+    "TYR": "Y",
+    "VAL": "V",
+}
 
 
 def _torch_load(path: Path) -> Any:
@@ -110,9 +132,16 @@ def _esm_id(path: Path) -> str:
     return path.parent.name
 
 
-def _load_labels(label_root: Path | None, pdb_id: str, n_res: int) -> torch.Tensor:
+def _load_labels(
+    label_root: Path | None,
+    pdb_id: str,
+    n_res: int,
+    required: bool = False,
+) -> tuple[torch.Tensor, dict[str, Any] | None]:
     if label_root is None:
-        return torch.full((n_res,), -100, dtype=torch.long)
+        if required:
+            raise ValueError(f"{pdb_id}: label_root is required but None")
+        return torch.full((n_res,), -100, dtype=torch.long), None
     candidates = (
         label_root / pdb_id / f"{pdb_id}_labels.pt",
         label_root / pdb_id / f"{pdb_id}_contact.pt",
@@ -127,8 +156,10 @@ def _load_labels(label_root: Path | None, pdb_id: str, n_res: int) -> torch.Tens
         labels = torch.as_tensor(value, dtype=torch.long)
         if labels.shape[0] != n_res:
             raise ValueError(f"{pdb_id}: label length {labels.shape[0]} != ESM length {n_res}")
-        return labels
-    return torch.full((n_res,), -100, dtype=torch.long)
+        return labels, data if isinstance(data, dict) else None
+    if required:
+        raise FileNotFoundError(f"{pdb_id}: label file not found under {label_root}")
+    return torch.full((n_res,), -100, dtype=torch.long), None
 
 
 def _local_chain_ids(chain_ids: list[Any]) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
@@ -175,6 +206,61 @@ def _compare_text_list(name: str, expected: list[Any], observed: list[Any], pdb_
         b = _norm_text(b_value)
         if a != b:
             raise ValueError(f"{pdb_id}: {name} mismatch at residue {idx}: ESM={a!r} seq_feature={b!r}")
+
+
+def _get_metadata_list(data: dict[str, Any], *keys: str) -> list[Any] | None:
+    for key in keys:
+        if key in data:
+            value = data[key]
+            if isinstance(value, str):
+                return list(value)
+            return list(value)
+    return None
+
+
+def _norm_residue_name(value: Any, target: str) -> str:
+    text = _norm_text(value).upper()
+    if target == "one":
+        return AA3_TO_1.get(text, text)
+    return text
+
+
+def _compare_label_metadata(
+    data: dict[str, Any],
+    label_data: dict[str, Any] | None,
+    pdb_id: str,
+    n_res: int,
+) -> None:
+    if label_data is None:
+        raise ValueError(f"{pdb_id}: strict label metadata requested but label payload has no metadata")
+
+    checks = [
+        ("chain_ids", _get_metadata_list(data, "chain_ids", "chain_id"), label_data.get("chain_ids")),
+        ("residue_indices", _get_metadata_list(data, "residue_indices", "residue_index"), label_data.get("residue_indices")),
+        ("insertion_codes", _get_metadata_list(data, "insertion_codes", "insertion_code"), label_data.get("insertion_codes")),
+    ]
+    for name, esm_values, label_values in checks:
+        if esm_values is None or label_values is None:
+            raise ValueError(f"{pdb_id}: missing metadata field for strict label check: {name}")
+        _compare_text_list(name, list(esm_values), list(label_values), pdb_id)
+
+    label_res = label_data.get("residue_names")
+    if label_res is None:
+        raise ValueError(f"{pdb_id}: missing label residue_names for strict label check")
+    esm_res3 = _get_metadata_list(data, "residue_names_3", "residue_name_3")
+    esm_res1 = _get_metadata_list(data, "residue_names_1", "residue_name_1")
+    if esm_res3 is not None:
+        observed = [_norm_residue_name(x, "three") for x in label_res]
+        expected = [_norm_residue_name(x, "three") for x in esm_res3]
+        _compare_text_list("residue_names_3", expected, observed, pdb_id)
+    elif esm_res1 is not None:
+        observed = [_norm_residue_name(x, "one") for x in label_res]
+        expected = [_norm_residue_name(x, "one") for x in esm_res1]
+        _compare_text_list("residue_names_1", expected, observed, pdb_id)
+    else:
+        raise ValueError(f"{pdb_id}: missing ESM residue names for strict label check")
+    if len(label_res) != n_res:
+        raise ValueError(f"{pdb_id}: label residue metadata length {len(label_res)} != ESM length {n_res}")
 
 
 def _load_external_sequence_features(
@@ -225,9 +311,16 @@ def _slice_value(value: torch.Tensor, residue_slice: slice) -> torch.Tensor:
     return value[residue_slice]
 
 
-def _load_contact_graph(data: dict[str, Any], pdb_id: str, n_res: int) -> tuple[torch.Tensor, torch.Tensor]:
+def _load_contact_graph(
+    data: dict[str, Any],
+    pdb_id: str,
+    n_res: int,
+    required: bool = False,
+) -> tuple[torch.Tensor, torch.Tensor]:
     edge_value = data.get("contact_edge_index", data.get("contact_edges"))
     if edge_value is None:
+        if required:
+            raise ValueError(f"{pdb_id}: contact graph required but contact_edge_index/contact_edges is missing")
         return torch.empty((2, 0), dtype=torch.long), torch.empty((0,), dtype=torch.float32)
 
     edge_index = torch.as_tensor(edge_value, dtype=torch.long)
@@ -254,7 +347,11 @@ def _load_contact_graph(data: dict[str, Any], pdb_id: str, n_res: int) -> tuple[
         & (edge_index[1] < n_res)
         & (edge_index[0] != edge_index[1])
     )
-    return edge_index[:, valid].contiguous(), torch.nan_to_num(scores[valid], nan=0.0, posinf=1.0, neginf=0.0)
+    edge_index = edge_index[:, valid].contiguous()
+    scores = torch.nan_to_num(scores[valid], nan=0.0, posinf=1.0, neginf=0.0)
+    if required and edge_index.shape[1] == 0:
+        raise ValueError(f"{pdb_id}: contact graph required but no valid edges remain after filtering")
+    return edge_index, scores
 
 
 def _slice_contact_graph(
@@ -296,6 +393,10 @@ class ESMProteinSiteDataset(Dataset):
         crop_mode: str = "none",
         seed: int = 0,
         preload: bool = False,
+        strict_ids: bool = False,
+        require_labels: bool = False,
+        strict_label_metadata: bool = False,
+        require_contact_graph: bool = False,
     ) -> None:
         self.esm_root = Path(esm_root)
         self.label_root = Path(label_root) if label_root else None
@@ -304,9 +405,24 @@ class ESMProteinSiteDataset(Dataset):
         self.max_residues = int(max_residues) if max_residues else None
         self.crop_mode = crop_mode
         self.rng = random.Random(seed)
+        self.requested_ids = [str(pdb_id).lower() for pdb_id in ids] if ids is not None else None
+        self.require_labels = bool(require_labels)
+        self.strict_label_metadata = bool(strict_label_metadata)
+        self.require_contact_graph = bool(require_contact_graph)
         self.esm_paths = _discover_esm_paths(self.esm_root, ids)
         if not self.esm_paths:
             raise FileNotFoundError(f"No *_esm2.pt files under {self.esm_root}")
+        if strict_ids and self.requested_ids is not None:
+            requested = set(self.requested_ids)
+            discovered = {_esm_id(path).lower() for path in self.esm_paths}
+            missing = sorted(requested - discovered)
+            extra = sorted(discovered - requested)
+            if missing or extra or len(self.esm_paths) != len(self.requested_ids):
+                raise FileNotFoundError(
+                    f"ESM files under {self.esm_root} do not match split ids: "
+                    f"requested={len(self.requested_ids)} discovered={len(discovered)} "
+                    f"missing={missing[:20]} extra={extra[:20]}"
+                )
         self._preloaded_items: list[dict[str, Any]] | None = None
         if preload:
             self._preloaded_items = [self._load_item(i) for i in range(len(self.esm_paths))]
@@ -326,7 +442,9 @@ class ESMProteinSiteDataset(Dataset):
         embeddings = torch.as_tensor(data["embeddings"], dtype=torch.float32)
         embeddings = torch.nan_to_num(embeddings, nan=0.0, posinf=0.0, neginf=0.0)
         n_res = int(embeddings.shape[0])
-        labels = _load_labels(self.label_root, pdb_id, n_res)
+        labels, label_data = _load_labels(self.label_root, pdb_id, n_res, self.require_labels)
+        if self.strict_label_metadata:
+            _compare_label_metadata(data, label_data, pdb_id, n_res)
         chain_ids_raw = list(data.get("chain_ids", data.get("chain_id", [""] * n_res)))
         if len(chain_ids_raw) != n_res:
             raise ValueError(f"{pdb_id}: chain_ids length {len(chain_ids_raw)} != ESM length {n_res}")
@@ -345,7 +463,7 @@ class ESMProteinSiteDataset(Dataset):
         )
         if seq_features is None:
             seq_features = _sequence_features(residue_names)
-        contact_edge_index, contact_edge_scores = _load_contact_graph(data, pdb_id, n_res)
+        contact_edge_index, contact_edge_scores = _load_contact_graph(data, pdb_id, n_res, self.require_contact_graph)
 
         residue_slice = self._select_slice(n_res)
         contact_edge_index, contact_edge_scores = _slice_contact_graph(contact_edge_index, contact_edge_scores, residue_slice)

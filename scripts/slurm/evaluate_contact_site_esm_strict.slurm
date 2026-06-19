@@ -17,6 +17,7 @@ OUTPUT_JSON="${OUTPUT_JSON:-}"
 STRICT_OUTPUT_JSON="${STRICT_OUTPUT_JSON:-}"
 STRICT_OUTPUT_CSV="${STRICT_OUTPUT_CSV:-}"
 SPLITS="${SPLITS:-val,test}"
+EXTRA_ARGS="${EXTRA_ARGS:-}"
 
 mkdir -p logs
 
@@ -45,10 +46,16 @@ CMD=(python scripts/training/evaluate_esm_site.py --config "${CONFIG}" --splits 
 if [ -n "${CHECKPOINT}" ]; then
     CMD+=(--checkpoint "${CHECKPOINT}")
 fi
+if [ -n "${EXTRA_ARGS}" ]; then
+    # shellcheck disable=SC2206
+    EXTRA_ARGS_ARRAY=(${EXTRA_ARGS})
+    CMD+=("${EXTRA_ARGS_ARRAY[@]}")
+fi
 
 echo "Job ID: ${SLURM_JOB_ID}"
 echo "Node: ${SLURMD_NODENAME}"
 echo "Config: ${CONFIG}"
+echo "Extra args: ${EXTRA_ARGS}"
 echo "Command: ${CMD[*]}"
 "${CMD[@]}"
 

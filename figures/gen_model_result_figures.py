@@ -16,12 +16,12 @@ from paper_plot_style import COLORS, save_fig
 ROOT = Path('.')
 FIG = Path('figures')
 METRICS = [
-    ('f1_best', 'F1'),
-    ('pr_auc', 'PR-AUC'),
-    ('auroc', 'AUROC'),
-    ('mcc_best', 'MCC'),
-    ('top5', 'Top-5% P'),
-    ('top10', 'Top-10% P'),
+    ('f1_best', 'Val F1'),
+    ('pr_auc', 'Val PR-AUC'),
+    ('auroc', 'Val AUROC'),
+    ('mcc_best', 'Val MCC'),
+    ('top5', 'Val Top-5% P'),
+    ('top10', 'Val Top-10% P'),
 ]
 CURATED_MANIFESTS = [
     Path('runs/job_manifests/hpcue_predstruct_batch_20260619_002109.tsv'),
@@ -111,6 +111,10 @@ def esm_kind(model: dict, data: dict, run_name: str) -> str:
 def context_kind(model: dict) -> str:
     ctx = any(bool(model.get(k)) for k in ('use_chain_embedding', 'use_position_features', 'use_global_context'))
     contact = bool(model.get('use_contact_graph'))
+    root = str(model.get('_esm_root_for_contact_check') or '')
+    has_contact_payload = ('_contact' in root) or ('_mlc' in root)
+    if contact and not has_contact_payload:
+        return '+context empty-graph' if ctx else 'no-context empty-graph'
     if ctx and contact:
         return '+context +contact'
     if ctx and not contact:
@@ -121,6 +125,8 @@ def context_kind(model: dict) -> str:
 
 
 def label_for(data: dict, model: dict, training: dict, run_name: str, source: str) -> str:
+    model = dict(model)
+    model['_esm_root_for_contact_check'] = str(data.get('esm_root') or '')
     esm = esm_kind(model, data, run_name)
     feat = feature_kind(data, model)
     ctx = context_kind(model)
@@ -138,6 +144,8 @@ def short_label(label: str) -> str:
         'MLC ESM | No scalar | +context +contact': 'MLC + no scalar + contact',
         'Final ESM | PredStruct scalar | +context +contact': 'Final + PS + contact',
         'Final ESM | No scalar | +context +contact': 'Final + no scalar + contact',
+        'Final ESM | PredStruct scalar | +context empty-graph': 'Final + PS empty graph',
+        'Final ESM | No scalar | +context empty-graph': 'Final + no scalar empty graph',
         'Final ESM | PredStruct scalar | no-context no-contact': 'Final + PS no-context',
         'Final ESM | No scalar | no-context no-contact': 'Final + no scalar no-context',
         'Final ESM | PredStruct scalar | +context no-contact': 'Final + PS + context no graph',
@@ -166,6 +174,7 @@ def row_from_run(run_dir: Path, source: str, config_override: dict | None = None
         'split_dir': data.get('split_dir'),
         'esm_root': data.get('esm_root'),
         'sequence_feature_root': data.get('sequence_feature_root'),
+        'metric_scope': 'validation',
         'done_event': done,
         'last_epoch': last.get('best_epoch') if last else None,
     }
@@ -224,6 +233,12 @@ def write_csv(path: Path, rows: list[dict]) -> None:
 
 
 def summarize(rows: list[dict]) -> pd.DataFrame:
+    split_dirs = {str(row.get('split_dir')) for row in rows if row.get('split_dir')}
+    if len(split_dirs) != 1:
+        raise ValueError(f'Curated rows must use exactly one split_dir, got {sorted(split_dirs)}')
+    scopes = {str(row.get('metric_scope')) for row in rows if row.get('metric_scope')}
+    if scopes != {'validation'}:
+        raise ValueError(f'Curated rows must be validation metrics, got {sorted(scopes)}')
     grouped = defaultdict(list)
     for row in rows:
         grouped[row['model_short']].append(row)
@@ -270,7 +285,7 @@ def plot_matrix(df: pd.DataFrame) -> None:
             v = vals[i, j]
             ax.text(j, i, f'{v:.3f}', ha='center', va='center', color='white' if v < 0.80 else 'black', fontsize=7)
     cbar = fig.colorbar(im, ax=ax, fraction=0.025, pad=0.02)
-    cbar.ax.set_ylabel('Metric value', rotation=270, labelpad=11)
+    cbar.ax.set_ylabel('Validation metric value', rotation=270, labelpad=11)
     save_fig(fig, 'fig_metrics_matrix_auc_topk')
     plt.close(fig)
 
@@ -298,7 +313,7 @@ def write_latex(df: pd.DataFrame) -> None:
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/fig_metrics_matrix_auc_topk.pdf}
-    \caption{Metric matrix for model variants on the relaxed MMseq30 split, including threshold-selected F1, PR-AUC, AUROC, MCC, and top-k precision.}
+    \caption{Validation metric matrix for model variants on the relaxed MMseq30 split, including threshold-selected F1, PR-AUC, AUROC, MCC, and top-k precision.}
     \label{fig:metrics_matrix}
 \end{figure}
 '''.strip() + '\n'

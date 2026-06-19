@@ -155,6 +155,10 @@ def _build_loader(
     seed: int,
     shuffle: bool,
     preload: bool = False,
+    strict_ids: bool = True,
+    require_labels: bool = True,
+    strict_label_metadata: bool = True,
+    require_contact_graph: bool = False,
 ) -> DataLoader:
     dataset = ESMProteinSiteDataset(
         esm_root=esm_root,
@@ -166,6 +170,10 @@ def _build_loader(
         crop_mode=crop_mode,
         seed=seed,
         preload=preload,
+        strict_ids=strict_ids,
+        require_labels=require_labels,
+        strict_label_metadata=strict_label_metadata,
+        require_contact_graph=require_contact_graph,
     )
     loader_kwargs: dict[str, Any] = {
         "batch_size": batch_size,
@@ -433,6 +441,10 @@ def main() -> int:
     parser.add_argument("--split-dir", default="features/contact_labels/splits_mmseq30_tmk_no_len_limit", type=Path)
     parser.add_argument("--sequence-feature-root", default=None, type=Path)
     parser.add_argument("--require-sequence-features", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--strict-ids", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--require-labels", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--strict-label-metadata", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--require-contact-graph", action=argparse.BooleanOptionalAction, default=None)
     parser.add_argument("--output-dir", default=None, type=Path)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--seed", type=int, default=42)
@@ -482,6 +494,7 @@ def main() -> int:
     val_ids = _limit_ids(_read_ids(args.split_dir / "val_ids.txt"), args.max_val_samples)
     test_ids = _read_ids(args.split_dir / "test_ids.txt")
     pos_weight, train_pos, train_neg = _class_weight_from_manifest(args.manifest, train_ids, args.max_pos_weight)
+    require_contact_graph = bool(model_config.get("use_contact_graph")) if args.require_contact_graph is None else bool(args.require_contact_graph)
 
     train_loader = _build_loader(
         args.esm_root,
@@ -498,6 +511,10 @@ def main() -> int:
         args.seed,
         True,
         preload=args.preload,
+        strict_ids=args.strict_ids,
+        require_labels=args.require_labels,
+        strict_label_metadata=args.strict_label_metadata,
+        require_contact_graph=require_contact_graph,
     )
     val_loader = _build_loader(
         args.esm_root,
@@ -514,6 +531,10 @@ def main() -> int:
         args.seed + 1,
         False,
         preload=args.preload,
+        strict_ids=args.strict_ids,
+        require_labels=args.require_labels,
+        strict_label_metadata=args.strict_label_metadata,
+        require_contact_graph=require_contact_graph,
     )
 
     model = ESMSiteClassifier(model_config).to(device)
@@ -557,6 +578,10 @@ def main() -> int:
             "thresholds_resolved": thresholds,
             "topk_fracs_resolved": topk_fracs,
             "input_policy": "ESM embeddings plus sequence-derived residue/global features only; optional ESM-predicted contact graph; no PDB coordinates or complete structure features",
+            "strict_ids": args.strict_ids,
+            "require_labels": args.require_labels,
+            "strict_label_metadata": args.strict_label_metadata,
+            "require_contact_graph_resolved": require_contact_graph,
         }
     )
     (args.output_dir / "config.json").write_text(json.dumps(run_config, indent=2, default=str) + "\n")

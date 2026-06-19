@@ -42,6 +42,17 @@ def _run_name(summary_csv: Path, row: dict[str, str]) -> str:
     return row.get("run_name") or summary_csv.parent.name
 
 
+def _read_manifest(path: Path | None) -> dict[str, dict[str, str]]:
+    if path is None or not path.exists():
+        return {}
+    with path.open(newline="") as handle:
+        rows = list(csv.DictReader(handle, delimiter="\t"))
+    out: dict[str, dict[str, str]] = {}
+    for row in rows:
+        out[Path(row["strict_output_csv"]).name] = row
+    return out
+
+
 def _float_or_none(value: Any) -> float | None:
     if value in (None, ""):
         return None
@@ -51,14 +62,21 @@ def _float_or_none(value: Any) -> float | None:
         return None
 
 
-def collect(paths: list[Path]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def collect(paths: list[Path], manifest: Path | None = None) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    manifest_rows = _read_manifest(manifest)
     rows: list[dict[str, Any]] = []
     for path in paths:
+        manifest_row = manifest_rows.get(path.name, {})
         for row in _read_csv(path):
             if row.get("split") != "test":
                 continue
+            run_name = manifest_row.get("run_name") or _run_name(path, row)
+            model_short = manifest_row.get("model_short") or run_name
+            metric_note = manifest_row.get("metric_scope_note") or "strict"
             out: dict[str, Any] = {
-                "run_name": _run_name(path, row),
+                "run_name": run_name,
+                "model_short": model_short,
+                "metric_scope_note": metric_note,
                 "summary_csv": str(path),
                 "metric_scope": row.get("metric_scope", "test_at_val_threshold"),
                 "val_selected_threshold": _float_or_none(row.get("val_selected_threshold")),
@@ -67,19 +85,13 @@ def collect(paths: list[Path]) -> tuple[list[dict[str, Any]], list[dict[str, Any
                 out[key] = _float_or_none(row.get(key))
             rows.append(out)
 
-    grouped: dict[str, list[dict[str, Any]]] = {}
+    grouped: dict[tuple[str, str], list[dict[str, Any]]] = {}
     for row in rows:
-        # Drop seed suffixes only when the run naming follows the project convention.
-        name = str(row["run_name"])
-        model = name
-        for token in ("_seed42_", "_seed43_", "_seed44_"):
-            if token in model:
-                model = model.replace(token, "_seedXX_")
-        grouped.setdefault(model, []).append(row)
+        grouped.setdefault((str(row["model_short"]), str(row["metric_scope_note"])), []).append(row)
 
     summary: list[dict[str, Any]] = []
-    for model, vals in sorted(grouped.items()):
-        item: dict[str, Any] = {"model_group": model, "n": len(vals)}
+    for (model, metric_note), vals in sorted(grouped.items()):
+        item: dict[str, Any] = {"model_short": model, "metric_scope_note": metric_note, "n": len(vals)}
         for key in METRIC_COLUMNS:
             xs = [float(v[key]) for v in vals if v.get(key) is not None]
             item[f"{key}_mean"] = mean(xs) if xs else None
@@ -103,10 +115,11 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("summary_csv", nargs="+", type=Path)
+    parser.add_argument("--manifest", type=Path, default=Path("results/strict_eval/strict_eval_manifest.tsv"))
     parser.add_argument("--output-dir", type=Path, default=Path("results/strict_eval"))
     args = parser.parse_args()
 
-    rows, summary = collect(args.summary_csv)
+    rows, summary = collect(args.summary_csv, args.manifest)
     write_csv(args.output_dir / "strict_test_at_val_threshold_rows.csv", rows)
     write_csv(args.output_dir / "strict_test_at_val_threshold_summary.csv", summary)
     print(json.dumps({"n_rows": len(rows), "n_groups": len(summary), "output_dir": str(args.output_dir)}, default=str), flush=True)

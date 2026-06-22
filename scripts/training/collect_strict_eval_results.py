@@ -20,6 +20,7 @@ METRIC_COLUMNS = [
     "pr_auc",
     "top_5pct_precision_micro",
     "top_10pct_precision_micro",
+    "top_20pct_precision_micro",
 ]
 
 

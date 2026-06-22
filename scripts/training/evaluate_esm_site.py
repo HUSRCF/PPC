@@ -58,11 +58,14 @@ def main() -> int:
     parser.add_argument("--manifest", default="features/contact_labels/manifest.csv", type=Path)
     parser.add_argument("--split-dir", default="features/contact_labels/splits_mmseq30_tmk_no_len_limit", type=Path)
     parser.add_argument("--sequence-feature-root", default=None, type=Path)
+    parser.add_argument("--contact-graph-root", default=None, type=Path)
+    parser.add_argument("--aux-contact-graph-root", default=None, type=Path)
     parser.add_argument("--require-sequence-features", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--strict-ids", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--require-labels", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--strict-label-metadata", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--require-contact-graph", action=argparse.BooleanOptionalAction, default=None)
+    parser.add_argument("--require-aux-contact-graph", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--output-dir", default=None, type=Path)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--max-residues", type=int, default=0)
@@ -113,6 +116,7 @@ def main() -> int:
         "require_labels": args.require_labels,
         "strict_label_metadata": args.strict_label_metadata,
         "require_contact_graph_resolved": require_contact_graph,
+        "require_aux_contact_graph": args.require_aux_contact_graph,
         "splits": {},
     }
     for split in [x.strip() for x in str(args.splits).split(",") if x.strip()]:
@@ -123,6 +127,8 @@ def main() -> int:
             args.label_root,
             ids,
             args.sequence_feature_root,
+            args.contact_graph_root,
+            args.aux_contact_graph_root,
             args.require_sequence_features,
             args.batch_size,
             args.num_workers,
@@ -136,6 +142,7 @@ def main() -> int:
             require_labels=args.require_labels,
             strict_label_metadata=args.strict_label_metadata,
             require_contact_graph=require_contact_graph,
+            require_aux_contact_graph=args.require_aux_contact_graph,
         )
         results["splits"][split] = _evaluate(
             model,

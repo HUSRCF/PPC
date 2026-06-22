@@ -40,6 +40,8 @@ def _row(split: str, metrics: dict[str, Any], val_threshold: float) -> dict[str,
         "top_5pct_enrichment_micro": metrics.get("top_5pct_enrichment_micro"),
         "top_10pct_precision_micro": metrics.get("top_10pct_precision_micro"),
         "top_10pct_enrichment_micro": metrics.get("top_10pct_enrichment_micro"),
+        "top_20pct_precision_micro": metrics.get("top_20pct_precision_micro"),
+        "top_20pct_enrichment_micro": metrics.get("top_20pct_enrichment_micro"),
         "loss": metrics.get("loss"),
         "skipped_nonfinite": metrics.get("skipped_nonfinite"),
     }

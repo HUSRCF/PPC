@@ -36,7 +36,16 @@ except Exception:  # pragma: no cover
     roc_auc_score = None
 
 
-PATH_KEYS = {"esm_root", "label_root", "manifest", "split_dir", "sequence_feature_root", "output_dir"}
+PATH_KEYS = {
+    "esm_root",
+    "label_root",
+    "manifest",
+    "split_dir",
+    "sequence_feature_root",
+    "contact_graph_root",
+    "aux_contact_graph_root",
+    "output_dir",
+}
 
 
 def _read_ids(path: Path) -> list[str]:
@@ -145,6 +154,8 @@ def _build_loader(
     label_root: Path,
     ids: list[str],
     sequence_feature_root: Path | None,
+    contact_graph_root: Path | None,
+    aux_contact_graph_root: Path | None,
     require_sequence_features: bool,
     batch_size: int,
     num_workers: int,
@@ -159,12 +170,15 @@ def _build_loader(
     require_labels: bool = True,
     strict_label_metadata: bool = True,
     require_contact_graph: bool = False,
+    require_aux_contact_graph: bool = False,
 ) -> DataLoader:
     dataset = ESMProteinSiteDataset(
         esm_root=esm_root,
         label_root=label_root,
         ids=ids,
         sequence_feature_root=sequence_feature_root,
+        contact_graph_root=contact_graph_root,
+        aux_contact_graph_root=aux_contact_graph_root,
         require_sequence_features=require_sequence_features,
         max_residues=max_residues,
         crop_mode=crop_mode,
@@ -174,6 +188,7 @@ def _build_loader(
         require_labels=require_labels,
         strict_label_metadata=strict_label_metadata,
         require_contact_graph=require_contact_graph,
+        require_aux_contact_graph=require_aux_contact_graph,
     )
     loader_kwargs: dict[str, Any] = {
         "batch_size": batch_size,
@@ -190,7 +205,7 @@ def _build_loader(
 def _move_batch(batch: dict[str, Any], device: torch.device) -> tuple[dict[str, torch.Tensor], torch.Tensor]:
     keys = ("esm_embeddings", "seq_features", "protein_mask", "chain_ids", "chain_rel_pos", "protein_rel_pos")
     inputs = {key: batch[key].to(device, non_blocking=True) for key in keys}
-    for key in ("contact_edge_index", "contact_edge_scores"):
+    for key in ("contact_edge_index", "contact_edge_scores", "aux_contact_edge_index", "aux_contact_edge_scores"):
         if key in batch:
             inputs[key] = batch[key].to(device, non_blocking=True)
     labels = batch["labels"].to(device, non_blocking=True)
@@ -294,6 +309,23 @@ def _threshold_metrics(scores: torch.Tensor, targets: torch.Tensor, thresholds: 
         "best_mcc_threshold": best_mcc["threshold"],
         "mcc_best_threshold": best_mcc["mcc"],
         "f1_at_best_mcc_threshold": best_mcc["f1"],
+    }
+
+
+def _metrics_at_threshold(metrics: dict[str, Any], threshold: float | None) -> dict[str, Any]:
+    if threshold is None:
+        return {}
+    sweep = metrics.get("threshold_sweep") or []
+    if not sweep:
+        return {}
+    row = min(sweep, key=lambda item: abs(float(item["threshold"]) - float(threshold)))
+    return {
+        "threshold": row.get("threshold"),
+        "precision": row.get("precision"),
+        "recall": row.get("recall"),
+        "f1": row.get("f1"),
+        "mcc": row.get("mcc"),
+        "accuracy": row.get("accuracy"),
     }
 
 
@@ -440,11 +472,14 @@ def main() -> int:
     parser.add_argument("--manifest", default="features/contact_labels/manifest.csv", type=Path)
     parser.add_argument("--split-dir", default="features/contact_labels/splits_mmseq30_tmk_no_len_limit", type=Path)
     parser.add_argument("--sequence-feature-root", default=None, type=Path)
+    parser.add_argument("--contact-graph-root", default=None, type=Path)
+    parser.add_argument("--aux-contact-graph-root", default=None, type=Path)
     parser.add_argument("--require-sequence-features", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--strict-ids", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--require-labels", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--strict-label-metadata", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--require-contact-graph", action=argparse.BooleanOptionalAction, default=None)
+    parser.add_argument("--require-aux-contact-graph", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--output-dir", default=None, type=Path)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--seed", type=int, default=42)
@@ -460,6 +495,7 @@ def main() -> int:
     parser.add_argument("--max-train-samples", type=int, default=None)
     parser.add_argument("--max-val-samples", type=int, default=0)
     parser.add_argument("--eval-max-batches", type=int, default=None)
+    parser.add_argument("--eval-test-each-epoch", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--lr", type=float, default=5e-5)
     parser.add_argument("--warmup-steps", type=int, default=0)
     parser.add_argument("--warmup-ratio", type=float, default=0.05)
@@ -501,6 +537,8 @@ def main() -> int:
         args.label_root,
         train_ids,
         args.sequence_feature_root,
+        args.contact_graph_root,
+        args.aux_contact_graph_root,
         args.require_sequence_features,
         args.batch_size,
         args.num_workers,
@@ -515,12 +553,15 @@ def main() -> int:
         require_labels=args.require_labels,
         strict_label_metadata=args.strict_label_metadata,
         require_contact_graph=require_contact_graph,
+        require_aux_contact_graph=args.require_aux_contact_graph,
     )
     val_loader = _build_loader(
         args.esm_root,
         args.label_root,
         val_ids,
         args.sequence_feature_root,
+        args.contact_graph_root,
+        args.aux_contact_graph_root,
         args.require_sequence_features,
         args.batch_size,
         args.num_workers,
@@ -535,6 +576,34 @@ def main() -> int:
         require_labels=args.require_labels,
         strict_label_metadata=args.strict_label_metadata,
         require_contact_graph=require_contact_graph,
+        require_aux_contact_graph=args.require_aux_contact_graph,
+    )
+    test_loader = (
+        _build_loader(
+            args.esm_root,
+            args.label_root,
+            test_ids,
+            args.sequence_feature_root,
+            args.contact_graph_root,
+            args.aux_contact_graph_root,
+            args.require_sequence_features,
+            args.batch_size,
+            args.num_workers,
+            args.pin_memory,
+            args.prefetch_factor,
+            args.max_residues,
+            args.eval_crop_mode,
+            args.seed + 2,
+            False,
+            preload=args.preload,
+            strict_ids=args.strict_ids,
+            require_labels=args.require_labels,
+            strict_label_metadata=args.strict_label_metadata,
+            require_contact_graph=require_contact_graph,
+            require_aux_contact_graph=args.require_aux_contact_graph,
+        )
+        if args.eval_test_each_epoch
+        else None
     )
 
     model = ESMSiteClassifier(model_config).to(device)
@@ -582,6 +651,8 @@ def main() -> int:
             "require_labels": args.require_labels,
             "strict_label_metadata": args.strict_label_metadata,
             "require_contact_graph_resolved": require_contact_graph,
+            "require_aux_contact_graph": args.require_aux_contact_graph,
+            "eval_test_each_epoch": args.eval_test_each_epoch,
         }
     )
     (args.output_dir / "config.json").write_text(json.dumps(run_config, indent=2, default=str) + "\n")
@@ -660,6 +731,21 @@ def main() -> int:
             thresholds=thresholds,
             topk_fracs=topk_fracs,
         )
+        test_metrics = None
+        test_at_val_threshold = None
+        if test_loader is not None:
+            test_metrics = _evaluate(
+                model,
+                test_loader,
+                criterion,
+                device,
+                max_batches=args.eval_max_batches,
+                show_progress=args.progress,
+                desc=f"test {epoch}/{args.epochs}",
+                thresholds=thresholds,
+                topk_fracs=topk_fracs,
+            )
+            test_at_val_threshold = _metrics_at_threshold(test_metrics, val_metrics.get("best_threshold"))
         record = {
             "event": "epoch",
             "epoch": epoch,
@@ -667,6 +753,9 @@ def main() -> int:
             "train": train_metrics,
             "val": val_metrics,
         }
+        if test_metrics is not None:
+            record["test"] = test_metrics
+            record["test_at_val_threshold"] = test_at_val_threshold
         with log_path.open("a") as handle:
             handle.write(json.dumps(record) + "\n")
         print(json.dumps(record), flush=True)

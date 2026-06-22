@@ -354,6 +354,35 @@ def _load_contact_graph(
     return edge_index, scores
 
 
+def _load_external_contact_graph(
+    contact_graph_root: Path | None,
+    pdb_id: str,
+    n_res: int,
+    required: bool,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    if contact_graph_root is None:
+        return torch.empty((2, 0), dtype=torch.long), torch.empty((0,), dtype=torch.float32)
+    candidates = (
+        contact_graph_root / pdb_id / f"{pdb_id}_contact_graph.pt",
+        contact_graph_root / pdb_id / f"{pdb_id}_predcontact.pt",
+        contact_graph_root / pdb_id / f"{pdb_id}_pred_struct_contact.pt",
+        contact_graph_root / f"{pdb_id}_contact_graph.pt",
+        contact_graph_root / f"{pdb_id}_predcontact.pt",
+        contact_graph_root / f"{pdb_id}.pt",
+    )
+    path = next((candidate for candidate in candidates if candidate.exists()), None)
+    if path is None:
+        if required:
+            raise FileNotFoundError(f"{pdb_id}: external contact graph file not found under {contact_graph_root}")
+        return torch.empty((2, 0), dtype=torch.long), torch.empty((0,), dtype=torch.float32)
+    data = _torch_load(path)
+    if isinstance(data, dict) and "n_residues" in data and int(data["n_residues"]) != int(n_res):
+        raise ValueError(f"{pdb_id}: external contact graph n_residues {data['n_residues']} != ESM length {n_res}")
+    if isinstance(data, dict):
+        return _load_contact_graph(data, pdb_id, n_res, required=required)
+    raise ValueError(f"{pdb_id}: external contact graph payload must be a dict: {path}")
+
+
 def _slice_contact_graph(
     edge_index: torch.Tensor,
     scores: torch.Tensor,
@@ -388,6 +417,8 @@ class ESMProteinSiteDataset(Dataset):
         label_root: str | Path | None = None,
         ids: list[str] | None = None,
         sequence_feature_root: str | Path | None = None,
+        contact_graph_root: str | Path | None = None,
+        aux_contact_graph_root: str | Path | None = None,
         require_sequence_features: bool = False,
         max_residues: int | None = None,
         crop_mode: str = "none",
@@ -397,10 +428,13 @@ class ESMProteinSiteDataset(Dataset):
         require_labels: bool = False,
         strict_label_metadata: bool = False,
         require_contact_graph: bool = False,
+        require_aux_contact_graph: bool = False,
     ) -> None:
         self.esm_root = Path(esm_root)
         self.label_root = Path(label_root) if label_root else None
         self.sequence_feature_root = Path(sequence_feature_root) if sequence_feature_root else None
+        self.contact_graph_root = Path(contact_graph_root) if contact_graph_root else None
+        self.aux_contact_graph_root = Path(aux_contact_graph_root) if aux_contact_graph_root else None
         self.require_sequence_features = bool(require_sequence_features)
         self.max_residues = int(max_residues) if max_residues else None
         self.crop_mode = crop_mode
@@ -409,6 +443,7 @@ class ESMProteinSiteDataset(Dataset):
         self.require_labels = bool(require_labels)
         self.strict_label_metadata = bool(strict_label_metadata)
         self.require_contact_graph = bool(require_contact_graph)
+        self.require_aux_contact_graph = bool(require_aux_contact_graph)
         self.esm_paths = _discover_esm_paths(self.esm_root, ids)
         if not self.esm_paths:
             raise FileNotFoundError(f"No *_esm2.pt files under {self.esm_root}")
@@ -463,10 +498,29 @@ class ESMProteinSiteDataset(Dataset):
         )
         if seq_features is None:
             seq_features = _sequence_features(residue_names)
-        contact_edge_index, contact_edge_scores = _load_contact_graph(data, pdb_id, n_res, self.require_contact_graph)
+        if self.contact_graph_root is not None:
+            contact_edge_index, contact_edge_scores = _load_external_contact_graph(
+                self.contact_graph_root,
+                pdb_id,
+                n_res,
+                self.require_contact_graph,
+            )
+        else:
+            contact_edge_index, contact_edge_scores = _load_contact_graph(data, pdb_id, n_res, self.require_contact_graph)
+        aux_contact_edge_index, aux_contact_edge_scores = _load_external_contact_graph(
+            self.aux_contact_graph_root,
+            pdb_id,
+            n_res,
+            self.require_aux_contact_graph,
+        )
 
         residue_slice = self._select_slice(n_res)
         contact_edge_index, contact_edge_scores = _slice_contact_graph(contact_edge_index, contact_edge_scores, residue_slice)
+        aux_contact_edge_index, aux_contact_edge_scores = _slice_contact_graph(
+            aux_contact_edge_index,
+            aux_contact_edge_scores,
+            residue_slice,
+        )
         item: dict[str, Any] = {
             "pdb_id": pdb_id,
             "esm_embeddings": _slice_value(embeddings, residue_slice),
@@ -478,6 +532,8 @@ class ESMProteinSiteDataset(Dataset):
             "labels": _slice_value(labels, residue_slice),
             "contact_edge_index": contact_edge_index,
             "contact_edge_scores": contact_edge_scores,
+            "aux_contact_edge_index": aux_contact_edge_index,
+            "aux_contact_edge_scores": aux_contact_edge_scores,
         }
         if residue_slice != slice(None):
             item["crop_start"] = residue_slice.start
@@ -503,6 +559,25 @@ def _pad_tensor(value: torch.Tensor, max_len: int, pad_value: float | int = 0) -
     return out
 
 
+def _collate_contact_edges(
+    items: list[dict[str, Any]],
+    max_len: int,
+    index_key: str,
+    score_key: str,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    edge_indices: list[torch.Tensor] = []
+    edge_scores: list[torch.Tensor] = []
+    for batch_idx, item in enumerate(items):
+        edge_index = item.get(index_key)
+        if edge_index is None or edge_index.numel() == 0:
+            continue
+        edge_indices.append(edge_index.long() + batch_idx * max_len)
+        edge_scores.append(item[score_key].float())
+    if edge_indices:
+        return torch.cat(edge_indices, dim=1), torch.cat(edge_scores, dim=0)
+    return torch.empty((2, 0), dtype=torch.long), torch.empty((0,), dtype=torch.float32)
+
+
 def collate_esm_site_features(items: list[dict[str, Any]]) -> dict[str, Any]:
     max_len = max(int(item["esm_embeddings"].shape[0]) for item in items)
     batch: dict[str, Any] = {"pdb_id": [item["pdb_id"] for item in items]}
@@ -522,18 +597,16 @@ def collate_esm_site_features(items: list[dict[str, Any]]) -> dict[str, Any]:
         mask[idx, : int(item["esm_embeddings"].shape[0])] = True
     batch["protein_mask"] = mask
 
-    edge_indices: list[torch.Tensor] = []
-    edge_scores: list[torch.Tensor] = []
-    for batch_idx, item in enumerate(items):
-        edge_index = item.get("contact_edge_index")
-        if edge_index is None or edge_index.numel() == 0:
-            continue
-        edge_indices.append(edge_index.long() + batch_idx * max_len)
-        edge_scores.append(item["contact_edge_scores"].float())
-    if edge_indices:
-        batch["contact_edge_index"] = torch.cat(edge_indices, dim=1)
-        batch["contact_edge_scores"] = torch.cat(edge_scores, dim=0)
-    else:
-        batch["contact_edge_index"] = torch.empty((2, 0), dtype=torch.long)
-        batch["contact_edge_scores"] = torch.empty((0,), dtype=torch.float32)
+    batch["contact_edge_index"], batch["contact_edge_scores"] = _collate_contact_edges(
+        items,
+        max_len,
+        "contact_edge_index",
+        "contact_edge_scores",
+    )
+    batch["aux_contact_edge_index"], batch["aux_contact_edge_scores"] = _collate_contact_edges(
+        items,
+        max_len,
+        "aux_contact_edge_index",
+        "aux_contact_edge_scores",
+    )
     return batch

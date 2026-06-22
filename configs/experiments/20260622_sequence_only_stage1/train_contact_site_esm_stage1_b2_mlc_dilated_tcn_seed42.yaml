@@ -1,0 +1,79 @@
+data:
+  esm_root: features/esm2_t33_650M_UR50D_mlc/pt
+  label_root: features/contact_labels_5p5A
+  manifest: features/contact_labels_5p5A/manifest.csv
+  split_dir: features/contact_labels_5p5A/splits_pairwise_si30_cov0_s7p5_tmk_no_len_limit_predstruct_relaxed_largetrain_balanced
+  sequence_feature_root: null
+  require_sequence_features: false
+  contact_graph_root: null
+  aux_contact_graph_root: null
+  require_contact_graph: false
+  require_aux_contact_graph: false
+model:
+  d_esm: 3840
+  d_seq: 28
+  d_model: 256
+  d_hidden: 512
+  dropout: 0.18
+  classifier_dropout: 0.35
+  max_chains: 128
+  use_chain_embedding: true
+  use_seq_features: true
+  use_position_features: true
+  use_global_context: true
+  use_contact_graph: false
+  contact_graph_layers: 0
+  use_sparse_graph_transformer: false
+  sparse_graph_layers: 0
+  use_contact_profile_features: false
+  use_aux_contact_graph: false
+  aux_contact_mode: none
+  use_mamba_context: false
+  mamba_layers: 0
+  use_tcn_context: true
+  tcn_layers: 4
+  tcn_kernel_size: 7
+  tcn_dilations: [1, 2, 4, 8]
+  n_transformer_layers: 0
+  n_heads: 8
+  transformer_ff_mult: 4
+training:
+  output_dir: runs/contact_site_esm_stage1_b2_mlc_dilated_tcn_seed42_e40_pairwise_si30_s7p5_5p5A_20260622
+  device: cuda:0
+  seed: 42
+  epochs: 40
+  batch_size: 32
+  num_workers: 8
+  pin_memory: true
+  preload: true
+  prefetch_factor: 1
+  max_residues: 0
+  train_crop_mode: none
+  eval_crop_mode: none
+  max_train_samples: null
+  max_val_samples: 0
+  eval_max_batches: null
+  eval_test_each_epoch: true
+  lr: 5.0e-05
+  warmup_steps: 0
+  warmup_ratio: 0.1
+  min_lr_scale: 0.02
+  weight_decay: 0.05
+  label_smoothing: 0.03
+  threshold_grid: 0.01:0.99:0.01
+  topk_fracs: 0.05,0.10,0.20
+  selection_metric: f1_best_threshold
+  max_pos_weight: 20.0
+  grad_clip_norm: 1.0
+  grad_value_clip: 100.0
+  adam_eps: 1.0e-07
+  amp: true
+  progress: true
+metadata:
+  stage: sequence_only_stage1_backbone
+  experiment_id: B2
+  experiment_role: Dilated TCN tests longer local receptive field without dense attention.
+  label_cutoff_angstrom: 5.5
+  input_policy: sequence_only_no_predicted_structure
+  new_dependencies: none
+  metric_naming: top_5pct=P@L/20; top_10pct=P@L/10; top_20pct=P@L/5

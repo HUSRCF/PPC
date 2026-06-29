@@ -1,0 +1,356 @@
+{
+  "mode": "tmk_no_len_limit",
+  "decision": "kept_existing_complex_split; applied chain-level PyPropel QC allowlist",
+  "reason_no_resplit": "The existing split is already component-disjoint under the pairwise SI graph. Filtering chains by the PyPropel QC dataset is a subset operation and cannot create new cross-split edges; the pairwise audit below verifies this.",
+  "paths": {
+    "split_dir": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_si30_cov0_s7p5_tmk_no_len_limit_predstruct_relaxed_largetrain_balanced",
+    "qc_dataset": "/media/990Pro/ProtBind/PPC/data/qc/tmk_no_len_limit/dataset.csv",
+    "chain_metadata": "/media/990Pro/ProtBind/PPC/features/mmseq30/chain_metadata.csv",
+    "pairwise_hits": "/media/990Pro/ProtBind/PPC/features/mmseq_pairwise_si30_cov0_s7p5/pairwise_hits.tsv",
+    "output_dir": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_si30_cov0_s7p5_tmk_no_len_limit_predstruct_relaxed_largetrain_balanced/pypropel_chain_filtered_no_len_limit"
+  },
+  "thresholds": {
+    "min_seq_id": 0.3,
+    "coverage": 0.8,
+    "cov_mode_interpretation": "qcov>=coverage and tcov>=coverage",
+    "min_aln_len": 0
+  },
+  "input_counts": {
+    "n_split_pdb_ids": 6139,
+    "n_chain_metadata_rows_in_split_pdbs": 41177,
+    "n_qc_dataset_rows": 21422,
+    "n_qc_dataset_rows_in_split_pdbs": 21344,
+    "n_excluded_chain_rows_in_split_pdbs": 19833
+  },
+  "split_stats": {
+    "train": {
+      "n_pdb_ids": 4786,
+      "n_retained_chains": 16648,
+      "n_retained_pdb_ids": 4786,
+      "n_residues": 5628029
+    },
+    "val": {
+      "n_pdb_ids": 673,
+      "n_retained_chains": 2474,
+      "n_retained_pdb_ids": 673,
+      "n_residues": 928882
+    },
+    "test": {
+      "n_pdb_ids": 680,
+      "n_retained_chains": 2222,
+      "n_retained_pdb_ids": 680,
+      "n_residues": 816895
+    }
+  },
+  "pairwise_si_audit": {
+    "n_pairwise_hit_rows": 7767348,
+    "n_hit_rows_after_filters": 7767348,
+    "n_hit_rows_with_chain_outside_allowlist": 3919700,
+    "cross_split_hit_counts": {},
+    "n_cross_split_hits": 0,
+    "max_cross_split_pident": 0.0,
+    "examples": []
+  },
+  "excluded_examples": [
+    {
+      "seq_id": "1aig__H",
+      "pdb_id": "1aig",
+      "chain_id": "H",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1aij__H",
+      "pdb_id": "1aij",
+      "chain_id": "H",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__A",
+      "pdb_id": "1bcc",
+      "chain_id": "A",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__B",
+      "pdb_id": "1bcc",
+      "chain_id": "B",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__D",
+      "pdb_id": "1bcc",
+      "chain_id": "D",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__E",
+      "pdb_id": "1bcc",
+      "chain_id": "E",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__F",
+      "pdb_id": "1bcc",
+      "chain_id": "F",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__G",
+      "pdb_id": "1bcc",
+      "chain_id": "G",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__H",
+      "pdb_id": "1bcc",
+      "chain_id": "H",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__J",
+      "pdb_id": "1bcc",
+      "chain_id": "J",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__K",
+      "pdb_id": "1bcc",
+      "chain_id": "K",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__L",
+      "pdb_id": "1bcc",
+      "chain_id": "L",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__N",
+      "pdb_id": "1bcc",
+      "chain_id": "N",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__O",
+      "pdb_id": "1bcc",
+      "chain_id": "O",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__P",
+      "pdb_id": "1bcc",
+      "chain_id": "P",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__Q",
+      "pdb_id": "1bcc",
+      "chain_id": "Q",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__R",
+      "pdb_id": "1bcc",
+      "chain_id": "R",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bcc__T",
+      "pdb_id": "1bcc",
+      "chain_id": "T",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1be3__A",
+      "pdb_id": "1be3",
+      "chain_id": "A",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1be3__B",
+      "pdb_id": "1be3",
+      "chain_id": "B",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1be3__D",
+      "pdb_id": "1be3",
+      "chain_id": "D",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1be3__E",
+      "pdb_id": "1be3",
+      "chain_id": "E",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1be3__F",
+      "pdb_id": "1be3",
+      "chain_id": "F",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1be3__G",
+      "pdb_id": "1be3",
+      "chain_id": "G",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1be3__H",
+      "pdb_id": "1be3",
+      "chain_id": "H",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1be3__I",
+      "pdb_id": "1be3",
+      "chain_id": "I",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1be3__J",
+      "pdb_id": "1be3",
+      "chain_id": "J",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1be3__K",
+      "pdb_id": "1be3",
+      "chain_id": "K",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__A",
+      "pdb_id": "1bgy",
+      "chain_id": "A",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__B",
+      "pdb_id": "1bgy",
+      "chain_id": "B",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__D",
+      "pdb_id": "1bgy",
+      "chain_id": "D",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__E",
+      "pdb_id": "1bgy",
+      "chain_id": "E",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__F",
+      "pdb_id": "1bgy",
+      "chain_id": "F",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__G",
+      "pdb_id": "1bgy",
+      "chain_id": "G",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__H",
+      "pdb_id": "1bgy",
+      "chain_id": "H",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__I",
+      "pdb_id": "1bgy",
+      "chain_id": "I",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__J",
+      "pdb_id": "1bgy",
+      "chain_id": "J",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__K",
+      "pdb_id": "1bgy",
+      "chain_id": "K",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__M",
+      "pdb_id": "1bgy",
+      "chain_id": "M",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__N",
+      "pdb_id": "1bgy",
+      "chain_id": "N",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__P",
+      "pdb_id": "1bgy",
+      "chain_id": "P",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__Q",
+      "pdb_id": "1bgy",
+      "chain_id": "Q",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__R",
+      "pdb_id": "1bgy",
+      "chain_id": "R",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__S",
+      "pdb_id": "1bgy",
+      "chain_id": "S",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__T",
+      "pdb_id": "1bgy",
+      "chain_id": "T",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__U",
+      "pdb_id": "1bgy",
+      "chain_id": "U",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__V",
+      "pdb_id": "1bgy",
+      "chain_id": "V",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1bgy__W",
+      "pdb_id": "1bgy",
+      "chain_id": "W",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1ds8__H",
+      "pdb_id": "1ds8",
+      "chain_id": "H",
+      "reason": "not_in_qc_dataset"
+    },
+    {
+      "seq_id": "1dv3__H",
+      "pdb_id": "1dv3",
+      "chain_id": "H",
+      "reason": "not_in_qc_dataset"
+    }
+  ]
+}

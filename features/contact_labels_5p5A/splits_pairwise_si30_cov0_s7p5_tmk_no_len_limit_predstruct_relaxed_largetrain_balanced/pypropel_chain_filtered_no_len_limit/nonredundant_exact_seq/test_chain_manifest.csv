@@ -1,0 +1,866 @@
+split,seq_id,pdb_id,chain_id,n_residues,len_seq,nchain,rez,met1,mthm,tm_type,bio_name,seq_equal_xml,feature_path,seq_sha1,seq_len_from_seq,duplicate_count,member_seq_ids
+test,1kqf__C,1kqf,C,216,216,9,1.6,x-ray diffraction,4.0,alpha,"formate dehydrogenase, nitrate-inducible, cytochrome b556(fdn) subunit",0,features/protein_v4/pt/1kqf/1kqf_protein.pt,15f2a8695d4f5e84,216,6,1kqf__C;1kqf__F;1kqf__I;1kqg__C;1kqg__F;1kqg__I
+test,1lnq__A,1lnq,A,301,301,4,3.3,x-ray diffraction,2.0,alpha,potassium channel related protein,0,features/protein_v4/pt/1lnq/1lnq_protein.pt,43c5b90de58d74db,301,4,1lnq__A;1lnq__B;1lnq__C;1lnq__D
+test,1q16__C,1q16,C,224,224,6,1.9,x-ray diffraction,5.0,alpha,respiratory nitrate reductase 1 gamma chain,0,features/protein_v4/pt/1q16/1q16_protein.pt,343f470fbe67a15d,224,2,1q16__C;1q16__F
+test,1siw__C,1siw,C,219,219,6,2.2,x-ray diffraction,5.0,alpha,respiratory nitrate reductase 1 gamma chain,0,features/protein_v4/pt/1siw/1siw_protein.pt,115cc0043ddb0a77,219,2,1siw__C;1siw__F
+test,1y4z__C,1y4z,C,217,217,6,2.0,x-ray diffraction,5.0,alpha,respiratory nitrate reductase 1 gamma chain,0,features/protein_v4/pt/1y4z/1y4z_protein.pt,a3a21071d69dfeb9,217,2,1y4z__C;1y4z__F
+test,1y5i__C,1y5i,C,217,217,6,1.9,x-ray diffraction,5.0,alpha,respiratory nitrate reductase 1 gamma chain,0,features/protein_v4/pt/1y5i/1y5i_protein.pt,73272e5f99266e22,217,4,1y5i__C;1y5i__F;1y5n__C;1y5n__F
+test,1y5l__C,1y5l,C,211,211,6,2.5,x-ray diffraction,5.0,alpha,respiratory nitrate reductase 1 gamma chain,0,features/protein_v4/pt/1y5l/1y5l_protein.pt,c79c60c14ed17b58,211,2,1y5l__C;1y5l__F
+test,1zcd__A,1zcd,A,376,376,2,3.45,x-ray diffraction,12.0,alpha,na(+)/h(+) antiporter 1,0,features/protein_v4/pt/1zcd/1zcd_protein.pt,9777b73e08d02cb3,376,2,1zcd__A;1zcd__C
+test,2irv__A,2irv,A,176,176,3,2.3,x-ray diffraction,6.0,alpha,protein glpg,0,features/protein_v4/pt/2irv/2irv_protein.pt,9bea7ab43391c10d,176,3,2irv__A;2irv__C;2irv__D
+test,2nrf__A,2nrf,A,182,182,3,2.6,x-ray diffraction,6.0,alpha,protein glpg,1,features/protein_v4/pt/2nrf/2nrf_protein.pt,7a13d39f2e23420d,182,3,2nrf__A;2nrf__C;2nrf__D
+test,2pno__A,2pno,A,146,146,3,3.3,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/2pno/2pno_protein.pt,4e2224995da1635e,146,3,2pno__A;2pno__B;2pno__C
+test,2qts__A,2qts,A,417,417,3,1.9,x-ray diffraction,2.0,alpha,acid-sensing ion channel,0,features/protein_v4/pt/2qts/2qts_protein.pt,89f17fe0f6cfb361,417,3,2qts__A;5wku__A;5wkv__A
+test,2qts__B,2qts,B,420,420,3,1.9,x-ray diffraction,2.0,alpha,acid-sensing ion channel,0,features/protein_v4/pt/2qts/2qts_protein.pt,c2533396f4e65df8,420,1,2qts__B
+test,2qts__C,2qts,C,418,418,3,1.9,x-ray diffraction,2.0,alpha,acid-sensing ion channel,0,features/protein_v4/pt/2qts/2qts_protein.pt,1ffb95a2d6821c16,418,1,2qts__C
+test,2uuh__A,2uuh,A,151,151,3,2.15,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/2uuh/2uuh_protein.pt,9685fade74946741,151,3,2uuh__A;2uuh__B;2uuh__C
+test,2uui__A,2uui,A,156,156,3,2.0,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,1,features/protein_v4/pt/2uui/2uui_protein.pt,c7ce40a91912994a,156,3,2uui__A;2uui__B;2uui__C
+test,2vpw__C,2vpw,C,251,251,6,3.1,x-ray diffraction,8.0,alpha,hypothetical membrane spanning protein,0,features/protein_v4/pt/2vpw/2vpw_protein.pt,f24e50ba7e3fa3b1,251,8,2vpw__C;2vpw__G;2vpx__C;2vpx__G;2vpy__C;2vpy__G;2vpz__C;2vpz__G
+test,2wcd__M,2wcd,M,285,285,12,3.29,x-ray diffraction,3.0,alpha,"hemolysin e, chromosomal",0,features/protein_v4/pt/2wcd/2wcd_protein.pt,8ee15cc38586cc62,285,12,2wcd__M;2wcd__N;2wcd__O;2wcd__P;2wcd__Q;2wcd__R;2wcd__S;2wcd__T;2wcd__U;2wcd__V;2wcd__W;2wcd__X
+test,3b29__A,3b29,A,142,142,3,3.2,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/3b29/3b29_protein.pt,19071b49049dc748,142,3,3b29__A;3b29__B;3b29__C
+test,3egw__C,3egw,C,225,225,6,1.9,x-ray diffraction,5.0,alpha,respiratory nitrate reductase 1 gamma chain,1,features/protein_v4/pt/3egw/3egw_protein.pt,ea64c477b32ffca4,225,2,3egw__C;3egw__F
+test,3h9v__A,3h9v,A,329,329,3,3.1,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/3h9v/3h9v_protein.pt,9774a0ec2b31e49c,329,3,3h9v__A;3h9v__D;3h9v__E
+test,3hkk__A,3hkk,A,145,145,3,2.9,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/3hkk/3hkk_protein.pt,e96dec099fcfa138,145,3,3hkk__A;3hkk__B;3hkk__C
+test,3i5d__A,3i5d,A,324,324,3,3.46,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/3i5d/3i5d_protein.pt,d0e38618d690fded,324,1,3i5d__A
+test,3i5d__B,3i5d,B,328,328,3,3.46,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/3i5d/3i5d_protein.pt,62e8b00a9c6f2716,328,1,3i5d__B
+test,3i5d__C,3i5d,C,325,325,3,3.46,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/3i5d/3i5d_protein.pt,a0ee259d24110be7,325,1,3i5d__C
+test,3ij4__A,3ij4,A,406,406,3,3.0,x-ray diffraction,2.0,alpha,"amiloride-sensitive cation channel 2, neuronal",0,features/protein_v4/pt/3ij4/3ij4_protein.pt,4e13d0fc52154bd3,406,3,3ij4__A;3ij4__B;3ij4__C
+test,3ir5__C,3ir5,C,220,220,6,2.3,x-ray diffraction,5.0,alpha,respiratory nitrate reductase 1 gamma chain,0,features/protein_v4/pt/3ir5/3ir5_protein.pt,c6bb0cbe06ae1d7e,220,2,3ir5__C;3ir5__F
+test,3ir6__C,3ir6,C,225,225,6,2.8,x-ray diffraction,5.0,alpha,respiratory nitrate reductase 1 gamma chain,1,features/protein_v4/pt/3ir6/3ir6_protein.pt,ac591b6c90dac4a4,225,4,3ir6__C;3ir6__F;3ir7__C;3ir7__H
+test,3leo__A,3leo,A,150,150,3,2.1,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/3leo/3leo_protein.pt,d2238d460de08723,150,3,3leo__A;3leo__B;3leo__C
+test,3ncy__A,3ncy,A,422,422,2,3.2,x-ray diffraction,12.0,alpha,adic,0,features/protein_v4/pt/3ncy/3ncy_protein.pt,b808b9d90ed7bfdb,422,1,3ncy__A
+test,3ncy__B,3ncy,B,420,420,2,3.2,x-ray diffraction,12.0,alpha,adic,0,features/protein_v4/pt/3ncy/3ncy_protein.pt,d19f9fcf13cb53bc,420,1,3ncy__B
+test,3o0r__B,3o0r,B,449,449,2,2.7,x-ray diffraction,12.0,alpha,nitric oxide reductase subunit b,0,features/protein_v4/pt/3o0r/3o0r_protein.pt,323f7e9e3b9dcc78,449,7,3o0r__B;3wfb__B;3wfc__B;3wfd__B;3wfe__B;5guw__B;5gux__B
+test,3ob6__A,3ob6,A,431,431,2,3.0,x-ray diffraction,12.0,alpha,adic arginine:agmatine antiporter,0,features/protein_v4/pt/3ob6/3ob6_protein.pt,19d300ccc4531bc6,431,1,3ob6__A
+test,3ob6__B,3ob6,B,437,437,2,3.0,x-ray diffraction,12.0,alpha,adic arginine:agmatine antiporter,0,features/protein_v4/pt/3ob6/3ob6_protein.pt,ecede98f9b85086b,437,1,3ob6__B
+test,3pcv__A,3pcv,A,146,146,3,1.9,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/3pcv/3pcv_protein.pt,a5375bcd8a047c5c,146,3,3pcv__A;3pcv__B;3pcv__C
+test,3qnq__A,3qnq,A,432,432,4,3.3,x-ray diffraction,10.0,alpha,"pts system, cellobiose-specific iic component",0,features/protein_v4/pt/3qnq/3qnq_protein.pt,d3a36e0e5fddf09f,432,2,3qnq__A;3qnq__B
+test,3rbz__A,3rbz,A,289,289,4,3.4,x-ray diffraction,2.0,alpha,calcium-gated potassium channel mthk,0,features/protein_v4/pt/3rbz/3rbz_protein.pt,986582b95197a794,289,2,3rbz__A;3rbz__E
+test,3rbz__B,3rbz,B,281,281,4,3.4,x-ray diffraction,2.0,alpha,calcium-gated potassium channel mthk,0,features/protein_v4/pt/3rbz/3rbz_protein.pt,53f76bf6813322f6,281,2,3rbz__B;3rbz__F
+test,3s3w__A,3s3w,A,396,396,3,2.6,x-ray diffraction,2.0,alpha,"amiloride-sensitive cation channel 2, neuronal",0,features/protein_v4/pt/3s3w/3s3w_protein.pt,bce0750087765f16,396,1,3s3w__A
+test,3s3w__B,3s3w,B,397,397,3,2.6,x-ray diffraction,2.0,alpha,"amiloride-sensitive cation channel 2, neuronal",0,features/protein_v4/pt/3s3w/3s3w_protein.pt,b2554112dbcad670,397,1,3s3w__B
+test,3s3w__C,3s3w,C,401,401,3,2.6,x-ray diffraction,2.0,alpha,"amiloride-sensitive cation channel 2, neuronal",0,features/protein_v4/pt/3s3w/3s3w_protein.pt,b86cbd01bf52c26c,401,1,3s3w__C
+test,3s3x__A,3s3x,A,401,401,6,2.99,x-ray diffraction,2.0,alpha,"amiloride-sensitive cation channel 2, neuronal",0,features/protein_v4/pt/3s3x/3s3x_protein.pt,ca31d575fe51b5af,401,1,3s3x__A
+test,3s3x__B,3s3x,B,391,391,6,2.99,x-ray diffraction,2.0,alpha,"amiloride-sensitive cation channel 2, neuronal",0,features/protein_v4/pt/3s3x/3s3x_protein.pt,fe779e605760440c,391,1,3s3x__B
+test,3s3x__C,3s3x,C,396,396,6,2.99,x-ray diffraction,2.0,alpha,"amiloride-sensitive cation channel 2, neuronal",0,features/protein_v4/pt/3s3x/3s3x_protein.pt,b0ee9a67b15ad9f0,396,1,3s3x__C
+test,3txt__A,3txt,A,175,175,3,2.3,x-ray diffraction,6.0,alpha,rhomboid protease glpg,0,features/protein_v4/pt/3txt/3txt_protein.pt,6f1ee843a56e9d1b,175,3,3txt__A;3txt__B;3txt__C
+test,3ubb__A,3ubb,A,179,179,3,2.6,x-ray diffraction,6.0,alpha,rhomboid protease glpg,0,features/protein_v4/pt/3ubb/3ubb_protein.pt,bbb858862a9adb7b,179,3,3ubb__A;3ubb__B;3ubb__C
+test,3ux4__A,3ux4,A,180,180,3,3.26,x-ray diffraction,6.0,alpha,acid-activated urea channel,0,features/protein_v4/pt/3ux4/3ux4_protein.pt,03968c6f2b87a499,180,3,3ux4__A;3ux4__B;3ux4__C
+test,4dw0__A,4dw0,A,330,330,3,2.9,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/4dw0/4dw0_protein.pt,70340375533a75fc,330,3,4dw0__A;4dw0__C;4dw0__D
+test,4dw1__A,4dw1,A,324,324,3,2.8,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/4dw1/4dw1_protein.pt,c997f5118d1a79fd,324,6,4dw1__A;4dw1__C;4dw1__D;5wzy__A;5wzy__C;5wzy__D
+test,4fz0__A,4fz0,A,405,405,6,2.8,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/4fz0/4fz0_protein.pt,af20d78448d68579,405,1,4fz0__A
+test,4fz0__B,4fz0,B,406,406,6,2.8,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/4fz0/4fz0_protein.pt,ac368606641492a9,406,1,4fz0__B
+test,4fz0__C,4fz0,C,410,410,6,2.8,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/4fz0/4fz0_protein.pt,b1f425f4a98c44a0,410,1,4fz0__C
+test,4fz1__A,4fz1,A,406,406,6,3.36,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/4fz1/4fz1_protein.pt,5f14d8f452fa3f60,406,3,4fz1__A;4fz1__B;4fz1__E
+test,4gd3__A,4gd3,A,179,179,10,3.3,x-ray diffraction,4.0,alpha,ni/fe-hydrogenase 1 b-type cytochrome subunit,0,features/protein_v4/pt/4gd3/4gd3_protein.pt,c09649fbdc2ec795,179,2,4gd3__A;4gd3__B
+test,4gd3__Q,4gd3,Q,304,304,10,3.3,x-ray diffraction,2.0,alpha,hydrogenase-1 small chain,0,features/protein_v4/pt/4gd3/4gd3_protein.pt,e06c82e51d5bc47f,304,2,4gd3__Q;4gd3__S
+test,4gx0__A,4gx0,A,375,375,4,2.6,x-ray diffraction,2.0,alpha,trka domain protein,0,features/protein_v4/pt/4gx0/4gx0_protein.pt,b5ac395e28a2e532,375,4,4gx0__A;4gx0__F;4gx2__A;4gx2__E
+test,4gx0__B,4gx0,B,547,547,4,2.6,x-ray diffraction,2.0,alpha,trka domain protein,0,features/protein_v4/pt/4gx0/4gx0_protein.pt,c631e39f7c1e6f8a,547,4,4gx0__B;4gx0__G;4gx1__B;4gx1__F
+test,4gx1__A,4gx1,A,376,376,4,2.8,x-ray diffraction,2.0,alpha,trka domain protein,0,features/protein_v4/pt/4gx1/4gx1_protein.pt,e3dc1f3fa59b0d3a,376,2,4gx1__A;4gx1__E
+test,4gx2__B,4gx2,B,548,548,4,3.2,x-ray diffraction,2.0,alpha,trka domain protein,0,features/protein_v4/pt/4gx2/4gx2_protein.pt,9318cdcafe0e8f42,548,2,4gx2__B;4gx2__F
+test,4h1d__A,4h1d,A,173,173,3,2.9,x-ray diffraction,6.0,alpha,rhomboid protease glpg,0,features/protein_v4/pt/4h1d/4h1d_protein.pt,e04cd11c0ffe22c7,173,3,4h1d__A;4h1d__B;4h1d__C
+test,4hkr__A,4hkr,A,165,165,6,3.35,x-ray diffraction,4.0,alpha,calcium release-activated calcium channel protein 1,0,features/protein_v4/pt/4hkr/4hkr_protein.pt,16e5a13f2f2e6061,165,3,4hkr__A;4hkr__C;4hkr__E
+test,4hkr__B,4hkr,B,160,160,6,3.35,x-ray diffraction,4.0,alpha,calcium release-activated calcium channel protein 1,0,features/protein_v4/pt/4hkr/4hkr_protein.pt,7b3160d4acf81355,160,3,4hkr__B;4hkr__D;4hkr__F
+test,4hks__A,4hks,A,165,165,6,3.35,x-ray diffraction,4.0,alpha,calcium release-activated calcium channel protein 1,0,features/protein_v4/pt/4hks/4hks_protein.pt,17d1dd26bfba6f59,165,3,4hks__A;4hks__C;4hks__E
+test,4hks__B,4hks,B,160,160,6,3.35,x-ray diffraction,4.0,alpha,calcium release-activated calcium channel protein 1,0,features/protein_v4/pt/4hks/4hks_protein.pt,99b26490d28c62e5,160,3,4hks__B;4hks__D;4hks__F
+test,4j72__A,4j72,A,323,323,2,3.3,x-ray diffraction,10.0,alpha,phospho-n-acetylmuramoyl-pentapeptide-transferase,0,features/protein_v4/pt/4j72/4j72_protein.pt,41b0835678f34e26,323,1,4j72__A
+test,4j72__B,4j72,B,297,297,2,3.3,x-ray diffraction,10.0,alpha,phospho-n-acetylmuramoyl-pentapeptide-transferase,0,features/protein_v4/pt/4j72/4j72_protein.pt,a027595ed81c98bd,297,1,4j72__B
+test,4j7t__A,4j7t,A,148,148,3,3.2,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/4j7t/4j7t_protein.pt,17516804de223def,148,3,4j7t__A;4j7t__B;4j7t__C
+test,4j7y__A,4j7y,A,148,148,3,2.9,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/4j7y/4j7y_protein.pt,271e2b2ba060ec12,148,3,4j7y__A;4j7y__B;4j7y__C
+test,4jc7__A,4jc7,A,155,155,3,2.7,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/4jc7/4jc7_protein.pt,a8bee4aa22c3de1c,155,3,4jc7__A;4jc7__B;4jc7__C
+test,4jcz__A,4jcz,A,147,147,3,2.75,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/4jcz/4jcz_protein.pt,77c9ced18461b6ae,147,3,4jcz__A;4jcz__B;4jcz__C
+test,4jrz__A,4jrz,A,156,156,3,2.4,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,1,features/protein_v4/pt/4jrz/4jrz_protein.pt,502b74372f5986e2,156,3,4jrz__A;4jrz__B;4jrz__C
+test,4lep__A,4lep,A,455,455,2,3.2,x-ray diffraction,14.0,alpha,proton:oligopeptide symporter pot family,0,features/protein_v4/pt/4lep/4lep_protein.pt,ce25ee3f0f6426ef,455,1,4lep__A
+test,4lep__B,4lep,B,452,452,2,3.2,x-ray diffraction,14.0,alpha,proton:oligopeptide symporter pot family,0,features/protein_v4/pt/4lep/4lep_protein.pt,c9416b7733bf5517,452,1,4lep__B
+test,4lto__A,4lto,A,138,138,4,3.46,x-ray diffraction,2.0,alpha,ion transport protein,0,features/protein_v4/pt/4lto/4lto_protein.pt,0978eaa5068fd452,138,10,4lto__A;4lto__B;4lto__C;4lto__D;5hk7__B;5hk7__C;5hk7__D;5iwo__B;5iwo__C;5iwo__D
+test,4nta__A,4nta,A,147,147,3,2.7,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/4nta/4nta_protein.pt,9f399c567108fe83,147,3,4nta__A;4nta__B;4nta__C
+test,4ntb__A,4ntb,A,146,146,3,2.7,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/4ntb/4ntb_protein.pt,19e1d5783f1d677c,146,3,4ntb__A;4ntb__B;4ntb__C
+test,4ntf__A,4ntf,A,145,145,3,2.65,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/4ntf/4ntf_protein.pt,0179698d626e9e41,145,3,4ntf__A;4ntf__B;4ntf__C
+test,4ntw__A,4ntw,A,410,410,9,2.07,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/4ntw/4ntw_protein.pt,95c1f79f389dca42,410,6,4ntw__A;4ntw__D;4ntw__G;4ntx__A;4ntx__D;4ntx__G
+test,4nty__A,4nty,A,406,406,9,2.65,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/4nty/4nty_protein.pt,0a4087778751d015,406,3,4nty__A;4nty__D;4nty__G
+test,4nyk__A,4nyk,A,414,414,3,3.0,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/4nyk/4nyk_protein.pt,67a60dbf967ed2ce,414,3,4nyk__A;4nyk__B;4nyk__C
+test,4o6y__A,4o6y,A,210,210,2,1.7,x-ray diffraction,6.0,alpha,probable transmembrane ascorbate ferrireductase 2,0,features/protein_v4/pt/4o6y/4o6y_protein.pt,8c92667170230bf1,210,2,4o6y__A;4o79__A
+test,4o6y__B,4o6y,B,211,211,2,1.7,x-ray diffraction,6.0,alpha,probable transmembrane ascorbate ferrireductase 2,0,features/protein_v4/pt/4o6y/4o6y_protein.pt,9836a9cbd220283a,211,2,4o6y__B;4o79__B
+test,4o7g__A,4o7g,A,211,211,2,2.21,x-ray diffraction,6.0,alpha,probable transmembrane ascorbate ferrireductase 2,0,features/protein_v4/pt/4o7g/4o7g_protein.pt,601ae99fefa4ff57,211,1,4o7g__A
+test,4o7g__B,4o7g,B,212,212,2,2.21,x-ray diffraction,6.0,alpha,probable transmembrane ascorbate ferrireductase 2,0,features/protein_v4/pt/4o7g/4o7g_protein.pt,1894d8a5262e8cd4,212,1,4o7g__B
+test,4o93__A,4o93,A,94,94,4,2.77,x-ray diffraction,3.0,alpha,nad(p) transhydrogenase subunit alpha 2,1,features/protein_v4/pt/4o93/4o93_protein.pt,f9b4fdc712d47f2a,94,3,4o93__A;5uni__A;5uni__C
+test,4o93__B,4o93,B,264,264,4,2.77,x-ray diffraction,9.0,alpha,nad(p) transhydrogenase subunit beta,0,features/protein_v4/pt/4o93/4o93_protein.pt,9e36a9b909ec0eb9,264,1,4o93__B
+test,4o93__C,4o93,C,90,90,4,2.77,x-ray diffraction,3.0,alpha,nad(p) transhydrogenase subunit alpha 2,0,features/protein_v4/pt/4o93/4o93_protein.pt,fac51cfeabc2b345,90,1,4o93__C
+test,4o93__D,4o93,D,260,260,4,2.77,x-ray diffraction,9.0,alpha,nad(p) transhydrogenase subunit beta,0,features/protein_v4/pt/4o93/4o93_protein.pt,15f888dec18fffbe,260,1,4o93__D
+test,4o9p__A,4o9p,A,94,94,4,2.89,x-ray diffraction,3.0,alpha,nad(p) transhydrogenase subunit alpha 2,0,features/protein_v4/pt/4o9p/4o9p_protein.pt,9817c0add8b68560,94,2,4o9p__A;4o9t__A
+test,4o9p__B,4o9p,B,264,264,4,2.89,x-ray diffraction,9.0,alpha,nad(p) transhydrogenase subunit beta,0,features/protein_v4/pt/4o9p/4o9p_protein.pt,0c8284e1561f0dd9,264,1,4o9p__B
+test,4o9p__C,4o9p,C,89,89,4,2.89,x-ray diffraction,3.0,alpha,nad(p) transhydrogenase subunit alpha 2,0,features/protein_v4/pt/4o9p/4o9p_protein.pt,5a286aa627de779a,89,2,4o9p__C;4o9t__C
+test,4o9p__D,4o9p,D,260,260,4,2.89,x-ray diffraction,9.0,alpha,nad(p) transhydrogenase subunit beta,0,features/protein_v4/pt/4o9p/4o9p_protein.pt,f05c64eaac6ef38c,260,2,4o9p__D;4o9t__D
+test,4o9t__B,4o9t,B,262,262,4,3.08,x-ray diffraction,9.0,alpha,nad(p) transhydrogenase subunit beta,0,features/protein_v4/pt/4o9t/4o9t_protein.pt,ddd1d03ce56344f3,262,1,4o9t__B
+test,4pl0__A,4pl0,A,571,571,2,2.7,x-ray diffraction,6.0,alpha,microcin-j25 export atp-binding/permease protein mcjd,0,features/protein_v4/pt/4pl0/4pl0_protein.pt,363be72db87b557d,571,3,4pl0__A;5eg1__A;5ofr__A
+test,4pl0__B,4pl0,B,576,576,2,2.7,x-ray diffraction,6.0,alpha,microcin-j25 export atp-binding/permease protein mcjd,0,features/protein_v4/pt/4pl0/4pl0_protein.pt,ade03933a5c3d48d,576,3,4pl0__B;5eg1__B;5ofr__B
+test,4qnc__A,4qnc,A,81,81,2,2.39,x-ray diffraction,3.0,alpha,chemical transport protein,0,features/protein_v4/pt/4qnc/4qnc_protein.pt,ce0a7ae59222136e,81,1,4qnc__A
+test,4qnc__B,4qnc,B,82,82,2,2.39,x-ray diffraction,3.0,alpha,chemical transport protein,0,features/protein_v4/pt/4qnc/4qnc_protein.pt,d7e0e21bb5c3f838,82,1,4qnc__B
+test,4qo0__A,4qo0,A,182,182,2,2.9,x-ray diffraction,6.0,alpha,rhomboid protease glpg,0,features/protein_v4/pt/4qo0/4qo0_protein.pt,4f079a4142c9dcf1,182,2,4qo0__A;4qo0__B
+test,4rng__A,4rng,A,82,82,2,2.4,x-ray diffraction,3.0,alpha,mtn3/saliva family,0,features/protein_v4/pt/4rng/4rng_protein.pt,10c8c33af239c1c9,82,1,4rng__A
+test,4rng__C,4rng,C,83,83,2,2.4,x-ray diffraction,3.0,alpha,mtn3/saliva family,0,features/protein_v4/pt/4rng/4rng_protein.pt,42a36cacf3917051,83,1,4rng__C
+test,4rp8__A,4rp8,A,442,442,2,2.36,x-ray diffraction,11.0,alpha,ascorbate-specific permease iic component ulaa,0,features/protein_v4/pt/4rp8/4rp8_protein.pt,63b25168be1425ea,442,1,4rp8__A
+test,4rp8__C,4rp8,C,430,430,2,2.36,x-ray diffraction,11.0,alpha,ascorbate-specific permease iic component ulaa,0,features/protein_v4/pt/4rp8/4rp8_protein.pt,573070f22d3fedd2,430,1,4rp8__C
+test,4rp9__A,4rp9,A,451,451,2,1.65,x-ray diffraction,11.0,alpha,ascorbate-specific permease iic component ulaa,0,features/protein_v4/pt/4rp9/4rp9_protein.pt,6752513ae2e9b0f0,451,2,4rp9__A;4rp9__B
+test,4tph__A,4tph,A,454,454,2,3.16,x-ray diffraction,14.0,alpha,proton:oligopeptide symporter pot family,0,features/protein_v4/pt/4tph/4tph_protein.pt,d17af35f7e3b04ab,454,1,4tph__A
+test,4tph__B,4tph,B,453,453,2,3.16,x-ray diffraction,14.0,alpha,proton:oligopeptide symporter pot family,0,features/protein_v4/pt/4tph/4tph_protein.pt,231a804bdba3c349,453,1,4tph__B
+test,4tpj__A,4tpj,A,445,445,2,3.2,x-ray diffraction,13.0,alpha,proton:oligopeptide symporter pot family,0,features/protein_v4/pt/4tpj/4tpj_protein.pt,5b54d524d08bfea1,445,1,4tpj__A
+test,4tpj__B,4tpj,B,450,450,2,3.2,x-ray diffraction,13.0,alpha,proton:oligopeptide symporter pot family,0,features/protein_v4/pt/4tpj/4tpj_protein.pt,77098124f1455b15,450,1,4tpj__B
+test,4u9l__A,4u9l,A,179,179,2,2.3,x-ray diffraction,5.0,alpha,magnesium transporter mgte,1,features/protein_v4/pt/4u9l/4u9l_protein.pt,49bf630f389766e2,179,1,4u9l__A
+test,4u9l__B,4u9l,B,178,178,2,2.3,x-ray diffraction,5.0,alpha,magnesium transporter mgte,0,features/protein_v4/pt/4u9l/4u9l_protein.pt,bb3ac5812418d4e5,178,6,4u9l__B;4u9n__B;4wib__A;4wib__B;8h5e__A;8h5e__B
+test,4u9n__A,4u9n,A,177,177,2,2.2,x-ray diffraction,5.0,alpha,magnesium transporter mgte,0,features/protein_v4/pt/4u9n/4u9n_protein.pt,22f6aa36a5bf3ed4,177,1,4u9n__A
+test,4uc1__A,4uc1,A,157,157,2,1.8,x-ray diffraction,5.0,alpha,translocator protein tspo,1,features/protein_v4/pt/4uc1/4uc1_protein.pt,2fa9e421566d7162,157,4,4uc1__A;5duo__A;5duo__B;8e7w__A
+test,4uc1__B,4uc1,B,156,156,2,1.8,x-ray diffraction,5.0,alpha,translocator protein tspo,0,features/protein_v4/pt/4uc1/4uc1_protein.pt,0f9ef3d023380f90,156,3,4uc1__B;4uc2__A;8e7w__B
+test,4uc2__B,4uc2,B,155,155,2,2.4,x-ray diffraction,5.0,alpha,translocator protein tspo,0,features/protein_v4/pt/4uc2/4uc2_protein.pt,2a91c8bee51546de,155,1,4uc2__B
+test,4uc3__A,4uc3,A,143,143,2,2.5,x-ray diffraction,5.0,alpha,translocator protein tspo,0,features/protein_v4/pt/4uc3/4uc3_protein.pt,fe3b2c8559a7cefc,143,1,4uc3__A
+test,4uc3__B,4uc3,B,132,132,2,2.5,x-ray diffraction,5.0,alpha,translocator protein tspo,0,features/protein_v4/pt/4uc3/4uc3_protein.pt,24a5419eb6d0d683,132,1,4uc3__B
+test,4x5m__B,4x5m,B,93,93,2,2.0,x-ray diffraction,3.0,alpha,uncharacterized protein,0,features/protein_v4/pt/4x5m/4x5m_protein.pt,96ec517974550bb7,93,1,4x5m__B
+test,4x5m__C,4x5m,C,93,93,2,2.0,x-ray diffraction,3.0,alpha,uncharacterized protein,0,features/protein_v4/pt/4x5m/4x5m_protein.pt,adec8e791a8dd7a8,93,1,4x5m__C
+test,4x5n__A,4x5n,A,91,91,2,3.0,x-ray diffraction,3.0,alpha,uncharacterized protein,0,features/protein_v4/pt/4x5n/4x5n_protein.pt,b180cca9d93d5f63,91,1,4x5n__A
+test,4x5n__B,4x5n,B,92,92,2,3.0,x-ray diffraction,3.0,alpha,uncharacterized protein,0,features/protein_v4/pt/4x5n/4x5n_protein.pt,d883885cf2fa9583,92,1,4x5n__B
+test,4xyd__A,4xyd,A,445,445,2,2.85,x-ray diffraction,12.0,alpha,nitric-oxide reductase subunit b,0,features/protein_v4/pt/4xyd/4xyd_protein.pt,d8b15994fea8215f,445,1,4xyd__A
+test,5bki__A,5bki,A,317,317,8,3.1,x-ray diffraction,2.0,alpha,calcium-gated potassium channel mthk,0,features/protein_v4/pt/5bki/5bki_protein.pt,e1b5d7ca53005f3b,317,4,5bki__A;5bki__C;5bki__E;5bki__G
+test,5ckr__A,5ckr,A,329,329,2,2.95,x-ray diffraction,10.0,alpha,phospho-n-acetylmuramoyl-pentapeptide-transferase,0,features/protein_v4/pt/5ckr/5ckr_protein.pt,1a9cb519263eecb7,329,2,5ckr__A;5ckr__B
+test,5egi__A,5egi,A,232,232,3,3.3,x-ray diffraction,7.0,alpha,uncharacterized protein y57a10a.10,0,features/protein_v4/pt/5egi/5egi_protein.pt,43765a8a95df5afc,232,2,5egi__A;5egi__C
+test,5egi__B,5egi,B,233,233,3,3.3,x-ray diffraction,7.0,alpha,uncharacterized protein y57a10a.10,0,features/protein_v4/pt/5egi/5egi_protein.pt,7ae140d775912ef8,233,1,5egi__B
+test,5eik__A,5eik,A,234,234,3,2.3,x-ray diffraction,7.0,alpha,uncharacterized protein y57a10a.28,0,features/protein_v4/pt/5eik/5eik_protein.pt,1125398b82f20070,234,3,5eik__A;5eik__B;5eik__C
+test,5eke__A,5eke,A,288,288,4,3.0,x-ray diffraction,2.0,alpha,uncharacterized glycosyltransferase sll0501,0,features/protein_v4/pt/5eke/5eke_protein.pt,4fb1fac6894ecd07,288,1,5eke__A
+test,5eke__B,5eke,B,299,299,4,3.0,x-ray diffraction,2.0,alpha,uncharacterized glycosyltransferase sll0501,0,features/protein_v4/pt/5eke/5eke_protein.pt,a4aaf2a57ce920ba,299,1,5eke__B
+test,5eke__C,5eke,C,307,307,4,3.0,x-ray diffraction,2.0,alpha,uncharacterized glycosyltransferase sll0501,0,features/protein_v4/pt/5eke/5eke_protein.pt,0197c2598462b6c9,307,1,5eke__C
+test,5eke__D,5eke,D,296,296,4,3.0,x-ray diffraction,2.0,alpha,uncharacterized glycosyltransferase sll0501,0,features/protein_v4/pt/5eke/5eke_protein.pt,d95c37dfcab4607c,296,1,5eke__D
+test,5ekp__A,5ekp,A,288,288,4,3.19,x-ray diffraction,2.0,alpha,uncharacterized glycosyltransferase sll0501,0,features/protein_v4/pt/5ekp/5ekp_protein.pt,fa3fda7883811847,288,1,5ekp__A
+test,5ekp__B,5ekp,B,299,299,4,3.19,x-ray diffraction,2.0,alpha,uncharacterized glycosyltransferase sll0501,0,features/protein_v4/pt/5ekp/5ekp_protein.pt,60cddf371580f97c,299,1,5ekp__B
+test,5ekp__C,5ekp,C,307,307,4,3.19,x-ray diffraction,2.0,alpha,uncharacterized glycosyltransferase sll0501,0,features/protein_v4/pt/5ekp/5ekp_protein.pt,1955a91c0cf3ec12,307,1,5ekp__C
+test,5ekp__D,5ekp,D,296,296,4,3.19,x-ray diffraction,2.0,alpha,uncharacterized glycosyltransferase sll0501,0,features/protein_v4/pt/5ekp/5ekp_protein.pt,6c5782fef24244eb,296,1,5ekp__D
+test,5f1c__A,5f1c,A,343,343,3,2.9,x-ray diffraction,2.0,alpha,putative uncharacterized protein,0,features/protein_v4/pt/5f1c/5f1c_protein.pt,e39f00dde7c73fd4,343,1,5f1c__A
+test,5f1c__B,5f1c,B,355,355,3,2.9,x-ray diffraction,2.0,alpha,putative uncharacterized protein,0,features/protein_v4/pt/5f1c/5f1c_protein.pt,41c9907f4ee6b868,355,1,5f1c__B
+test,5f1c__C,5f1c,C,344,344,3,2.9,x-ray diffraction,2.0,alpha,putative uncharacterized protein,0,features/protein_v4/pt/5f1c/5f1c_protein.pt,56b029d4eab69ea5,344,1,5f1c__C
+test,5gko__A,5gko,A,650,650,2,3.39,x-ray diffraction,4.0,alpha,macrolide export atp-binding/permease protein macb,0,features/protein_v4/pt/5gko/5gko_protein.pt,f5bb18c613ed35e2,650,4,5gko__A;5gko__B;5ws4__A;5ws4__B
+test,5h1q__A,5h1q,A,361,361,8,3.3,x-ray diffraction,5.0,alpha,innexin-6,0,features/protein_v4/pt/5h1q/5h1q_protein.pt,4310687f10e330f0,361,8,5h1q__A;5h1q__B;5h1q__C;5h1q__D;5h1q__E;5h1q__F;5h1q__G;5h1q__H
+test,5h35__C,5h35,C,195,195,3,2.64,x-ray diffraction,7.0,alpha,membrane protein tric,0,features/protein_v4/pt/5h35/5h35_protein.pt,547409a5dc8790c3,195,3,5h35__C;5h35__D;5h35__E
+test,5h36__A,5h36,A,193,193,3,3.41,x-ray diffraction,7.0,alpha,uncharacterized protein tric,0,features/protein_v4/pt/5h36/5h36_protein.pt,6cdafa9deb423814,193,3,5h36__A;5h36__B;5h36__C
+test,5hk7__A,5hk7,A,139,139,4,2.95,x-ray diffraction,2.0,alpha,ion transport protein,0,features/protein_v4/pt/5hk7/5hk7_protein.pt,c670123b4b180e1f,139,2,5hk7__A;5iwo__A
+test,5hv9__A,5hv9,A,143,143,3,3.0,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/5hv9/5hv9_protein.pt,529e7c2dd9d0b526,143,3,5hv9__A;5hv9__B;5hv9__C
+test,5iji__A,5iji,A,227,227,2,1.94,x-ray diffraction,2.0,alpha,nitrate/nitrite sensor histidine kinase narq,0,features/protein_v4/pt/5iji/5iji_protein.pt,5441d6d6469682bd,227,2,5iji__A;5iji__B
+test,5iws__A,5iws,A,443,443,2,2.55,x-ray diffraction,8.0,alpha,protein-n(pi)-phosphohistidine-sugar phosphotransferase (enzyme ii of the phosphotransferase system) (pts system glucose- specific iibc component),0,features/protein_v4/pt/5iws/5iws_protein.pt,67ddceefb93a1651,443,2,5iws__A;5iws__C
+test,5j4i__A,5j4i,A,437,437,2,2.21,x-ray diffraction,12.0,alpha,arginine/agmatine antiporter,0,features/protein_v4/pt/5j4i/5j4i_protein.pt,d80cea62cde0ca5a,437,4,5j4i__A;5j4i__B;5j4n__A;7o82__A
+test,5j4n__B,5j4n,B,436,436,2,2.59,x-ray diffraction,12.0,alpha,arginine/agmatine antiporter,0,features/protein_v4/pt/5j4n/5j4n_protein.pt,d1deb3cb484e6bb0,436,2,5j4n__B;7o82__B
+test,5jef__A,5jef,A,219,219,2,2.42,x-ray diffraction,2.0,alpha,nitrate/nitrite sensor protein narq,0,features/protein_v4/pt/5jef/5jef_protein.pt,7ebf786a8f6f46f0,219,1,5jef__A
+test,5jef__B,5jef,B,222,222,2,2.42,x-ray diffraction,2.0,alpha,nitrate/nitrite sensor protein narq,0,features/protein_v4/pt/5jef/5jef_protein.pt,30b8f916067d3c8d,222,1,5jef__B
+test,5jeq__A,5jeq,A,227,227,2,1.9,x-ray diffraction,2.0,alpha,nitrate/nitrite sensor protein narq,0,features/protein_v4/pt/5jeq/5jeq_protein.pt,ccffdf0ed4636072,227,2,5jeq__A;5jeq__B
+test,5jgp__A,5jgp,A,226,226,2,2.7,x-ray diffraction,2.0,alpha,nitrate/nitrite sensor protein narq,0,features/protein_v4/pt/5jgp/5jgp_protein.pt,19da5eea54fc0d5a,226,2,5jgp__A;5jgp__B
+test,5jnq__A,5jnq,A,307,307,2,2.6,x-ray diffraction,10.0,alpha,phospho-n-acetylmuramoyl-pentapeptide-transferase,0,features/protein_v4/pt/5jnq/5jnq_protein.pt,898546eb44b81032,307,2,5jnq__A;5jnq__B
+test,5l22__A,5l22,A,539,539,2,3.15,x-ray diffraction,6.0,alpha,abc transporter (hlyb subfamily),0,features/protein_v4/pt/5l22/5l22_protein.pt,129a24dbca082df7,539,1,5l22__A
+test,5l22__B,5l22,B,540,540,2,3.15,x-ray diffraction,6.0,alpha,abc transporter (hlyb subfamily),0,features/protein_v4/pt/5l22/5l22_protein.pt,0e77cceb92509c31,540,1,5l22__B
+test,5lil__A,5lil,A,615,615,2,3.35,x-ray diffraction,4.0,alpha,macrolide export atp-binding/permease protein macb,0,features/protein_v4/pt/5lil/5lil_protein.pt,4de8a802488db052,615,1,5lil__A
+test,5lil__B,5lil,B,604,604,2,3.35,x-ray diffraction,4.0,alpha,macrolide export atp-binding/permease protein macb,0,features/protein_v4/pt/5lil/5lil_protein.pt,18a79fdedced697b,604,1,5lil__B
+test,5lj7__A,5lj7,A,592,592,2,3.25,x-ray diffraction,4.0,alpha,macrolide export atp-binding/permease protein macb,0,features/protein_v4/pt/5lj7/5lj7_protein.pt,c3c71280054a3d4a,592,1,5lj7__A
+test,5lj7__B,5lj7,B,599,599,2,3.25,x-ray diffraction,4.0,alpha,macrolide export atp-binding/permease protein macb,0,features/protein_v4/pt/5lj7/5lj7_protein.pt,d1b1c8a14103085a,599,1,5lj7__B
+test,5lki__A,5lki,A,1427,1427,5,3.46,x-ray diffraction,2.0,alpha,tcda1,0,features/protein_v4/pt/5lki/5lki_protein.pt,29b4170c5ae0a408,1427,5,5lki__A;5lki__B;5lki__C;5lki__D;5lki__E
+test,5mtf__A,5mtf,A,181,181,3,1.79,x-ray diffraction,6.0,alpha,rhomboid protease glpg,0,features/protein_v4/pt/5mtf/5mtf_protein.pt,364182fd2e63c84c,181,3,5mtf__A;5mtf__B;5mtf__E
+test,5nik__A,5nik,A,428,428,11,3.3,x-ray diffraction,4.0,beta,outer membrane protein tolc,0,features/protein_v4/pt/5nik/5nik_protein.pt,31108f7e84407fc9,428,3,5nik__A;5nik__B;5nik__C
+test,5nik__J,5nik,J,629,629,11,3.3,x-ray diffraction,4.0,alpha,macrolide export atp-binding/permease protein macb,0,features/protein_v4/pt/5nik/5nik_protein.pt,cf42b83fd8b3369d,629,2,5nik__J;5nik__K
+test,5o5e__A,5o5e,A,381,381,2,3.4,x-ray diffraction,10.0,alpha,udp-n-acetylglucosamine--dolichyl-phosphate n- acetylglucosaminephosphotransferase,0,features/protein_v4/pt/5o5e/5o5e_protein.pt,f9ca996e0c3a89d1,381,2,5o5e__A;5o5e__B
+test,5sv0__A,5sv0,A,232,232,5,2.6,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5sv0/5sv0_protein.pt,a833189d1f32333b,232,1,5sv0__A
+test,5sv0__B,5sv0,B,224,224,5,2.6,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5sv0/5sv0_protein.pt,1dea51b1c79bb2ff,224,1,5sv0__B
+test,5sv0__C,5sv0,C,221,221,5,2.6,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5sv0/5sv0_protein.pt,248aa0527a6166a3,221,1,5sv0__C
+test,5sv0__D,5sv0,D,214,214,5,2.6,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5sv0/5sv0_protein.pt,32ffd3234675903d,214,1,5sv0__D
+test,5sv0__F,5sv0,F,222,222,5,2.6,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5sv0/5sv0_protein.pt,1483ab1ed890744e,222,1,5sv0__F
+test,5svj__A,5svj,A,322,322,3,2.98,x-ray diffraction,2.0,alpha,p2x purinoceptor 3,0,features/protein_v4/pt/5svj/5svj_protein.pt,f063b5fe96f55e61,322,3,5svj__A;5svj__B;5svj__C
+test,5svk__A,5svk,A,357,357,3,2.77,x-ray diffraction,2.0,alpha,p2x purinoceptor 3,0,features/protein_v4/pt/5svk/5svk_protein.pt,9045e311c30a7dd9,357,6,5svk__A;5svk__C;5svk__D;6ah4__A;6ah4__B;6ah4__C
+test,5svl__A,5svl,A,333,333,3,2.9,x-ray diffraction,2.0,alpha,p2x purinoceptor 3,0,features/protein_v4/pt/5svl/5svl_protein.pt,2678440c987f229c,333,3,5svl__A;5svl__D;5svl__E
+test,5svm__A,5svm,A,323,323,3,3.09,x-ray diffraction,2.0,alpha,p2x purinoceptor 3,0,features/protein_v4/pt/5svm/5svm_protein.pt,0eca7d8dbbff2e08,323,6,5svm__A;5svm__C;5svm__D;5svp__A;5svp__C;5svp__D
+test,5svq__A,5svq,A,318,318,3,3.25,x-ray diffraction,2.0,alpha,p2x purinoceptor 3,0,features/protein_v4/pt/5svq/5svq_protein.pt,a47f6f672e8633d4,318,3,5svq__A;5svq__B;5svq__C
+test,5svr__A,5svr,A,327,327,3,3.13,x-ray diffraction,2.0,alpha,p2x purinoceptor 3,0,features/protein_v4/pt/5svr/5svr_protein.pt,cbcb5596081bdbe7,327,6,5svr__A;5svr__B;5svr__C;5yve__A;5yve__B;5yve__C
+test,5t4d__A,5t4d,A,463,463,4,3.0,x-ray diffraction,6.0,alpha,"hpkd:198-703, polycystin-2",0,features/protein_v4/pt/5t4d/5t4d_protein.pt,deea6d8623e3ff5e,463,4,5t4d__A;5t4d__B;5t4d__C;5t4d__D
+test,5u1l__A,5u1l,A,317,317,3,3.4,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/5u1l/5u1l_protein.pt,58f5139705a4c0cc,317,6,5u1l__A;5u1l__B;5u1l__C;5u1y__A;5u1y__B;5u1y__C
+test,5u1v__A,5u1v,A,320,320,3,3.4,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/5u1v/5u1v_protein.pt,13908c9eabff871f,320,3,5u1v__A;5u1v__C;5u1v__D
+test,5u1x__A,5u1x,A,321,321,3,3.2,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/5u1x/5u1x_protein.pt,e3b2a4ca84a0e46f,321,3,5u1x__A;5u1x__C;5u1x__D
+test,5uhq__A,5uhq,A,93,93,2,2.78,x-ray diffraction,2.0,alpha,sugar transporter semisweet,1,features/protein_v4/pt/5uhq/5uhq_protein.pt,14e8287b89b9ab21,93,1,5uhq__A
+test,5uhs__A,5uhs,A,81,81,2,2.8,x-ray diffraction,3.0,alpha,sugar transporter semisweet,0,features/protein_v4/pt/5uhs/5uhs_protein.pt,bf3f76b4f3442669,81,2,5uhs__A;5uhs__B
+test,5uni__B,5uni,B,261,261,4,2.2,x-ray diffraction,9.0,alpha,nad(p) transhydrogenase subunit beta,0,features/protein_v4/pt/5uni/5uni_protein.pt,8ee6de14e3f8d34c,261,2,5uni__B;5uni__D
+test,5w3s__A,5w3s,A,485,485,4,2.94,x-ray diffraction,6.0,alpha,mucolipin-3 isoform 1,0,features/protein_v4/pt/5w3s/5w3s_protein.pt,753be8989a6ec8c6,485,4,5w3s__A;5w3s__B;5w3s__C;5w3s__D
+test,5wj9__A,5wj9,A,479,479,4,3.49,x-ray diffraction,6.0,alpha,mucolipin-1,0,features/protein_v4/pt/5wj9/5wj9_protein.pt,f5c7b5d82b488155,479,4,5wj9__A;5wj9__B;5wj9__C;5wj9__D
+test,5wku__B,5wku,B,418,418,3,2.95,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/5wku/5wku_protein.pt,8e84276352cd7218,418,2,5wku__B;5wkv__B
+test,5wku__C,5wku,C,414,414,3,2.95,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/5wku/5wku_protein.pt,1083f55dda29733f,414,2,5wku__C;5wkv__C
+test,5wtr__A,5wtr,A,197,197,3,2.2,x-ray diffraction,7.0,alpha,uncharacterized protein,0,features/protein_v4/pt/5wtr/5wtr_protein.pt,0a3e10e8a3dc159d,197,2,5wtr__A;5wtr__B
+test,5wtr__C,5wtr,C,196,196,3,2.2,x-ray diffraction,7.0,alpha,uncharacterized protein,0,features/protein_v4/pt/5wtr/5wtr_protein.pt,538f74cffeba6034,196,1,5wtr__C
+test,5wuc__A,5wuc,A,194,194,3,1.6,x-ray diffraction,7.0,alpha,uncharacterized protein,0,features/protein_v4/pt/5wuc/5wuc_protein.pt,ca8f9869b79e2c61,194,3,5wuc__A;5wuc__B;5wuc__C
+test,5wud__A,5wud,A,196,196,3,1.9,x-ray diffraction,7.0,alpha,uncharacterized protein,0,features/protein_v4/pt/5wud/5wud_protein.pt,b61fe58d3d98c809,196,3,5wud__A;5wud__B;5wud__C
+test,5wue__A,5wue,A,203,203,3,2.4,x-ray diffraction,7.0,alpha,uncharacterized protein,0,features/protein_v4/pt/5wue/5wue_protein.pt,0d348b2325756113,203,3,5wue__A;5wue__B;5wue__C
+test,5wuf__A,5wuf,A,195,195,3,2.4,x-ray diffraction,7.0,alpha,putative membrane protein,0,features/protein_v4/pt/5wuf/5wuf_protein.pt,8fbb1db25f4eadf3,195,3,5wuf__A;5wuf__B;5wuf__C
+test,5xw6__A,5xw6,A,320,320,3,3.1,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/5xw6/5xw6_protein.pt,188b057ac7ddbd11,320,3,5xw6__A;5xw6__B;5xw6__C
+test,5ys3__A,5ys3,A,188,188,6,1.82,x-ray diffraction,6.0,alpha,succinate-acetate permease,0,features/protein_v4/pt/5ys3/5ys3_protein.pt,bdb626e6a2a8bed6,188,2,5ys3__A;5ys3__D
+test,5ys3__B,5ys3,B,182,182,6,1.82,x-ray diffraction,6.0,alpha,succinate-acetate permease,0,features/protein_v4/pt/5ys3/5ys3_protein.pt,0a8013325f67fe80,182,4,5ys3__B;5ys3__C;5ys3__E;5ys3__F
+test,5ys8__A,5ys8,A,182,182,6,2.8,x-ray diffraction,6.0,alpha,succinate-acetate permease,0,features/protein_v4/pt/5ys8/5ys8_protein.pt,3ed8ef6ad4515c68,182,2,5ys8__A;5ys8__D
+test,5ys8__B,5ys8,B,181,181,6,2.8,x-ray diffraction,6.0,alpha,succinate-acetate permease,0,features/protein_v4/pt/5ys8/5ys8_protein.pt,adba03bacb83064e,181,4,5ys8__B;5ys8__C;5ys8__E;5ys8__F
+test,5z1w__A,5z1w,A,429,429,4,3.38,x-ray diffraction,6.0,alpha,polycystic kidney disease 2-like 1 protein,0,features/protein_v4/pt/5z1w/5z1w_protein.pt,93d1716520bfc131,429,4,5z1w__A;5z1w__B;5z1w__C;5z1w__D
+test,5zfp__A,5zfp,A,225,225,6,2.84,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5zfp/5zfp_protein.pt,5a3b20a637074b93,225,2,5zfp__A;6tyi__B
+test,5zfp__B,5zfp,B,215,215,6,2.84,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5zfp/5zfp_protein.pt,ec9e028a6d0c2f72,215,1,5zfp__B
+test,5zfp__C,5zfp,C,223,223,6,2.84,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5zfp/5zfp_protein.pt,9645b5ab9cbee176,223,1,5zfp__C
+test,5zfp__D,5zfp,D,215,215,6,2.84,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5zfp/5zfp_protein.pt,ca539df467d42fc9,215,1,5zfp__D
+test,5zfp__E,5zfp,E,222,222,6,2.84,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5zfp/5zfp_protein.pt,394616a2348a0e2c,222,1,5zfp__E
+test,5zfp__F,5zfp,F,216,216,6,2.84,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/5zfp/5zfp_protein.pt,637ac4396952c274,216,1,5zfp__F
+test,5zle__A,5zle,A,225,225,2,2.6,x-ray diffraction,6.0,alpha,cytochrome b reductase 1,0,features/protein_v4/pt/5zle/5zle_protein.pt,846ff7af3813d806,225,4,5zle__A;5zle__B;5zlg__A;5zlg__B
+test,5zov__A,5zov,A,399,399,2,3.33,x-ray diffraction,10.0,alpha,pts ascorbate-specific subunit iibc,0,features/protein_v4/pt/5zov/5zov_protein.pt,61c7484f574f4121,399,2,5zov__A;5zov__B
+test,5zug__A,5zug,A,182,182,6,2.8,x-ray diffraction,6.0,alpha,succinate-acetate/proton symporter satp,0,features/protein_v4/pt/5zug/5zug_protein.pt,ef5dbd73bed562ab,182,4,5zug__A;5zug__B;5zug__D;5zug__E
+test,5zug__C,5zug,C,181,181,6,2.8,x-ray diffraction,6.0,alpha,succinate-acetate/proton symporter satp,0,features/protein_v4/pt/5zug/5zug_protein.pt,e7d1f5e99f5e38a2,181,2,5zug__C;5zug__F
+test,6btm__C,6btm,C,457,457,6,3.4,x-ray diffraction,10.0,alpha,alternative complex iii subunit c,0,features/protein_v4/pt/6btm/6btm_protein.pt,e49a8a764a7adaef,457,1,6btm__C
+test,6btm__D,6btm,D,172,172,6,3.4,x-ray diffraction,2.0,alpha,alternative complex iii subunit d,0,features/protein_v4/pt/6btm/6btm_protein.pt,30b09e6c4a693b46,172,1,6btm__D
+test,6btm__F,6btm,F,402,402,6,3.4,x-ray diffraction,10.0,alpha,alternative complex iii subunit f,0,features/protein_v4/pt/6btm/6btm_protein.pt,15a2fff7087fc0cb,402,1,6btm__F
+test,6bug__C,6bug,C,414,414,2,3.27,x-ray diffraction,10.0,alpha,d-alanyl transfer protein dltb,0,features/protein_v4/pt/6bug/6bug_protein.pt,66158abf661c2a66,414,2,6bug__C;6buh__C
+test,6bvg__A,6bvg,A,447,447,2,3.2,x-ray diffraction,10.0,alpha,protein-n(pi)-phosphohistidine-sugar phosphotransferase (enzyme ii of the phosphotransferase system) (pts system glucose- specific iibc component),0,features/protein_v4/pt/6bvg/6bvg_protein.pt,602cb0954c5488dc,447,2,6bvg__A;6bvg__B
+test,6bw5__A,6bw5,A,378,378,2,3.1,x-ray diffraction,10.0,alpha,udp-n-acetylglucosamine--dolichyl-phosphate n- acetylglucosaminephosphotransferase,0,features/protein_v4/pt/6bw5/6bw5_protein.pt,4d74acf3b06cf593,378,1,6bw5__A
+test,6bw5__B,6bw5,B,369,369,2,3.1,x-ray diffraction,10.0,alpha,udp-n-acetylglucosamine--dolichyl-phosphate n- acetylglucosaminephosphotransferase,0,features/protein_v4/pt/6bw5/6bw5_protein.pt,c7401d3438decda5,369,1,6bw5__B
+test,6bw6__A,6bw6,A,368,368,2,2.95,x-ray diffraction,10.0,alpha,udp-n-acetylglucosamine--dolichyl-phosphate n- acetylglucosaminephosphotransferase,0,features/protein_v4/pt/6bw6/6bw6_protein.pt,0ad18e7ed84ffe56,368,1,6bw6__A
+test,6bw6__B,6bw6,B,374,374,2,2.95,x-ray diffraction,10.0,alpha,udp-n-acetylglucosamine--dolichyl-phosphate n- acetylglucosaminephosphotransferase,0,features/protein_v4/pt/6bw6/6bw6_protein.pt,6ac5f34c6101834e,374,1,6bw6__B
+test,6cjq__A,6cjq,A,392,392,4,3.42,x-ray diffraction,6.0,alpha,sthk cyclic nucleotide-gated potassium channel,0,features/protein_v4/pt/6cjq/6cjq_protein.pt,799e89d07a0892b2,392,8,6cjq__A;6cjq__B;6cjq__C;6cjq__D;7tj5__A;7tj5__B;7tj5__C;7tj5__D
+test,6cjt__A,6cjt,A,396,396,4,3.46,x-ray diffraction,6.0,alpha,sthk cyclic nucleotide-gated potassium channel,0,features/protein_v4/pt/6cjt/6cjt_protein.pt,535a2d5d3f00c4f6,396,4,6cjt__A;6cjt__B;6cjt__C;6cjt__D
+test,6cju__A,6cju,A,390,390,4,3.35,x-ray diffraction,6.0,alpha,sthk cyclic nucleotide-gated potassium channel,0,features/protein_v4/pt/6cju/6cju_protein.pt,2fe718d63b704ff2,390,4,6cju__A;6cju__B;6cju__C;6cju__D
+test,6coy__A,6coy,A,465,465,2,3.36,x-ray diffraction,12.0,alpha,chloride channel protein 1,0,features/protein_v4/pt/6coy/6coy_protein.pt,e7771e4af5151fc0,465,2,6coy__A;6coy__B
+test,6du8__A,6du8,A,421,421,4,3.11,x-ray diffraction,6.0,alpha,polycystic kidney disease 2-like 1 protein,0,features/protein_v4/pt/6du8/6du8_protein.pt,20e772b16cfa574b,421,4,6du8__A;6du8__B;6du8__C;6du8__D
+test,6ezn__B,6ezn,B,110,110,8,3.3,x-ray diffraction,3.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit ost2,0,features/protein_v4/pt/6ezn/6ezn_protein.pt,e6f9e40ed4d54442,110,1,6ezn__B
+test,6ezn__C,6ezn,C,120,120,8,3.3,x-ray diffraction,3.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit 3,0,features/protein_v4/pt/6ezn/6ezn_protein.pt,bc0e8c1fb6c5f924,120,1,6ezn__C
+test,6ezn__E,6ezn,E,85,85,8,3.3,x-ray diffraction,2.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit ost5,0,features/protein_v4/pt/6ezn/6ezn_protein.pt,b510b2d63bab67ff,85,4,6ezn__E;7oci__E;8agc__C;8age__C
+test,6ezn__F,6ezn,F,650,650,8,3.3,x-ray diffraction,12.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit stt3,0,features/protein_v4/pt/6ezn/6ezn_protein.pt,4cc321bda94dd6df,650,1,6ezn__F
+test,6ezn__H,6ezn,H,259,259,8,3.3,x-ray diffraction,3.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit swp1,0,features/protein_v4/pt/6ezn/6ezn_protein.pt,f758daa7413c5b8f,259,1,6ezn__H
+test,6fl9__A,6fl9,A,310,310,5,2.3,x-ray diffraction,4.0,alpha,cys-loop ligand-gated ion channel,0,features/protein_v4/pt/6fl9/6fl9_protein.pt,43f129e753bb9279,310,19,6fl9__A;6fl9__B;6fl9__C;6fl9__D;6fl9__E;6fli__A;6fli__B;6fli__C;6fli__D;6fli__E;6fvs__B;6fvs__C;6fvs__D;6fvs__E;9f5n__A;9f5n__B;9f5n__C;9f5n__D;9f5n__E
+test,6fvq__A,6fvq,A,309,309,5,3.3,x-ray diffraction,4.0,alpha,cys-loop ligand-gated ion channel,0,features/protein_v4/pt/6fvq/6fvq_protein.pt,1119ec2fd2a060c5,309,5,6fvq__A;6fvq__B;6fvq__C;6fvq__D;6fvq__E
+test,6fvs__A,6fvs,A,309,309,5,3.2,x-ray diffraction,4.0,alpha,cys-loop ligand-gated ion channel,0,features/protein_v4/pt/6fvs/6fvs_protein.pt,6e4edfe8078beecc,309,1,6fvs__A
+test,6fwz__A,6fwz,A,373,373,2,3.1,x-ray diffraction,10.0,alpha,udp-n-acetylglucosamine--dolichyl-phosphate n- acetylglucosaminephosphotransferase,0,features/protein_v4/pt/6fwz/6fwz_protein.pt,1b68ba84de5fe940,373,2,6fwz__A;6fwz__B
+test,6g94__A,6g94,A,172,172,10,2.5,x-ray diffraction,4.0,alpha,probable ni/fe-hydrogenase 1 b-type cytochrome subunit,0,features/protein_v4/pt/6g94/6g94_protein.pt,a258a1cc2024e50d,172,1,6g94__A
+test,6g94__B,6g94,B,160,160,10,2.5,x-ray diffraction,4.0,alpha,probable ni/fe-hydrogenase 1 b-type cytochrome subunit,0,features/protein_v4/pt/6g94/6g94_protein.pt,e8b3b63bcb9e3dbf,160,1,6g94__B
+test,6grj__A,6grj,A,338,338,10,2.94,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6grj/6grj_protein.pt,587f75694e2f64ea,338,3,6grj__A;6grj__C;6grj__G
+test,6grj__B,6grj,B,322,322,10,2.94,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6grj/6grj_protein.pt,3788ac7ec8acbf05,322,2,6grj__B;6grj__J
+test,6grj__D,6grj,D,320,320,10,2.94,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6grj/6grj_protein.pt,8a9ef4ea1516547b,320,1,6grj__D
+test,6grj__E,6grj,E,338,338,10,2.94,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6grj/6grj_protein.pt,b1a7e77d5e96d23b,338,1,6grj__E
+test,6grj__F,6grj,F,317,317,10,2.94,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6grj/6grj_protein.pt,c2911ce6548c6fe2,317,1,6grj__F
+test,6grj__H,6grj,H,337,337,10,2.94,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6grj/6grj_protein.pt,87768c3a6b2801fb,337,1,6grj__H
+test,6grj__I,6grj,I,315,315,10,2.94,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6grj/6grj_protein.pt,a2e03fcf2f54905c,315,1,6grj__I
+test,6gyb__C,6gyb,C,205,205,42,3.28,x-ray diffraction,2.0,alpha,virb10 protein,0,features/protein_v4/pt/6gyb/6gyb_protein.pt,37b31e2fbaa84d22,205,14,6gyb__C;6gyb__F;6gyb__I;6gyb__L;6gyb__O;6gyb__R;6gyb__U;6gyb__c;6gyb__f;6gyb__i;6gyb__l;6gyb__o;6gyb__r;6gyb__u
+test,6h2f__A,6h2f,A,331,331,10,2.55,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6h2f/6h2f_protein.pt,731e7eaa508396d7,331,1,6h2f__A
+test,6h2f__B,6h2f,B,344,344,10,2.55,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6h2f/6h2f_protein.pt,92e247c190b1c99f,344,1,6h2f__B
+test,6h2f__C,6h2f,C,338,338,10,2.55,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6h2f/6h2f_protein.pt,201b8c8556b8ab9e,338,2,6h2f__C;6h2f__I
+test,6h2f__D,6h2f,D,338,338,10,2.55,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6h2f/6h2f_protein.pt,10e5bda20e2d0c87,338,1,6h2f__D
+test,6h2f__E,6h2f,E,329,329,10,2.55,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6h2f/6h2f_protein.pt,bdcd97b2f25e7fb5,329,1,6h2f__E
+test,6h2f__F,6h2f,F,326,326,10,2.55,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6h2f/6h2f_protein.pt,1774718381a0c0a1,326,1,6h2f__F
+test,6h2f__G,6h2f,G,328,328,10,2.55,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6h2f/6h2f_protein.pt,981f12f0ac3a02d9,328,1,6h2f__G
+test,6h2f__H,6h2f,H,345,345,10,2.55,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6h2f/6h2f_protein.pt,88660b5a5dfdc14b,345,1,6h2f__H
+test,6h2f__J,6h2f,J,343,343,10,2.55,x-ray diffraction,2.0,alpha,ahlb,0,features/protein_v4/pt/6h2f/6h2f_protein.pt,6af099cd7000d0ad,343,1,6h2f__J
+test,6hd8__B,6hd8,B,232,232,8,2.4,x-ray diffraction,6.0,alpha,tmem175,0,features/protein_v4/pt/6hd8/6hd8_protein.pt,a79f3586d2efbe83,232,8,6hd8__B;6hd8__E;6hd8__G;6hd8__I;6hdb__B;6hdb__E;6hdb__G;6hdb__I
+test,6hdc__B,6hdc,B,232,232,8,3.4,x-ray diffraction,6.0,alpha,tmem175,0,features/protein_v4/pt/6hdc/6hdc_protein.pt,59aefc967674ad81,232,4,6hdc__B;6hdc__E;6hdc__G;6hdc__I
+test,6is6__A,6is6,A,250,250,2,2.4,x-ray diffraction,7.0,alpha,heliorhodopsin,0,features/protein_v4/pt/6is6/6is6_protein.pt,7f6481a476a62d0c,250,2,6is6__A;6is6__B
+test,6iyu__A,6iyu,A,225,225,3,2.2,x-ray diffraction,7.0,alpha,trimeric intracellular cation channel type a,0,features/protein_v4/pt/6iyu/6iyu_protein.pt,8aad69e9bbac0080,225,3,6iyu__A;6iyu__B;6iyu__C
+test,6iyx__A,6iyx,A,226,226,3,1.8,x-ray diffraction,7.0,alpha,trimeric intracellular cation channel type a,0,features/protein_v4/pt/6iyx/6iyx_protein.pt,140c2659dc373602,226,3,6iyx__A;6iyx__B;6iyx__C
+test,6iyz__A,6iyz,A,225,225,3,2.2,x-ray diffraction,7.0,alpha,trimeric intracellular cation channel type a,0,features/protein_v4/pt/6iyz/6iyz_protein.pt,a5f9414bb8cf1f75,225,3,6iyz__A;6iyz__B;6iyz__C
+test,6iz0__A,6iz0,A,224,224,3,2.3,x-ray diffraction,7.0,alpha,trimeric intracellular cation channel type a,0,features/protein_v4/pt/6iz0/6iz0_protein.pt,92ded63125bdaf75,224,3,6iz0__A;6iz0__B;6iz0__C
+test,6iz1__A,6iz1,A,224,224,3,2.4,x-ray diffraction,7.0,alpha,trimeric intracellular cation channel type a,0,features/protein_v4/pt/6iz1/6iz1_protein.pt,c7a3e1ef6e369af5,224,3,6iz1__A;6iz1__B;6iz1__C
+test,6iz4__A,6iz4,A,224,224,3,3.1,x-ray diffraction,7.0,alpha,trimeric intracellular cation channel type b-b,0,features/protein_v4/pt/6iz4/6iz4_protein.pt,51ec72d264f232a7,224,6,6iz4__A;6iz4__B;6iz4__C;6iz6__A;6iz6__B;6iz6__C
+test,6izf__A,6izf,A,224,224,3,2.0,x-ray diffraction,7.0,alpha,trimeric intracellular cation channel type a,0,features/protein_v4/pt/6izf/6izf_protein.pt,8329cb3e3ddf4b9f,224,3,6izf__A;6izf__B;6izf__C
+test,6k7x__A,6k7x,A,273,273,8,3.27,x-ray diffraction,2.0,alpha,"calcium uniporter protein, mitochondrial",0,features/protein_v4/pt/6k7x/6k7x_protein.pt,90438c7f4e142901,273,3,6k7x__A;6k7x__B;6k7x__D
+test,6k7x__C,6k7x,C,276,276,8,3.27,x-ray diffraction,2.0,alpha,"calcium uniporter protein, mitochondrial",1,features/protein_v4/pt/6k7x/6k7x_protein.pt,bba075b9c563d901,276,1,6k7x__C
+test,6l6i__A,6l6i,A,428,428,3,3.24,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/6l6i/6l6i_protein.pt,74bda4ed74055bd9,428,1,6l6i__A
+test,6l6i__B,6l6i,B,443,443,3,3.24,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/6l6i/6l6i_protein.pt,45b9714b4a16329c,443,1,6l6i__B
+test,6l6i__C,6l6i,C,410,410,3,3.24,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/6l6i/6l6i_protein.pt,4b170ad93c2be220,410,1,6l6i__C
+test,6l6n__A,6l6n,A,405,405,3,2.86,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/6l6n/6l6n_protein.pt,f78aee69ea2809ff,405,1,6l6n__A
+test,6l6n__B,6l6n,B,403,403,3,2.86,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/6l6n/6l6n_protein.pt,034f1a19c602f303,403,1,6l6n__B
+test,6l6n__C,6l6n,C,401,401,3,2.86,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/6l6n/6l6n_protein.pt,c5dbc55924057448,401,1,6l6n__C
+test,6l6p__A,6l6p,A,434,434,3,3.08,x-ray diffraction,2.0,alpha,acid-sensing ion channel 2,0,features/protein_v4/pt/6l6p/6l6p_protein.pt,51b7c4b9b5c6243f,434,1,6l6p__A
+test,6l6p__B,6l6p,B,433,433,3,3.08,x-ray diffraction,2.0,alpha,acid-sensing ion channel 2,0,features/protein_v4/pt/6l6p/6l6p_protein.pt,b685eafb59ed9f38,433,1,6l6p__B
+test,6l6p__C,6l6p,C,430,430,3,3.08,x-ray diffraction,2.0,alpha,acid-sensing ion channel 2,0,features/protein_v4/pt/6l6p/6l6p_protein.pt,b7e97fb8b4be98a3,430,1,6l6p__C
+test,6lod__C,6lod,C,456,456,6,3.2,x-ray diffraction,10.0,alpha,polysulphide reductase nrfd,0,features/protein_v4/pt/6lod/6lod_protein.pt,068273c669fba335,456,1,6lod__C
+test,6lod__D,6lod,D,174,174,6,3.2,x-ray diffraction,2.0,alpha,uncharacterized protein actd,0,features/protein_v4/pt/6lod/6lod_protein.pt,76f07fab1a50273f,174,1,6lod__D
+test,6lod__F,6lod,F,395,395,6,3.2,x-ray diffraction,10.0,alpha,uncharacterized protein actf,0,features/protein_v4/pt/6lod/6lod_protein.pt,a333ff12e59ed0d8,395,1,6lod__F
+test,6lyp__A,6lyp,A,287,287,7,3.3,x-ray diffraction,4.0,alpha,"mechanosensitive ion channel protein 1, mitochondrial",0,features/protein_v4/pt/6lyp/6lyp_protein.pt,2864d55eb39d4067,287,7,6lyp__A;6lyp__B;6lyp__C;6lyp__D;6lyp__E;6lyp__F;6lyp__G
+test,6m32__A,6m32,A,628,628,7,2.7,x-ray diffraction,11.0,alpha,"photosystem p840 reaction center, large subunit",0,features/protein_v4/pt/6m32/6m32_protein.pt,0e469ada51684012,628,2,6m32__A;6m32__a
+test,6mrt__A,6mrt,A,285,285,12,2.8,x-ray diffraction,3.0,alpha,"hemolysin e, chromosomal",0,features/protein_v4/pt/6mrt/6mrt_protein.pt,6cd3c3c52bdc307f,285,25,6mrt__A;6mrt__B;6mrt__C;6mrt__D;6mrt__E;6mrt__F;6mrt__G;6mrt__H;6mrt__I;6mrt__J;6mrt__K;6mrt__L;6mru__A;6mru__B;6mru__C;6mru__D;6mru__E;6mru__F;6mru__G;6mru__H;6mru__I;6mru__J;6mru__K;6mru__L;6mru__M
+test,6nf4__A,6nf4,A,421,421,2,2.98,x-ray diffraction,12.0,alpha,otopetrin1,0,features/protein_v4/pt/6nf4/6nf4_protein.pt,e41d750f4e9245f4,421,2,6nf4__A;6nf4__B
+test,6nf6__A,6nf6,A,411,411,2,3.32,x-ray diffraction,12.0,alpha,otopetrin3,0,features/protein_v4/pt/6nf6/6nf6_protein.pt,2e6738b9a007a4f3,411,2,6nf6__A;6nf6__B
+test,6nsj__A,6nsj,A,182,182,6,2.7,x-ray diffraction,6.0,alpha,acid-activated urea channel,0,features/protein_v4/pt/6nsj/6nsj_protein.pt,854153753390b76f,182,12,6nsj__A;6nsj__B;6nsj__C;6nsj__D;6nsj__E;6nsj__F;6nsk__A;6nsk__B;6nsk__C;6nsk__D;6nsk__E;6nsk__F
+test,6oly__A,6oly,A,313,313,4,3.11,x-ray diffraction,2.0,alpha,calcium-gated potassium channel mthk,0,features/protein_v4/pt/6oly/6oly_protein.pt,58a56392319beaf2,313,2,6oly__A;6oly__E
+test,6oly__B,6oly,B,314,314,4,3.11,x-ray diffraction,2.0,alpha,calcium-gated potassium channel mthk,0,features/protein_v4/pt/6oly/6oly_protein.pt,d72ee4bc477cf161,314,2,6oly__B;6oly__F
+test,6ov2__A,6ov2,A,182,182,2,3.2,x-ray diffraction,4.0,alpha,claudin-9,0,features/protein_v4/pt/6ov2/6ov2_protein.pt,924b41f8c7b8fb15,182,1,6ov2__A
+test,6ov3__A,6ov3,A,179,179,2,3.25,x-ray diffraction,4.0,alpha,claudin-9,0,features/protein_v4/pt/6ov3/6ov3_protein.pt,68b36a36638278e5,179,1,6ov3__A
+test,6oyh__A,6oyh,A,326,326,2,2.95,x-ray diffraction,10.0,alpha,phospho-n-acetylmuramoyl-pentapeptide-transferase,0,features/protein_v4/pt/6oyh/6oyh_protein.pt,aa607d7e3dd20de4,326,1,6oyh__A
+test,6oyh__B,6oyh,B,330,330,2,2.95,x-ray diffraction,10.0,alpha,phospho-n-acetylmuramoyl-pentapeptide-transferase,0,features/protein_v4/pt/6oyh/6oyh_protein.pt,1f6ad4d91b17a0d0,330,1,6oyh__B
+test,6pl6__A,6pl6,A,336,336,2,3.3,x-ray diffraction,10.0,alpha,peptidoglycan glycosyltransferase roda,0,features/protein_v4/pt/6pl6/6pl6_protein.pt,6271b118d49848be,336,1,6pl6__A
+test,6pw5__A,6pw5,A,734,734,4,3.45,x-ray diffraction,6.0,alpha,trp-like ion channel,0,features/protein_v4/pt/6pw5/6pw5_protein.pt,0a2f8d336c19fc98,734,2,6pw5__A;6pw5__C
+test,6pw5__B,6pw5,B,782,782,4,3.45,x-ray diffraction,6.0,alpha,trp-like ion channel,0,features/protein_v4/pt/6pw5/6pw5_protein.pt,ced36a69bdf1b821,782,2,6pw5__B;6pw5__D
+test,6r7d__A,6r7d,A,149,149,3,2.35,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/6r7d/6r7d_protein.pt,3bbbb92429d2a533,149,2,6r7d__A;6r7d__B
+test,6r7d__C,6r7d,C,148,148,3,2.35,x-ray diffraction,4.0,alpha,leukotriene c4 synthase,0,features/protein_v4/pt/6r7d/6r7d_protein.pt,a700c5e8954e11c8,148,1,6r7d__C
+test,6rbg__A,6rbg,A,308,308,8,3.0,x-ray diffraction,2.0,alpha,chain length determinant protein,0,features/protein_v4/pt/6rbg/6rbg_protein.pt,ff882cc5404f1cff,308,8,6rbg__A;6rbg__B;6rbg__C;6rbg__D;6rbg__E;6rbg__F;6rbg__G;6rbg__H
+test,6rko__A,6rko,A,444,444,4,2.68,x-ray diffraction,9.0,alpha,cytochrome bd-i ubiquinol oxidase subunit 1,0,features/protein_v4/pt/6rko/6rko_protein.pt,8dc097a55058cc6a,444,1,6rko__A
+test,6rko__B,6rko,B,378,378,4,2.68,x-ray diffraction,9.0,alpha,cytochrome bd-i ubiquinol oxidase subunit 2,0,features/protein_v4/pt/6rko/6rko_protein.pt,424c5e2e02f1ca9d,378,1,6rko__B
+test,6rx4__A,6rx4,A,474,474,3,3.3,x-ray diffraction,9.0,alpha,cytochrome bd-i ubiquinol oxidase subunit 1,0,features/protein_v4/pt/6rx4/6rx4_protein.pt,7ed07f1577bf5486,474,1,6rx4__A
+test,6rx4__B,6rx4,B,379,379,3,3.3,x-ray diffraction,9.0,alpha,cytochrome bd-i ubiquinol oxidase subunit 2,1,features/protein_v4/pt/6rx4/6rx4_protein.pt,3a7cf19d54c57f11,379,1,6rx4__B
+test,6s3l__G,6s3l,G,89,89,11,3.2,x-ray diffraction,2.0,alpha,flagellar biosynthetic protein fliq,1,features/protein_v4/pt/6s3l/6s3l_protein.pt,07f1612d2683ec7f,89,4,6s3l__G;6s3l__H;6s3l__I;6s3l__J
+test,6s3l__K,6s3l,K,193,193,11,3.2,x-ray diffraction,4.0,alpha,flagellar biosynthetic protein flhb,0,features/protein_v4/pt/6s3l/6s3l_protein.pt,dab3f605c2f87d52,193,1,6s3l__K
+test,6sp2__A,6sp2,A,365,365,6,3.33,x-ray diffraction,10.0,alpha,membrane protein tms1d,0,features/protein_v4/pt/6sp2/6sp2_protein.pt,c67c1aaf2c9b49ac,365,6,6sp2__A;6sp2__B;6sp2__C;6sp2__D;6sp2__E;6sp2__F
+test,6sss__A,6sss,A,136,136,3,2.5,x-ray diffraction,4.0,alpha,microsomal glutathione s-transferase 2,0,features/protein_v4/pt/6sss/6sss_protein.pt,c9a5c23c2e6f164a,136,1,6sss__A
+test,6sss__B,6sss,B,130,130,3,2.5,x-ray diffraction,4.0,alpha,microsomal glutathione s-transferase 2,0,features/protein_v4/pt/6sss/6sss_protein.pt,c221f95510a40161,130,3,6sss__B;6ssu__C;6ssw__C
+test,6sss__C,6sss,C,133,133,3,2.5,x-ray diffraction,4.0,alpha,microsomal glutathione s-transferase 2,0,features/protein_v4/pt/6sss/6sss_protein.pt,90d98c3935517ecb,133,1,6sss__C
+test,6ssu__A,6ssu,A,139,139,3,2.5,x-ray diffraction,4.0,alpha,microsomal glutathione s-transferase 2,0,features/protein_v4/pt/6ssu/6ssu_protein.pt,4b13ad1ecb003dea,139,1,6ssu__A
+test,6ssu__B,6ssu,B,139,139,3,2.5,x-ray diffraction,4.0,alpha,microsomal glutathione s-transferase 2,0,features/protein_v4/pt/6ssu/6ssu_protein.pt,367a1f0d967e3b54,139,1,6ssu__B
+test,6ssw__A,6ssw,A,136,136,3,3.0,x-ray diffraction,4.0,alpha,microsomal glutathione s-transferase 2,0,features/protein_v4/pt/6ssw/6ssw_protein.pt,50b1f275da9ac4f2,136,1,6ssw__A
+test,6ssw__B,6ssw,B,140,140,3,3.0,x-ray diffraction,4.0,alpha,microsomal glutathione s-transferase 2,0,features/protein_v4/pt/6ssw/6ssw_protein.pt,500b2190b98f80b7,140,1,6ssw__B
+test,6su3__A,6su3,A,256,256,2,1.5,x-ray diffraction,7.0,alpha,48c12 heliorhodopsin,0,features/protein_v4/pt/6su3/6su3_protein.pt,b5c14748a5d9c384,256,1,6su3__A
+test,6su3__X,6su3,X,256,256,2,1.5,x-ray diffraction,7.0,alpha,48c12 heliorhodopsin,0,features/protein_v4/pt/6su3/6su3_protein.pt,1274e51737d8b2a0,256,1,6su3__X
+test,6su4__A,6su4,A,254,254,2,1.5,x-ray diffraction,7.0,alpha,48c12 heliorhodopsin,0,features/protein_v4/pt/6su4/6su4_protein.pt,871181bb8025e196,254,1,6su4__A
+test,6su4__X,6su4,X,254,254,2,1.5,x-ray diffraction,7.0,alpha,48c12 heliorhodopsin,0,features/protein_v4/pt/6su4/6su4_protein.pt,1872112fbb9e1b22,254,1,6su4__X
+test,6swr__B,6swr,B,230,230,2,3.2,x-ray diffraction,6.0,alpha,uncharacterized protein,0,features/protein_v4/pt/6swr/6swr_protein.pt,4adc521083864457,230,1,6swr__B
+test,6t9n__A,6t9n,A,480,480,4,2.96,x-ray diffraction,6.0,alpha,polycystin-2,0,features/protein_v4/pt/6t9n/6t9n_protein.pt,c4c5236aefec8b0f,480,4,6t9n__A;6t9n__B;6t9n__C;6t9n__D
+test,6t9o__A,6t9o,A,481,481,4,3.39,x-ray diffraction,6.0,alpha,polycystin-2,0,features/protein_v4/pt/6t9o/6t9o_protein.pt,3fee5cad5d390a95,481,4,6t9o__A;6t9o__B;6t9o__C;6t9o__D
+test,6tyi__A,6tyi,A,225,225,7,3.3,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/6tyi/6tyi_protein.pt,19eabfffcfa8f210,225,1,6tyi__A
+test,6tyi__C,6tyi,C,226,226,7,3.3,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/6tyi/6tyi_protein.pt,59300191064db83f,226,2,6tyi__C;6tyi__D
+test,6tyi__E,6tyi,E,224,224,7,3.3,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/6tyi/6tyi_protein.pt,6808c8cc5d211cc9,224,1,6tyi__E
+test,6u9v__A,6u9v,A,560,560,3,2.9,x-ray diffraction,2.0,alpha,p2x purinoceptor 7,0,features/protein_v4/pt/6u9v/6u9v_protein.pt,57322768459179f5,560,3,6u9v__A;6u9v__B;6u9v__C
+test,6u9w__A,6u9w,A,562,562,3,3.3,x-ray diffraction,2.0,alpha,p2x purinoceptor 7,0,features/protein_v4/pt/6u9w/6u9w_protein.pt,f47d0797f230bdd9,562,3,6u9w__A;6u9w__B;6u9w__C
+test,6uh3__A,6uh3,A,246,246,2,2.7,x-ray diffraction,7.0,alpha,heliorhodopsin,0,features/protein_v4/pt/6uh3/6uh3_protein.pt,923b7961d10f8f75,246,1,6uh3__A
+test,6uh3__B,6uh3,B,245,245,2,2.7,x-ray diffraction,7.0,alpha,heliorhodopsin,0,features/protein_v4/pt/6uh3/6uh3_protein.pt,b1e6d60f48f2d96d,245,1,6uh3__B
+test,6urt__A,6urt,A,331,331,7,3.27,x-ray diffraction,3.0,alpha,low conductance mechanosensitive channel ynai,0,features/protein_v4/pt/6urt/6urt_protein.pt,e3abd8a20931ab2a,331,7,6urt__A;6urt__B;6urt__C;6urt__D;6urt__E;6urt__F;6urt__G
+test,6vgc__A,6vgc,A,144,144,3,2.37,x-ray diffraction,4.0,alpha,5-lipoxygenase-activating protein,0,features/protein_v4/pt/6vgc/6vgc_protein.pt,d3d09b50023c6be6,144,1,6vgc__A
+test,6vgc__B,6vgc,B,149,149,3,2.37,x-ray diffraction,4.0,alpha,5-lipoxygenase-activating protein,0,features/protein_v4/pt/6vgc/6vgc_protein.pt,9cd78e2fadc519ad,149,1,6vgc__B
+test,6vgc__C,6vgc,C,151,151,3,2.37,x-ray diffraction,4.0,alpha,5-lipoxygenase-activating protein,0,features/protein_v4/pt/6vgc/6vgc_protein.pt,a873a7b536564922,151,1,6vgc__C
+test,6vgi__A,6vgi,A,139,139,3,2.61,x-ray diffraction,4.0,alpha,5-lipoxygenase-activating protein,0,features/protein_v4/pt/6vgi/6vgi_protein.pt,a4e09e2d06a65f2c,139,1,6vgi__A
+test,6vgi__E,6vgi,E,144,144,3,2.61,x-ray diffraction,4.0,alpha,5-lipoxygenase-activating protein,0,features/protein_v4/pt/6vgi/6vgi_protein.pt,f92a7ebb918a3c87,144,1,6vgi__E
+test,6vgi__F,6vgi,F,154,154,3,2.61,x-ray diffraction,4.0,alpha,5-lipoxygenase-activating protein,0,features/protein_v4/pt/6vgi/6vgi_protein.pt,2400b936babbbc5d,154,1,6vgi__F
+test,6vp0__C,6vp0,C,404,404,2,3.1,x-ray diffraction,9.0,alpha,diacylglycerol o-acyltransferase 1,0,features/protein_v4/pt/6vp0/6vp0_protein.pt,7af4454de85630b1,404,2,6vp0__C;6vp0__E
+test,6vqq__A,6vqq,A,279,279,5,2.56,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/6vqq/6vqq_protein.pt,1f493416811b8d8e,279,2,6vqq__A;7mxy__C
+test,6vqq__B,6vqq,B,282,282,5,2.56,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/6vqq/6vqq_protein.pt,c0117921f1d87e80,282,1,6vqq__B
+test,6vqq__C,6vqq,C,278,278,5,2.56,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/6vqq/6vqq_protein.pt,0ec403b094abd698,278,1,6vqq__C
+test,6vqq__D,6vqq,D,283,283,5,2.56,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/6vqq/6vqq_protein.pt,96fd12c3b5fa321b,283,1,6vqq__D
+test,6vqq__E,6vqq,E,277,277,5,2.56,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/6vqq/6vqq_protein.pt,96c2c7535dc6b78c,277,1,6vqq__E
+test,6vqr__A,6vqr,A,281,281,5,2.78,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/6vqr/6vqr_protein.pt,407a909b29da84d5,281,2,6vqr__A;7mxy__B
+test,6vqr__B,6vqr,B,285,285,5,2.78,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/6vqr/6vqr_protein.pt,d2ea7b3fb4446a94,285,1,6vqr__B
+test,6vqr__C,6vqr,C,282,282,5,2.78,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/6vqr/6vqr_protein.pt,f68ddedf5b5d41fd,282,2,6vqr__C;7mxy__D
+test,6vqr__D,6vqr,D,284,284,5,2.78,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/6vqr/6vqr_protein.pt,677384fa2b092b43,284,1,6vqr__D
+test,6vqr__E,6vqr,E,288,288,5,2.78,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/6vqr/6vqr_protein.pt,8c8aa367bd5e7b7e,288,1,6vqr__E
+test,6vtk__A,6vtk,A,446,446,3,2.82,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/6vtk/6vtk_protein.pt,d3b4e0e123cdeff1,446,3,6vtk__A;6vtk__B;6vtk__C
+test,6vxm__A,6vxm,A,277,277,7,3.06,x-ray diffraction,3.0,alpha,"mechanosensitive ion channel protein 1, mitochondrial",0,features/protein_v4/pt/6vxm/6vxm_protein.pt,ca981cf2bfc96cf4,277,14,6vxm__A;6vxm__B;6vxm__C;6vxm__D;6vxm__E;6vxm__F;6vxm__G;6vxp__A;6vxp__B;6vxp__C;6vxp__D;6vxp__E;6vxp__F;6vxp__G
+test,6vxn__A,6vxn,A,266,266,7,2.96,x-ray diffraction,4.0,alpha,"mechanosensitive ion channel protein 1, mitochondrial",0,features/protein_v4/pt/6vxn/6vxn_protein.pt,dc3db1771283b239,266,7,6vxn__A;6vxn__B;6vxn__C;6vxn__D;6vxn__E;6vxn__F;6vxn__G
+test,6vxz__A,6vxz,A,389,389,4,3.42,x-ray diffraction,6.0,alpha,sthk,0,features/protein_v4/pt/6vxz/6vxz_protein.pt,1c641a724962618a,389,4,6vxz__A;6vxz__B;6vxz__C;6vxz__D
+test,6vyi__A,6vyi,A,406,406,2,3.0,x-ray diffraction,9.0,alpha,diacylglycerol o-acyltransferase 1,0,features/protein_v4/pt/6vyi/6vyi_protein.pt,6e8c6234e0777a8b,406,6,6vyi__A;6vyi__B;8esm__A;8esm__B;8etm__A;8etm__B
+test,6vz1__A,6vz1,A,411,411,2,3.2,x-ray diffraction,9.0,alpha,diacylglycerol o-acyltransferase 1,0,features/protein_v4/pt/6vz1/6vz1_protein.pt,f1d9e2eb26c2355a,411,2,6vz1__A;6vz1__B
+test,6w2y__A,6w2y,A,663,663,2,3.2,x-ray diffraction,7.0,alpha,gamma-aminobutyric acid type b receptor subunit 1,0,features/protein_v4/pt/6w2y/6w2y_protein.pt,974646ee72d3dbc8,663,1,6w2y__A
+test,6w2y__B,6w2y,B,664,664,2,3.2,x-ray diffraction,7.0,alpha,gamma-aminobutyric acid type b receptor subunit 1,0,features/protein_v4/pt/6w2y/6w2y_protein.pt,c0d392818115a791,664,1,6w2y__B
+test,6w8n__A,6w8n,A,402,402,2,3.2,x-ray diffraction,12.0,alpha,endosomal/lysosomal potassium channel tmem175,0,features/protein_v4/pt/6w8n/6w8n_protein.pt,6db4699874e7ceee,402,2,6w8n__A;6w8n__B
+test,6w8o__A,6w8o,A,416,416,2,3.4,x-ray diffraction,12.0,alpha,endosomal/lysosomal potassium channel tmem175,0,features/protein_v4/pt/6w8o/6w8o_protein.pt,008fb181e7c09dae,416,2,6w8o__A;6w8o__B
+test,6wb8__A,6wb8,A,463,463,4,3.24,x-ray diffraction,6.0,alpha,polycystin-2,0,features/protein_v4/pt/6wb8/6wb8_protein.pt,b1e1068efb2179e4,463,4,6wb8__A;6wb8__B;6wb8__C;6wb8__D
+test,6wc9__A,6wc9,A,367,367,2,2.64,x-ray diffraction,10.0,alpha,endosomal/lysosomal potassium channel tmem175,0,features/protein_v4/pt/6wc9/6wc9_protein.pt,da62ff0c928783bc,367,12,6wc9__A;6wc9__B;6wca__A;6wca__B;6wcb__A;6wcb__B;6wcc__A;6wcc__B;7unl__A;7unl__B;8dhm__A;8dhm__B
+test,6wdn__C,6wdn,C,173,173,10,3.2,x-ray diffraction,2.0,alpha,"calcium uniporter protein, mitochondrial",0,features/protein_v4/pt/6wdn/6wdn_protein.pt,121652909f724fcc,173,1,6wdn__C
+test,6wdn__E,6wdn,E,174,174,10,3.2,x-ray diffraction,2.0,alpha,"calcium uniporter protein, mitochondrial",0,features/protein_v4/pt/6wdn/6wdn_protein.pt,8b07867ad35a9c9e,174,1,6wdn__E
+test,6wdn__G,6wdn,G,174,174,10,3.2,x-ray diffraction,2.0,alpha,"calcium uniporter protein, mitochondrial",0,features/protein_v4/pt/6wdn/6wdn_protein.pt,b86cdc7fa34449d3,174,1,6wdn__G
+test,6wdn__I,6wdn,I,160,160,10,3.2,x-ray diffraction,2.0,alpha,"calcium uniporter protein, mitochondrial",0,features/protein_v4/pt/6wdn/6wdn_protein.pt,8d045f119b4cad0f,160,1,6wdn__I
+test,6whg__A,6whg,A,523,523,4,3.1,x-ray diffraction,6.0,alpha,calcium channel yvc1,0,features/protein_v4/pt/6whg/6whg_protein.pt,1273085d6f91a206,523,4,6whg__A;6whg__B;6whg__C;6whg__D
+test,6wiv__A,6wiv,A,681,681,2,3.3,x-ray diffraction,7.0,alpha,gamma-aminobutyric acid type b receptor subunit 1,0,features/protein_v4/pt/6wiv/6wiv_protein.pt,7611ae74a16e19ab,681,1,6wiv__A
+test,6wiv__B,6wiv,B,671,671,2,3.3,x-ray diffraction,7.0,alpha,gamma-aminobutyric acid type b receptor subunit 2,0,features/protein_v4/pt/6wiv/6wiv_protein.pt,d1c81aeae53a6571,671,1,6wiv__B
+test,6wk8__A,6wk8,A,104,104,2,2.53,x-ray diffraction,4.0,alpha,"multidrug resistance protein, smr family",0,features/protein_v4/pt/6wk8/6wk8_protein.pt,326d89e185961195,104,6,6wk8__A;6wk8__B;7szt__A;7szt__B;8tgy__A;8tgy__E
+test,6wqz__A,6wqz,A,536,536,3,2.8,x-ray diffraction,4.0,alpha,autophagy-related protein 9a,0,features/protein_v4/pt/6wqz/6wqz_protein.pt,cba9959088b62c9b,536,3,6wqz__A;6wqz__B;6wqz__C
+test,6wr4__A,6wr4,A,470,470,3,2.9,x-ray diffraction,4.0,alpha,autophagy-related protein 9a,0,features/protein_v4/pt/6wr4/6wr4_protein.pt,b8050dba6a1c60dd,470,3,6wr4__A;6wr4__B;6wr4__C
+test,6wtw__A,6wtw,A,489,489,2,2.86,x-ray diffraction,11.0,alpha,dass family sodium-coupled anion symporter,0,features/protein_v4/pt/6wtw/6wtw_protein.pt,974f2db1fcda9329,489,6,6wtw__A;6wtw__B;6wu1__A;6wu1__B;6wu2__A;6wu2__B
+test,6wxr__A,6wxr,A,1075,1075,2,3.2,x-ray diffraction,7.0,alpha,dual oxidase 1,0,features/protein_v4/pt/6wxr/6wxr_protein.pt,b26fb5c7ea83f129,1075,1,6wxr__A
+test,6wxr__B,6wxr,B,228,228,2,3.2,x-ray diffraction,4.0,alpha,dual oxidase maturation factor 1,0,features/protein_v4/pt/6wxr/6wxr_protein.pt,6d97182ed7fca069,228,2,6wxr__B;6wxv__B
+test,6wxu__A,6wxu,A,834,834,4,2.7,x-ray diffraction,7.0,alpha,dual oxidase 1,0,features/protein_v4/pt/6wxu/6wxu_protein.pt,435c37a515f58b6e,834,2,6wxu__A;6wxu__C
+test,6wxu__B,6wxu,B,273,273,4,2.7,x-ray diffraction,5.0,alpha,dual oxidase maturation factor 1,0,features/protein_v4/pt/6wxu/6wxu_protein.pt,707808d37c366d4b,273,2,6wxu__B;6wxu__D
+test,6wxv__A,6wxv,A,1091,1091,2,3.3,x-ray diffraction,7.0,alpha,dual oxidase 1,0,features/protein_v4/pt/6wxv/6wxv_protein.pt,f57adeb8a0c13ffd,1091,1,6wxv__A
+test,6x9h__A,6x9h,A,409,409,3,3.01,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/6x9h/6x9h_protein.pt,b8eda9506e2edccb,409,1,6x9h__A
+test,6x9h__B,6x9h,B,410,410,3,3.01,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/6x9h/6x9h_protein.pt,57a8f8af904b7e1c,410,1,6x9h__B
+test,6x9h__C,6x9h,C,403,403,3,3.01,x-ray diffraction,2.0,alpha,acid-sensing ion channel 1,0,features/protein_v4/pt/6x9h/6x9h_protein.pt,fb22f11b67d41c64,403,1,6x9h__C
+test,6xdc__A,6xdc,A,193,193,2,2.9,x-ray diffraction,3.0,alpha,orf3a protein,0,features/protein_v4/pt/6xdc/6xdc_protein.pt,81f32b9128c8b67b,193,2,6xdc__A;6xdc__B
+test,6xqn__A,6xqn,A,154,154,9,3.3,x-ray diffraction,2.0,alpha,calcium uniporter protein,0,features/protein_v4/pt/6xqn/6xqn_protein.pt,ca73b5e5ea7baa66,154,2,6xqn__A;6xqn__C
+test,6xqn__B,6xqn,B,151,151,9,3.3,x-ray diffraction,2.0,alpha,calcium uniporter protein,0,features/protein_v4/pt/6xqn/6xqn_protein.pt,b3303ab754c8e5af,151,2,6xqn__B;6xqn__D
+test,6ye4__A,6ye4,A,236,236,5,3.2,x-ray diffraction,3.0,alpha,biopolymer transport protein exbb,0,features/protein_v4/pt/6ye4/6ye4_protein.pt,a2d0db4e8eebec12,236,5,6ye4__A;6ye4__B;6ye4__C;6ye4__D;6ye4__E
+test,6yue__A,6yue,A,227,227,2,2.4,x-ray diffraction,2.0,alpha,nitrate/nitrite sensor protein narq,0,features/protein_v4/pt/6yue/6yue_protein.pt,7d33dd0556d13455,227,2,6yue__A;6yue__B
+test,6z16__A,6z16,A,788,788,14,2.98,x-ray diffraction,21.0,alpha,"multisubunit na+/h+ antiporter, a subunit",0,features/protein_v4/pt/6z16/6z16_protein.pt,3161279df8711ee5,788,2,6z16__A;6z16__a
+test,6z16__B,6z16,B,138,138,14,2.98,x-ray diffraction,4.0,alpha,"multisubunit na+/h+ antiporter, b subunit",0,features/protein_v4/pt/6z16/6z16_protein.pt,b0aed4b3843e4f8a,138,2,6z16__B;6z16__b
+test,6z16__C,6z16,C,107,107,14,2.98,x-ray diffraction,3.0,alpha,"multisubunit na+/h+ antiporter, c subunit",0,features/protein_v4/pt/6z16/6z16_protein.pt,1e87855d96316aa8,107,2,6z16__C;6z16__c
+test,6z16__D,6z16,D,489,489,14,2.98,x-ray diffraction,14.0,alpha,"multisubunit na+/h+ antiporter, d subunit",0,features/protein_v4/pt/6z16/6z16_protein.pt,153ca83160ee32c8,489,2,6z16__D;6z16__d
+test,6z16__E,6z16,E,158,158,14,2.98,x-ray diffraction,2.0,alpha,"multisubunit na+/h+ antiporter, e subunit",1,features/protein_v4/pt/6z16/6z16_protein.pt,aa8942f3ff9d864a,158,2,6z16__E;6z16__e
+test,6z16__F,6z16,F,88,88,14,2.98,x-ray diffraction,3.0,alpha,"multisubunit na+/h+ antiporter, f subunit",0,features/protein_v4/pt/6z16/6z16_protein.pt,1b70d0e2e3a627f1,88,2,6z16__F;6z16__f
+test,6z16__G,6z16,G,104,104,14,2.98,x-ray diffraction,3.0,alpha,"multisubunit na+/h+ antiporter, g subunit",0,features/protein_v4/pt/6z16/6z16_protein.pt,558ece5f9bf0d22e,104,2,6z16__G;6z16__g
+test,6z3z__A,6z3z,A,384,384,2,3.19,x-ray diffraction,12.0,alpha,sodium/hydrogen exchanger,0,features/protein_v4/pt/6z3z/6z3z_protein.pt,415d40108142c885,384,1,6z3z__A
+test,6z3z__B,6z3z,B,385,385,2,3.19,x-ray diffraction,12.0,alpha,sodium/hydrogen exchanger,0,features/protein_v4/pt/6z3z/6z3z_protein.pt,cd5290adc7151d18,385,1,6z3z__B
+test,6zyd__A,6zyd,A,256,256,7,3.0,x-ray diffraction,3.0,alpha,"low conductance mechanosensitive channel ynai,low conductance mechanosensitive channel ynai",0,features/protein_v4/pt/6zyd/6zyd_protein.pt,0f9c0350bb63d114,256,7,6zyd__A;6zyd__B;6zyd__C;6zyd__D;6zyd__E;6zyd__F;6zyd__G
+test,7a0w__A,7a0w,A,368,368,2,2.04,x-ray diffraction,12.0,alpha,na(+)/h(+) antiporter nhaa,0,features/protein_v4/pt/7a0w/7a0w_protein.pt,7a41e538ec980800,368,1,7a0w__A
+test,7a0w__B,7a0w,B,373,373,2,2.04,x-ray diffraction,12.0,alpha,na(+)/h(+) antiporter nhaa,0,features/protein_v4/pt/7a0w/7a0w_protein.pt,4b065b816823dd1c,373,2,7a0w__B;7a0x__B
+test,7a0x__A,7a0x,A,370,370,2,2.37,x-ray diffraction,12.0,alpha,na(+)/h(+) antiporter nhaa,0,features/protein_v4/pt/7a0x/7a0x_protein.pt,3756d9c73d4de804,370,1,7a0x__A
+test,7a0y__A,7a0y,A,372,372,2,2.45,x-ray diffraction,12.0,alpha,na(+)/h(+) antiporter nhaa,0,features/protein_v4/pt/7a0y/7a0y_protein.pt,0bb5dbf624b0a4f5,372,1,7a0y__A
+test,7a0y__B,7a0y,B,373,373,2,2.45,x-ray diffraction,12.0,alpha,na(+)/h(+) antiporter nhaa,0,features/protein_v4/pt/7a0y/7a0y_protein.pt,dbefed56be2d9a45,373,1,7a0y__B
+test,7a46__A,7a46,A,207,207,7,3.0,x-ray diffraction,3.0,alpha,putative transport protein,0,features/protein_v4/pt/7a46/7a46_protein.pt,4e7f61633d1f6935,207,7,7a46__A;7a46__B;7a46__C;7a46__D;7a46__E;7a46__F;7a46__G
+test,7b1k__A,7b1k,A,200,200,2,2.2,x-ray diffraction,8.0,alpha,cdp-diacylglycerol--serine o-phosphatidyltransferase,0,features/protein_v4/pt/7b1k/7b1k_protein.pt,1a055930d5640eda,200,3,7b1k__A;7b1n__A;7b1n__B
+test,7b1k__B,7b1k,B,202,202,2,2.2,x-ray diffraction,8.0,alpha,cdp-diacylglycerol--serine o-phosphatidyltransferase,0,features/protein_v4/pt/7b1k/7b1k_protein.pt,047575107a2cbc77,202,1,7b1k__B
+test,7b1l__A,7b1l,A,202,202,2,1.85,x-ray diffraction,8.0,alpha,cdp-diacylglycerol--serine o-phosphatidyltransferase,0,features/protein_v4/pt/7b1l/7b1l_protein.pt,2895915d8712a7f0,202,2,7b1l__A;7b1l__B
+test,7b4l__A,7b4l,A,443,443,2,3.1,x-ray diffraction,14.0,alpha,sodium/hydrogen exchanger 9b2,0,features/protein_v4/pt/7b4l/7b4l_protein.pt,c0a66a3cf64ac4a0,443,2,7b4l__A;7b4l__B
+test,7b9f__D,7b9f,D,485,485,5,3.0,x-ray diffraction,11.0,alpha,eccd5,0,features/protein_v4/pt/7b9f/7b9f_protein.pt,fcf1ed2ade3f003f,485,7,7b9f__D;7b9s__3;7b9s__D;7b9s__G;7b9s__L;7b9s__Q;7b9s__W
+test,7b9f__X,7b9f,X,425,425,5,3.0,x-ray diffraction,10.0,alpha,eccd5,0,features/protein_v4/pt/7b9f/7b9f_protein.pt,61da70b1107fcdea,425,1,7b9f__X
+test,7b9s__2,7b9s,2,396,396,30,3.4,x-ray diffraction,2.0,alpha,eccc5,0,features/protein_v4/pt/7b9s/7b9s_protein.pt,9352bc98a98a61e0,396,6,7b9s__2;7b9s__C;7b9s__F;7b9s__K;7b9s__P;7b9s__V
+test,7b9s__5,7b9s,5,462,462,30,3.4,x-ray diffraction,11.0,alpha,eccd5,0,features/protein_v4/pt/7b9s/7b9s_protein.pt,d5c35055213730e5,462,6,7b9s__5;7b9s__I;7b9s__N;7b9s__S;7b9s__X;7b9s__Z
+test,7c7q__A,7c7q,A,678,678,2,3.0,x-ray diffraction,7.0,alpha,gamma-aminobutyric acid type b receptor subunit 1,0,features/protein_v4/pt/7c7q/7c7q_protein.pt,1b90e499d30ef6c2,678,1,7c7q__A
+test,7c7q__B,7c7q,B,670,670,2,3.0,x-ray diffraction,7.0,alpha,gamma-aminobutyric acid type b receptor subunit 2,0,features/protein_v4/pt/7c7q/7c7q_protein.pt,74a2d00f96e751a4,670,1,7c7q__B
+test,7c7s__A,7c7s,A,685,685,2,2.9,x-ray diffraction,7.0,alpha,gamma-aminobutyric acid type b receptor subunit 1,0,features/protein_v4/pt/7c7s/7c7s_protein.pt,e46d27fe560dcf00,685,1,7c7s__A
+test,7c7s__B,7c7s,B,670,670,2,2.9,x-ray diffraction,7.0,alpha,gamma-aminobutyric acid type b receptor subunit 2,0,features/protein_v4/pt/7c7s/7c7s_protein.pt,062996713f2d94df,670,1,7c7s__B
+test,7clj__A,7clj,A,250,250,2,2.6,x-ray diffraction,7.0,alpha,heliorhodopsin,0,features/protein_v4/pt/7clj/7clj_protein.pt,4d9dc00c432ff0c0,250,2,7clj__A;7clj__B
+test,7cr0__A,7cr0,A,251,251,4,3.1,x-ray diffraction,6.0,alpha,potassium voltage-gated channel subfamily kqt member 2,0,features/protein_v4/pt/7cr0/7cr0_protein.pt,fd4290afeab6f059,251,12,7cr0__A;7cr0__B;7cr0__C;7cr0__D;7cr2__A;7cr2__B;7cr2__C;7cr2__D;8izy__A;8izy__B;8izy__C;8izy__D
+test,7cr1__A,7cr1,A,250,250,4,3.4,x-ray diffraction,6.0,alpha,potassium voltage-gated channel subfamily kqt member 2,0,features/protein_v4/pt/7cr1/7cr1_protein.pt,cf56ee91d7792b8f,250,4,7cr1__A;7cr1__B;7cr1__C;7cr1__D
+test,7cxr__A,7cxr,A,307,307,2,3.4,x-ray diffraction,6.0,alpha,"mcherry fluorescent protein,ion channel tacan",0,features/protein_v4/pt/7cxr/7cxr_protein.pt,3d2a1c96c367a730,307,2,7cxr__A;7cxr__B
+test,7cyf__A,7cyf,A,334,334,6,3.15,x-ray diffraction,10.0,alpha,slr1512 protein,0,features/protein_v4/pt/7cyf/7cyf_protein.pt,a052936cf06c2587,334,3,7cyf__A;7cyf__B;7cyf__C
+test,7d0i__B,7d0i,B,424,424,3,3.0,x-ray diffraction,4.0,alpha,autophagy-related protein 9,0,features/protein_v4/pt/7d0i/7d0i_protein.pt,1ac9718d1cc81241,424,3,7d0i__B;7d0i__D;7d0i__F
+test,7d3e__A,7d3e,A,1380,1380,4,2.8,x-ray diffraction,7.0,alpha,dual oxidase 1,0,features/protein_v4/pt/7d3e/7d3e_protein.pt,7bd4390b7b0aa823,1380,2,7d3e__A;7d3e__C
+test,7d3e__B,7d3e,B,272,272,4,2.8,x-ray diffraction,5.0,alpha,isoform 2 of dual oxidase maturation factor 1,0,features/protein_v4/pt/7d3e/7d3e_protein.pt,9981b7646a42a51e,272,4,7d3e__B;7d3e__D;7d3f__B;7d3f__D
+test,7d3f__A,7d3f,A,1369,1369,4,2.3,x-ray diffraction,7.0,alpha,dual oxidase 1,0,features/protein_v4/pt/7d3f/7d3f_protein.pt,d9003607f5425cd9,1369,2,7d3f__A;7d3f__C
+test,7d3u__A,7d3u,A,904,904,6,3.0,x-ray diffraction,25.0,alpha,monovalent na+/h+ antiporter subunit a,0,features/protein_v4/pt/7d3u/7d3u_protein.pt,0377d5f7e08ffba3,904,1,7d3u__A
+test,7d3u__C,7d3u,C,129,129,6,3.0,x-ray diffraction,3.0,alpha,monovalent na+/h+ antiporter subunit c,0,features/protein_v4/pt/7d3u/7d3u_protein.pt,ec818a7cbf84d122,129,1,7d3u__C
+test,7d3u__D,7d3u,D,534,534,6,3.0,x-ray diffraction,14.0,alpha,monovalent na+/h+ antiporter subunit d,0,features/protein_v4/pt/7d3u/7d3u_protein.pt,9464dbd25b371d11,534,1,7d3u__D
+test,7d3u__F,7d3u,F,85,85,6,3.0,x-ray diffraction,3.0,alpha,monovalent na+/h+ antiporter subunit f,1,features/protein_v4/pt/7d3u/7d3u_protein.pt,66b824626b5e2498,85,1,7d3u__F
+test,7d3u__G,7d3u,G,111,111,6,3.0,x-ray diffraction,3.0,alpha,monovalent na+/h+ antiporter subunit g,0,features/protein_v4/pt/7d3u/7d3u_protein.pt,f9769eaffbed3d94,111,1,7d3u__G
+test,7d5i__A,7d5i,A,443,443,2,2.79,x-ray diffraction,9.0,alpha,cytochrome d ubiquinol oxidase subunit 1,0,features/protein_v4/pt/7d5i/7d5i_protein.pt,ac727dc4f20bc29b,443,1,7d5i__A
+test,7d5i__B,7d5i,B,350,350,2,2.79,x-ray diffraction,9.0,alpha,integral membrane cytochrome d ubiquinol oxidase (subunit ii) cydb,0,features/protein_v4/pt/7d5i/7d5i_protein.pt,323ba65c22468a60,350,1,7d5i__B
+test,7d7e__A,7d7e,A,451,451,4,3.4,x-ray diffraction,6.0,alpha,polycystic kidney disease protein 1-like 3,0,features/protein_v4/pt/7d7e/7d7e_protein.pt,73600223caa23ffb,451,1,7d7e__A
+test,7d7e__B,7d7e,B,482,482,4,3.4,x-ray diffraction,6.0,alpha,polycystic kidney disease 2-like 1 protein,0,features/protein_v4/pt/7d7e/7d7e_protein.pt,4515057686bca698,482,2,7d7e__B;7d7f__B
+test,7d7e__C,7d7e,C,474,474,4,3.4,x-ray diffraction,6.0,alpha,polycystic kidney disease 2-like 1 protein,0,features/protein_v4/pt/7d7e/7d7e_protein.pt,28fc689b51812a8d,474,2,7d7e__C;7d7f__C
+test,7d7e__D,7d7e,D,471,471,4,3.4,x-ray diffraction,6.0,alpha,polycystic kidney disease 2-like 1 protein,0,features/protein_v4/pt/7d7e/7d7e_protein.pt,7e300125d68260ff,471,2,7d7e__D;7d7f__D
+test,7d7f__A,7d7f,A,446,446,4,3.0,x-ray diffraction,6.0,alpha,polycystic kidney disease protein 1-like 3,0,features/protein_v4/pt/7d7f/7d7f_protein.pt,20d4f70e6b0be162,446,1,7d7f__A
+test,7drt__B,7drt,B,496,496,2,2.2,x-ray diffraction,8.0,alpha,protein wntless homolog,0,features/protein_v4/pt/7drt/7drt_protein.pt,bd1c8dc57725e7d6,496,3,7drt__B;8tzo__B;8tzp__B
+test,7dsv__A,7dsv,A,463,463,4,3.4,x-ray diffraction,13.0,alpha,sodium/hydrogen exchanger 1,0,features/protein_v4/pt/7dsv/7dsv_protein.pt,04c5b9628e5b098f,463,2,7dsv__A;7dsv__B
+test,7dsw__A,7dsw,A,420,420,2,3.3,x-ray diffraction,13.0,alpha,sodium/hydrogen exchanger 1,1,features/protein_v4/pt/7dsw/7dsw_protein.pt,8f117c519659abec,420,2,7dsw__A;7dsw__B
+test,7dyr__A,7dyr,A,75,75,9,2.28,x-ray diffraction,2.0,alpha,microcin e492,0,features/protein_v4/pt/7dyr/7dyr_protein.pt,ad401227746bbccf,75,3,7dyr__A;7dyr__D;7dyr__G
+test,7dyr__B,7dyr,B,248,248,9,2.28,x-ray diffraction,3.0,alpha,pts system mannose-specific eiic component,0,features/protein_v4/pt/7dyr/7dyr_protein.pt,6a7137b9a2531cd0,248,3,7dyr__B;7dyr__E;7dyr__Y
+test,7dyr__C,7dyr,C,274,274,9,2.28,x-ray diffraction,5.0,alpha,pts system mannose-specific eiid component,0,features/protein_v4/pt/7dyr/7dyr_protein.pt,1e86128d9dce5d28,274,3,7dyr__C;7dyr__F;7dyr__Z
+test,7dys__A,7dys,A,387,387,4,3.18,x-ray diffraction,6.0,alpha,mucolipin-2,0,features/protein_v4/pt/7dys/7dys_protein.pt,cc77866f54e72111,387,4,7dys__A;7dys__B;7dys__C;7dys__D
+test,7e26__A,7e26,A,287,287,5,2.29,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/7e26/7e26_protein.pt,8333328c30250e38,287,10,7e26__A;7e26__B;7e26__C;7e26__D;7e26__E;7e27__A;7e27__B;7e27__C;7e27__D;7e27__E
+test,7eeb__A,7eeb,A,258,258,13,2.9,x-ray diffraction,6.0,alpha,"enhanced green fluorescent protein,cation channel sperm- associated protein 1",0,features/protein_v4/pt/7eeb/7eeb_protein.pt,09d867ffdee5b2cc,258,1,7eeb__A
+test,7eeb__B,7eeb,B,281,281,13,2.9,x-ray diffraction,6.0,alpha,cation channel sperm-associated protein 2,0,features/protein_v4/pt/7eeb/7eeb_protein.pt,aad5414dd3a4ee00,281,1,7eeb__B
+test,7eeb__C,7eeb,C,278,278,13,2.9,x-ray diffraction,6.0,alpha,cation channel sperm-associated protein 3,0,features/protein_v4/pt/7eeb/7eeb_protein.pt,e4524ad2c9069aae,278,1,7eeb__C
+test,7eeb__D,7eeb,D,242,242,13,2.9,x-ray diffraction,6.0,alpha,cation channel sperm-associated protein 4,0,features/protein_v4/pt/7eeb/7eeb_protein.pt,1760bf4628507505,242,1,7eeb__D
+test,7eeb__J,7eeb,J,161,161,13,2.9,x-ray diffraction,2.0,alpha,transmembrane protein 249,0,features/protein_v4/pt/7eeb/7eeb_protein.pt,788cde1fd2c87b8f,161,1,7eeb__J
+test,7eeb__L,7eeb,L,597,597,13,2.9,x-ray diffraction,12.0,alpha,kazal-like domain-containing protein,0,features/protein_v4/pt/7eeb/7eeb_protein.pt,dc84727914ba5878,597,1,7eeb__L
+test,7eeb__M,7eeb,M,116,116,13,2.9,x-ray diffraction,3.0,alpha,transmembrane protein 262,1,features/protein_v4/pt/7eeb/7eeb_protein.pt,da0e7dd6f99360cd,116,1,7eeb__M
+test,7egk__A,7egk,A,330,330,6,2.7,x-ray diffraction,10.0,alpha,sodium-dependent bicarbonate transporter sbta,0,features/protein_v4/pt/7egk/7egk_protein.pt,b76f7a37b045ac03,330,3,7egk__A;7egk__C;7egk__E
+test,7egl__A,7egl,A,335,335,6,3.2,x-ray diffraction,10.0,alpha,sodium-dependent bicarbonate transporter sbta,0,features/protein_v4/pt/7egl/7egl_protein.pt,a73aec686f6e30ea,335,3,7egl__A;7egl__C;7egl__E
+test,7ek1__A,7ek1,A,336,336,5,3.0,x-ray diffraction,4.0,alpha,bestrophin-like protein,0,features/protein_v4/pt/7ek1/7ek1_protein.pt,54dd63b2f7a010f6,336,5,7ek1__A;7ek1__B;7ek1__C;7ek1__D;7ek1__E
+test,7ek2__A,7ek2,A,341,341,5,2.7,x-ray diffraction,4.0,alpha,bestrophin-like protein,0,features/protein_v4/pt/7ek2/7ek2_protein.pt,479fff3208f224a9,341,5,7ek2__A;7ek2__B;7ek2__C;7ek2__D;7ek2__E
+test,7ek3__A,7ek3,A,341,341,5,2.7,x-ray diffraction,4.0,alpha,bestrophin-like protein,0,features/protein_v4/pt/7ek3/7ek3_protein.pt,2c9ce3568785b672,341,5,7ek3__A;7ek3__B;7ek3__C;7ek3__D;7ek3__E
+test,7en0__A,7en0,A,313,313,3,2.97,x-ray diffraction,10.0,alpha,slow anion channel 1,0,features/protein_v4/pt/7en0/7en0_protein.pt,0f9918e1639e5241,313,3,7en0__A;7en0__B;7en0__C
+test,7f02__B,7f02,B,220,220,6,3.24,x-ray diffraction,6.0,alpha,heme exporter protein b,1,features/protein_v4/pt/7f02/7f02_protein.pt,0c8a648f4158d35d,220,6,7f02__B;7f02__F;7f03__B;7f03__F;7f04__B;7f04__F
+test,7f02__C,7f02,C,231,231,6,3.24,x-ray diffraction,6.0,alpha,heme exporter protein c,0,features/protein_v4/pt/7f02/7f02_protein.pt,b87a89accbbc5628,231,3,7f02__C;7f03__C;7f04__C
+test,7fh1__A,7fh1,A,874,874,2,3.34,x-ray diffraction,7.0,alpha,meckelin,0,features/protein_v4/pt/7fh1/7fh1_protein.pt,94a91ba4e46c6a1f,874,2,7fh1__A;7fh1__B
+test,7jlo__A,7jlo,A,485,485,3,3.4,x-ray diffraction,4.0,alpha,autophagy-related protein 9a,0,features/protein_v4/pt/7jlo/7jlo_protein.pt,29961f651dd5e754,485,6,7jlo__A;7jlo__B;7jlo__C;7jlp__A;7jlp__B;7jlp__C
+test,7kc4__B,7kc4,B,493,493,2,3.19,x-ray diffraction,8.0,alpha,protein wntless homolog,0,features/protein_v4/pt/7kc4/7kc4_protein.pt,5299644fae9b2f4a,493,1,7kc4__B
+test,7kp4__A,7kp4,A,182,182,2,3.37,x-ray diffraction,4.0,alpha,claudin-4,0,features/protein_v4/pt/7kp4/7kp4_protein.pt,75932de0461bbe3e,182,1,7kp4__A
+test,7kr5__A,7kr5,A,127,127,6,3.3,x-ray diffraction,4.0,alpha,calcium release-activated calcium channel protein 1,0,features/protein_v4/pt/7kr5/7kr5_protein.pt,e5a75713a4708ce4,127,6,7kr5__A;7kr5__B;7kr5__C;7kr5__D;7kr5__E;7kr5__F
+test,7lhe__A,7lhe,A,2298,2298,4,3.3,x-ray diffraction,8.0,alpha,"inositol 1,4,5-trisphosphate receptor type 1",0,features/protein_v4/pt/7lhe/7lhe_protein.pt,9a5c23a9348d23fc,2298,4,7lhe__A;7lhe__B;7lhe__C;7lhe__D
+test,7lhf__A,7lhf,A,2300,2300,4,2.96,x-ray diffraction,8.0,alpha,"inositol 1,4,5-trisphosphate receptor type 1",0,features/protein_v4/pt/7lhf/7lhf_protein.pt,b59c3e11a48c768b,2300,4,7lhf__A;7lhf__B;7lhf__C;7lhf__D
+test,7lic__A,7lic,A,377,377,4,3.3,x-ray diffraction,7.0,alpha,mhor5,0,features/protein_v4/pt/7lic/7lic_protein.pt,9b77124a098cea1d,377,4,7lic__A;7lic__B;7lic__C;7lic__D
+test,7lid__A,7lid,A,381,381,4,2.9,x-ray diffraction,7.0,alpha,mhor5,0,features/protein_v4/pt/7lid/7lid_protein.pt,359b2d10965aa972,381,8,7lid__A;7lid__B;7lid__C;7lid__D;7lig__A;7lig__B;7lig__C;7lig__D
+test,7m93__A,7m93,A,165,165,2,2.94,x-ray diffraction,4.0,alpha,sigma intracellular receptor 2,0,features/protein_v4/pt/7m93/7m93_protein.pt,218baddb933bcac7,165,1,7m93__A
+test,7m93__B,7m93,B,165,165,2,2.94,x-ray diffraction,4.0,alpha,sigma intracellular receptor 2,0,features/protein_v4/pt/7m93/7m93_protein.pt,7fb19cc8d2afdd62,165,2,7m93__B;7m94__B
+test,7m94__A,7m94,A,163,163,2,2.71,x-ray diffraction,4.0,alpha,sigma intracellular receptor 2,0,features/protein_v4/pt/7m94/7m94_protein.pt,bd730edb5d39bc49,163,1,7m94__A
+test,7m95__A,7m95,A,164,164,2,2.41,x-ray diffraction,4.0,alpha,sigma intracellular receptor 2,0,features/protein_v4/pt/7m95/7m95_protein.pt,0627e901e0bee63c,164,1,7m95__A
+test,7m95__B,7m95,B,167,167,2,2.41,x-ray diffraction,4.0,alpha,sigma intracellular receptor 2,0,features/protein_v4/pt/7m95/7m95_protein.pt,6249b4320362e075,167,1,7m95__B
+test,7m96__A,7m96,A,166,166,2,2.41,x-ray diffraction,4.0,alpha,sigma intracellular receptor 2,0,features/protein_v4/pt/7m96/7m96_protein.pt,ae962e4735878eb9,166,2,7m96__A;7m96__B
+test,7mfi__A,7mfi,A,164,164,2,2.81,x-ray diffraction,4.0,alpha,sigma intracellular receptor 2,0,features/protein_v4/pt/7mfi/7mfi_protein.pt,482d78ee2d515547,164,1,7mfi__A
+test,7mfi__B,7mfi,B,164,164,2,2.81,x-ray diffraction,4.0,alpha,sigma intracellular receptor 2,0,features/protein_v4/pt/7mfi/7mfi_protein.pt,27654810ed0f5148,164,1,7mfi__B
+test,7mgl__A,7mgl,A,472,472,4,2.9,x-ray diffraction,6.0,alpha,mucolipin-1,0,features/protein_v4/pt/7mgl/7mgl_protein.pt,5817302a9d4e5f08,472,4,7mgl__A;7mgl__B;7mgl__C;7mgl__D
+test,7mh6__A,7mh6,A,103,103,2,2.85,x-ray diffraction,4.0,alpha,multidrug transporter emre,0,features/protein_v4/pt/7mh6/7mh6_protein.pt,2c4e76e88bebff37,103,4,7mh6__A;7mh6__B;7ssu__A;7sv9__A
+test,7mxy__A,7mxy,A,283,283,5,2.18,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/7mxy/7mxy_protein.pt,ee2e7c8a47d3a58c,283,1,7mxy__A
+test,7mxy__E,7mxy,E,281,281,5,2.18,x-ray diffraction,6.0,alpha,formate-nitrite transporter,0,features/protein_v4/pt/7mxy/7mxy_protein.pt,31cc97a85b55caec,281,1,7mxy__E
+test,7n0l__A,7n0l,A,313,313,2,2.8,x-ray diffraction,6.0,alpha,ion channel tacan,0,features/protein_v4/pt/7n0l/7n0l_protein.pt,1429ff80a0c8d99b,313,2,7n0l__A;7n0l__B
+test,7n4t__A,7n4t,A,229,229,7,2.4,x-ray diffraction,2.0,alpha,low conductance mechanosensitive channel ynai,0,features/protein_v4/pt/7n4t/7n4t_protein.pt,7005966aa5bd9932,229,7,7n4t__A;7n4t__B;7n4t__C;7n4t__D;7n4t__E;7n4t__F;7n4t__G
+test,7n5d__A,7n5d,A,386,386,7,2.8,x-ray diffraction,6.0,alpha,mechanosensitive ion channel flycatcher1,0,features/protein_v4/pt/7n5d/7n5d_protein.pt,74a0928f4cfa3322,386,1,7n5d__A
+test,7n5d__B,7n5d,B,371,371,7,2.8,x-ray diffraction,6.0,alpha,mechanosensitive ion channel flycatcher1,0,features/protein_v4/pt/7n5d/7n5d_protein.pt,241b94a5aa04c03b,371,6,7n5d__B;7n5d__C;7n5d__D;7n5d__E;7n5d__F;7n5d__G
+test,7n5e__A,7n5e,A,316,316,7,2.8,x-ray diffraction,3.0,alpha,mechanosensitive ion channel flycatcher1,0,features/protein_v4/pt/7n5e/7n5e_protein.pt,6b87729c51ab9961,316,1,7n5e__A
+test,7n5e__B,7n5e,B,310,310,7,2.8,x-ray diffraction,3.0,alpha,mechanosensitive ion channel flycatcher1,0,features/protein_v4/pt/7n5e/7n5e_protein.pt,f239f7de87309f08,310,6,7n5e__B;7n5e__C;7n5e__D;7n5e__E;7n5e__F;7n5e__G
+test,7n7p__A,7n7p,A,313,313,2,3.24,x-ray diffraction,6.0,alpha,ion channel tacan,0,features/protein_v4/pt/7n7p/7n7p_protein.pt,49566495f60d8acc,313,2,7n7p__A;7n7p__B
+test,7nhr__A,7nhr,A,663,663,8,2.85,x-ray diffraction,2.0,alpha,putative transmembrane protein wzc,0,features/protein_v4/pt/7nhr/7nhr_protein.pt,4c8447fc430ee47a,663,6,7nhr__A;7nhr__D;7nhr__F;7nii__A;7nii__D;7nii__F
+test,7nhr__B,7nhr,B,564,564,8,2.85,x-ray diffraction,2.0,alpha,putative transmembrane protein wzc,0,features/protein_v4/pt/7nhr/7nhr_protein.pt,35ed401c16f9087e,564,4,7nhr__B;7nhr__G;7nii__B;7nii__G
+test,7nhr__C,7nhr,C,565,565,8,2.85,x-ray diffraction,2.0,alpha,putative transmembrane protein wzc,0,features/protein_v4/pt/7nhr/7nhr_protein.pt,98367f8c8083f035,565,4,7nhr__C;7nhr__H;7nii__C;7nii__H
+test,7nhr__E,7nhr,E,525,525,8,2.85,x-ray diffraction,2.0,alpha,putative transmembrane protein wzc,0,features/protein_v4/pt/7nhr/7nhr_protein.pt,4463be581607c04f,525,2,7nhr__E;7nii__E
+test,7nhs__A,7nhs,A,522,522,8,2.3,x-ray diffraction,2.0,alpha,putative transmembrane protein wzc,0,features/protein_v4/pt/7nhs/7nhs_protein.pt,5b63e7c775bdd60e,522,16,7nhs__A;7nhs__B;7nhs__C;7nhs__D;7nhs__E;7nhs__F;7nhs__G;7nhs__H;7nih__A;7nih__B;7nih__C;7nih__D;7nih__E;7nih__F;7nih__G;7nih__H
+test,7ni2__A,7ni2,A,510,510,8,2.89,x-ray diffraction,2.0,alpha,tyrosine-protein kinase,0,features/protein_v4/pt/7ni2/7ni2_protein.pt,7aedbe456e5a1826,510,8,7ni2__A;7ni2__B;7ni2__C;7ni2__D;7ni2__E;7ni2__F;7ni2__G;7ni2__H
+test,7nkz__A,7nkz,A,455,455,2,2.5,x-ray diffraction,9.0,alpha,probable integral membrane cytochrome d ubiquinol oxidase (subunit i) cyda (cytochrome bd-i oxidase subunit i),0,features/protein_v4/pt/7nkz/7nkz_protein.pt,575acab20eabca1d,455,1,7nkz__A
+test,7nkz__B,7nkz,B,337,337,2,2.5,x-ray diffraction,9.0,alpha,probable integral membrane cytochrome d ubiquinol oxidase (subunit ii) cydb (cytochrome bd-i oxidase subunit ii),0,features/protein_v4/pt/7nkz/7nkz_protein.pt,d2080fe796b25a7b,337,1,7nkz__B
+test,7o0y__D,7o0y,D,267,267,5,3.3,x-ray diffraction,6.0,alpha,probable abc transporter permease protein nosy,0,features/protein_v4/pt/7o0y/7o0y_protein.pt,ac51d6675e3ffe70,267,2,7o0y__D;7osg__D
+test,7o0y__E,7o0y,E,248,248,5,3.3,x-ray diffraction,6.0,alpha,probable abc transporter permease protein nosy,0,features/protein_v4/pt/7o0y/7o0y_protein.pt,0b7c773bf65828e1,248,2,7o0y__E;7osg__E
+test,7oci__B,7oci,B,108,108,8,3.46,x-ray diffraction,3.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit ost2,0,features/protein_v4/pt/7oci/7oci_protein.pt,85b76e22a0c3a03d,108,1,7oci__B
+test,7oci__C,7oci,C,119,119,8,3.46,x-ray diffraction,3.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit ost6,0,features/protein_v4/pt/7oci/7oci_protein.pt,61bdb91ff9fe24d3,119,1,7oci__C
+test,7oci__F,7oci,F,639,639,8,3.46,x-ray diffraction,12.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit stt3,0,features/protein_v4/pt/7oci/7oci_protein.pt,a41d4e31df79af38,639,1,7oci__F
+test,7oci__H,7oci,H,258,258,8,3.46,x-ray diffraction,3.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit swp1,0,features/protein_v4/pt/7oci/7oci_protein.pt,1758a35f4a50981f,258,3,7oci__H;8agc__F;8age__F
+test,7ose__A,7ose,A,503,503,6,3.0,x-ray diffraction,9.0,alpha,cytochrome bd-ii ubiquinol oxidase subunit 1,0,features/protein_v4/pt/7ose/7ose_protein.pt,31acfb1d466de37e,503,2,7ose__A;7ose__D
+test,7ose__B,7ose,B,377,377,6,3.0,x-ray diffraction,9.0,alpha,appb protein,0,features/protein_v4/pt/7ose/7ose_protein.pt,774bdf2e6b27ea4d,377,2,7ose__B;7ose__E
+test,7ot9__A,7ot9,A,221,221,5,2.8,x-ray diffraction,8.0,alpha,ai-2e member ydik,0,features/protein_v4/pt/7ot9/7ot9_protein.pt,b2cb7008f750f5df,221,5,7ot9__A;7ot9__B;7ot9__C;7ot9__D;7ot9__E
+test,7oy2__B,7oy2,B,376,376,3,2.06,x-ray diffraction,9.0,alpha,cytochrome bd-ii ubiquinol oxidase subunit 2,0,features/protein_v4/pt/7oy2/7oy2_protein.pt,a48fb593c3d3ad71,376,1,7oy2__B
+test,7oy2__C,7oy2,C,454,454,3,2.06,x-ray diffraction,9.0,alpha,cytochrome bd-ii ubiquinol oxidase subunit 1,0,features/protein_v4/pt/7oy2/7oy2_protein.pt,63fa871ccaee72d5,454,1,7oy2__C
+test,7p1i__A,7p1i,A,442,442,2,3.15,x-ray diffraction,14.0,alpha,mitochondrial sodium/hydrogen exchanger 9b2,0,features/protein_v4/pt/7p1i/7p1i_protein.pt,35a17f128c9d218a,442,2,7p1i__A;7p1i__B
+test,7p1j__A,7p1j,A,434,434,2,3.04,x-ray diffraction,14.0,alpha,mitochondrial sodium/hydrogen exchanger 9b2,0,features/protein_v4/pt/7p1j/7p1j_protein.pt,dc4470f4bf4d0d9f,434,2,7p1j__A;7p1j__B
+test,7pgg__A,7pgg,A,147,147,4,2.85,x-ray diffraction,2.0,alpha,ion transport protein,1,features/protein_v4/pt/7pgg/7pgg_protein.pt,3a8c7cba6a9af2a8,147,4,7pgg__A;7pgg__B;7pgg__C;7pgg__D
+test,7pl9__A,7pl9,A,994,994,5,3.21,x-ray diffraction,20.0,alpha,rhodopsin,0,features/protein_v4/pt/7pl9/7pl9_protein.pt,e29ef74f90d04c58,994,5,7pl9__A;7pl9__B;7pl9__C;7pl9__D;7pl9__E
+test,7pow__A,7pow,A,201,201,2,2.51,x-ray diffraction,8.0,alpha,cdp-diacylglycerol--serine o-phosphatidyltransferase,0,features/protein_v4/pt/7pow/7pow_protein.pt,7032dc35ee37d58f,201,1,7pow__A
+test,7pow__B,7pow,B,205,205,2,2.51,x-ray diffraction,8.0,alpha,cdp-diacylglycerol--serine o-phosphatidyltransferase,0,features/protein_v4/pt/7pow/7pow_protein.pt,e95933d15999c8be,205,1,7pow__B
+test,7q3h__A,7q3h,A,559,559,5,3.2,x-ray diffraction,4.0,alpha,neur_chan_lbd domain-containing protein,0,features/protein_v4/pt/7q3h/7q3h_protein.pt,409ef69f6bf1f498,559,5,7q3h__A;7q3h__B;7q3h__C;7q3h__D;7q3h__E
+test,7qru__A,7qru,A,805,805,8,2.24,x-ray diffraction,21.0,alpha,na+/h+ antiporter subunit a,1,features/protein_v4/pt/7qru/7qru_protein.pt,611715ef1b35dd7b,805,1,7qru__A
+test,7qru__B,7qru,B,140,140,8,2.24,x-ray diffraction,4.0,alpha,na(+)/h(+) antiporter subunit b,0,features/protein_v4/pt/7qru/7qru_protein.pt,3c6691546afbd9f4,140,1,7qru__B
+test,7qru__C,7qru,C,112,112,8,2.24,x-ray diffraction,3.0,alpha,na(+)/h(+) antiporter subunit c,1,features/protein_v4/pt/7qru/7qru_protein.pt,01211b28199349a7,112,1,7qru__C
+test,7qru__D,7qru,D,491,491,8,2.24,x-ray diffraction,14.0,alpha,na+/h+ antiporter subunit d,0,features/protein_v4/pt/7qru/7qru_protein.pt,35fd46dbd724327e,491,1,7qru__D
+test,7qru__E,7qru,E,158,158,8,2.24,x-ray diffraction,2.0,alpha,na+/h+ antiporter subunit e,1,features/protein_v4/pt/7qru/7qru_protein.pt,4a6b8111cfb2c742,158,1,7qru__E
+test,7qru__F,7qru,F,91,91,8,2.24,x-ray diffraction,3.0,alpha,na(+)/h(+) antiporter subunit f,1,features/protein_v4/pt/7qru/7qru_protein.pt,ce1daa38983f5839,91,1,7qru__F
+test,7qru__G,7qru,G,113,113,8,2.24,x-ray diffraction,3.0,alpha,na+/h+ antiporter subunit g1,0,features/protein_v4/pt/7qru/7qru_protein.pt,7474d3f6dcd3715f,113,1,7qru__G
+test,7qru__e,7qru,e,47,47,8,2.24,x-ray diffraction,2.0,alpha,na+/h+ antiporter subunit e,0,features/protein_v4/pt/7qru/7qru_protein.pt,f830f001e7cee45e,47,1,7qru__e
+test,7rsh__A,7rsh,A,401,401,4,3.0,x-ray diffraction,6.0,alpha,sthk,0,features/protein_v4/pt/7rsh/7rsh_protein.pt,c7c703a186d9eaa6,401,4,7rsh__A;7rsh__B;7rsh__C;7rsh__D
+test,7rsl__A,7rsl,A,235,235,10,3.45,x-ray diffraction,2.0,alpha,seipin,0,features/protein_v4/pt/7rsl/7rsl_protein.pt,638d91ca16ff5772,235,10,7rsl__A;7rsl__B;7rsl__C;7rsl__D;7rsl__E;7rsl__F;7rsl__G;7rsl__H;7rsl__I;7rsl__J
+test,7rtf__A,7rtf,A,395,395,4,2.9,x-ray diffraction,6.0,alpha,sthk,0,features/protein_v4/pt/7rtf/7rtf_protein.pt,a7c70785e812ac18,395,4,7rtf__A;7rtf__B;7rtf__C;7rtf__D
+test,7saa__A,7saa,A,796,796,4,2.97,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/7saa/7saa_protein.pt,6c86416bacbda4b6,796,2,7saa__A;7saa__C
+test,7saa__B,7saa,B,786,786,4,2.97,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 2b",0,features/protein_v4/pt/7saa/7saa_protein.pt,7d311f396a44e4cc,786,4,7saa__B;7saa__D;9arf__B;9arf__D
+test,7shm__A,7shm,A,570,570,2,3.14,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7shm/7shm_protein.pt,f43b9bf9b834a394,570,1,7shm__A
+test,7shm__B,7shm,B,572,572,2,3.14,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7shm/7shm_protein.pt,1cfb3e37ea5422e3,572,1,7shm__B
+test,7shn__A,7shn,A,585,585,2,3.1,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7shn/7shn_protein.pt,11901a20394ecab7,585,1,7shn__A
+test,7shn__B,7shn,B,586,586,2,3.1,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7shn/7shn_protein.pt,64ece040c6b67790,586,1,7shn__B
+test,7sii__A,7sii,A,324,324,4,3.45,x-ray diffraction,4.0,alpha,stimulator of interferon genes protein,0,features/protein_v4/pt/7sii/7sii_protein.pt,21713e33596efc49,324,2,7sii__A;7sii__C
+test,7sii__B,7sii,B,319,319,4,3.45,x-ray diffraction,4.0,alpha,stimulator of interferon genes protein,0,features/protein_v4/pt/7sii/7sii_protein.pt,560763458cc10334,319,2,7sii__B;7sii__D
+test,7sq6__A,7sq6,A,467,467,4,2.32,x-ray diffraction,6.0,alpha,mucolipin-1,0,features/protein_v4/pt/7sq6/7sq6_protein.pt,f043092cff987db2,467,4,7sq6__A;7sq6__B;7sq6__C;7sq6__D
+test,7sq7__A,7sq7,A,463,463,4,2.41,x-ray diffraction,6.0,alpha,mucolipin-1,0,features/protein_v4/pt/7sq7/7sq7_protein.pt,e559e8879328849e,463,8,7sq7__A;7sq7__B;7sq7__C;7sq7__D;7sq8__A;7sq8__B;7sq8__C;7sq8__D
+test,7sq9__A,7sq9,A,469,469,4,2.11,x-ray diffraction,6.0,alpha,mucolipin-1,0,features/protein_v4/pt/7sq9/7sq9_protein.pt,10d373c7579f4484,469,4,7sq9__A;7sq9__B;7sq9__C;7sq9__D
+test,7ssu__B,7ssu,B,102,102,2,3.22,x-ray diffraction,4.0,alpha,multidrug transporter emre,0,features/protein_v4/pt/7ssu/7ssu_protein.pt,484a0df4935293ce,102,2,7ssu__B;7sv9__B
+test,7t92__A,7t92,A,298,298,3,3.1,x-ray diffraction,5.0,alpha,peroxin-2,0,features/protein_v4/pt/7t92/7t92_protein.pt,898a7e362b8cfef5,298,1,7t92__A
+test,7t92__B,7t92,B,360,360,3,3.1,x-ray diffraction,5.0,alpha,peroxin-12,0,features/protein_v4/pt/7t92/7t92_protein.pt,0ac454c8cd6f00ef,360,1,7t92__B
+test,7t92__C,7t92,C,317,317,3,3.1,x-ray diffraction,5.0,alpha,peroxin-10,0,features/protein_v4/pt/7t92/7t92_protein.pt,9a52a284f6ee61b8,317,1,7t92__C
+test,7tj6__A,7tj6,A,391,391,4,2.9,x-ray diffraction,6.0,alpha,"putative transcriptional regulator, crp/fnr family",0,features/protein_v4/pt/7tj6/7tj6_protein.pt,cc22d7c97f6eda02,391,4,7tj6__A;7tj6__B;7tj6__C;7tj6__D
+test,7u55__A,7u55,A,245,245,2,1.97,x-ray diffraction,7.0,alpha,heliorhodopsin,0,features/protein_v4/pt/7u55/7u55_protein.pt,2e302d7627a5f43d,245,2,7u55__A;7u55__B
+test,7uea__A,7uea,A,645,645,9,3.49,x-ray diffraction,11.0,alpha,"photosystem p840 reaction center, large subunit",0,features/protein_v4/pt/7uea/7uea_protein.pt,3ef4f8f979fcb722,645,1,7uea__A
+test,7uea__C,7uea,C,117,117,9,3.49,x-ray diffraction,3.0,alpha,cytochrome c,0,features/protein_v4/pt/7uea/7uea_protein.pt,438aa5bcdbec93b9,117,1,7uea__C
+test,7uea__a,7uea,a,633,633,9,3.49,x-ray diffraction,11.0,alpha,"photosystem p840 reaction center, large subunit",0,features/protein_v4/pt/7uea/7uea_protein.pt,84a131a0da1c6472,633,1,7uea__a
+test,7uea__c,7uea,c,105,105,9,3.49,x-ray diffraction,3.0,alpha,cytochrome c,0,features/protein_v4/pt/7uea/7uea_protein.pt,25dd927b059c4b9a,105,1,7uea__c
+test,7unm__A,7unm,A,368,368,2,2.61,x-ray diffraction,10.0,alpha,endosomal/lysosomal potassium channel tmem175,0,features/protein_v4/pt/7unm/7unm_protein.pt,f8e2dd1e8ff9f08b,368,2,7unm__A;7unm__B
+test,7usw__A,7usw,A,608,608,6,3.1,x-ray diffraction,10.0,alpha,transmembrane channel-like protein 1,0,features/protein_v4/pt/7usw/7usw_protein.pt,d3c17d96f3623fdc,608,2,7usw__A;7usw__B
+test,7usx__A,7usx,A,605,605,6,3.09,x-ray diffraction,10.0,alpha,transmembrane channel-like protein 1,0,features/protein_v4/pt/7usx/7usx_protein.pt,db46d6e69d3a07e9,605,2,7usx__A;7usx__B
+test,7ux1__A,7ux1,A,713,713,7,3.48,x-ray diffraction,11.0,alpha,mechanosensitive channel msck,0,features/protein_v4/pt/7ux1/7ux1_protein.pt,00c85274acdfd759,713,7,7ux1__A;7ux1__B;7ux1__C;7ux1__D;7ux1__E;7ux1__F;7ux1__G
+test,7vcf__A,7vcf,A,1496,1496,15,2.5,x-ray diffraction,6.0,alpha,tic214,0,features/protein_v4/pt/7vcf/7vcf_protein.pt,5e540843545ef4fe,1496,1,7vcf__A
+test,7vcf__H,7vcf,H,101,101,15,2.5,x-ray diffraction,2.0,alpha,ylmg,0,features/protein_v4/pt/7vcf/7vcf_protein.pt,aec03b65998bf8d8,101,1,7vcf__H
+test,7vcf__W,7vcf,W,164,164,15,2.5,x-ray diffraction,4.0,alpha,tic20-venus-flag,0,features/protein_v4/pt/7vcf/7vcf_protein.pt,2e94eae4f5d547e9,164,1,7vcf__W
+test,7vgr__A,7vgr,A,198,198,2,2.7,x-ray diffraction,3.0,alpha,membrane protein,0,features/protein_v4/pt/7vgr/7vgr_protein.pt,5aecd71f0ad3cc23,198,2,7vgr__A;7vgr__B
+test,7vgs__A,7vgs,A,196,196,2,2.8,x-ray diffraction,3.0,alpha,membrane protein,0,features/protein_v4/pt/7vgs/7vgs_protein.pt,da7a1236dec7c7fa,196,2,7vgs__A;7vgs__B
+test,7vlx__A,7vlx,A,247,247,6,3.12,x-ray diffraction,7.0,alpha,mannose/fructose/sorbose family pts transporter subunit iic,0,features/protein_v4/pt/7vlx/7vlx_protein.pt,5d055e3cdcc132ff,247,6,7vlx__A;7vlx__C;7vlx__Y;7vly__C;7vly__F;7vly__Y
+test,7vlx__B,7vlx,B,298,298,6,3.12,x-ray diffraction,5.0,alpha,pts mannose family transporter subunit iid,0,features/protein_v4/pt/7vlx/7vlx_protein.pt,ad18da5750b110ca,298,3,7vlx__B;7vlx__D;7vlx__Z
+test,7vly__D,7vly,D,297,297,9,2.45,x-ray diffraction,5.0,alpha,pts mannose family transporter subunit iid,0,features/protein_v4/pt/7vly/7vly_protein.pt,63c7f64a2ef1c458,297,3,7vly__D;7vly__G;7vly__Z
+test,7vr1__A,7vr1,A,598,598,2,3.4,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7vr1/7vr1_protein.pt,d1b8267149fc73e0,598,2,7vr1__A;7vr1__B
+test,7vx8__A,7vx8,A,560,560,2,2.8,x-ray diffraction,6.0,alpha,"peroxisomal membrane protein related,atp-binding cassette sub-family d member 1",0,features/protein_v4/pt/7vx8/7vx8_protein.pt,69a6721e77eb63e2,560,2,7vx8__A;7vx8__B
+test,7vzg__A,7vzg,A,854,854,12,2.61,x-ray diffraction,11.0,alpha,psca,0,features/protein_v4/pt/7vzg/7vzg_protein.pt,ffe790884a49831b,854,2,7vzg__A;7vzr__A
+test,7vzg__a,7vzg,a,858,858,12,2.61,x-ray diffraction,11.0,alpha,psca,1,features/protein_v4/pt/7vzg/7vzg_protein.pt,d3d65edfabde4e96,858,2,7vzg__a;7vzr__a
+test,7w72__A,7w72,A,588,588,5,3.1,x-ray diffraction,8.0,alpha,glycosylphosphatidylinositol anchor attachment 1 protein,0,features/protein_v4/pt/7w72/7w72_protein.pt,f344f27167826058,588,1,7w72__A
+test,7w72__S,7w72,S,533,533,5,3.1,x-ray diffraction,2.0,alpha,gpi transamidase component pig-s,1,features/protein_v4/pt/7w72/7w72_protein.pt,4589d14408c92301,533,1,7w72__S
+test,7w72__U,7w72,U,420,420,5,3.1,x-ray diffraction,10.0,alpha,phosphatidylinositol glycan anchor biosynthesis class u protein,1,features/protein_v4/pt/7w72/7w72_protein.pt,367624af2f8850f3,420,1,7w72__U
+test,7wld__G,7wld,G,583,583,5,2.53,x-ray diffraction,8.0,alpha,glycosylphosphatidylinositol anchor attachment 1 protein,0,features/protein_v4/pt/7wld/7wld_protein.pt,292624db38064d67,583,1,7wld__G
+test,7wld__S,7wld,S,532,532,5,2.53,x-ray diffraction,2.0,alpha,gpi transamidase component pig-s,0,features/protein_v4/pt/7wld/7wld_protein.pt,401cfc5854414a1f,532,1,7wld__S
+test,7wld__U,7wld,U,419,419,5,2.53,x-ray diffraction,12.0,alpha,phosphatidylinositol glycan anchor biosynthesis class u protein,0,features/protein_v4/pt/7wld/7wld_protein.pt,1141166f1d6e0e4a,419,1,7wld__U
+test,7wnq__A,7wnq,A,368,368,3,2.7,x-ray diffraction,10.0,alpha,guard cell s-type anion channel slac1,0,features/protein_v4/pt/7wnq/7wnq_protein.pt,58c42b14bc90d563,368,3,7wnq__A;7wnq__B;7wnq__C
+test,7x0t__A,7x0t,A,633,633,2,3.3,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7x0t/7x0t_protein.pt,6c022177770ca227,633,2,7x0t__A;7x0t__B
+test,7x0z__A,7x0z,A,576,576,2,2.96,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7x0z/7x0z_protein.pt,6e68f5c76e188109,576,1,7x0z__A
+test,7x0z__B,7x0z,B,580,580,2,2.96,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7x0z/7x0z_protein.pt,5d55cd02d3069bb3,580,1,7x0z__B
+test,7x1g__A,7x1g,A,676,676,2,2.94,x-ray diffraction,14.0,alpha,isoform 1 of solute carrier family 4 member 11,0,features/protein_v4/pt/7x1g/7x1g_protein.pt,3fefd1f4bba96587,676,4,7x1g__A;7x1g__B;7x1h__A;7x1h__B
+test,7x1i__A,7x1i,A,678,678,2,2.94,x-ray diffraction,14.0,alpha,isoform 1 of solute carrier family 4 member 11,0,features/protein_v4/pt/7x1i/7x1i_protein.pt,8b8008bfe638302e,678,4,7x1i__A;7x1i__B;7x1j__A;7x1j__B
+test,7x1w__A,7x1w,A,579,579,2,3.3,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7x1w/7x1w_protein.pt,8e9a7913ccbc5439,579,1,7x1w__A
+test,7x1w__B,7x1w,B,580,580,2,3.3,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7x1w/7x1w_protein.pt,c7920954ff4c49d2,580,1,7x1w__B
+test,7x2u__A,7x2u,A,541,541,4,3.2,x-ray diffraction,13.0,alpha,sodium/hydrogen exchanger 3,0,features/protein_v4/pt/7x2u/7x2u_protein.pt,727c365e00938f68,541,1,7x2u__A
+test,7x2u__B,7x2u,B,540,540,4,3.2,x-ray diffraction,13.0,alpha,sodium/hydrogen exchanger 3,0,features/protein_v4/pt/7x2u/7x2u_protein.pt,5ded236eec91741e,540,1,7x2u__B
+test,7x5v__A,7x5v,A,290,290,5,2.83,x-ray diffraction,6.0,alpha,"ion channel,gfp-twinstrep",0,features/protein_v4/pt/7x5v/7x5v_protein.pt,4ed24664ad9434b1,290,8,7x5v__A;7x5v__B;7x5v__C;7x5v__D;8j7h__A;8j7h__B;8j7h__C;8j7h__D
+test,7xec__A,7xec,A,597,597,2,3.34,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7xec/7xec_protein.pt,ed0643e9fb6978d7,597,1,7xec__A
+test,7xec__B,7xec,B,589,589,2,3.34,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7xec/7xec_protein.pt,bda3f3ec91c3f60b,589,1,7xec__B
+test,7xno__D,7xno,D,247,247,12,2.54,x-ray diffraction,7.0,alpha,mannose permease iic component,0,features/protein_v4/pt/7xno/7xno_protein.pt,98c3562bd937ba20,247,3,7xno__D;7xno__H;7xno__Y
+test,7xno__E,7xno,E,301,301,12,2.54,x-ray diffraction,5.0,alpha,mannose permease iid component,0,features/protein_v4/pt/7xno/7xno_protein.pt,b8bf8b3eae13cba4,301,3,7xno__E;7xno__I;7xno__Z
+test,7xtg__D,7xtg,D,248,248,12,2.2,x-ray diffraction,7.0,alpha,mannose permease iic component,1,features/protein_v4/pt/7xtg/7xtg_protein.pt,42c66510ee681c8d,248,3,7xtg__D;7xtg__H;7xtg__Y
+test,7xtg__E,7xtg,E,300,300,12,2.2,x-ray diffraction,5.0,alpha,mannose permease iid component,1,features/protein_v4/pt/7xtg/7xtg_protein.pt,96b61eba52499443,300,3,7xtg__E;7xtg__I;7xtg__Z
+test,7yfi__A,7yfi,A,749,749,4,3.3,x-ray diffraction,2.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/7yfi/7yfi_protein.pt,6c9b94ffc620db83,749,1,7yfi__A
+test,7yfi__B,7yfi,B,735,735,4,3.3,x-ray diffraction,2.0,alpha,glutamate receptor,0,features/protein_v4/pt/7yfi/7yfi_protein.pt,9f9aba6910852305,735,1,7yfi__B
+test,7yfi__C,7yfi,C,746,746,4,3.3,x-ray diffraction,2.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/7yfi/7yfi_protein.pt,84d39c9f2f7a32d3,746,1,7yfi__C
+test,7yfi__D,7yfi,D,750,750,4,3.3,x-ray diffraction,2.0,alpha,"glutamate receptor ionotropic, nmda 2c",0,features/protein_v4/pt/7yfi/7yfi_protein.pt,3d31241d3468e270,750,1,7yfi__D
+test,7yid__A,7yid,A,660,660,4,3.4,x-ray diffraction,5.0,alpha,potassium voltage-gated channel subfamily h member 5,0,features/protein_v4/pt/7yid/7yid_protein.pt,f78e23d7e6349666,660,8,7yid__A;7yid__B;7yid__C;7yid__D;7yie__A;7yie__B;7yie__C;7yie__D
+test,7ykr__A,7ykr,A,1035,1035,4,3.2,x-ray diffraction,6.0,alpha,transient receptor potential cation channel subfamily a member 1,0,features/protein_v4/pt/7ykr/7ykr_protein.pt,9018c30ace724c68,1035,4,7ykr__A;7ykr__B;7ykr__C;7ykr__D
+test,7yrq__A,7yrq,A,624,624,2,3.35,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7yrq/7yrq_protein.pt,c1eff87cae73db5f,624,1,7yrq__A
+test,7yrq__B,7yrq,B,623,623,2,3.35,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 1,0,features/protein_v4/pt/7yrq/7yrq_protein.pt,fd513e695c0b7ff9,623,1,7yrq__B
+test,7ytj__A,7ytj,A,119,119,5,3.0,x-ray diffraction,3.0,alpha,vacuolar transporter chaperone 1,0,features/protein_v4/pt/7ytj/7ytj_protein.pt,225ae86492a3e4ef,119,1,7ytj__A
+test,7ytj__B,7ytj,B,102,102,5,3.0,x-ray diffraction,3.0,alpha,vacuolar transporter chaperone 1,0,features/protein_v4/pt/7ytj/7ytj_protein.pt,970a1069200d4312,102,3,7ytj__B;7ytj__C;8i6v__A
+test,7ytj__D,7ytj,D,601,601,5,3.0,x-ray diffraction,3.0,alpha,vacuolar transporter chaperone 4,0,features/protein_v4/pt/7ytj/7ytj_protein.pt,4848e02f7c4bad19,601,1,7ytj__D
+test,7ytj__E,7ytj,E,650,650,5,3.0,x-ray diffraction,3.0,alpha,vacuolar transporter chaperone 3,0,features/protein_v4/pt/7ytj/7ytj_protein.pt,8122d04eef56eb3f,650,1,7ytj__E
+test,7ytw__A,7ytw,A,507,507,2,3.2,x-ray diffraction,14.0,alpha,solute carrier family 23 member 1,0,features/protein_v4/pt/7ytw/7ytw_protein.pt,b6772c216938d409,507,2,7ytw__A;7ytw__B
+test,7yvb__A,7yvb,A,471,471,3,2.9,x-ray diffraction,2.0,alpha,fmrfamide-gated na+ channel,0,features/protein_v4/pt/7yvb/7yvb_protein.pt,74b54c09cfa356a7,471,3,7yvb__A;7yvb__B;7yvb__C
+test,7yvc__A,7yvc,A,467,467,3,3.0,x-ray diffraction,2.0,alpha,fmrfamide-gated na+ channel,0,features/protein_v4/pt/7yvc/7yvc_protein.pt,62a53b67d8d6e7e6,467,3,7yvc__A;7yvc__B;7yvc__C
+test,7z6q__A,7z6q,A,667,667,12,2.5,x-ray diffraction,11.0,alpha,"photosystem p840 reaction center, large subunit",0,features/protein_v4/pt/7z6q/7z6q_protein.pt,269b5383423b5bdf,667,1,7z6q__A
+test,7z6q__C,7z6q,C,121,121,12,2.5,x-ray diffraction,3.0,alpha,cytochrome c,0,features/protein_v4/pt/7z6q/7z6q_protein.pt,02e0e5d4ca69c2bf,121,2,7z6q__C;7z6q__c
+test,7z6q__a,7z6q,a,654,654,12,2.5,x-ray diffraction,11.0,alpha,"photosystem p840 reaction center, large subunit",0,features/protein_v4/pt/7z6q/7z6q_protein.pt,2131fa8cf9421292,654,1,7z6q__a
+test,7znq__Y,7znq,Y,269,269,6,3.04,x-ray diffraction,6.0,alpha,probable abc transporter permease protein nosy,0,features/protein_v4/pt/7znq/7znq_protein.pt,379b86b8a3eaf4fe,269,1,7znq__Y
+test,7znq__y,7znq,y,250,250,6,3.04,x-ray diffraction,6.0,alpha,probable abc transporter permease protein nosy,0,features/protein_v4/pt/7znq/7znq_protein.pt,8490bb4df50ad5ea,250,1,7znq__y
+test,7zpo__I,7zpo,I,436,436,5,3.24,x-ray diffraction,9.0,alpha,ktr system potassium uptake protein b,0,features/protein_v4/pt/7zpo/7zpo_protein.pt,8f1ace829c2afcba,436,1,7zpo__I
+test,7zpo__M,7zpo,M,438,438,5,3.24,x-ray diffraction,9.0,alpha,ktr system potassium uptake protein b,0,features/protein_v4/pt/7zpo/7zpo_protein.pt,fb44227b8e13bc87,438,1,7zpo__M
+test,8agc__A,8agc,A,697,697,8,3.1,x-ray diffraction,13.0,alpha,dolichyl-diphosphooligosaccharide--protein glycotransferase,0,features/protein_v4/pt/8agc/8agc_protein.pt,42460a582c10a2d8,697,1,8agc__A
+test,8agc__D,8agc,D,109,109,8,3.1,x-ray diffraction,3.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit ost2,0,features/protein_v4/pt/8agc/8agc_protein.pt,8689e4160642c9a3,109,2,8agc__D;8age__D
+test,8agc__H,8agc,H,131,131,8,3.1,x-ray diffraction,3.0,alpha,ost3 isoform 1,0,features/protein_v4/pt/8agc/8agc_protein.pt,ad73b66463df04a8,131,1,8agc__H
+test,8age__A,8age,A,644,644,8,2.8,x-ray diffraction,12.0,alpha,dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit stt3,0,features/protein_v4/pt/8age/8age_protein.pt,7f508dbcc66e4b55,644,1,8age__A
+test,8age__H,8age,H,133,133,8,2.8,x-ray diffraction,3.0,alpha,ost3 isoform 1,0,features/protein_v4/pt/8age/8age_protein.pt,81d50035c576b318,133,1,8age__H
+test,8ap7__A,8ap7,A,231,231,15,2.7,x-ray diffraction,5.0,alpha,atp synthase subunit a,1,features/protein_v4/pt/8ap7/8ap7_protein.pt,bd87624bc388eab8,231,1,8ap7__A
+test,8ap7__J,8ap7,J,168,168,15,2.7,x-ray diffraction,2.0,alpha,atptb6,0,features/protein_v4/pt/8ap7/8ap7_protein.pt,8f58b05eb5ae5a9e,168,1,8ap7__J
+test,8ap7__M,8ap7,M,129,129,15,2.7,x-ray diffraction,2.0,alpha,subunit-g,0,features/protein_v4/pt/8ap7/8ap7_protein.pt,f419a36f9549a796,129,1,8ap7__M
+test,8ap7__Q,8ap7,Q,85,85,15,2.7,x-ray diffraction,2.0,alpha,atpeg3,0,features/protein_v4/pt/8ap7/8ap7_protein.pt,515b85b3124ace02,85,1,8ap7__Q
+test,8b4o__A,8b4o,A,442,442,2,2.0,x-ray diffraction,9.0,alpha,cytochrome bd ubiquinol oxidase subunit i,0,features/protein_v4/pt/8b4o/8b4o_protein.pt,f25f2ab8ac07c890,442,1,8b4o__A
+test,8b4o__B,8b4o,B,330,330,2,2.0,x-ray diffraction,9.0,alpha,cytochrome bd-type quinol oxidase subunit ii,0,features/protein_v4/pt/8b4o/8b4o_protein.pt,9ccfde2a8f764f16,330,1,8b4o__B
+test,8bhw__A,8bhw,A,332,332,8,3.2,x-ray diffraction,2.0,alpha,eca polysaccharide chain length modulation protein,0,features/protein_v4/pt/8bhw/8bhw_protein.pt,422be33cbab081f4,332,8,8bhw__A;8bhw__B;8bhw__C;8bhw__D;8bhw__E;8bhw__F;8bhw__G;8bhw__H
+test,8bxg__A,8bxg,A,547,547,2,3.16,x-ray diffraction,13.0,alpha,glutathione-regulated potassium-efflux system protein kefc,0,features/protein_v4/pt/8bxg/8bxg_protein.pt,f2081eef10bd8f85,547,1,8bxg__A
+test,8bxg__B,8bxg,B,546,546,2,3.16,x-ray diffraction,13.0,alpha,glutathione-regulated potassium-efflux system protein kefc,0,features/protein_v4/pt/8bxg/8bxg_protein.pt,b6142135654c7f08,546,2,8bxg__B;8by2__B
+test,8by2__A,8by2,A,548,548,2,3.18,x-ray diffraction,13.0,alpha,glutathione-regulated potassium-efflux system protein kefc,0,features/protein_v4/pt/8by2/8by2_protein.pt,5f8d243d60acc9bd,548,1,8by2__A
+test,8ce1__B,8ce1,B,219,219,8,3.47,x-ray diffraction,6.0,alpha,heme exporter protein b,0,features/protein_v4/pt/8ce1/8ce1_protein.pt,6c2865cb2fd160da,219,2,8ce1__B;8ce1__b
+test,8ce1__C,8ce1,C,241,241,8,3.47,x-ray diffraction,6.0,alpha,heme exporter protein c,0,features/protein_v4/pt/8ce1/8ce1_protein.pt,add2d49a28111da2,241,2,8ce1__C;8ce1__c
+test,8djb__A,8djb,A,317,317,8,3.18,x-ray diffraction,2.0,alpha,calcium-gated potassium channel mthk,0,features/protein_v4/pt/8djb/8djb_protein.pt,7f95d07af5b48d75,317,4,8djb__A;8djb__C;8djb__E;8djb__G
+test,8e7x__A,8e7x,A,157,157,2,2.1,x-ray diffraction,5.0,alpha,tryptophan-rich sensory protein,0,features/protein_v4/pt/8e7x/8e7x_protein.pt,95aaec6420835c83,157,3,8e7x__A;8e7y__A;8e7y__B
+test,8e7x__B,8e7x,B,156,156,2,2.1,x-ray diffraction,5.0,alpha,tryptophan-rich sensory protein,0,features/protein_v4/pt/8e7x/8e7x_protein.pt,a39066daa3c798c7,156,1,8e7x__B
+test,8e7z__A,8e7z,A,156,156,2,2.6,x-ray diffraction,5.0,alpha,tryptophan-rich sensory protein,0,features/protein_v4/pt/8e7z/8e7z_protein.pt,85907a9fdb4c1a94,156,1,8e7z__A
+test,8e7z__B,8e7z,B,155,155,2,2.6,x-ray diffraction,5.0,alpha,tryptophan-rich sensory protein,0,features/protein_v4/pt/8e7z/8e7z_protein.pt,5a4601c72eca3e5c,155,1,8e7z__B
+test,8e96__A,8e96,A,739,739,4,3.38,x-ray diffraction,2.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/8e96/8e96_protein.pt,8ec1516dcbf421c3,739,1,8e96__A
+test,8e96__B,8e96,B,685,685,4,3.38,x-ray diffraction,2.0,alpha,"glutamate receptor ionotropic, nmda 2d",0,features/protein_v4/pt/8e96/8e96_protein.pt,f0eee521b5d6abc8,685,1,8e96__B
+test,8e96__C,8e96,C,722,722,4,3.38,x-ray diffraction,2.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/8e96/8e96_protein.pt,0f0e2a63acabd8a8,722,1,8e96__C
+test,8e96__D,8e96,D,692,692,4,3.38,x-ray diffraction,2.0,alpha,"glutamate receptor ionotropic, nmda 2d",0,features/protein_v4/pt/8e96/8e96_protein.pt,431e05224fe27427,692,1,8e96__D
+test,8eqj__A,8eqj,A,192,192,2,3.0,x-ray diffraction,3.0,alpha,orf3a protein,0,features/protein_v4/pt/8eqj/8eqj_protein.pt,59ca845af7504c2b,192,2,8eqj__A;8eqj__B
+test,8eqs__A,8eqs,A,192,192,4,3.1,x-ray diffraction,3.0,alpha,orf3a protein,0,features/protein_v4/pt/8eqs/8eqs_protein.pt,a7fd55c2e31c4156,192,2,8eqs__A;8eqs__B
+test,8eqt__A,8eqt,A,191,191,2,3.4,x-ray diffraction,3.0,alpha,orf3a protein,0,features/protein_v4/pt/8eqt/8eqt_protein.pt,5f1665bc65fff87d,191,2,8eqt__A;8eqt__B
+test,8equ__A,8equ,A,191,191,2,2.8,x-ray diffraction,3.0,alpha,orf3a protein,0,features/protein_v4/pt/8equ/8equ_protein.pt,d7c84bf1273a261d,191,2,8equ__A;8equ__B
+test,8fdw__A,8fdw,A,508,508,3,2.9,x-ray diffraction,3.0,alpha,spike protein s2,0,features/protein_v4/pt/8fdw/8fdw_protein.pt,9cd84a8abf327503,508,3,8fdw__A;8fdw__B;8fdw__C
+test,8flm__A,8flm,A,318,318,2,2.9,x-ray diffraction,4.0,alpha,stimulator of interferon genes protein,0,features/protein_v4/pt/8flm/8flm_protein.pt,8fde59e0a2a3cccd,318,2,8flm__A;8flm__B
+test,8fyf__A,8fyf,A,387,387,4,3.4,x-ray diffraction,10.0,alpha,endosomal/lysosomal potassium channel tmem175,0,features/protein_v4/pt/8fyf/8fyf_protein.pt,f23aad0e8ad85341,387,2,8fyf__A;8fyf__B
+test,8fz7__A,8fz7,A,317,317,4,2.88,x-ray diffraction,2.0,alpha,calcium-gated potassium channel mthk,0,features/protein_v4/pt/8fz7/8fz7_protein.pt,b27c52520d81a8f8,317,4,8fz7__A;8fz7__C;8fz7__E;8fz7__G
+test,8g01__A,8g01,A,360,360,6,3.4,x-ray diffraction,10.0,alpha,phospho-n-acetylmuramoyl-pentapeptide-transferase,1,features/protein_v4/pt/8g01/8g01_protein.pt,c11ac4456a31431a,360,2,8g01__A;8g01__E
+test,8g27__C,8g27,C,717,717,3,3.3,x-ray diffraction,7.0,alpha,cellulose synthase,0,features/protein_v4/pt/8g27/8g27_protein.pt,bd4917b3a9082758,717,1,8g27__C
+test,8g27__D,8g27,D,694,694,3,3.3,x-ray diffraction,6.0,alpha,cellulose synthase,0,features/protein_v4/pt/8g27/8g27_protein.pt,3dae40f79fed620a,694,1,8g27__D
+test,8g27__I,8g27,I,718,718,3,3.3,x-ray diffraction,7.0,alpha,cellulose synthase,0,features/protein_v4/pt/8g27/8g27_protein.pt,c88b91da891f5e79,718,1,8g27__I
+test,8g2j__C,8g2j,C,719,719,3,3.3,x-ray diffraction,7.0,alpha,cellulose synthase,0,features/protein_v4/pt/8g2j/8g2j_protein.pt,c711c58d12fa12ce,719,1,8g2j__C
+test,8g2j__D,8g2j,D,718,718,3,3.3,x-ray diffraction,7.0,alpha,cellulose synthase,0,features/protein_v4/pt/8g2j/8g2j_protein.pt,02ab977aa0a1059e,718,1,8g2j__D
+test,8g2j__I,8g2j,I,720,720,3,3.3,x-ray diffraction,7.0,alpha,cellulose synthase,0,features/protein_v4/pt/8g2j/8g2j_protein.pt,3e7eb5d9b55b3803,720,1,8g2j__I
+test,8gt6__A,8gt6,A,309,309,2,3.47,x-ray diffraction,4.0,alpha,stimulator of interferon genes protein,0,features/protein_v4/pt/8gt6/8gt6_protein.pt,454550bed5ccf8ec,309,2,8gt6__A;8gt6__B
+test,8gw6__A,8gw6,A,367,367,3,3.3,x-ray diffraction,10.0,alpha,"guard cell s-type anion channel slac1,green fluorescent protein (fragment)",0,features/protein_v4/pt/8gw6/8gw6_protein.pt,0a2b7e13ec546197,367,3,8gw6__A;8gw6__B;8gw6__C
+test,8gw7__A,8gw7,A,315,315,3,3.3,x-ray diffraction,10.0,alpha,"guard cell s-type anion channel slac1,green fluorescent protein (fragment)",0,features/protein_v4/pt/8gw7/8gw7_protein.pt,f920caecea2cca41,315,3,8gw7__A;8gw7__B;8gw7__C
+test,8hfs__C,8hfs,C,248,248,8,2.98,x-ray diffraction,7.0,alpha,"mannose-specific pts system, iic component",0,features/protein_v4/pt/8hfs/8hfs_protein.pt,24510019388febc3,248,2,8hfs__C;8hfs__E
+test,8hfs__D,8hfs,D,302,302,8,2.98,x-ray diffraction,5.0,alpha,"mannose-specific pts system, iid component",0,features/protein_v4/pt/8hfs/8hfs_protein.pt,c02702945dd16100,302,2,8hfs__D;8hfs__F
+test,8hfs__Y,8hfs,Y,249,249,8,2.98,x-ray diffraction,7.0,alpha,"mannose-specific pts system, iic component",0,features/protein_v4/pt/8hfs/8hfs_protein.pt,35403ed5f1e015a7,249,1,8hfs__Y
+test,8hfs__Z,8hfs,Z,303,303,8,2.98,x-ray diffraction,5.0,alpha,"mannose-specific pts system, iid component",0,features/protein_v4/pt/8hfs/8hfs_protein.pt,34293e83aa16a25b,303,1,8hfs__Z
+test,8hip__A,8hip,A,647,647,2,2.77,x-ray diffraction,11.0,alpha,systemic rna interference defective protein 1,0,features/protein_v4/pt/8hip/8hip_protein.pt,594a6d3630103e40,647,2,8hip__A;8hip__B
+test,8hk7__A,8hk7,A,468,468,4,3.0,x-ray diffraction,6.0,alpha,polycystin-2,0,features/protein_v4/pt/8hk7/8hk7_protein.pt,2143519965462e25,468,4,8hk7__A;8hk7__B;8hk7__C;8hk7__D
+test,8i6v__B,8i6v,B,101,101,5,3.06,x-ray diffraction,3.0,alpha,vacuolar transporter chaperone complex subunit 1,0,features/protein_v4/pt/8i6v/8i6v_protein.pt,6069e53726c751c1,101,1,8i6v__B
+test,8i6v__C,8i6v,C,102,102,5,3.06,x-ray diffraction,3.0,alpha,vacuolar transporter chaperone complex subunit 1,0,features/protein_v4/pt/8i6v/8i6v_protein.pt,a0cba348798422b4,102,1,8i6v__C
+test,8i6v__D,8i6v,D,678,678,5,3.06,x-ray diffraction,3.0,alpha,vacuolar transporter chaperone 3 complex subunit 3,0,features/protein_v4/pt/8i6v/8i6v_protein.pt,74b0f3f34b3a1dec,678,1,8i6v__D
+test,8i6v__E,8i6v,E,611,611,5,3.06,x-ray diffraction,3.0,alpha,vacuolar transporter chaperone complex subunit 4,0,features/protein_v4/pt/8i6v/8i6v_protein.pt,0b759d4f7ffa0d07,611,1,8i6v__E
+test,8ik0__A,8ik0,A,319,319,2,3.3,x-ray diffraction,4.0,alpha,"stimulator of interferon genes protein,immune protein tsi3",0,features/protein_v4/pt/8ik0/8ik0_protein.pt,41047475a6796e5e,319,1,8ik0__A
+test,8ik0__B,8ik0,B,320,320,2,3.3,x-ray diffraction,4.0,alpha,"stimulator of interferon genes protein,immune protein tsi3",0,features/protein_v4/pt/8ik0/8ik0_protein.pt,cca2b239efae133d,320,1,8ik0__B
+test,8ik3__A,8ik3,A,328,328,2,3.3,x-ray diffraction,4.0,alpha,"stimulator of interferon genes protein,immune protein tsi3",0,features/protein_v4/pt/8ik3/8ik3_protein.pt,12e340b4ebe1af4e,328,1,8ik3__A
+test,8ik3__B,8ik3,B,327,327,2,3.3,x-ray diffraction,4.0,alpha,"stimulator of interferon genes protein,immune protein tsi3",0,features/protein_v4/pt/8ik3/8ik3_protein.pt,17f8538c2b5dadf2,327,1,8ik3__B
+test,8ip3__A,8ip3,A,319,319,5,2.6,x-ray diffraction,2.0,alpha,"magnesium transporter mrs2 homolog, mitochondrial",0,features/protein_v4/pt/8ip3/8ip3_protein.pt,d52bf4001c713aac,319,5,8ip3__A;8ip3__B;8ip3__C;8ip3__D;8ip3__E
+test,8ip4__A,8ip4,A,320,320,5,2.7,x-ray diffraction,2.0,alpha,"magnesium transporter mrs2 homolog, mitochondrial",0,features/protein_v4/pt/8ip4/8ip4_protein.pt,8718aeb255b11f71,320,15,8ip4__A;8ip4__B;8ip4__C;8ip4__D;8ip4__E;8ip5__A;8ip5__B;8ip5__C;8ip5__D;8ip5__E;8ip6__A;8ip6__B;8ip6__C;8ip6__D;8ip6__E
+test,8izd__A,8izd,A,315,315,4,3.09,x-ray diffraction,8.0,alpha,ceramide synthase lac1,0,features/protein_v4/pt/8izd/8izd_protein.pt,e38199c73f537a8a,315,4,8izd__A;8izd__C;8y2n__A;8y2n__C
+test,8j0j__A,8j0j,A,377,377,3,2.7,x-ray diffraction,10.0,alpha,"guard cell s-type anion channel slac1,green fluorescent protein",0,features/protein_v4/pt/8j0j/8j0j_protein.pt,12c8fa0980eba711,377,3,8j0j__A;8j0j__B;8j0j__C
+test,8j2g__A,8j2g,A,325,325,2,3.4,x-ray diffraction,6.0,alpha,proton-coupled zinc antiporter slc30a1,0,features/protein_v4/pt/8j2g/8j2g_protein.pt,69da6f0e16f3e840,325,2,8j2g__A;8j2g__B
+test,8j7f__A,8j7f,A,289,289,5,2.6,x-ray diffraction,6.0,alpha,"ion channel,voltage dependent ion channel,green fluorescent protein (fragment),voltage dependent ion channel,green fluorescent protein (fragment),ion transport domain-containing protein",1,features/protein_v4/pt/8j7f/8j7f_protein.pt,dc6fc93a4b1ab50b,289,4,8j7f__A;8j7f__B;8j7f__C;8j7f__D
+test,8j7m__A,8j7m,A,257,257,4,3.1,x-ray diffraction,6.0,alpha,"ion channel,voltage dependent ion channel,green fluorescent protein (fragment),voltage dependent ion channel,green fluorescent protein (fragment),voltage dependent ion channel,green fluorescent protein (fragment)",0,features/protein_v4/pt/8j7m/8j7m_protein.pt,7cb2841ac0a0950a,257,4,8j7m__A;8j7m__B;8j7m__C;8j7m__D
+test,8jec__A,8jec,A,653,653,4,3.1,x-ray diffraction,6.0,alpha,potassium channel skor,0,features/protein_v4/pt/8jec/8jec_protein.pt,1e06d9af02310a9c,653,2,8jec__A;8jec__C
+test,8jec__B,8jec,B,663,663,4,3.1,x-ray diffraction,6.0,alpha,potassium channel skor,0,features/protein_v4/pt/8jec/8jec_protein.pt,8de7266ed17c525a,663,2,8jec__B;8jec__D
+test,8jem__A,8jem,A,417,417,4,3.23,x-ray diffraction,10.0,alpha,teichoic acid d-alanyltransferase,0,features/protein_v4/pt/8jem/8jem_protein.pt,9eeaf6429e64d5cf,417,2,8jem__A;8jes__A
+test,8jem__B,8jem,B,419,419,4,3.23,x-ray diffraction,10.0,alpha,teichoic acid d-alanyltransferase,0,features/protein_v4/pt/8jem/8jem_protein.pt,774e604bcc30a256,419,6,8jem__B;8jem__C;8jem__D;8jes__B;8jes__C;8jes__D
+test,8jet__A,8jet,A,652,652,4,3.1,x-ray diffraction,6.0,alpha,potassium channel skor,0,features/protein_v4/pt/8jet/8jet_protein.pt,33b11487f17f4470,652,2,8jet__A;8jet__C
+test,8jet__B,8jet,B,654,654,4,3.1,x-ray diffraction,6.0,alpha,potassium channel skor,0,features/protein_v4/pt/8jet/8jet_protein.pt,5f2b37938fd966f4,654,2,8jet__B;8jet__D
+test,8jew__A,8jew,A,512,512,2,2.49,x-ray diffraction,14.0,alpha,solute carrier family 23 member 1,0,features/protein_v4/pt/8jew/8jew_protein.pt,33fb547c9cc0801c,512,2,8jew__A;8jew__B
+test,8jez__A,8jez,A,513,513,2,2.6,x-ray diffraction,14.0,alpha,solute carrier family 23 member 1,0,features/protein_v4/pt/8jez/8jez_protein.pt,20e6a43f745a9b97,513,2,8jez__A;8jez__C
+test,8jf1__A,8jf1,A,513,513,2,2.85,x-ray diffraction,14.0,alpha,solute carrier family 23 member 1,0,features/protein_v4/pt/8jf1/8jf1_protein.pt,167440e10588ab0a,513,2,8jf1__A;8jf1__B
+test,8jlf__A,8jlf,A,592,592,2,3.01,x-ray diffraction,12.0,alpha,synaptic vesicle glycoprotein 2a,0,features/protein_v4/pt/8jlf/8jlf_protein.pt,15877f4f58d2339d,592,3,8jlf__A;8jlh__A;8js8__A
+test,8jv5__A,8jv5,A,316,316,3,3.23,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/8jv5/8jv5_protein.pt,796d072fa93c3f7d,316,5,8jv5__A;8jv5__B;8jv6__A;8jv6__B;8jv6__C
+test,8jv5__C,8jv5,C,317,317,3,3.23,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/8jv5/8jv5_protein.pt,7c6ec7dfc2f98213,317,1,8jv5__C
+test,8jv8__A,8jv8,A,320,320,3,3.34,x-ray diffraction,2.0,alpha,p2x purinoceptor,0,features/protein_v4/pt/8jv8/8jv8_protein.pt,ca803bc531aaf9c6,320,3,8jv8__A;8jv8__B;8jv8__C
+test,8jwe__A,8jwe,A,281,281,7,2.74,x-ray diffraction,4.0,alpha,mechanosensitive ion channel protein 10,0,features/protein_v4/pt/8jwe/8jwe_protein.pt,8a60f485d3c7f424,281,7,8jwe__A;8jwe__B;8jwe__C;8jwe__D;8jwe__E;8jwe__F;8jwe__G
+test,8jzu__A,8jzu,A,474,474,2,3.05,x-ray diffraction,12.0,alpha,lysosomal transporter,0,features/protein_v4/pt/8jzu/8jzu_protein.pt,1663e335ac88a9cd,474,1,8jzu__A
+test,8k1s__K,8k1s,K,407,407,10,2.83,x-ray diffraction,9.0,alpha,ktr system potassium uptake protein b,0,features/protein_v4/pt/8k1s/8k1s_protein.pt,514ed0e5eaf87920,407,2,8k1s__K;8k1s__L
+test,8k1t__I,8k1t,I,431,431,10,2.48,x-ray diffraction,9.0,alpha,ktr system potassium uptake protein b,0,features/protein_v4/pt/8k1t/8k1t_protein.pt,d923f4ec8ce46036,431,8,8k1t__I;8k1t__J;8k1u__I;8k1u__J;8xmh__K;8xmh__L;8xmi__K;8xmi__L
+test,8k3s__A,8k3s,A,466,466,4,3.0,x-ray diffraction,6.0,alpha,polycystin-2,0,features/protein_v4/pt/8k3s/8k3s_protein.pt,aa154e06e496710d,466,4,8k3s__A;8k3s__B;8k3s__C;8k3s__D
+test,8k9e__C,8k9e,C,449,449,8,3.33,x-ray diffraction,10.0,alpha,polysulphide reductase nrfd,0,features/protein_v4/pt/8k9e/8k9e_protein.pt,f57db962d4a350fc,449,4,8k9e__C;8k9f__C;8x2j__C;9ilt__C
+test,8k9e__D,8k9e,D,175,175,8,3.33,x-ray diffraction,2.0,alpha,quinol:cytochrome c oxidoreductase membrane protein,0,features/protein_v4/pt/8k9e/8k9e_protein.pt,853082f3b42c7c32,175,4,8k9e__D;8k9f__D;8x2j__D;9ilt__D
+test,8k9e__F,8k9e,F,397,397,8,3.33,x-ray diffraction,10.0,alpha,quinol:cytochrome c oxidoreductase quinone-binding subunit 2,0,features/protein_v4/pt/8k9e/8k9e_protein.pt,c010f359d7264635,397,3,8k9e__F;8k9f__F;8x2j__F
+test,8on7__A,8on7,A,525,525,3,2.5,x-ray diffraction,2.0,alpha,fmrfamide-gated sodium channel 1 (fanac1),0,features/protein_v4/pt/8on7/8on7_protein.pt,475d7f3af6d1a19b,525,3,8on7__A;8on7__B;8on7__C
+test,8on8__A,8on8,A,524,524,3,2.7,x-ray diffraction,2.0,alpha,fmrfamide-gated sodium channel 1,0,features/protein_v4/pt/8on8/8on8_protein.pt,9ca360d59c8f22e4,524,3,8on8__A;8on8__B;8on8__C
+test,8on9__A,8on9,A,524,524,3,2.4,x-ray diffraction,3.0,alpha,fmrfamide-gated sodium channel 1 (fanac1),0,features/protein_v4/pt/8on9/8on9_protein.pt,f41817ffc6c61ad2,524,3,8on9__A;8on9__B;8on9__C
+test,8ona__A,8ona,A,523,523,3,3.0,x-ray diffraction,3.0,alpha,fmrfamide-gated sodium channel 1 (fanac1),0,features/protein_v4/pt/8ona/8ona_protein.pt,0e005e6e1ab43993,523,3,8ona__A;8ona__B;8ona__C
+test,8p1u__A,8p1u,A,370,370,5,3.3,x-ray diffraction,10.0,alpha,probable peptidoglycan glycosyltransferase ftsw,0,features/protein_v4/pt/8p1u/8p1u_protein.pt,98d059e2beecb7bb,370,1,8p1u__A
+test,8p3o__A,8p3o,A,332,332,8,2.9,x-ray diffraction,2.0,alpha,eca polysaccharide chain length modulation protein,0,features/protein_v4/pt/8p3o/8p3o_protein.pt,2646d2996bc11b31,332,8,8p3o__A;8p3o__B;8p3o__C;8p3o__D;8p3o__E;8p3o__F;8p3o__G;8p3o__H
+test,8p3p__A,8p3p,A,332,332,8,2.5,x-ray diffraction,2.0,alpha,eca polysaccharide chain length modulation protein,0,features/protein_v4/pt/8p3p/8p3p_protein.pt,4047da5a4f2ad1aa,332,8,8p3p__A;8p3p__B;8p3p__C;8p3p__D;8p3p__E;8p3p__F;8p3p__G;8p3p__H
+test,8ps0__A,8ps0,A,372,372,2,3.37,x-ray diffraction,12.0,alpha,na(+)/h(+) antiporter nhaa,0,features/protein_v4/pt/8ps0/8ps0_protein.pt,170eb83b3713aa89,372,2,8ps0__A;8ps0__B
+test,8px9__A,8px9,A,557,557,2,2.8,x-ray diffraction,6.0,alpha,microcin-j25 export atp-binding/permease protein mcjd,0,features/protein_v4/pt/8px9/8px9_protein.pt,2aa0bc658e58cc13,557,1,8px9__A
+test,8px9__B,8px9,B,567,567,2,2.8,x-ray diffraction,6.0,alpha,microcin-j25 export atp-binding/permease protein mcjd,0,features/protein_v4/pt/8px9/8px9_protein.pt,0a19ea0b6b34a9fa,567,1,8px9__B
+test,8q3v__C,8q3v,C,254,254,21,2.08,x-ray diffraction,8.0,alpha,tetrahydromethanopterin s-methyltransferase subunit c,0,features/protein_v4/pt/8q3v/8q3v_protein.pt,ba4f68fd030c85f0,254,2,8q3v__C;8q3v__S
+test,8q3v__D,8q3v,D,233,233,21,2.08,x-ray diffraction,6.0,alpha,tetrahydromethanopterin s-methyltransferase subunit d,1,features/protein_v4/pt/8q3v/8q3v_protein.pt,ef8e588a171a7521,233,3,8q3v__D;8q3v__T;8q3v__d
+test,8q3v__E,8q3v,E,294,294,21,2.08,x-ray diffraction,7.0,alpha,tetrahydromethanopterin s-methyltransferase subunit e,0,features/protein_v4/pt/8q3v/8q3v_protein.pt,e8de6f6736a99d41,294,3,8q3v__E;8q3v__U;8q3v__e
+test,8q3v__c,8q3v,c,253,253,21,2.08,x-ray diffraction,8.0,alpha,tetrahydromethanopterin s-methyltransferase subunit c,0,features/protein_v4/pt/8q3v/8q3v_protein.pt,6c5d31d8355d8be8,253,1,8q3v__c
+test,8q8p__A,8q8p,A,317,317,5,2.68,x-ray diffraction,2.0,alpha,magnesium channel mrs2,0,features/protein_v4/pt/8q8p/8q8p_protein.pt,c4d99bddc89d1ad7,317,5,8q8p__A;8q8p__B;8q8p__C;8q8p__D;8q8p__E
+test,8q8q__A,8q8q,A,315,315,5,3.22,x-ray diffraction,2.0,alpha,magnesium channel mrs2,0,features/protein_v4/pt/8q8q/8q8q_protein.pt,fd447680edc678c9,315,5,8q8q__A;8q8q__B;8q8q__C;8q8q__D;8q8q__E
+test,8qsk__A,8qsk,A,523,523,2,3.3,x-ray diffraction,12.0,alpha,solute carrier family 15 member 4,0,features/protein_v4/pt/8qsk/8qsk_protein.pt,6a25651cafdb25c3,523,4,8qsk__A;8qsk__C;8qsl__A;8qsl__C
+test,8qsr__A,8qsr,A,383,383,2,2.56,x-ray diffraction,11.0,alpha,pts system glucose-specific eiicb component,0,features/protein_v4/pt/8qsr/8qsr_protein.pt,4cb44eb29fde81ba,383,6,8qsr__A;8qsr__B;8qst__A;8qst__B;9hnp__A;9hnp__B
+test,8qtn__A,8qtn,A,309,309,4,3.0,x-ray diffraction,8.0,alpha,ceramide synthase lag1,1,features/protein_v4/pt/8qtn/8qtn_protein.pt,dd727db275fd8d61,309,2,8qtn__A;8qtr__A
+test,8qtn__B,8qtn,B,305,305,4,3.0,x-ray diffraction,8.0,alpha,ceramide synthase lac1,1,features/protein_v4/pt/8qtn/8qtn_protein.pt,fd41350474c82750,305,1,8qtn__B
+test,8qtr__B,8qtr,B,302,302,3,3.2,x-ray diffraction,8.0,alpha,ceramide synthase lac1,1,features/protein_v4/pt/8qtr/8qtr_protein.pt,b45814108dcd3b69,302,1,8qtr__B
+test,8r33__A,8r33,A,489,489,2,2.29,x-ray diffraction,11.0,alpha,pho90 isoform 1,0,features/protein_v4/pt/8r33/8r33_protein.pt,532d72e7dd2bdca5,489,2,8r33__A;8r33__B
+test,8r34__A,8r34,A,485,485,2,2.62,x-ray diffraction,11.0,alpha,low-affinity phosphate transporter pho90,0,features/protein_v4/pt/8r34/8r34_protein.pt,f8d35f39e43cac1e,485,2,8r34__A;8r34__B
+test,8r35__A,8r35,A,471,471,2,3.12,x-ray diffraction,11.0,alpha,low-affinity phosphate transporter pho90,0,features/protein_v4/pt/8r35/8r35_protein.pt,8c9d11bedf389915,471,1,8r35__A
+test,8r35__B,8r35,B,482,482,2,3.12,x-ray diffraction,11.0,alpha,low-affinity phosphate transporter pho90,0,features/protein_v4/pt/8r35/8r35_protein.pt,145831dc81f6d316,482,1,8r35__B
+test,8r96__A,8r96,A,288,288,5,2.46,x-ray diffraction,7.0,alpha,cryorhodopsin,0,features/protein_v4/pt/8r96/8r96_protein.pt,f5945d6370ea59ff,288,3,8r96__A;8r97__D;8r98__D
+test,8r96__B,8r96,B,290,290,5,2.46,x-ray diffraction,7.0,alpha,cryorhodopsin,0,features/protein_v4/pt/8r96/8r96_protein.pt,d1815c2f26f8aa06,290,1,8r96__B
+test,8r96__C,8r96,C,287,287,5,2.46,x-ray diffraction,7.0,alpha,cryorhodopsin,0,features/protein_v4/pt/8r96/8r96_protein.pt,481c43f64c3d1349,287,4,8r96__C;8r97__A;8r97__C;8r98__C
+test,8r96__D,8r96,D,289,289,5,2.46,x-ray diffraction,7.0,alpha,cryorhodopsin,0,features/protein_v4/pt/8r96/8r96_protein.pt,6ce94e5c08106835,289,1,8r96__D
+test,8r96__E,8r96,E,286,286,5,2.46,x-ray diffraction,7.0,alpha,cryorhodopsin,0,features/protein_v4/pt/8r96/8r96_protein.pt,72c5c2555d6b8bb8,286,3,8r96__E;8r97__E;8r98__E
+test,8r97__B,8r97,B,288,288,5,3.0,x-ray diffraction,7.0,alpha,cryorhodopsin cryor2,0,features/protein_v4/pt/8r97/8r97_protein.pt,cb41b07040c2517c,288,2,8r97__B;8r98__B
+test,8r98__A,8r98,A,285,285,5,3.0,x-ray diffraction,7.0,alpha,cryorhodopsin cryor2,0,features/protein_v4/pt/8r98/8r98_protein.pt,62b78532f1b12496,285,1,8r98__A
+test,8rt9__F,8rt9,F,272,272,10,2.97,x-ray diffraction,4.0,alpha,trwi protein,0,features/protein_v4/pt/8rt9/8rt9_protein.pt,b6375317d7c32164,272,5,8rt9__F;8rt9__G;8rt9__H;8rt9__I;8rt9__J
+test,8snl__B,8snl,B,491,491,2,2.78,x-ray diffraction,7.0,alpha,inactive rhomboid protein 2,0,features/protein_v4/pt/8snl/8snl_protein.pt,10985dff87791a65,491,3,8snl__B;8snn__B;8sno__B
+test,8t03__A,8t03,A,199,199,2,2.72,x-ray diffraction,7.0,alpha,protein myomaker,0,features/protein_v4/pt/8t03/8t03_protein.pt,ec20892abe956cf1,199,4,8t03__A;8t03__B;8t04__A;8t04__B
+test,8t05__A,8t05,A,201,201,2,3.22,x-ray diffraction,7.0,alpha,myomaker,0,features/protein_v4/pt/8t05/8t05_protein.pt,3150446c1c33d304,201,2,8t05__A;8t05__B
+test,8t06__A,8t06,A,199,199,2,3.32,x-ray diffraction,7.0,alpha,protein myomaker,0,features/protein_v4/pt/8t06/8t06_protein.pt,abeab5f1f2587bda,199,2,8t06__A;8t06__B
+test,8t07__A,8t07,A,199,199,2,3.38,x-ray diffraction,7.0,alpha,protein myomaker,0,features/protein_v4/pt/8t07/8t07_protein.pt,0bb351edfb5b5a6f,199,2,8t07__A;8t07__B
+test,8ta2__A,8ta2,A,460,460,2,2.74,x-ray diffraction,12.0,alpha,chloride channel protein 2,0,features/protein_v4/pt/8ta2/8ta2_protein.pt,3b3c7a1a65df74bd,460,1,8ta2__A
+test,8ta2__B,8ta2,B,466,466,2,2.74,x-ray diffraction,12.0,alpha,chloride channel protein 2,0,features/protein_v4/pt/8ta2/8ta2_protein.pt,a6f6e999deb837f7,466,1,8ta2__B
+test,8ta3__A,8ta3,A,470,470,2,2.46,x-ray diffraction,12.0,alpha,chloride channel protein 2,0,features/protein_v4/pt/8ta3/8ta3_protein.pt,e1dc96eb4bc90ba7,470,1,8ta3__A
+test,8ta3__B,8ta3,B,472,472,2,2.46,x-ray diffraction,12.0,alpha,chloride channel protein 2,0,features/protein_v4/pt/8ta3/8ta3_protein.pt,68dde8c07bda6567,472,1,8ta3__B
+test,8teg__A,8teg,A,539,539,2,2.15,x-ray diffraction,14.0,alpha,boron transporter 1,0,features/protein_v4/pt/8teg/8teg_protein.pt,626f3c8804137634,539,1,8teg__A
+test,8teh__A,8teh,A,554,554,2,2.3,x-ray diffraction,14.0,alpha,boron transporter 1,0,features/protein_v4/pt/8teh/8teh_protein.pt,f92a4139050be8c5,554,4,8teh__A;8teh__B;8tei__A;8tei__B
+test,8tel__A,8tel,A,494,494,2,2.77,x-ray diffraction,12.0,alpha,boron transporter 1,0,features/protein_v4/pt/8tel/8tel_protein.pt,e1fcb11ae822ec8a,494,3,8tel__A;8tel__B;8ten__A
+test,8tem__A,8tem,A,505,505,2,3.02,x-ray diffraction,14.0,alpha,boron transporter 1,0,features/protein_v4/pt/8tem/8tem_protein.pt,c7718ded72f92afe,505,2,8tem__A;8tem__B
+test,8ten__B,8ten,B,502,502,2,2.98,x-ray diffraction,14.0,alpha,boron transporter 1,0,features/protein_v4/pt/8ten/8ten_protein.pt,958ac7668c9fd811,502,1,8ten__B
+test,8tj3__B,8tj3,B,341,341,2,3.2,x-ray diffraction,10.0,alpha,peptidoglycan glycosyltransferase mrdb,0,features/protein_v4/pt/8tj3/8tj3_protein.pt,704061621ab03dd1,341,1,8tj3__B
+test,8tkp__A,8tkp,A,614,614,6,2.9,x-ray diffraction,10.0,alpha,transmembrane channel-like protein 2,0,features/protein_v4/pt/8tkp/8tkp_protein.pt,b6fe084c2b734064,614,2,8tkp__A;8tkp__D
+test,8tr5__A,8tr5,A,553,553,3,2.53,x-ray diffraction,2.0,alpha,p2x purinoceptor 7,0,features/protein_v4/pt/8tr5/8tr5_protein.pt,3f33583c9dcdead0,553,3,8tr5__A;8tr5__B;8tr5__C
+test,8tr6__A,8tr6,A,555,555,3,2.18,x-ray diffraction,2.0,alpha,p2x purinoceptor 7,0,features/protein_v4/pt/8tr6/8tr6_protein.pt,cf4c4b362bb1fd0d,555,9,8tr6__A;8tr6__B;8tr6__C;8tr7__A;8tr7__B;8tr7__C;8tra__A;8tra__B;8tra__C
+test,8tr8__A,8tr8,A,552,552,3,2.21,x-ray diffraction,2.0,alpha,p2x purinoceptor 7,0,features/protein_v4/pt/8tr8/8tr8_protein.pt,d8a8f95798398847,552,3,8tr8__A;8tr8__B;8tr8__C
+test,8trk__A,8trk,A,553,553,3,2.69,x-ray diffraction,2.0,alpha,p2x purinoceptor 7,0,features/protein_v4/pt/8trk/8trk_protein.pt,6b6c0add74c99f54,553,3,8trk__A;8trk__B;8trk__C
+test,8ts1__A,8ts1,A,301,301,5,2.92,x-ray diffraction,2.0,alpha,"magnesium transporter mrs2 homolog, mitochondrial, soluble cytochrome b562 fusion protein",0,features/protein_v4/pt/8ts1/8ts1_protein.pt,6071a8e9f21facaf,301,15,8ts1__A;8ts1__B;8ts1__C;8ts1__D;8ts1__E;8ts2__A;8ts2__B;8ts2__C;8ts2__D;8ts2__E;8ts3__A;8ts3__B;8ts3__C;8ts3__D;8ts3__E
+test,8tul__A,8tul,A,317,317,5,2.8,x-ray diffraction,2.0,alpha,"magnesium transporter mrs2 homolog, mitochondrial",0,features/protein_v4/pt/8tul/8tul_protein.pt,67676a0bc25d5891,317,5,8tul__A;8tul__B;8tul__C;8tul__D;8tul__E
+test,8tup__A,8tup,A,318,318,5,3.3,x-ray diffraction,2.0,alpha,"magnesium transporter mrs2 homolog, mitochondrial",0,features/protein_v4/pt/8tup/8tup_protein.pt,4873d6e981ceb92a,318,5,8tup__A;8tup__B;8tup__C;8tup__D;8tup__E
+test,8u4v__A,8u4v,A,180,180,2,2.99,x-ray diffraction,4.0,alpha,claudin-4,0,features/protein_v4/pt/8u4v/8u4v_protein.pt,ada1f5ab1979e546,180,2,8u4v__A;9cmi__A
+test,8ug6__A,8ug6,A,400,400,2,3.06,x-ray diffraction,12.0,alpha,proton channel otop2,0,features/protein_v4/pt/8ug6/8ug6_protein.pt,2382ea1c9aa5a2b1,400,2,8ug6__A;8ug6__B
+test,8ug7__A,8ug7,A,393,393,2,2.95,x-ray diffraction,12.0,alpha,proton channel otop2,0,features/protein_v4/pt/8ug7/8ug7_protein.pt,24a426857b5769f7,393,2,8ug7__A;8ug7__B
+test,8uga__A,8uga,A,395,395,2,3.12,x-ray diffraction,12.0,alpha,proton channel otop2,0,features/protein_v4/pt/8uga/8uga_protein.pt,a2eb92155e4d32e7,395,2,8uga__A;8uga__B
+test,8uvt__A,8uvt,A,386,386,4,2.9,x-ray diffraction,7.0,alpha,gustatory receptor,0,features/protein_v4/pt/8uvt/8uvt_protein.pt,16c5c43bbfc41d61,386,4,8uvt__A;8uvt__B;8uvt__C;8uvt__D
+test,8uvu__A,8uvu,A,379,379,4,3.0,x-ray diffraction,7.0,alpha,gustatory receptor,0,features/protein_v4/pt/8uvu/8uvu_protein.pt,1d8da718e9b07c31,379,4,8uvu__A;8uvu__B;8uvu__C;8uvu__D
+test,8v00__A,8v00,A,394,394,4,2.88,x-ray diffraction,7.0,alpha,odorant receptor orco,0,features/protein_v4/pt/8v00/8v00_protein.pt,83f755dce4bb6922,394,3,8v00__A;8v00__B;8v00__C
+test,8v00__D,8v00,D,375,375,4,2.88,x-ray diffraction,7.0,alpha,odorant receptor or10,1,features/protein_v4/pt/8v00/8v00_protein.pt,5e4fce66ccbf2d17,375,2,8v00__D;8v02__D
+test,8v02__A,8v02,A,391,391,4,2.9,x-ray diffraction,7.0,alpha,odorant receptor orco,0,features/protein_v4/pt/8v02/8v02_protein.pt,313518b9daf4769d,391,3,8v02__A;8v02__B;8v02__C
+test,8v3c__A,8v3c,A,393,393,4,2.62,x-ray diffraction,7.0,alpha,odorant receptor orco,0,features/protein_v4/pt/8v3c/8v3c_protein.pt,0102f4517b0188a2,393,3,8v3c__A;8v3c__B;8v3c__C
+test,8v3c__D,8v3c,D,395,395,4,2.62,x-ray diffraction,7.0,alpha,or28,0,features/protein_v4/pt/8v3c/8v3c_protein.pt,325bad725e16afc5,395,1,8v3c__D
+test,8v4s__A,8v4s,A,552,552,3,2.49,x-ray diffraction,2.0,alpha,p2x purinoceptor 7,0,features/protein_v4/pt/8v4s/8v4s_protein.pt,bd75aa5c4b3e426b,552,3,8v4s__A;8v4s__B;8v4s__C
+test,8vc1__A,8vc1,A,391,391,4,2.85,x-ray diffraction,7.0,alpha,gustatory receptor,0,features/protein_v4/pt/8vc1/8vc1_protein.pt,c1b2ddf76af12d9a,391,4,8vc1__A;8vc1__B;8vc1__C;8vc1__D
+test,8vht__A,8vht,A,685,685,3,3.2,x-ray diffraction,6.0,alpha,cellulose synthase,0,features/protein_v4/pt/8vht/8vht_protein.pt,88d820ae1ccf01b6,685,3,8vht__A;8vht__B;8vht__D
+test,8vhz__A,8vhz,A,714,714,3,3.3,x-ray diffraction,7.0,alpha,cellulose synthase,0,features/protein_v4/pt/8vhz/8vhz_protein.pt,1de9bd893729ab8a,714,3,8vhz__A;8vhz__B;8vhz__C
+test,8vi0__A,8vi0,A,724,724,3,3.0,x-ray diffraction,7.0,alpha,cellulose synthase,0,features/protein_v4/pt/8vi0/8vi0_protein.pt,3d589b13c8940055,724,2,8vi0__A;8vi0__D
+test,8vi0__B,8vi0,B,723,723,3,3.0,x-ray diffraction,7.0,alpha,cellulose synthase,0,features/protein_v4/pt/8vi0/8vi0_protein.pt,aa832ca511370598,723,1,8vi0__B
+test,8vlw__A,8vlw,A,220,220,7,3.34,x-ray diffraction,3.0,alpha,tol-pal system protein tolq,1,features/protein_v4/pt/8vlw/8vlw_protein.pt,195ff7f07da8ba7c,220,2,8vlw__A;8vlw__C
+test,8vlw__B,8vlw,B,219,219,7,3.34,x-ray diffraction,3.0,alpha,tol-pal system protein tolq,0,features/protein_v4/pt/8vlw/8vlw_protein.pt,e47f242bedfe5a63,219,3,8vlw__B;8vlw__D;8vlw__E
+test,8vt9__A,8vt9,A,406,406,4,2.9,x-ray diffraction,6.0,alpha,"transcriptional regulator, crp/fnr family",0,features/protein_v4/pt/8vt9/8vt9_protein.pt,c5ecb9471fc5cd5f,406,4,8vt9__A;8vt9__B;8vt9__C;8vt9__D
+test,8vta__A,8vta,A,404,404,4,3.0,x-ray diffraction,6.0,alpha,"transcriptional regulator, crp/fnr family",0,features/protein_v4/pt/8vta/8vta_protein.pt,498d02e8b7b4e45a,404,4,8vta__A;8vta__B;8vta__C;8vta__D
+test,8vtb__A,8vtb,A,400,400,4,2.5,x-ray diffraction,6.0,alpha,"transcriptional regulator, crp/fnr family",0,features/protein_v4/pt/8vtb/8vtb_protein.pt,18ec66f70faa0a73,400,4,8vtb__A;8vtb__B;8vtb__C;8vtb__D
+test,8vv3__A,8vv3,A,387,387,4,2.61,x-ray diffraction,7.0,alpha,gustatory receptor,0,features/protein_v4/pt/8vv3/8vv3_protein.pt,36e8d7b9dfde9a78,387,4,8vv3__A;8vv3__B;8vv3__C;8vv3__D
+test,8vvn__C,8vvn,C,232,232,7,2.2,x-ray diffraction,3.0,alpha,mota/tolq/exbb proton channel domain-containing protein,0,features/protein_v4/pt/8vvn/8vvn_protein.pt,bc787b49224f0928,232,4,8vvn__C;8vvn__E;8vvn__F;8vvn__G
+test,8vvn__D,8vvn,D,231,231,7,2.2,x-ray diffraction,3.0,alpha,mota/tolq/exbb proton channel domain-containing protein,0,features/protein_v4/pt/8vvn/8vvn_protein.pt,9e3242a1efa04765,231,1,8vvn__D
+test,8vxh__A,8vxh,A,312,312,4,2.79,x-ray diffraction,2.0,alpha,undecaprenyl-phosphate 4-deoxy-4-formamido-l-arabinose transferase,0,features/protein_v4/pt/8vxh/8vxh_protein.pt,a91763d33e783b5d,312,4,8vxh__A;8vxh__B;8vxh__C;8vxh__D
+test,8vxu__A,8vxu,A,103,103,2,2.29,x-ray diffraction,4.0,alpha,"multidrug resistance protein, smr family",0,features/protein_v4/pt/8vxu/8vxu_protein.pt,2e6ae77219f89161,103,1,8vxu__A
+test,8vxu__B,8vxu,B,104,104,2,2.29,x-ray diffraction,4.0,alpha,"multidrug resistance protein, smr family",0,features/protein_v4/pt/8vxu/8vxu_protein.pt,94fdeef61019cb80,104,1,8vxu__B
+test,8wge__A,8wge,A,348,348,5,3.4,x-ray diffraction,4.0,alpha,zac,0,features/protein_v4/pt/8wge/8wge_protein.pt,f9a681623e413a68,348,5,8wge__A;8wge__B;8wge__C;8wge__D;8wge__E
+test,8wk3__A,8wk3,A,89,89,43,3.3,x-ray diffraction,2.0,alpha,flagellar biosynthetic protein fliq,1,features/protein_v4/pt/8wk3/8wk3_protein.pt,eb09a087f769d8ae,89,4,8wk3__A;8wk3__B;8wk3__C;8wk3__D
+test,8wk3__E,8wk3,E,253,253,43,3.3,x-ray diffraction,2.0,alpha,flagellar biosynthetic protein flir,0,features/protein_v4/pt/8wk3/8wk3_protein.pt,55222f37c4017a1c,253,1,8wk3__E
+test,8wk3__F,8wk3,F,207,207,43,3.3,x-ray diffraction,2.0,alpha,flagellar biosynthetic protein flip,0,features/protein_v4/pt/8wk3/8wk3_protein.pt,af195a8e1be89fdc,207,1,8wk3__F
+test,8wxi__A,8wxi,A,467,467,2,2.57,x-ray diffraction,12.0,alpha,chloride channel protein 1,0,features/protein_v4/pt/8wxi/8wxi_protein.pt,ed8b447bc919fdb1,467,4,8wxi__A;8wxi__B;8wxj__A;8wxj__B
+test,8x5f__A,8x5f,A,616,616,2,2.96,x-ray diffraction,10.0,alpha,solute carrier family 53 member 1,0,features/protein_v4/pt/8x5f/8x5f_protein.pt,97b542ecfbf0e933,616,2,8x5f__A;8x5f__B
+test,8xbs__A,8xbs,A,641,641,2,2.21,x-ray diffraction,11.0,alpha,systemic rna interference defective protein 1,0,features/protein_v4/pt/8xbs/8xbs_protein.pt,a0c7b484ed73b9cf,641,2,8xbs__A;8xbs__B
+test,8xc1__A,8xc1,A,660,660,2,2.21,x-ray diffraction,11.0,alpha,systemic rna interference defective protein 1,0,features/protein_v4/pt/8xc1/8xc1_protein.pt,6be571d69f6548da,660,2,8xc1__A;8xc1__B
+test,8xku__D,8xku,D,805,805,15,3.2,x-ray diffraction,2.0,alpha,protein ycf2,0,features/protein_v4/pt/8xku/8xku_protein.pt,da1bdc159fdcb46f,805,2,8xku__D;8xkv__D
+test,8xku__G,8xku,G,285,285,15,3.2,x-ray diffraction,8.0,alpha,attam46,0,features/protein_v4/pt/8xku/8xku_protein.pt,fce4cdd248bf357e,285,2,8xku__G;8xkv__G
+test,8xm6__A,8xm6,A,323,323,2,3.48,x-ray diffraction,6.0,alpha,proton-coupled zinc antiporter slc30a1,0,features/protein_v4/pt/8xm6/8xm6_protein.pt,ae1f2e7e44c1b676,323,1,8xm6__A
+test,8xm6__B,8xm6,B,322,322,2,3.48,x-ray diffraction,6.0,alpha,proton-coupled zinc antiporter slc30a1,0,features/protein_v4/pt/8xm6/8xm6_protein.pt,310c4870a9086e6c,322,1,8xm6__B
+test,8xma__A,8xma,A,301,301,2,2.65,x-ray diffraction,6.0,alpha,proton-coupled zinc antiporter slc30a1,0,features/protein_v4/pt/8xma/8xma_protein.pt,b3ae2e4994c0040c,301,1,8xma__A
+test,8xma__B,8xma,B,300,300,2,2.65,x-ray diffraction,6.0,alpha,proton-coupled zinc antiporter slc30a1,0,features/protein_v4/pt/8xma/8xma_protein.pt,fc8739993edcacc3,300,1,8xma__B
+test,8y81__B,8y81,B,158,158,4,2.89,x-ray diffraction,4.0,alpha,high affinity immunoglobulin epsilon receptor subunit beta,0,features/protein_v4/pt/8y81/8y81_protein.pt,7247ca91b162131f,158,4,8y81__B;8y84__B;8zgs__B;8zgt__B
+test,8ybr__A,8ybr,A,647,647,3,2.57,x-ray diffraction,12.0,alpha,bcct family transporter,0,features/protein_v4/pt/8ybr/8ybr_protein.pt,bbbfdd5c97fb41bf,647,3,8ybr__A;8ybr__B;8ybr__C
+test,8yez__A,8yez,A,1279,1279,3,3.3,x-ray diffraction,26.0,alpha,piezo-type mechanosensitive ion channel component 1,0,features/protein_v4/pt/8yez/8yez_protein.pt,46e3d6c33cb9ac39,1279,3,8yez__A;8yez__B;8yez__C
+test,8yf0__B,8yf0,B,567,567,2,3.49,x-ray diffraction,11.0,alpha,synaptic vesicle glycoprotein 2a,0,features/protein_v4/pt/8yf0/8yf0_protein.pt,1cfee3724bb421b1,567,2,8yf0__B;8yf1__B
+test,8yf0__C,8yf0,C,592,592,2,3.49,x-ray diffraction,12.0,alpha,synaptic vesicle glycoprotein 2a,0,features/protein_v4/pt/8yf0/8yf0_protein.pt,32b51e9ace574247,592,1,8yf0__C
+test,8yf1__A,8yf1,A,589,589,2,3.38,x-ray diffraction,12.0,alpha,synaptic vesicle glycoprotein 2a,0,features/protein_v4/pt/8yf1/8yf1_protein.pt,5dfd876e5febd879,589,1,8yf1__A
+test,8yfc__A,8yfc,A,1280,1280,6,3.2,x-ray diffraction,26.0,alpha,piezo-type mechanosensitive ion channel component 1,0,features/protein_v4/pt/8yfc/8yfc_protein.pt,bb056e5083e5a931,1280,6,8yfc__A;8yfc__B;8yfc__D;8zu3__A;8zu3__B;8zu3__D
+test,8ymr__A,8ymr,A,362,362,3,3.09,x-ray diffraction,3.0,alpha,broad-range thermal receptor 1,0,features/protein_v4/pt/8ymr/8ymr_protein.pt,1285e2c653654f51,362,12,8ymr__A;8ymr__B;8ymr__C;8yms__A;8yms__B;8yms__C;8ymt__A;8ymt__B;8ymt__C;8ymu__A;8ymu__B;8ymu__C
+test,8ymw__A,8ymw,A,356,356,3,3.2,x-ray diffraction,2.0,alpha,broad-range thermal receptor 1,0,features/protein_v4/pt/8ymw/8ymw_protein.pt,7268cdbf7156565f,356,3,8ymw__A;8ymw__B;8ymw__C
+test,8ymx__A,8ymx,A,338,338,3,3.27,x-ray diffraction,2.0,alpha,broad-range thermal receptor 1,0,features/protein_v4/pt/8ymx/8ymx_protein.pt,50cafddf64ea3d85,338,3,8ymx__A;8ymx__B;8ymx__C
+test,8yw6__A,8yw6,A,93,93,2,3.18,x-ray diffraction,3.0,alpha,mitochondrial pyruvate carrier 1,0,features/protein_v4/pt/8yw6/8yw6_protein.pt,2739afd714e0fa9e,93,3,8yw6__A;9knw__A;9kny__A
+test,8yw6__B,8yw6,B,126,126,2,3.18,x-ray diffraction,3.0,alpha,mitochondrial pyruvate carrier 2,0,features/protein_v4/pt/8yw6/8yw6_protein.pt,34ea60f457a154a2,126,4,8yw6__B;8yw8__B;9knw__B;9kny__B
+test,8yw8__A,8yw8,A,89,89,2,3.17,x-ray diffraction,3.0,alpha,mitochondrial pyruvate carrier 1,0,features/protein_v4/pt/8yw8/8yw8_protein.pt,14ccf85e7bb40d8f,89,1,8yw8__A
+test,8yw9__A,8yw9,A,94,94,2,3.01,x-ray diffraction,3.0,alpha,mitochondrial pyruvate carrier 1,0,features/protein_v4/pt/8yw9/8yw9_protein.pt,310074e5026052e3,94,1,8yw9__A
+test,8yw9__B,8yw9,B,123,123,2,3.01,x-ray diffraction,3.0,alpha,mitochondrial pyruvate carrier 2,0,features/protein_v4/pt/8yw9/8yw9_protein.pt,81c9b4a8aebd0113,123,1,8yw9__B
+test,8ywa__B,8ywa,B,157,157,8,3.14,x-ray diffraction,4.0,alpha,high affinity immunoglobulin epsilon receptor subunit beta,0,features/protein_v4/pt/8ywa/8ywa_protein.pt,b90c91078f743d23,157,1,8ywa__B
+test,8yx6__A,8yx6,A,324,324,5,2.9,x-ray diffraction,4.0,alpha,ligand-gated cation channel zacn,0,features/protein_v4/pt/8yx6/8yx6_protein.pt,3b85dae682a0b334,324,15,8yx6__A;8yx6__B;8yx6__C;8yx6__D;8yx6__E;8yx7__A;8yx7__B;8yx7__C;8yx7__D;8yx7__E;8yx8__A;8yx8__B;8yx8__C;8yx8__D;8yx8__E
+test,8z0f__A,8z0f,A,549,549,2,3.27,x-ray diffraction,6.0,alpha,atp-binding cassette sub-family d member 3,0,features/protein_v4/pt/8z0f/8z0f_protein.pt,5fb891a2c08e6009,549,2,8z0f__A;8z0f__B
+test,8z9a__A,8z9a,A,406,406,4,3.0,x-ray diffraction,7.0,alpha,"odorant receptor, apisorco",0,features/protein_v4/pt/8z9a/8z9a_protein.pt,efdc541fc5e3d036,406,2,8z9a__A;8z9a__B
+test,8z9a__C,8z9a,C,388,388,4,3.0,x-ray diffraction,7.0,alpha,"odorant receptor, apisorco",0,features/protein_v4/pt/8z9a/8z9a_protein.pt,61557a53866dfaa2,388,1,8z9a__C
+test,8z9a__D,8z9a,D,357,357,4,3.0,x-ray diffraction,7.0,alpha,"odorant receptor, apisor5",0,features/protein_v4/pt/8z9a/8z9a_protein.pt,f6135aa1b42549a0,357,1,8z9a__D
+test,8z9y__A,8z9y,A,781,781,6,2.5,x-ray diffraction,6.0,alpha,protein tic 214,0,features/protein_v4/pt/8z9y/8z9y_protein.pt,86a56e688f8e834a,781,1,8z9y__A
+test,8z9y__B,8z9y,B,164,164,6,2.5,x-ray diffraction,4.0,alpha,"protein tic 20-i, chloroplastic",0,features/protein_v4/pt/8z9y/8z9y_protein.pt,eb52a7a45fafba34,164,1,8z9y__B
+test,8zsb__A,8zsb,A,307,307,2,3.26,x-ray diffraction,6.0,alpha,proton-coupled zinc antiporter slc30a1,0,features/protein_v4/pt/8zsb/8zsb_protein.pt,ba095e8f3d71002a,307,2,8zsb__A;8zsb__B
+test,8zxd__A,8zxd,A,388,388,3,2.9,x-ray diffraction,4.0,alpha,vang-like protein 1,0,features/protein_v4/pt/8zxd/8zxd_protein.pt,8b6e2c3b1e6d90d5,388,3,8zxd__A;8zxd__B;8zxd__C
+test,8zyn__A,8zyn,A,210,210,4,3.27,x-ray diffraction,6.0,alpha,potassium voltage-gated channel subfamily h member 2,0,features/protein_v4/pt/8zyn/8zyn_protein.pt,e9c42b28e6336864,210,9,8zyn__A;8zyn__B;8zyn__C;8zyn__D;8zyo__A;8zyo__D;8zyq__B;8zyq__C;8zyq__D
+test,8zyo__B,8zyo,B,199,199,4,3.29,x-ray diffraction,6.0,alpha,potassium voltage-gated channel subfamily h member 2,0,features/protein_v4/pt/8zyo/8zyo_protein.pt,d2683b0ab61a98f2,199,1,8zyo__B
+test,8zyo__C,8zyo,C,166,166,4,3.29,x-ray diffraction,4.0,alpha,potassium voltage-gated channel subfamily h member 2,0,features/protein_v4/pt/8zyo/8zyo_protein.pt,6b39862f4228d53f,166,2,8zyo__C;8zyq__A
+test,9arf__A,9arf,A,797,797,4,3.13,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/9arf/9arf_protein.pt,c37c9d95adf04c1b,797,2,9arf__A;9arf__C
+test,9asc__A,9asc,A,318,318,4,2.96,x-ray diffraction,2.0,alpha,undecaprenyl-phosphate 4-deoxy-4-formamido-l-arabinose transferase,0,features/protein_v4/pt/9asc/9asc_protein.pt,7ffb21ea9e980437,318,4,9asc__A;9asc__B;9asc__C;9asc__D
+test,9avi__A,9avi,A,216,216,5,3.02,x-ray diffraction,3.0,alpha,tol-pal system protein tolq,0,features/protein_v4/pt/9avi/9avi_protein.pt,6a88c61789f95f67,216,5,9avi__A;9avi__B;9avi__C;9avi__D;9avi__E
+test,9b4f__A,9b4f,A,335,335,2,3.27,x-ray diffraction,10.0,alpha,phosphatidylserine synthase 1,0,features/protein_v4/pt/9b4f/9b4f_protein.pt,8546474995dd12a1,335,2,9b4f__A;9b4f__B
+test,9b77__A,9b77,A,313,313,4,2.74,x-ray diffraction,2.0,alpha,undecaprenyl-phosphate 4-deoxy-4-formamido-l-arabinose transferase,0,features/protein_v4/pt/9b77/9b77_protein.pt,1cb2c9d33cdcb17f,313,4,9b77__A;9b77__B;9b77__C;9b77__D
+test,9bhc__A,9bhc,A,308,308,4,2.75,x-ray diffraction,2.0,alpha,undecaprenyl-phosphate 4-deoxy-4-formamido-l-arabinose transferase,0,features/protein_v4/pt/9bhc/9bhc_protein.pt,b78fb631735519c3,308,2,9bhc__A;9bhc__C
+test,9bhc__B,9bhc,B,307,307,4,2.75,x-ray diffraction,2.0,alpha,undecaprenyl-phosphate 4-deoxy-4-formamido-l-arabinose transferase,0,features/protein_v4/pt/9bhc/9bhc_protein.pt,4eae4dc67a5a2219,307,2,9bhc__B;9bhc__D
+test,9bqh__A,9bqh,A,374,374,3,2.27,x-ray diffraction,2.0,alpha,p2x purinoceptor 4,0,features/protein_v4/pt/9bqh/9bqh_protein.pt,a6c024e746a16f7e,374,6,9bqh__A;9bqh__B;9bqh__C;9bqi__A;9bqi__B;9bqi__C
+test,9c48__A,9c48,A,331,331,3,2.4,x-ray diffraction,2.0,alpha,p2x purinoceptor 4,0,features/protein_v4/pt/9c48/9c48_protein.pt,a8c134dceba02ae1,331,3,9c48__A;9c48__B;9c48__C
+test,9cbz__A,9cbz,A,473,473,4,2.86,x-ray diffraction,6.0,alpha,mucolipin-1,0,features/protein_v4/pt/9cbz/9cbz_protein.pt,f9d0d69f11bcf359,473,4,9cbz__A;9cbz__B;9cbz__C;9cbz__D
+test,9cc2__A,9cc2,A,464,464,4,2.46,x-ray diffraction,6.0,alpha,mucolipin-1,0,features/protein_v4/pt/9cc2/9cc2_protein.pt,7fe052ad208c1bbe,464,4,9cc2__A;9cc2__B;9cc2__C;9cc2__D
+test,9chp__A,9chp,A,293,293,4,3.3,x-ray diffraction,6.0,alpha,potassium voltage-gated channel subfamily h member 2,0,features/protein_v4/pt/9chp/9chp_protein.pt,535698a4d05f4377,293,12,9chp__A;9chp__B;9chp__C;9chp__D;9chq__A;9chq__B;9chq__C;9chq__D;9chs__A;9chs__B;9chs__C;9chs__D
+test,9ctu__A,9ctu,A,189,189,2,3.03,x-ray diffraction,3.0,alpha,membrane protein,0,features/protein_v4/pt/9ctu/9ctu_protein.pt,adf944c48393001e,189,2,9ctu__A;9ctu__B
+test,9ctw__A,9ctw,A,190,190,2,3.01,x-ray diffraction,3.0,alpha,membrane protein,0,features/protein_v4/pt/9ctw/9ctw_protein.pt,b3c26c107bf631c8,190,2,9ctw__A;9ctw__B
+test,9d37__A,9d37,A,790,790,4,3.34,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/9d37/9d37_protein.pt,b9876a67770ff1a8,790,1,9d37__A
+test,9d37__B,9d37,B,777,777,4,3.34,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 2b",0,features/protein_v4/pt/9d37/9d37_protein.pt,b7a2aa1e8cbe7ba2,777,1,9d37__B
+test,9d37__C,9d37,C,802,802,4,3.34,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/9d37/9d37_protein.pt,2fb648cb82e6b10c,802,1,9d37__C
+test,9d37__D,9d37,D,764,764,4,3.34,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 2d",0,features/protein_v4/pt/9d37/9d37_protein.pt,20eb74147f119c37,764,1,9d37__D
+test,9dwq__A,9dwq,A,470,470,4,2.76,x-ray diffraction,6.0,alpha,polycystin-2,0,features/protein_v4/pt/9dwq/9dwq_protein.pt,e1e29ba0b3cd4db0,470,4,9dwq__A;9dwq__B;9dwq__C;9dwq__D
+test,9emb__A,9emb,A,547,547,2,2.98,x-ray diffraction,13.0,alpha,glutathione-regulated potassium-efflux system protein kefc,0,features/protein_v4/pt/9emb/9emb_protein.pt,2f5b1de4303a4db4,547,1,9emb__A
+test,9emb__B,9emb,B,546,546,2,2.98,x-ray diffraction,13.0,alpha,glutathione-regulated potassium-efflux system protein kefc,0,features/protein_v4/pt/9emb/9emb_protein.pt,b80a536cd4b8b5ec,546,1,9emb__B
+test,9ev1__A,9ev1,A,601,601,5,2.63,x-ray diffraction,4.0,alpha,neur_chan_lbd domain-containing protein,0,features/protein_v4/pt/9ev1/9ev1_protein.pt,2f0ba9e405b1dda8,601,18,9ev1__A;9ev1__B;9ev1__C;9ev1__D;9ev1__E;9ev7__A;9ev7__B;9ev7__D;9ev7__E;9ev9__A;9ev9__B;9ev9__D;9ev9__E;9evb__A;9evb__B;9evb__C;9evb__D;9evb__E
+test,9ev7__C,9ev7,C,436,436,5,2.74,x-ray diffraction,4.0,alpha,neur_chan_lbd domain-containing protein,0,features/protein_v4/pt/9ev7/9ev7_protein.pt,9229803e006d0ae0,436,2,9ev7__C;9ev9__C
+test,9ev8__A,9ev8,A,576,576,5,2.06,x-ray diffraction,4.0,alpha,neur_chan_lbd domain-containing protein,0,features/protein_v4/pt/9ev8/9ev8_protein.pt,95d7fa1a941aeaf0,576,5,9ev8__A;9ev8__B;9ev8__C;9ev8__D;9ev8__E
+test,9ex6__A,9ex6,A,310,310,5,2.35,x-ray diffraction,4.0,alpha,cys-loop ligand-gated ion channel,0,features/protein_v4/pt/9ex6/9ex6_protein.pt,52aecd24d4c6b1d3,310,5,9ex6__A;9ex6__B;9ex6__C;9ex6__D;9ex6__E
+test,9fka__A,9fka,A,460,460,2,2.96,x-ray diffraction,9.0,alpha,probable integral membrane cytochrome d ubiquinol oxidase (subunit i) cyda (cytochrome bd-i oxidase subunit i),0,features/protein_v4/pt/9fka/9fka_protein.pt,9234b975c753bbb3,460,1,9fka__A
+test,9fka__B,9fka,B,346,346,2,2.96,x-ray diffraction,9.0,alpha,probable integral membrane cytochrome d ubiquinol oxidase (subunit ii) cydb (cytochrome bd-i oxidase subunit ii),1,features/protein_v4/pt/9fka/9fka_protein.pt,55cdffc31a56745c,346,1,9fka__B
+test,9fmv__A,9fmv,A,777,777,5,3.43,x-ray diffraction,8.0,alpha,cellulose synthase catalytic subunit [udp-forming],0,features/protein_v4/pt/9fmv/9fmv_protein.pt,c4add3d7fc890886,777,1,9fmv__A
+test,9fmv__B,9fmv,B,144,144,5,3.43,x-ray diffraction,5.0,alpha,cellulose biosynthesis protein bcsg,0,features/protein_v4/pt/9fmv/9fmv_protein.pt,4cc279672f28dddd,144,8,9fmv__B;9fmv__C;9fmv__D;9fnn__D;9fnn__G;9fp0__G;9fp0__J;9fp0__K
+test,9fnn__A,9fnn,A,793,793,15,2.85,x-ray diffraction,8.0,alpha,cellulose synthase catalytic subunit [udp-forming],0,features/protein_v4/pt/9fnn/9fnn_protein.pt,fbf2958da4bdcef2,793,1,9fnn__A
+test,9fp0__A,9fp0,A,780,780,12,3.37,x-ray diffraction,8.0,alpha,cellulose synthase catalytic subunit [udp-forming],0,features/protein_v4/pt/9fp0/9fp0_protein.pt,d7e201702296419e,780,1,9fp0__A
+test,9fs5__A,9fs5,A,225,225,10,2.66,x-ray diffraction,2.0,alpha,trat complement resistance protein,1,features/protein_v4/pt/9fs5/9fs5_protein.pt,a955ba2d4e6752fa,225,10,9fs5__A;9fs5__B;9fs5__C;9fs5__D;9fs5__E;9fs5__F;9fs5__G;9fs5__H;9fs5__I;9fs5__J
+test,9fsm__A,9fsm,A,226,226,10,2.47,x-ray diffraction,2.0,alpha,trat complement resistance protein,1,features/protein_v4/pt/9fsm/9fsm_protein.pt,ce69775c769f4cf3,226,10,9fsm__A;9fsm__B;9fsm__C;9fsm__D;9fsm__E;9fsm__F;9fsm__G;9fsm__H;9fsm__I;9fsm__J
+test,9ftg__A,9ftg,A,559,559,5,3.1,x-ray diffraction,4.0,alpha,neurotransmitter-gated ion-channel ligand-binding domain- containing protein,0,features/protein_v4/pt/9ftg/9ftg_protein.pt,b98dc5299051f498,559,5,9ftg__A;9ftg__B;9ftg__C;9ftg__D;9ftg__E
+test,9fth__A,9fth,A,602,602,5,2.9,x-ray diffraction,4.0,alpha,neurotransmitter-gated ion-channel ligand-binding domain- containing protein,0,features/protein_v4/pt/9fth/9fth_protein.pt,6ca2a86d81ed2f97,602,5,9fth__A;9fth__B;9fth__C;9fth__D;9fth__E
+test,9go3__A,9go3,A,253,253,7,3.15,x-ray diffraction,3.0,alpha,mechanosensitive channel protein,0,features/protein_v4/pt/9go3/9go3_protein.pt,8b7c0a5f3caf5e9f,253,7,9go3__A;9go3__B;9go3__C;9go3__D;9go3__E;9go3__F;9go3__G
+test,9ik4__A,9ik4,A,607,607,2,3.34,x-ray diffraction,10.0,alpha,phosphate transporter pho1 homolog 1,0,features/protein_v4/pt/9ik4/9ik4_protein.pt,a630110448077b4a,607,2,9ik4__A;9ik4__B
+test,9ilt__F,9ilt,F,396,396,8,3.25,x-ray diffraction,10.0,alpha,quinol:cytochrome c oxidoreductase quinone-binding subunit 2,0,features/protein_v4/pt/9ilt/9ilt_protein.pt,f9610c4114dcc643,396,1,9ilt__F
+test,9iws__A,9iws,A,614,614,2,2.86,x-ray diffraction,10.0,alpha,solute carrier family 53 member 1,0,features/protein_v4/pt/9iws/9iws_protein.pt,e3b153878ef7e7cc,614,2,9iws__A;9iws__B
+test,9iyp__A,9iyp,A,789,789,4,3.27,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/9iyp/9iyp_protein.pt,6ce746c77b9ff8b5,789,1,9iyp__A
+test,9iyp__B,9iyp,B,772,772,4,3.27,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 2b",0,features/protein_v4/pt/9iyp/9iyp_protein.pt,f76f28c948ef3bdb,772,1,9iyp__B
+test,9iyp__C,9iyp,C,797,797,4,3.27,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/9iyp/9iyp_protein.pt,a513f0ad34dbdc6d,797,1,9iyp__C
+test,9iyp__D,9iyp,D,770,770,4,3.27,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 2b",0,features/protein_v4/pt/9iyp/9iyp_protein.pt,00282e44b1d445d0,770,1,9iyp__D
+test,9iyq__A,9iyq,A,782,782,4,3.18,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/9iyq/9iyq_protein.pt,00f9a70dbe40267d,782,1,9iyq__A
+test,9iyq__B,9iyq,B,768,768,4,3.18,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 2b",0,features/protein_v4/pt/9iyq/9iyq_protein.pt,14676008b2a75ca4,768,2,9iyq__B;9iyq__D
+test,9iyq__C,9iyq,C,787,787,4,3.18,x-ray diffraction,3.0,alpha,"glutamate receptor ionotropic, nmda 1",0,features/protein_v4/pt/9iyq/9iyq_protein.pt,c0d92ff19361bfa0,787,1,9iyq__C
+test,9j0x__A,9j0x,A,669,669,4,3.0,x-ray diffraction,6.0,alpha,potassium channel gork,0,features/protein_v4/pt/9j0x/9j0x_protein.pt,420f99b478404eba,669,2,9j0x__A;9j0x__C
+test,9j0x__B,9j0x,B,688,688,4,3.0,x-ray diffraction,6.0,alpha,potassium channel gork,0,features/protein_v4/pt/9j0x/9j0x_protein.pt,909ef14e39cfba8c,688,2,9j0x__B;9j0x__D
+test,9j0y__A,9j0y,A,325,325,4,3.14,x-ray diffraction,6.0,alpha,potassium channel gork,0,features/protein_v4/pt/9j0y/9j0y_protein.pt,445ebf16cea8ac3a,325,4,9j0y__A;9j0y__B;9j0y__C;9j0y__D
+test,9j34__A,9j34,A,502,502,4,2.51,x-ray diffraction,6.0,alpha,cyclic nucleotide-gated ion channel 1,0,features/protein_v4/pt/9j34/9j34_protein.pt,611c3f01684dd9a6,502,4,9j34__A;9j34__B;9j34__C;9j34__D
+test,9j35__A,9j35,A,523,523,4,2.71,x-ray diffraction,6.0,alpha,probable cyclic nucleotide-gated ion channel 5,0,features/protein_v4/pt/9j35/9j35_protein.pt,bf6323604927fed0,523,8,9j35__A;9j35__B;9j35__C;9j35__D;9j36__A;9j36__B;9j36__C;9j36__D
+test,9jk6__A,9jk6,A,376,376,3,3.0,x-ray diffraction,4.0,alpha,vang-like protein 1,0,features/protein_v4/pt/9jk6/9jk6_protein.pt,d71017837ade5392,376,6,9jk6__A;9jk6__B;9jk6__C;9jk8__A;9jk8__B;9jk8__C
+test,9jk7__A,9jk7,A,362,362,3,2.9,x-ray diffraction,4.0,alpha,vang-like protein 2,0,features/protein_v4/pt/9jk7/9jk7_protein.pt,06366ad1552fe609,362,6,9jk7__A;9jk7__B;9jk7__C;9jka__A;9jka__B;9jka__C
+test,9jk9__A,9jk9,A,378,378,3,2.2,x-ray diffraction,4.0,alpha,vang-like protein 1,0,features/protein_v4/pt/9jk9/9jk9_protein.pt,9631a9fe662ad241,378,3,9jk9__A;9jk9__B;9jk9__C
+test,9kqf__A,9kqf,A,377,377,2,3.25,x-ray diffraction,10.0,alpha,phosphatidylserine synthase 1,0,features/protein_v4/pt/9kqf/9kqf_protein.pt,63028135de78f91d,377,4,9kqf__A;9kqf__B;9kqj__A;9kqj__B
+test,9kqi__A,9kqi,A,378,378,2,3.02,x-ray diffraction,10.0,alpha,phosphatidylserine synthase 1,0,features/protein_v4/pt/9kqi/9kqi_protein.pt,e3307aa7d0a65684,378,2,9kqi__A;9kqi__B
+test,9ljj__A,9ljj,A,253,253,2,3.23,x-ray diffraction,7.0,alpha,heliorhodopsin,0,features/protein_v4/pt/9ljj/9ljj_protein.pt,86620408f2299079,253,2,9ljj__A;9ljj__B
+test,9mnx__A,9mnx,A,102,102,2,3.11,x-ray diffraction,3.0,alpha,mitochondrial pyruvate carrier 1,0,features/protein_v4/pt/9mnx/9mnx_protein.pt,fbcce98ce4d5c84b,102,1,9mnx__A
+test,9mnx__B,9mnx,B,120,120,2,3.11,x-ray diffraction,3.0,alpha,mitochondrial pyruvate carrier 2,0,features/protein_v4/pt/9mnx/9mnx_protein.pt,252ad3a3eab292ed,120,2,9mnx__B;9mnz__B
+test,9mny__A,9mny,A,108,108,2,2.78,x-ray diffraction,3.0,alpha,mitochondrial pyruvate carrier 1,0,features/protein_v4/pt/9mny/9mny_protein.pt,c90e6f1f941e2ba8,108,1,9mny__A
+test,9mny__B,9mny,B,117,117,2,2.78,x-ray diffraction,3.0,alpha,mitochondrial pyruvate carrier 2,0,features/protein_v4/pt/9mny/9mny_protein.pt,a7e8086cc5c26dcb,117,1,9mny__B
+test,9mnz__A,9mnz,A,107,107,2,2.73,x-ray diffraction,3.0,alpha,mitochondrial pyruvate carrier 1,0,features/protein_v4/pt/9mnz/9mnz_protein.pt,fb485a0d41db8b0d,107,1,9mnz__A

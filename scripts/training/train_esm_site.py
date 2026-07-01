@@ -14,7 +14,7 @@ from typing import Any
 
 import torch
 from torch import nn
-from torch.utils.data import DataLoader
+from torch.utils.data import BatchSampler, DataLoader
 
 from ppcbind.data import ESMProteinSiteDataset, collate_esm_site_features
 from ppcbind.models import ESMSiteClassifier
@@ -42,9 +42,11 @@ PATH_KEYS = {
     "manifest",
     "split_dir",
     "sequence_feature_root",
+    "prottrans_embedding_root",
     "contact_graph_root",
     "aux_contact_graph_root",
     "output_dir",
+    "init_checkpoint",
 }
 
 
@@ -92,12 +94,31 @@ def _section(config: dict[str, Any], key: str) -> dict[str, Any]:
     return value
 
 
+def _coerce_config_value(args: argparse.Namespace, key: str, value: Any) -> Any:
+    if key in PATH_KEYS and value is not None:
+        return Path(value)
+    if not hasattr(args, key) or value is None:
+        return value
+    current = getattr(args, key)
+    if isinstance(current, bool):
+        if isinstance(value, str):
+            text = value.strip().lower()
+            if text in {"1", "true", "yes", "y", "on"}:
+                return True
+            if text in {"0", "false", "no", "n", "off"}:
+                return False
+        return bool(value)
+    if isinstance(current, int) and not isinstance(current, bool):
+        return int(value)
+    if isinstance(current, float):
+        return float(value)
+    return value
+
+
 def _apply_config(args: argparse.Namespace, config: dict[str, Any]) -> dict[str, Any]:
     for section_name in ("data", "training"):
         for key, value in _section(config, section_name).items():
-            if key in PATH_KEYS and value is not None:
-                value = Path(value)
-            setattr(args, key, value)
+            setattr(args, key, _coerce_config_value(args, key, value))
     return dict(_section(config, "model"))
 
 
@@ -149,6 +170,99 @@ def _class_weight_from_manifest(manifest_path: Path, train_ids: list[str], max_p
     return min(float(neg / pos), max_pos_weight), pos, neg
 
 
+def _lengths_from_manifest(manifest_path: Path) -> dict[str, int]:
+    rows = _read_manifest(manifest_path)
+    lengths: dict[str, int] = {}
+    for pdb_id, row in rows.items():
+        value = row.get("n_residues")
+        if value is None or value == "":
+            continue
+        lengths[pdb_id.lower()] = int(value)
+    return lengths
+
+
+def _esm_length(path: Path) -> int:
+    data = torch.load(path, map_location="cpu", weights_only=False)
+    value = data["embeddings"] if isinstance(data, dict) else data
+    return int(value.shape[0])
+
+
+class LengthAwareBatchSampler(BatchSampler):
+    """Pack examples with similar lengths to reduce padding waste.
+
+    The token budget is measured as ``batch_size * max_length_in_batch`` because
+    that is the tensor shape produced by ``collate_esm_site_features``.
+    """
+
+    def __init__(
+        self,
+        lengths: list[int],
+        batch_size: int,
+        max_batch_tokens: int,
+        shuffle: bool,
+        seed: int,
+        bucket_size: int,
+    ) -> None:
+        self.lengths = [max(1, int(length)) for length in lengths]
+        self.batch_size = max(1, int(batch_size))
+        self.max_batch_tokens = max(0, int(max_batch_tokens))
+        self.shuffle = bool(shuffle)
+        self.seed = int(seed)
+        self.bucket_size = max(0, int(bucket_size))
+        self._epoch = 0
+
+    def _ordered_indices(self, rng: random.Random | None = None) -> list[int]:
+        indices = list(range(len(self.lengths)))
+        if self.shuffle:
+            assert rng is not None
+            rng.shuffle(indices)
+            if self.bucket_size > 1:
+                ordered: list[int] = []
+                for start in range(0, len(indices), self.bucket_size):
+                    bucket = indices[start : start + self.bucket_size]
+                    bucket.sort(key=lambda idx: self.lengths[idx])
+                    ordered.extend(bucket)
+                return ordered
+            return indices
+        indices.sort(key=lambda idx: self.lengths[idx])
+        return indices
+
+    def _pack(self, indices: list[int]) -> list[list[int]]:
+        batches: list[list[int]] = []
+        batch: list[int] = []
+        max_len = 0
+        for idx in indices:
+            length = self.lengths[idx]
+            candidate_max = max(max_len, length)
+            candidate_size = len(batch) + 1
+            over_items = len(batch) >= self.batch_size
+            over_tokens = (
+                self.max_batch_tokens > 0
+                and bool(batch)
+                and candidate_size * candidate_max > self.max_batch_tokens
+            )
+            if over_items or over_tokens:
+                batches.append(batch)
+                batch = [idx]
+                max_len = length
+            else:
+                batch.append(idx)
+                max_len = candidate_max
+        if batch:
+            batches.append(batch)
+        return batches
+
+    def __iter__(self):
+        rng = random.Random(self.seed + self._epoch)
+        self._epoch += 1
+        yield from self._pack(self._ordered_indices(rng if self.shuffle else None))
+
+    def __len__(self) -> int:
+        indices = list(range(len(self.lengths)))
+        indices.sort(key=lambda idx: self.lengths[idx])
+        return len(self._pack(indices))
+
+
 def _build_loader(
     esm_root: Path,
     label_root: Path,
@@ -156,7 +270,9 @@ def _build_loader(
     sequence_feature_root: Path | None,
     contact_graph_root: Path | None,
     aux_contact_graph_root: Path | None,
+    prottrans_embedding_root: Path | None,
     require_sequence_features: bool,
+    require_prottrans_embeddings: bool,
     batch_size: int,
     num_workers: int,
     pin_memory: bool,
@@ -165,10 +281,15 @@ def _build_loader(
     crop_mode: str,
     seed: int,
     shuffle: bool,
+    batching: str = "random",
+    max_batch_tokens: int = 0,
+    length_bucket_size: int = 0,
+    lengths_by_id: dict[str, int] | None = None,
     preload: bool = False,
     strict_ids: bool = True,
     require_labels: bool = True,
     strict_label_metadata: bool = True,
+    strict_sequence_feature_metadata: bool = True,
     require_contact_graph: bool = False,
     require_aux_contact_graph: bool = False,
 ) -> DataLoader:
@@ -177,9 +298,11 @@ def _build_loader(
         label_root=label_root,
         ids=ids,
         sequence_feature_root=sequence_feature_root,
+        prottrans_embedding_root=prottrans_embedding_root,
         contact_graph_root=contact_graph_root,
         aux_contact_graph_root=aux_contact_graph_root,
         require_sequence_features=require_sequence_features,
+        require_prottrans_embeddings=require_prottrans_embeddings,
         max_residues=max_residues,
         crop_mode=crop_mode,
         seed=seed,
@@ -187,16 +310,37 @@ def _build_loader(
         strict_ids=strict_ids,
         require_labels=require_labels,
         strict_label_metadata=strict_label_metadata,
+        strict_sequence_feature_metadata=strict_sequence_feature_metadata,
         require_contact_graph=require_contact_graph,
         require_aux_contact_graph=require_aux_contact_graph,
     )
+    use_length_batches = str(batching or "random").lower() != "random" or int(max_batch_tokens or 0) > 0
     loader_kwargs: dict[str, Any] = {
-        "batch_size": batch_size,
-        "shuffle": shuffle,
         "num_workers": num_workers,
         "pin_memory": bool(pin_memory) and torch.cuda.is_available(),
         "collate_fn": collate_esm_site_features,
     }
+    if use_length_batches:
+        lengths: list[int] = []
+        for path in dataset.esm_paths:
+            pdb_id = path.parent.name.lower()
+            if path.stem.endswith("_esm2"):
+                pdb_id = path.stem[: -len("_esm2")].lower()
+            elif path.stem.endswith("_protein"):
+                pdb_id = path.stem[: -len("_protein")].lower()
+            length = (lengths_by_id or {}).get(pdb_id)
+            lengths.append(int(length) if length is not None else _esm_length(path))
+        loader_kwargs["batch_sampler"] = LengthAwareBatchSampler(
+            lengths=lengths,
+            batch_size=batch_size,
+            max_batch_tokens=max_batch_tokens,
+            shuffle=shuffle,
+            seed=seed,
+            bucket_size=length_bucket_size,
+        )
+    else:
+        loader_kwargs["batch_size"] = batch_size
+        loader_kwargs["shuffle"] = shuffle
     if num_workers > 0 and prefetch_factor is not None and int(prefetch_factor) > 0:
         loader_kwargs["prefetch_factor"] = int(prefetch_factor)
     return DataLoader(dataset, **loader_kwargs)
@@ -205,6 +349,8 @@ def _build_loader(
 def _move_batch(batch: dict[str, Any], device: torch.device) -> tuple[dict[str, torch.Tensor], torch.Tensor]:
     keys = ("esm_embeddings", "seq_features", "protein_mask", "chain_ids", "chain_rel_pos", "protein_rel_pos")
     inputs = {key: batch[key].to(device, non_blocking=True) for key in keys}
+    if "prottrans_embeddings" in batch:
+        inputs["prottrans_embeddings"] = batch["prottrans_embeddings"].to(device, non_blocking=True)
     for key in ("contact_edge_index", "contact_edge_scores", "aux_contact_edge_index", "aux_contact_edge_scores"):
         if key in batch:
             inputs[key] = batch[key].to(device, non_blocking=True)
@@ -389,6 +535,35 @@ def _set_lr(optimizer: torch.optim.Optimizer, base_lrs: list[float], scale: floa
         group["lr"] = float(base_lr) * float(scale)
 
 
+def _write_explaining_md(
+    output_dir: Path,
+    run_config: dict[str, Any],
+    best_metric: float | None = None,
+    status: str = "finished",
+) -> None:
+    metadata = run_config.get("yaml_config", {}).get("metadata", {})
+    model_config = run_config.get("model_config", {})
+    lines = [
+        "# Experiment Explanation",
+        "",
+        f"- Run directory: `{output_dir}`",
+        f"- Experiment time: {time.strftime('%Y-%m-%d %H:%M:%S %Z')}",
+        f"- Machine / source: `{run_config.get('device_resolved')}`",
+        f"- Parent experiment: {metadata.get('parent_experiment', 'current strict MLC + PS + contact baseline')}",
+        f"- Data split / protocol: `{run_config.get('split_dir')}`",
+        f"- Purpose: {metadata.get('experiment_role', metadata.get('stage', 'own-model training run'))}",
+        f"- Problem to solve: {metadata.get('problem_to_solve', 'Improve residue-level effect-site prediction under strict split.')}",
+        f"- Main change: {metadata.get('main_change', json.dumps(model_config, default=str))}",
+        f"- Expected outcome: {metadata.get('expected_outcome', 'Improve PR-AUC/F1/MCC or top-k ranking over parent baseline.')}",
+        f"- Result brief: status={status}; selection_metric={run_config.get('selection_metric')}; best_metric={best_metric}",
+        "- Key metrics: see `metrics.jsonl`, `best.pt`, and downstream strict evaluation summaries.",
+        f"- Decision: {metadata.get('decision', 'pending strict evaluation')}",
+        f"- Notes: {metadata.get('notes', '')}",
+        "",
+    ]
+    (output_dir / "explaning.md").write_text("\n".join(lines))
+
+
 def _safe_clip(parameters: list[torch.nn.Parameter], max_norm: float, value_clip: float | None) -> tuple[torch.Tensor, int]:
     params = [p for p in parameters if p.grad is not None]
     if not params:
@@ -407,6 +582,64 @@ def _safe_clip(parameters: list[torch.nn.Parameter], max_norm: float, value_clip
         for param in params:
             param.grad.detach().zero_()
     return norm, n_bad
+
+
+class ResidueSiteLoss(nn.Module):
+    def __init__(
+        self,
+        pos_weight: float,
+        label_smoothing: float,
+        loss_type: str,
+        dice_weight: float,
+        focal_gamma: float,
+        focal_alpha: float | None,
+        device: torch.device,
+    ) -> None:
+        super().__init__()
+        self.loss_type = str(loss_type or "ce").lower()
+        if self.loss_type not in {"ce", "ce_dice", "focal", "focal_dice"}:
+            raise ValueError(f"Unsupported loss_type={loss_type!r}; use ce, ce_dice, focal, or focal_dice")
+        self.dice_weight = max(0.0, float(dice_weight))
+        self.focal_gamma = max(0.0, float(focal_gamma))
+        self.focal_alpha = None if focal_alpha is None or focal_alpha < 0 else max(0.0, min(1.0, float(focal_alpha)))
+        self.ce = nn.CrossEntropyLoss(
+            weight=torch.tensor([1.0, pos_weight], dtype=torch.float32, device=device),
+            ignore_index=-100,
+            label_smoothing=max(0.0, min(1.0, float(label_smoothing))),
+        )
+
+    def forward(self, logits: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
+        if self.loss_type == "ce":
+            return self.ce(logits, labels)
+        valid = labels != -100
+        if not bool(valid.any()):
+            return logits.sum() * 0.0
+        valid_logits = logits[valid]
+        valid_labels = labels[valid].long()
+        if self.loss_type.startswith("focal"):
+            log_probs = torch.log_softmax(valid_logits.float(), dim=-1)
+            probs = torch.exp(log_probs)
+            target_log_probs = log_probs.gather(1, valid_labels.view(-1, 1)).squeeze(1)
+            target_probs = probs.gather(1, valid_labels.view(-1, 1)).squeeze(1)
+            focal = -((1.0 - target_probs).clamp_min(1.0e-6) ** self.focal_gamma) * target_log_probs
+            if self.focal_alpha is not None:
+                alpha = torch.where(
+                    valid_labels == 1,
+                    torch.full_like(focal, self.focal_alpha),
+                    torch.full_like(focal, 1.0 - self.focal_alpha),
+                )
+                focal = focal * alpha
+            base = focal.mean()
+        else:
+            base = self.ce(logits, labels)
+        if "dice" not in self.loss_type or self.dice_weight <= 0.0:
+            return base
+        scores = torch.softmax(valid_logits.float(), dim=-1)[:, 1]
+        targets = (valid_labels == 1).float()
+        intersection = (scores * targets).sum()
+        denom = scores.sum() + targets.sum()
+        dice = 1.0 - (2.0 * intersection + 1.0) / (denom + 1.0)
+        return base + self.dice_weight * dice.to(dtype=base.dtype)
 
 
 def _evaluate(
@@ -472,23 +705,31 @@ def main() -> int:
     parser.add_argument("--manifest", default="features/contact_labels/manifest.csv", type=Path)
     parser.add_argument("--split-dir", default="features/contact_labels/splits_mmseq30_tmk_no_len_limit", type=Path)
     parser.add_argument("--sequence-feature-root", default=None, type=Path)
+    parser.add_argument("--prottrans-embedding-root", default=None, type=Path)
     parser.add_argument("--contact-graph-root", default=None, type=Path)
     parser.add_argument("--aux-contact-graph-root", default=None, type=Path)
     parser.add_argument("--require-sequence-features", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--require-prottrans-embeddings", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--strict-ids", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--require-labels", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--strict-label-metadata", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--strict-sequence-feature-metadata", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--require-contact-graph", action=argparse.BooleanOptionalAction, default=None)
     parser.add_argument("--require-aux-contact-graph", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--output-dir", default=None, type=Path)
+    parser.add_argument("--init-checkpoint", default=None, type=Path)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--epochs", type=int, default=10)
     parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--eval-batch-size", type=int, default=0)
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--pin-memory", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--prefetch-factor", type=int, default=None)
     parser.add_argument("--preload", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--batching", choices=["random", "length_sorted", "token_budget"], default="random")
+    parser.add_argument("--max-batch-tokens", type=int, default=0)
+    parser.add_argument("--length-bucket-size", type=int, default=0)
     parser.add_argument("--max-residues", type=int, default=0)
     parser.add_argument("--train-crop-mode", choices=["none", "first", "random"], default="none")
     parser.add_argument("--eval-crop-mode", choices=["none", "first", "random"], default="none")
@@ -496,6 +737,8 @@ def main() -> int:
     parser.add_argument("--max-val-samples", type=int, default=0)
     parser.add_argument("--eval-max-batches", type=int, default=None)
     parser.add_argument("--eval-test-each-epoch", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--eval-only", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--freeze-non-prottrans", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--lr", type=float, default=5e-5)
     parser.add_argument("--warmup-steps", type=int, default=0)
     parser.add_argument("--warmup-ratio", type=float, default=0.05)
@@ -503,6 +746,10 @@ def main() -> int:
     parser.add_argument("--weight-decay", type=float, default=1e-2)
     parser.add_argument("--max-pos-weight", type=float, default=20.0)
     parser.add_argument("--label-smoothing", type=float, default=0.0)
+    parser.add_argument("--loss-type", choices=["ce", "ce_dice", "focal", "focal_dice"], default="ce")
+    parser.add_argument("--dice-weight", type=float, default=0.0)
+    parser.add_argument("--focal-gamma", type=float, default=2.0)
+    parser.add_argument("--focal-alpha", type=float, default=-1.0)
     parser.add_argument("--threshold-grid", default="0.01:0.99:0.01")
     parser.add_argument("--topk-fracs", default="0.05,0.10")
     parser.add_argument("--selection-metric", default="f1")
@@ -529,6 +776,7 @@ def main() -> int:
     train_ids = _limit_ids(_read_ids(args.split_dir / "train_ids.txt"), args.max_train_samples)
     val_ids = _limit_ids(_read_ids(args.split_dir / "val_ids.txt"), args.max_val_samples)
     test_ids = _read_ids(args.split_dir / "test_ids.txt")
+    lengths_by_id = _lengths_from_manifest(args.manifest)
     pos_weight, train_pos, train_neg = _class_weight_from_manifest(args.manifest, train_ids, args.max_pos_weight)
     require_contact_graph = bool(model_config.get("use_contact_graph")) if args.require_contact_graph is None else bool(args.require_contact_graph)
 
@@ -539,7 +787,9 @@ def main() -> int:
         args.sequence_feature_root,
         args.contact_graph_root,
         args.aux_contact_graph_root,
+        args.prottrans_embedding_root,
         args.require_sequence_features,
+        args.require_prottrans_embeddings,
         args.batch_size,
         args.num_workers,
         args.pin_memory,
@@ -548,13 +798,19 @@ def main() -> int:
         args.train_crop_mode,
         args.seed,
         True,
+        batching=args.batching,
+        max_batch_tokens=args.max_batch_tokens,
+        length_bucket_size=args.length_bucket_size,
+        lengths_by_id=lengths_by_id,
         preload=args.preload,
         strict_ids=args.strict_ids,
         require_labels=args.require_labels,
         strict_label_metadata=args.strict_label_metadata,
+        strict_sequence_feature_metadata=args.strict_sequence_feature_metadata,
         require_contact_graph=require_contact_graph,
         require_aux_contact_graph=args.require_aux_contact_graph,
     )
+    eval_batch_size = int(args.eval_batch_size) if int(args.eval_batch_size) > 0 else int(args.batch_size)
     val_loader = _build_loader(
         args.esm_root,
         args.label_root,
@@ -562,8 +818,10 @@ def main() -> int:
         args.sequence_feature_root,
         args.contact_graph_root,
         args.aux_contact_graph_root,
+        args.prottrans_embedding_root,
         args.require_sequence_features,
-        args.batch_size,
+        args.require_prottrans_embeddings,
+        eval_batch_size,
         args.num_workers,
         args.pin_memory,
         args.prefetch_factor,
@@ -571,10 +829,15 @@ def main() -> int:
         args.eval_crop_mode,
         args.seed + 1,
         False,
+        batching=args.batching,
+        max_batch_tokens=args.max_batch_tokens,
+        length_bucket_size=args.length_bucket_size,
+        lengths_by_id=lengths_by_id,
         preload=args.preload,
         strict_ids=args.strict_ids,
         require_labels=args.require_labels,
         strict_label_metadata=args.strict_label_metadata,
+        strict_sequence_feature_metadata=args.strict_sequence_feature_metadata,
         require_contact_graph=require_contact_graph,
         require_aux_contact_graph=args.require_aux_contact_graph,
     )
@@ -586,8 +849,10 @@ def main() -> int:
             args.sequence_feature_root,
             args.contact_graph_root,
             args.aux_contact_graph_root,
+            args.prottrans_embedding_root,
             args.require_sequence_features,
-            args.batch_size,
+            args.require_prottrans_embeddings,
+            eval_batch_size,
             args.num_workers,
             args.pin_memory,
             args.prefetch_factor,
@@ -595,10 +860,15 @@ def main() -> int:
             args.eval_crop_mode,
             args.seed + 2,
             False,
+            batching=args.batching,
+            max_batch_tokens=args.max_batch_tokens,
+            length_bucket_size=args.length_bucket_size,
+            lengths_by_id=lengths_by_id,
             preload=args.preload,
             strict_ids=args.strict_ids,
             require_labels=args.require_labels,
             strict_label_metadata=args.strict_label_metadata,
+            strict_sequence_feature_metadata=args.strict_sequence_feature_metadata,
             require_contact_graph=require_contact_graph,
             require_aux_contact_graph=args.require_aux_contact_graph,
         )
@@ -607,10 +877,56 @@ def main() -> int:
     )
 
     model = ESMSiteClassifier(model_config).to(device)
-    criterion = nn.CrossEntropyLoss(
-        weight=torch.tensor([1.0, pos_weight], dtype=torch.float32, device=device),
-        ignore_index=-100,
-        label_smoothing=max(0.0, min(1.0, float(args.label_smoothing))),
+    init_report: dict[str, Any] | None = None
+    if args.init_checkpoint is not None:
+        checkpoint = torch.load(args.init_checkpoint, map_location="cpu", weights_only=False)
+        if isinstance(checkpoint, dict):
+            if "model_state" in checkpoint:
+                state = checkpoint["model_state"]
+            elif "model" in checkpoint:
+                state = checkpoint["model"]
+            else:
+                state = checkpoint
+        else:
+            state = checkpoint
+        if not isinstance(state, dict):
+            raise ValueError(f"Unsupported init checkpoint format: {args.init_checkpoint}")
+        load_result = model.load_state_dict(state, strict=False)
+        init_report = {
+            "path": str(args.init_checkpoint),
+            "missing_keys": list(load_result.missing_keys),
+            "unexpected_keys": list(load_result.unexpected_keys),
+        }
+        print(
+            "Initialized model from "
+            f"{args.init_checkpoint} with {len(load_result.missing_keys)} missing "
+            f"and {len(load_result.unexpected_keys)} unexpected keys",
+            flush=True,
+        )
+    if args.freeze_non_prottrans:
+        for name, param in model.named_parameters():
+            if not name.startswith("prottrans_"):
+                param.requires_grad_(False)
+        n_trainable = sum(param.numel() for param in model.parameters() if param.requires_grad)
+        n_frozen = sum(param.numel() for param in model.parameters() if not param.requires_grad)
+        print(
+            json.dumps(
+                {
+                    "event": "freeze_non_prottrans",
+                    "trainable_parameters": n_trainable,
+                    "frozen_parameters": n_frozen,
+                }
+            ),
+            flush=True,
+        )
+    criterion = ResidueSiteLoss(
+        pos_weight=pos_weight,
+        label_smoothing=args.label_smoothing,
+        loss_type=args.loss_type,
+        dice_weight=args.dice_weight,
+        focal_gamma=args.focal_gamma,
+        focal_alpha=args.focal_alpha,
+        device=device,
     )
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -642,6 +958,12 @@ def main() -> int:
             "train_negative_residues": train_neg,
             "pos_weight": pos_weight,
             "total_train_steps": total_steps,
+            "n_train_batches": len(train_loader),
+            "n_val_batches": len(val_loader),
+            "n_test_batches": len(test_loader) if test_loader is not None else 0,
+            "batching": args.batching,
+            "max_batch_tokens": args.max_batch_tokens,
+            "length_bucket_size": args.length_bucket_size,
             "warmup_steps_resolved": warmup_steps,
             "min_lr_scale_resolved": min_lr_scale,
             "thresholds_resolved": thresholds,
@@ -650,17 +972,88 @@ def main() -> int:
             "strict_ids": args.strict_ids,
             "require_labels": args.require_labels,
             "strict_label_metadata": args.strict_label_metadata,
+            "strict_sequence_feature_metadata": args.strict_sequence_feature_metadata,
             "require_contact_graph_resolved": require_contact_graph,
             "require_aux_contact_graph": args.require_aux_contact_graph,
+            "prottrans_embedding_root": str(args.prottrans_embedding_root) if args.prottrans_embedding_root else None,
+            "require_prottrans_embeddings": args.require_prottrans_embeddings,
             "eval_test_each_epoch": args.eval_test_each_epoch,
+            "init_checkpoint_report": init_report,
+            "freeze_non_prottrans": args.freeze_non_prottrans,
+            "trainable_parameters": sum(param.numel() for param in model.parameters() if param.requires_grad),
+            "frozen_parameters": sum(param.numel() for param in model.parameters() if not param.requires_grad),
         }
     )
     (args.output_dir / "config.json").write_text(json.dumps(run_config, indent=2, default=str) + "\n")
+    _write_explaining_md(args.output_dir, run_config, best_metric=None, status="started")
     log_path = args.output_dir / "metrics.jsonl"
     best_metric = -1.0
     best_metric_name = str(args.selection_metric)
     global_step = 0
     print(json.dumps({"event": "start", **run_config}, default=str), flush=True)
+
+    if args.eval_only or args.epochs <= 0:
+        val_metrics = _evaluate(
+            model,
+            val_loader,
+            criterion,
+            device,
+            max_batches=args.eval_max_batches,
+            show_progress=args.progress,
+            desc="val eval-only",
+            thresholds=thresholds,
+            topk_fracs=topk_fracs,
+        )
+        test_metrics = None
+        test_at_val_threshold = None
+        if test_loader is not None:
+            test_metrics = _evaluate(
+                model,
+                test_loader,
+                criterion,
+                device,
+                max_batches=args.eval_max_batches,
+                show_progress=args.progress,
+                desc="test eval-only",
+                thresholds=thresholds,
+                topk_fracs=topk_fracs,
+            )
+            test_at_val_threshold = _metrics_at_threshold(test_metrics, val_metrics.get("best_threshold"))
+        record = {
+            "event": "eval_only",
+            "epoch": 0,
+            "val": val_metrics,
+        }
+        if test_metrics is not None:
+            record["test"] = test_metrics
+            record["test_at_val_threshold"] = test_at_val_threshold
+        with log_path.open("a") as handle:
+            handle.write(json.dumps(record) + "\n")
+        print(json.dumps(record), flush=True)
+        torch.save(
+            {
+                "model": model.state_dict(),
+                "epoch": 0,
+                "config": run_config,
+                "val": val_metrics,
+                "test": test_metrics,
+            },
+            args.output_dir / "last.pt",
+        )
+        torch.save(
+            {
+                "model": model.state_dict(),
+                "epoch": 0,
+                "config": run_config,
+                "val": val_metrics,
+                "test": test_metrics,
+            },
+            args.output_dir / "best.pt",
+        )
+        metric_value = val_metrics.get(best_metric_name)
+        best_metric = float(metric_value) if isinstance(metric_value, (int, float)) else None
+        _write_explaining_md(args.output_dir, run_config, best_metric=best_metric, status="eval_only")
+        return 0
 
     for epoch in range(1, args.epochs + 1):
         model.train()
@@ -787,6 +1180,7 @@ def main() -> int:
         ),
         flush=True,
     )
+    _write_explaining_md(args.output_dir, run_config, best_metric=best_metric, status="finished")
     return 0
 
 

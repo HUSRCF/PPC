@@ -21,6 +21,7 @@ def _sanitize(x: torch.Tensor, clip: float = 1.0e4) -> torch.Tensor:
 class ESMSiteConfig:
     d_esm: int = 1280
     d_seq: int = 28
+    d_prottrans: int = 1024
     d_model: int = 256
     d_hidden: int = 512
     n_classes: int = 2
@@ -29,6 +30,12 @@ class ESMSiteConfig:
     max_chains: int = 128
     use_chain_embedding: bool = True
     use_seq_features: bool = True
+    use_prottrans_embeddings: bool = False
+    prottrans_fusion_mode: str = "gated_residual"
+    prottrans_gate_input_mode: str = "full"
+    prottrans_gate_bias: float = -2.0
+    prottrans_residual_alpha_init: float = 1.0
+    prottrans_residual_alpha_trainable: bool = False
     use_position_features: bool = True
     use_global_context: bool = True
     use_contact_graph: bool = False
@@ -67,6 +74,10 @@ class ESMSiteConfig:
     tcn_layers: int = 0
     tcn_kernel_size: int = 7
     tcn_dilations: tuple[int, ...] | list[int] = field(default_factory=lambda: (1, 2, 4, 8))
+    tcn_block_type: str = "standard"
+    esm_layer_fusion: str = "concat"
+    esm_layer_count: int = 1
+    input_fusion_mode: str = "add"
     extra: dict[str, Any] = field(default_factory=dict)
 
 
@@ -86,6 +97,26 @@ class ResidualMLPBlock(nn.Module):
         return _sanitize(x + self.net(self.norm(x)))
 
 
+class ESMScalarMix(nn.Module):
+    """Learn a residue-wise source mix over concatenated ESM layer embeddings."""
+
+    def __init__(self, n_layers: int) -> None:
+        super().__init__()
+        self.n_layers = max(1, int(n_layers))
+        self.logits = nn.Parameter(torch.zeros(self.n_layers))
+        self.scale = nn.Parameter(torch.ones(()))
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        if self.n_layers <= 1:
+            return x
+        if x.shape[-1] % self.n_layers != 0:
+            raise ValueError(f"ESM embedding dim {x.shape[-1]} is not divisible by esm_layer_count={self.n_layers}")
+        layer_dim = x.shape[-1] // self.n_layers
+        y = x.view(*x.shape[:-1], self.n_layers, layer_dim)
+        weights = torch.softmax(self.logits.float(), dim=0).to(dtype=x.dtype)
+        return _sanitize(self.scale.to(dtype=x.dtype) * (y * weights.view(*((1,) * (y.ndim - 2)), self.n_layers, 1)).sum(dim=-2))
+
+
 class TCNContextBlock(nn.Module):
     """Masked residual 1D convolution context over residue order.
 
@@ -94,19 +125,47 @@ class TCNContextBlock(nn.Module):
     cannot inject values into valid residues.
     """
 
-    def __init__(self, d_model: int, d_hidden: int, dropout: float, kernel_size: int, dilation: int) -> None:
+    def __init__(
+        self,
+        d_model: int,
+        d_hidden: int,
+        dropout: float,
+        kernel_size: int,
+        dilation: int,
+        block_type: str = "standard",
+    ) -> None:
         super().__init__()
         kernel_size = max(1, int(kernel_size))
         dilation = max(1, int(dilation))
         padding = dilation * (kernel_size - 1) // 2
+        block_type = str(block_type or "standard").lower()
+        if block_type not in {"standard", "gated_depthwise"}:
+            raise ValueError(f"Unsupported tcn_block_type={block_type!r}; use standard or gated_depthwise")
         self.norm = nn.LayerNorm(d_model)
-        self.conv = nn.Sequential(
-            nn.Conv1d(d_model, d_hidden, kernel_size=kernel_size, padding=padding, dilation=dilation),
-            nn.GELU(),
-            nn.Dropout(dropout),
-            nn.Conv1d(d_hidden, d_model, kernel_size=1),
-            nn.Dropout(dropout),
-        )
+        self.block_type = block_type
+        if block_type == "gated_depthwise":
+            self.conv = nn.Sequential(
+                nn.Conv1d(
+                    d_model,
+                    d_model * 2,
+                    kernel_size=kernel_size,
+                    padding=padding,
+                    dilation=dilation,
+                    groups=d_model,
+                ),
+                nn.GLU(dim=1),
+                nn.Dropout(dropout),
+                nn.Conv1d(d_model, d_model, kernel_size=1),
+                nn.Dropout(dropout),
+            )
+        else:
+            self.conv = nn.Sequential(
+                nn.Conv1d(d_model, d_hidden, kernel_size=kernel_size, padding=padding, dilation=dilation),
+                nn.GELU(),
+                nn.Dropout(dropout),
+                nn.Conv1d(d_hidden, d_model, kernel_size=1),
+                nn.Dropout(dropout),
+            )
         self.ffn_norm = nn.LayerNorm(d_model)
         self.ffn = nn.Sequential(
             nn.Linear(d_model, d_hidden),
@@ -697,9 +756,36 @@ class ESMSiteClassifier(nn.Module):
                 "use residual_mlp, gated_residual, weighted, or attention"
             )
         c.dual_contact_fusion_mode = fusion_mode
+        c.esm_layer_fusion = str(c.esm_layer_fusion or "concat").lower()
+        if c.esm_layer_fusion not in {"concat", "scalar_mix"}:
+            raise ValueError(f"Unsupported esm_layer_fusion={c.esm_layer_fusion!r}; use concat or scalar_mix")
+        c.esm_layer_count = max(1, int(c.esm_layer_count))
+        c.prottrans_fusion_mode = str(c.prottrans_fusion_mode or "gated_residual").lower()
+        if c.prottrans_fusion_mode not in {"gated_residual", "add", "input_branch"}:
+            raise ValueError(
+                f"Unsupported prottrans_fusion_mode={c.prottrans_fusion_mode!r}; "
+                "use gated_residual, add, or input_branch"
+            )
+        c.prottrans_gate_input_mode = str(c.prottrans_gate_input_mode or "full").lower()
+        if c.prottrans_gate_input_mode not in {"full", "simple"}:
+            raise ValueError(
+                f"Unsupported prottrans_gate_input_mode={c.prottrans_gate_input_mode!r}; "
+                "use full or simple"
+            )
+        c.input_fusion_mode = str(c.input_fusion_mode or "add").lower()
+        if c.input_fusion_mode not in {"add", "gated_residual", "weighted"}:
+            raise ValueError(f"Unsupported input_fusion_mode={c.input_fusion_mode!r}; use add, gated_residual, or weighted")
+
+        esm_input_dim = c.d_esm
+        self.esm_scalar_mix = None
+        if c.esm_layer_fusion == "scalar_mix":
+            if c.d_esm % c.esm_layer_count != 0:
+                raise ValueError(f"d_esm={c.d_esm} must be divisible by esm_layer_count={c.esm_layer_count}")
+            esm_input_dim = c.d_esm // c.esm_layer_count
+            self.esm_scalar_mix = ESMScalarMix(c.esm_layer_count)
 
         self.esm_proj = nn.Sequential(
-            nn.Linear(c.d_esm, c.d_model),
+            nn.Linear(esm_input_dim, c.d_model),
             nn.LayerNorm(c.d_model),
             nn.GELU(),
             nn.Dropout(c.dropout),
@@ -714,6 +800,35 @@ class ESMSiteClassifier(nn.Module):
             if c.use_seq_features
             else None
         )
+        self.prottrans_proj = (
+            nn.Sequential(
+                nn.Linear(c.d_prottrans, c.d_model),
+                nn.LayerNorm(c.d_model),
+                nn.GELU(),
+                nn.Dropout(c.dropout),
+            )
+            if c.use_prottrans_embeddings
+            else None
+        )
+        self.prottrans_gate = None
+        gate_input_mult = 4 if c.prottrans_gate_input_mode == "full" else 2
+        if self.prottrans_proj is not None and c.prottrans_fusion_mode == "gated_residual":
+            self.prottrans_gate = nn.Sequential(
+                nn.LayerNorm(c.d_model * gate_input_mult),
+                nn.Linear(c.d_model * gate_input_mult, c.d_model),
+                nn.Sigmoid(),
+            )
+            gate_linear = self.prottrans_gate[1]
+            if isinstance(gate_linear, nn.Linear):
+                nn.init.constant_(gate_linear.bias, float(c.prottrans_gate_bias))
+        alpha = torch.tensor(float(c.prottrans_residual_alpha_init), dtype=torch.float32)
+        if self.prottrans_proj is not None and c.prottrans_fusion_mode in {"gated_residual", "add"}:
+            if bool(c.prottrans_residual_alpha_trainable):
+                self.prottrans_residual_alpha = nn.Parameter(alpha)
+            else:
+                self.register_buffer("prottrans_residual_alpha", alpha)
+        else:
+            self.prottrans_residual_alpha = None
         self.chain_embedding = nn.Embedding(c.max_chains, c.d_model) if c.use_chain_embedding else None
         self.position_proj = (
             nn.Sequential(
@@ -736,6 +851,36 @@ class ESMSiteClassifier(nn.Module):
             if c.use_contact_profile_features
             else None
         )
+        n_input_branches = (
+            1
+            + int(self.prottrans_proj is not None and c.prottrans_fusion_mode == "input_branch")
+            + int(self.seq_proj is not None)
+            + int(self.chain_embedding is not None)
+            + int(self.position_proj is not None)
+            + int(self.contact_profile_encoder is not None)
+        )
+        self.input_fusion = None
+        self.input_gate = None
+        self.input_weights = None
+        if c.input_fusion_mode == "gated_residual":
+            self.input_fusion = nn.Sequential(
+                nn.LayerNorm(c.d_model * n_input_branches),
+                nn.Linear(c.d_model * n_input_branches, c.d_hidden),
+                nn.GELU(),
+                nn.Dropout(c.dropout),
+                nn.Linear(c.d_hidden, c.d_model),
+                nn.Dropout(c.dropout),
+            )
+            self.input_gate = nn.Sequential(
+                nn.LayerNorm(c.d_model * n_input_branches),
+                nn.Linear(c.d_model * n_input_branches, c.d_model),
+                nn.Sigmoid(),
+            )
+        elif c.input_fusion_mode == "weighted":
+            self.input_weights = nn.Sequential(
+                nn.LayerNorm(c.d_model * n_input_branches),
+                nn.Linear(c.d_model * n_input_branches, n_input_branches),
+            )
         self.global_proj = (
             nn.Sequential(
                 nn.Linear(c.d_model * 2, c.d_model),
@@ -761,6 +906,7 @@ class ESMSiteClassifier(nn.Module):
                 c.dropout,
                 c.tcn_kernel_size,
                 tcn_dilations[layer_idx % len(tcn_dilations)],
+                c.tcn_block_type,
             )
             for layer_idx in range(n_tcn_layers)
         )
@@ -881,6 +1027,7 @@ class ESMSiteClassifier(nn.Module):
         esm_embeddings: torch.Tensor,
         protein_mask: torch.Tensor,
         seq_features: torch.Tensor | None = None,
+        prottrans_embeddings: torch.Tensor | None = None,
         chain_ids: torch.Tensor | None = None,
         chain_rel_pos: torch.Tensor | None = None,
         protein_rel_pos: torch.Tensor | None = None,
@@ -891,24 +1038,88 @@ class ESMSiteClassifier(nn.Module):
     ) -> dict[str, torch.Tensor]:
         c = self.config
         mask = protein_mask.bool()
-        h = self.esm_proj(_sanitize(esm_embeddings))
+        esm_input = _sanitize(esm_embeddings)
+        if self.esm_scalar_mix is not None:
+            esm_input = self.esm_scalar_mix(esm_input)
+        esm_branch = self.esm_proj(esm_input)
+        if self.prottrans_proj is not None:
+            if prottrans_embeddings is not None:
+                prottrans_branch = self.prottrans_proj(_sanitize(prottrans_embeddings, clip=10.0))
+            else:
+                prottrans_branch = torch.zeros_like(esm_branch)
+            if c.prottrans_fusion_mode == "gated_residual":
+                if c.prottrans_gate_input_mode == "simple":
+                    gate_input = torch.cat([esm_branch, prottrans_branch], dim=-1)
+                else:
+                    gate_input = torch.cat(
+                        [
+                            esm_branch,
+                            prottrans_branch,
+                            esm_branch - prottrans_branch,
+                            esm_branch * prottrans_branch,
+                        ],
+                        dim=-1,
+                    )
+                assert self.prottrans_gate is not None
+                gate = self.prottrans_gate(gate_input).to(dtype=prottrans_branch.dtype)
+                alpha = self.prottrans_residual_alpha.to(dtype=prottrans_branch.dtype, device=prottrans_branch.device)
+                esm_branch = _sanitize(esm_branch + alpha * gate * prottrans_branch)
+            elif c.prottrans_fusion_mode == "add":
+                alpha = self.prottrans_residual_alpha.to(dtype=prottrans_branch.dtype, device=prottrans_branch.device)
+                esm_branch = _sanitize(esm_branch + alpha * prottrans_branch)
+            elif c.prottrans_fusion_mode == "input_branch":
+                pass
+            else:
+                raise RuntimeError(f"unreachable prottrans_fusion_mode={c.prottrans_fusion_mode!r}")
+        branches = [esm_branch]
+        if self.prottrans_proj is not None and c.prottrans_fusion_mode == "input_branch":
+            if prottrans_embeddings is not None:
+                branches.append(self.prottrans_proj(_sanitize(prottrans_embeddings, clip=10.0)))
+            else:
+                branches.append(torch.zeros_like(esm_branch))
 
-        if self.seq_proj is not None and seq_features is not None:
-            h = h + self.seq_proj(_sanitize(seq_features, clip=10.0))
-        if self.chain_embedding is not None and chain_ids is not None:
-            safe_chain_ids = torch.clamp(chain_ids.long(), min=0, max=c.max_chains - 1)
-            h = h + self.chain_embedding(safe_chain_ids)
-        if self.position_proj is not None and chain_rel_pos is not None and protein_rel_pos is not None:
-            pos = torch.stack([chain_rel_pos.float(), protein_rel_pos.float()], dim=-1)
-            h = h + self.position_proj(_sanitize(pos, clip=1.0))
+        if self.seq_proj is not None:
+            if seq_features is not None:
+                branches.append(self.seq_proj(_sanitize(seq_features, clip=10.0)))
+            else:
+                branches.append(torch.zeros_like(esm_branch))
+        if self.chain_embedding is not None:
+            if chain_ids is not None:
+                safe_chain_ids = torch.clamp(chain_ids.long(), min=0, max=c.max_chains - 1)
+                branches.append(self.chain_embedding(safe_chain_ids))
+            else:
+                branches.append(torch.zeros_like(esm_branch))
+        if self.position_proj is not None:
+            if chain_rel_pos is not None and protein_rel_pos is not None:
+                pos = torch.stack([chain_rel_pos.float(), protein_rel_pos.float()], dim=-1)
+                branches.append(self.position_proj(_sanitize(pos, clip=1.0)))
+            else:
+                branches.append(torch.zeros_like(esm_branch))
         if self.contact_profile_encoder is not None:
-            h = h + self.contact_profile_encoder(
-                mask,
-                contact_edge_index,
-                contact_edge_scores,
-                aux_contact_edge_index,
-                aux_contact_edge_scores,
-            ).to(dtype=h.dtype)
+            branches.append(
+                self.contact_profile_encoder(
+                    mask,
+                    contact_edge_index,
+                    contact_edge_scores,
+                    aux_contact_edge_index,
+                    aux_contact_edge_scores,
+                ).to(dtype=esm_branch.dtype)
+            )
+
+        if c.input_fusion_mode == "add":
+            h = torch.stack(branches, dim=0).sum(dim=0)
+        else:
+            concat_branches = torch.cat(branches, dim=-1)
+            if c.input_fusion_mode == "gated_residual":
+                update = self.input_fusion(concat_branches)
+                gate = self.input_gate(concat_branches).to(dtype=update.dtype)
+                h = esm_branch + gate * update
+            elif c.input_fusion_mode == "weighted":
+                weights = torch.softmax(self.input_weights(concat_branches).float(), dim=-1).to(dtype=esm_branch.dtype)
+                h = sum(weights[..., idx : idx + 1] * branch for idx, branch in enumerate(branches))
+            else:
+                raise RuntimeError(f"unreachable input_fusion_mode={c.input_fusion_mode!r}")
+
         h = h.masked_fill(~mask.unsqueeze(-1), 0.0)
 
         for block in self.local_blocks:

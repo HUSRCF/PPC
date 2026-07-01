@@ -231,6 +231,12 @@ def _compare_label_metadata(
     pdb_id: str,
     n_res: int,
 ) -> None:
+    """Verify residue/chain alignment between the ESM payload and its label file.
+
+    This invariant can also be checked once offline with
+    scripts/analysis/validate_esm_site_metadata.py after regenerating labels or
+    features, instead of re-checking every __getitem__ call during training.
+    """
     if label_data is None:
         raise ValueError(f"{pdb_id}: strict label metadata requested but label payload has no metadata")
 
@@ -263,6 +269,25 @@ def _compare_label_metadata(
         raise ValueError(f"{pdb_id}: label residue metadata length {len(label_res)} != ESM length {n_res}")
 
 
+def _compare_sequence_feature_metadata(
+    data: dict[str, Any],
+    residue_names: list[Any],
+    chain_ids: list[Any],
+    pdb_id: str,
+) -> None:
+    """Verify residue/chain alignment between ESM and external sequence features.
+
+    This is the same invariant checked by scripts/analysis/validate_esm_site_metadata.py.
+    Use strict_sequence_feature_metadata=False only after that offline check passes.
+    """
+    if "residue_names_1" in data:
+        _compare_text_list("residue_names_1", residue_names, list(data["residue_names_1"]), pdb_id)
+    elif "sequence" in data:
+        _compare_text_list("sequence", residue_names, list(str(data["sequence"])), pdb_id)
+    if "chain_ids" in data:
+        _compare_text_list("chain_ids", chain_ids, list(data["chain_ids"]), pdb_id)
+
+
 def _load_external_sequence_features(
     sequence_feature_root: Path | None,
     pdb_id: str,
@@ -270,6 +295,7 @@ def _load_external_sequence_features(
     residue_names: list[Any],
     chain_ids: list[Any],
     required: bool,
+    strict_metadata: bool = True,
 ) -> torch.Tensor | None:
     if sequence_feature_root is None:
         return None
@@ -288,12 +314,8 @@ def _load_external_sequence_features(
     data = _torch_load(path)
     if isinstance(data, dict):
         value = data.get("seq_features", data.get("features"))
-        if "residue_names_1" in data:
-            _compare_text_list("residue_names_1", residue_names, list(data["residue_names_1"]), pdb_id)
-        elif "sequence" in data:
-            _compare_text_list("sequence", residue_names, list(str(data["sequence"])), pdb_id)
-        if "chain_ids" in data:
-            _compare_text_list("chain_ids", chain_ids, list(data["chain_ids"]), pdb_id)
+        if strict_metadata:
+            _compare_sequence_feature_metadata(data, residue_names, chain_ids, pdb_id)
     else:
         value = data
     if value is None:
@@ -305,6 +327,66 @@ def _load_external_sequence_features(
     if int(features.shape[0]) != n_res:
         raise ValueError(f"{pdb_id}: sequence feature length {features.shape[0]} != ESM length {n_res}")
     return torch.nan_to_num(features, nan=0.0, posinf=0.0, neginf=0.0)
+
+
+def _load_external_prottrans_embeddings(
+    prottrans_embedding_root: Path | None,
+    pdb_id: str,
+    n_res: int,
+    residue_names: list[Any],
+    chain_ids: list[Any],
+    required: bool,
+) -> torch.Tensor | None:
+    """Load frozen ProtTrans/ProtBert-style per-residue embeddings.
+
+    Expected shape is [L, D].  Payloads may be a raw tensor or a dict with one
+    of several conventional keys, so the same loader can handle ProtBert,
+    ProtBert-BFD, ProtT5, or future frozen PLM embeddings.
+    """
+
+    if prottrans_embedding_root is None:
+        return None
+    candidates = (
+        prottrans_embedding_root / pdb_id / f"{pdb_id}_prottrans.pt",
+        prottrans_embedding_root / pdb_id / f"{pdb_id}_protbert.pt",
+        prottrans_embedding_root / pdb_id / f"{pdb_id}_protbert_bfd.pt",
+        prottrans_embedding_root / pdb_id / f"{pdb_id}_embeddings.pt",
+        prottrans_embedding_root / pdb_id / f"{pdb_id}.pt",
+        prottrans_embedding_root / f"{pdb_id}_prottrans.pt",
+        prottrans_embedding_root / f"{pdb_id}_protbert.pt",
+        prottrans_embedding_root / f"{pdb_id}_protbert_bfd.pt",
+        prottrans_embedding_root / f"{pdb_id}_embeddings.pt",
+        prottrans_embedding_root / f"{pdb_id}.pt",
+    )
+    path = next((candidate for candidate in candidates if candidate.exists()), None)
+    if path is None:
+        if required:
+            raise FileNotFoundError(f"{pdb_id}: ProtTrans embedding file not found under {prottrans_embedding_root}")
+        return None
+
+    data = _torch_load(path)
+    if isinstance(data, dict):
+        for key in ("prottrans_embeddings", "protbert_embeddings", "embeddings", "features", "residue_embeddings"):
+            if key in data:
+                value = data[key]
+                break
+        else:
+            raise ValueError(f"{pdb_id}: ProtTrans payload has no embedding tensor: {path}")
+        if "residue_names_1" in data:
+            _compare_text_list("prottrans residue_names_1", residue_names, list(data["residue_names_1"]), pdb_id)
+        elif "sequence" in data:
+            _compare_text_list("prottrans sequence", residue_names, list(str(data["sequence"])), pdb_id)
+        if "chain_ids" in data:
+            _compare_text_list("prottrans chain_ids", chain_ids, list(data["chain_ids"]), pdb_id)
+    else:
+        value = data
+
+    embeddings = torch.as_tensor(value, dtype=torch.float32)
+    if embeddings.ndim != 2:
+        raise ValueError(f"{pdb_id}: ProtTrans embeddings must be 2D, got shape {tuple(embeddings.shape)}")
+    if int(embeddings.shape[0]) != n_res:
+        raise ValueError(f"{pdb_id}: ProtTrans embedding length {embeddings.shape[0]} != ESM length {n_res}")
+    return torch.nan_to_num(embeddings, nan=0.0, posinf=0.0, neginf=0.0)
 
 
 def _slice_value(value: torch.Tensor, residue_slice: slice) -> torch.Tensor:
@@ -417,9 +499,11 @@ class ESMProteinSiteDataset(Dataset):
         label_root: str | Path | None = None,
         ids: list[str] | None = None,
         sequence_feature_root: str | Path | None = None,
+        prottrans_embedding_root: str | Path | None = None,
         contact_graph_root: str | Path | None = None,
         aux_contact_graph_root: str | Path | None = None,
         require_sequence_features: bool = False,
+        require_prottrans_embeddings: bool = False,
         max_residues: int | None = None,
         crop_mode: str = "none",
         seed: int = 0,
@@ -427,21 +511,25 @@ class ESMProteinSiteDataset(Dataset):
         strict_ids: bool = False,
         require_labels: bool = False,
         strict_label_metadata: bool = False,
+        strict_sequence_feature_metadata: bool = True,
         require_contact_graph: bool = False,
         require_aux_contact_graph: bool = False,
     ) -> None:
         self.esm_root = Path(esm_root)
         self.label_root = Path(label_root) if label_root else None
         self.sequence_feature_root = Path(sequence_feature_root) if sequence_feature_root else None
+        self.prottrans_embedding_root = Path(prottrans_embedding_root) if prottrans_embedding_root else None
         self.contact_graph_root = Path(contact_graph_root) if contact_graph_root else None
         self.aux_contact_graph_root = Path(aux_contact_graph_root) if aux_contact_graph_root else None
         self.require_sequence_features = bool(require_sequence_features)
+        self.require_prottrans_embeddings = bool(require_prottrans_embeddings)
         self.max_residues = int(max_residues) if max_residues else None
         self.crop_mode = crop_mode
         self.rng = random.Random(seed)
         self.requested_ids = [str(pdb_id).lower() for pdb_id in ids] if ids is not None else None
         self.require_labels = bool(require_labels)
         self.strict_label_metadata = bool(strict_label_metadata)
+        self.strict_sequence_feature_metadata = bool(strict_sequence_feature_metadata)
         self.require_contact_graph = bool(require_contact_graph)
         self.require_aux_contact_graph = bool(require_aux_contact_graph)
         self.esm_paths = _discover_esm_paths(self.esm_root, ids)
@@ -495,9 +583,18 @@ class ESMProteinSiteDataset(Dataset):
             residue_names,
             chain_ids_raw,
             self.require_sequence_features,
+            self.strict_sequence_feature_metadata,
         )
         if seq_features is None:
             seq_features = _sequence_features(residue_names)
+        prottrans_embeddings = _load_external_prottrans_embeddings(
+            self.prottrans_embedding_root,
+            pdb_id,
+            n_res,
+            residue_names,
+            chain_ids_raw,
+            self.require_prottrans_embeddings,
+        )
         if self.contact_graph_root is not None:
             contact_edge_index, contact_edge_scores = _load_external_contact_graph(
                 self.contact_graph_root,
@@ -526,6 +623,7 @@ class ESMProteinSiteDataset(Dataset):
             "esm_embeddings": _slice_value(embeddings, residue_slice),
             "seq_features": _slice_value(seq_features, residue_slice),
             "chain_ids": _slice_value(chain_ids, residue_slice),
+            "chain_ids_raw": [_norm_text(value) for value in chain_ids_raw[residue_slice]],
             "chain_pos": _slice_value(chain_pos, residue_slice),
             "chain_rel_pos": _slice_value(chain_rel_pos, residue_slice),
             "protein_rel_pos": _slice_value(protein_rel_pos, residue_slice),
@@ -535,6 +633,8 @@ class ESMProteinSiteDataset(Dataset):
             "aux_contact_edge_index": aux_contact_edge_index,
             "aux_contact_edge_scores": aux_contact_edge_scores,
         }
+        if prottrans_embeddings is not None:
+            item["prottrans_embeddings"] = _slice_value(prottrans_embeddings, residue_slice)
         if residue_slice != slice(None):
             item["crop_start"] = residue_slice.start
             item["crop_end"] = residue_slice.stop
@@ -552,10 +652,17 @@ class ESMProteinSiteDataset(Dataset):
         return slice(start, start + self.max_residues)
 
 
-def _pad_tensor(value: torch.Tensor, max_len: int, pad_value: float | int = 0) -> torch.Tensor:
-    shape = (max_len,) + tuple(value.shape[1:])
-    out = value.new_full(shape, pad_value)
-    out[: value.shape[0]] = value
+def _stack_padded(
+    values: list[torch.Tensor],
+    max_len: int,
+    pad_value: float | int,
+    dtype: torch.dtype,
+) -> torch.Tensor:
+    """Pad and stack variable-length tensors in one allocation."""
+    tail_shape = tuple(values[0].shape[1:])
+    out = values[0].new_full((len(values), max_len) + tail_shape, pad_value, dtype=dtype)
+    for idx, value in enumerate(values):
+        out[idx, : value.shape[0]] = value
     return out
 
 
@@ -581,17 +688,26 @@ def _collate_contact_edges(
 def collate_esm_site_features(items: list[dict[str, Any]]) -> dict[str, Any]:
     max_len = max(int(item["esm_embeddings"].shape[0]) for item in items)
     batch: dict[str, Any] = {"pdb_id": [item["pdb_id"] for item in items]}
+    if "chain_ids_raw" in items[0]:
+        batch["chain_ids_raw"] = [item["chain_ids_raw"] for item in items]
     for key in ("crop_start", "crop_end"):
         if key in items[0]:
             batch[key] = [item.get(key) for item in items]
 
-    batch["esm_embeddings"] = torch.stack([_pad_tensor(item["esm_embeddings"], max_len, 0.0) for item in items])
-    batch["seq_features"] = torch.stack([_pad_tensor(item["seq_features"], max_len, 0.0) for item in items])
-    batch["chain_ids"] = torch.stack([_pad_tensor(item["chain_ids"], max_len, 0) for item in items])
-    batch["chain_pos"] = torch.stack([_pad_tensor(item["chain_pos"], max_len, 0) for item in items])
-    batch["chain_rel_pos"] = torch.stack([_pad_tensor(item["chain_rel_pos"], max_len, 0.0) for item in items])
-    batch["protein_rel_pos"] = torch.stack([_pad_tensor(item["protein_rel_pos"], max_len, 0.0) for item in items])
-    batch["labels"] = torch.stack([_pad_tensor(item["labels"], max_len, -100) for item in items])
+    batch["esm_embeddings"] = _stack_padded([item["esm_embeddings"] for item in items], max_len, 0.0, torch.float32)
+    if any("prottrans_embeddings" in item for item in items):
+        missing = [item["pdb_id"] for item in items if "prottrans_embeddings" not in item]
+        if missing:
+            raise ValueError(f"Batch mixes missing ProtTrans embeddings for: {missing[:8]}")
+        batch["prottrans_embeddings"] = _stack_padded(
+            [item["prottrans_embeddings"] for item in items], max_len, 0.0, torch.float32
+        )
+    batch["seq_features"] = _stack_padded([item["seq_features"] for item in items], max_len, 0.0, torch.float32)
+    batch["chain_ids"] = _stack_padded([item["chain_ids"] for item in items], max_len, 0, torch.long)
+    batch["chain_pos"] = _stack_padded([item["chain_pos"] for item in items], max_len, 0, torch.long)
+    batch["chain_rel_pos"] = _stack_padded([item["chain_rel_pos"] for item in items], max_len, 0.0, torch.float32)
+    batch["protein_rel_pos"] = _stack_padded([item["protein_rel_pos"] for item in items], max_len, 0.0, torch.float32)
+    batch["labels"] = _stack_padded([item["labels"] for item in items], max_len, -100, torch.long)
     mask = torch.zeros(len(items), max_len, dtype=torch.bool)
     for idx, item in enumerate(items):
         mask[idx, : int(item["esm_embeddings"].shape[0])] = True

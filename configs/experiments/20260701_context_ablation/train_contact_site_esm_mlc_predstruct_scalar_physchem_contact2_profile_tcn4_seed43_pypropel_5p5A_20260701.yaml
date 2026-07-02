@@ -1,0 +1,79 @@
+data:
+  aux_contact_graph_root: null
+  contact_graph_root: null
+  esm_root: features/esm2_t33_650M_UR50D_mlc/pt
+  label_root: features/contact_labels_5p5A
+  manifest: features/contact_labels_5p5A/manifest.csv
+  require_aux_contact_graph: false
+  require_contact_graph: null
+  require_sequence_features: true
+  sequence_feature_root: features/pred_struct_sequence_scalar_physchem_relaxed/pt
+  split_dir: features/contact_labels_5p5A/splits_pairwise_si30_cov0_s7p5_tmk_no_len_limit_predstruct_relaxed_largetrain_balanced
+metadata:
+  parent_config: /home/husrcf/Code/PPC/configs/experiments/20260701_context_ablation/train_contact_site_esm_mlc_predstruct_scalar_physchem_contact2_profile_seed43_pypropel_5p5A_20260701.yaml
+  purpose: 'B_tcn_context: A plus 4-layer dilated TCN context'
+  split_policy: PDB-level pairwise-si30 split; final benchmark exported on pypropel_chain_filtered_no_len_limit
+    test chains
+  test_usage_policy: best checkpoint selected on validation only; no test evaluation
+    during training
+  experiment_name: B_tcn_context
+model:
+  classifier_dropout: 0.35
+  contact_graph_layers: 2
+  contact_profile_hidden: 64
+  contact_profile_include_aux: true
+  contact_score_clip: 1.0
+  d_esm: 3840
+  d_hidden: 512
+  d_model: 256
+  d_seq: 152
+  dropout: 0.18
+  max_chains: 128
+  n_transformer_layers: 0
+  use_chain_embedding: true
+  use_contact_graph: true
+  use_contact_profile_features: true
+  use_global_context: true
+  use_position_features: true
+  use_seq_features: true
+  use_tcn_context: true
+  tcn_layers: 4
+  tcn_kernel_size: 7
+  tcn_dilations:
+  - 1
+  - 2
+  - 4
+  - 8
+training:
+  adam_eps: 1.0e-07
+  amp: true
+  batch_size: 16
+  device: cuda:1
+  epochs: 30
+  eval_batch_size: 8
+  eval_crop_mode: none
+  eval_max_batches: null
+  eval_test_each_epoch: false
+  grad_clip_norm: 1.0
+  grad_value_clip: 100.0
+  label_smoothing: 0.03
+  lr: 5.0e-05
+  max_pos_weight: 20.0
+  max_residues: 0
+  max_train_samples: null
+  max_val_samples: 0
+  min_lr_scale: 0.02
+  num_workers: 4
+  output_dir: runs/contact_site_esm_mlc_predstruct_scalar_physchem_contact2_profile_tcn4_seed43_e30_pairwise_si30_s7p5_5p5A_20260701
+  pin_memory: true
+  prefetch_factor: 1
+  preload: false
+  progress: false
+  seed: 43
+  selection_metric: f1_best_threshold
+  threshold_grid: 0.01:0.99:0.01
+  topk_fracs: 0.05,0.10,0.20
+  train_crop_mode: none
+  warmup_ratio: 0.1
+  warmup_steps: 0
+  weight_decay: 0.05

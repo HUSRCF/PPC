@@ -1,0 +1,71 @@
+data:
+  esm_root: features/esm2_t33_650M_UR50D_mlc/pt
+  label_root: features/contact_labels_5p5A
+  manifest: features/contact_labels_5p5A/manifest.csv
+  split_dir: features/contact_labels_5p5A/splits_pairwise_si30_cov0_s7p5_tmk_no_len_limit_predstruct_relaxed_largetrain_balanced
+  sequence_feature_root: features/pred_struct_sequence_scalar_physchem_relaxed/pt
+  require_sequence_features: true
+  contact_graph_root: null
+  aux_contact_graph_root: null
+  require_contact_graph: null
+  require_aux_contact_graph: false
+model:
+  d_esm: 3840
+  d_seq: 152
+  d_model: 256
+  d_hidden: 512
+  dropout: 0.18
+  classifier_dropout: 0.35
+  max_chains: 128
+  use_chain_embedding: true
+  use_seq_features: true
+  use_position_features: true
+  use_global_context: true
+  use_contact_graph: true
+  contact_graph_layers: 2
+  contact_score_clip: 1.0
+  n_transformer_layers: 0
+  use_contact_profile_features: true
+  contact_profile_hidden: 64
+  contact_profile_include_aux: true
+training:
+  output_dir: runs/contact_site_esm_mlc_predstruct_scalar_physchem_contact2_profile_seed44_e30_pairwise_si30_s7p5_5p5A_20260701
+  device: cuda:0
+  seed: 44
+  epochs: 30
+  batch_size: 16
+  eval_batch_size: 8
+  num_workers: 4
+  pin_memory: true
+  preload: false
+  prefetch_factor: 1
+  max_residues: 0
+  train_crop_mode: none
+  eval_crop_mode: none
+  max_train_samples: null
+  max_val_samples: 0
+  eval_max_batches: null
+  eval_test_each_epoch: false
+  lr: 5.0e-05
+  warmup_steps: 0
+  warmup_ratio: 0.1
+  min_lr_scale: 0.02
+  weight_decay: 0.05
+  label_smoothing: 0.03
+  threshold_grid: 0.01:0.99:0.01
+  topk_fracs: 0.05,0.10,0.20
+  selection_metric: f1_best_threshold
+  max_pos_weight: 20.0
+  grad_clip_norm: 1.0
+  grad_value_clip: 100.0
+  adam_eps: 1.0e-07
+  amp: true
+  progress: false
+metadata:
+  purpose: 'A_contact2_profile: scalar_physchem baseline plus contact_graph_layers=2
+    and contact_profile features'
+  split_policy: PDB-level pairwise-si30 split; final benchmark exported on pypropel_chain_filtered_no_len_limit
+    test chains
+  test_usage_policy: best checkpoint selected on validation only; no test evaluation
+    during training
+  parent_config: /home/husrcf/Code/PPC/configs/experiments/20260630_pypropel_retrain_completefeature/train_contact_site_esm_mlc_predstruct_scalar_physchem_seed44_pypropel_5p5A_20260630.yaml

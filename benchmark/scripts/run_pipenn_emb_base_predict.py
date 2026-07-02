@@ -22,7 +22,11 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--prepared-csv", required=True)
     p.add_argument("--embeddings-npz", required=True)
     p.add_argument("--model-hdf5", required=True)
-    p.add_argument("--architecture", required=True, choices=["dnet", "rnn", "rnet", "unet"])
+    p.add_argument(
+        "--architecture",
+        required=True,
+        choices=["ann", "cnn-rnn", "dnet", "rnn", "rnet", "unet"],
+    )
     p.add_argument("--output-tsv", required=True)
     p.add_argument("--summary-json", required=True)
     p.add_argument("--method", required=True)
@@ -59,6 +63,58 @@ def build_dnet_model(slice_len: int = 1170):
         x = BatchNormalization()(x)
         x = activation()(x)
         dilation *= 2
+    out = TimeDistributed(Dense(1, activation="sigmoid"))(x)
+    return Model(inputs=prot, outputs=out)
+
+
+def build_ann_model(slice_len: int = 1):
+    from tensorflow.keras.layers import BatchNormalization, Dense, Dropout, Input
+    from tensorflow.keras.models import Model
+
+    prot = Input(shape=(slice_len, INPUT_DIM))
+    x = prot
+    for dense_size in (1024, 768, 512, 256, 128, 64, 32, 16):
+        x = Dense(dense_size)(x)
+        x = Dropout(0.2)(x)
+        x = BatchNormalization()(x)
+        x = activation()(x)
+    out = Dense(1, activation="sigmoid")(x)
+    return Model(inputs=prot, outputs=out)
+
+
+def build_cnn_rnn_model(slice_len: int = 1024):
+    from tensorflow.keras.initializers import he_uniform
+    from tensorflow.keras.layers import Add, BatchNormalization, Conv1D, Dense, Dropout, GRU, Input, TimeDistributed
+    from tensorflow.keras.models import Model
+
+    def act_norm(x):
+        x = Dropout(0.2)(x)
+        x = BatchNormalization()(x)
+        return activation()(x)
+
+    def conv(x, kernel_size):
+        return Conv1D(
+            filters=128,
+            kernel_size=kernel_size,
+            strides=1,
+            padding="same",
+            use_bias=False,
+            kernel_initializer=he_uniform(),
+        )(x)
+
+    prot = Input(shape=(slice_len, INPUT_DIM))
+    x = conv(prot, 3)
+    for _ in range(8):
+        res = x
+        x = act_norm(x)
+        x = conv(x, 5)
+        x = act_norm(x)
+        x = conv(x, 3)
+        x = Add()([res, x])
+
+    x = act_norm(x)
+    x = GRU(128, return_sequences=True, reset_after=True)(x)
+    x = GRU(128, return_sequences=True, reset_after=True)(x)
     out = TimeDistributed(Dense(1, activation="sigmoid"))(x)
     return Model(inputs=prot, outputs=out)
 
@@ -198,6 +254,10 @@ def build_unet_model(slice_len: int = 1024):
 
 
 def build_model(architecture: str):
+    if architecture == "ann":
+        return build_ann_model(), 1
+    if architecture == "cnn-rnn":
+        return build_cnn_rnn_model(), 1024
     if architecture == "dnet":
         return build_dnet_model(), 1170
     if architecture == "rnn":

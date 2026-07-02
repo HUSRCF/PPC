@@ -19,6 +19,25 @@ from typing import Any
 import torch
 
 
+
+def get_spatial_scalar_feature_names_v4() -> list[str]:
+    names: list[str] = []
+    names += [f"v2_sasa_{i}" for i in range(6)]
+    names += [f"v2_surface_{i}" for i in range(14)]
+    names += [f"v2_structural_geometry_{i}" for i in range(26)]
+    names += [f"v2_enhanced_{i}" for i in range(12)]
+    names += [f"local_density_raw_{i}" for i in range(4)]
+    names += ["distance_to_center_raw"]
+    names += ["surface_normal_magnitude"]
+    names += [f"charge_density_raw_{i}" for i in range(4)]
+    names += [f"hydrophobicity_{i}" for i in range(4)]
+    names += ["phi_sin", "phi_cos", "psi_sin", "psi_cos", "omega_sin", "omega_cos"]
+    names += ["nearest_sidechain_dist", "packing_score", "void_ratio"]
+    names += ["env_aromatic_ratio", "env_hbond_donor_ratio", "env_hbond_acceptor_ratio", "env_gly_pro_ratio"]
+    names += ["self_metal_binder", "neighbor_metal_binder_6A", "neighbor_metal_binder_10A"]
+    names += ["local_anisotropy"]
+    return names
+
 def torch_load(path: Path) -> Any:
     try:
         return torch.load(path, map_location="cpu", weights_only=False)
@@ -59,8 +78,11 @@ def feature_tensor(data: dict[str, Any], feature_set: str) -> tuple[torch.Tensor
     if feature_set in {"scalar", "scalar_physchem"}:
         value = torch.as_tensor(data["pred_spatial_scalar_features"], dtype=torch.float32)
         tensors.append(value)
+        canonical_names = get_spatial_scalar_feature_names_v4()
         raw_names = list(data.get("spatial_scalar_feature_names", []))
-        if len(raw_names) == value.shape[1]:
+        if value.shape[1] == len(canonical_names):
+            names.extend([f"pred_scalar:{name}" for name in canonical_names])
+        elif len(raw_names) == value.shape[1]:
             names.extend([f"pred_scalar:{name}" for name in raw_names])
         else:
             names.extend([f"pred_scalar:{idx}" for idx in range(value.shape[1])])

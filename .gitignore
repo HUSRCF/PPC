@@ -6,6 +6,26 @@
 /wandb/
 /__sync_incoming__/
 
+# Runtime-only benchmark/model/result artifacts
+/bench/
+/models/
+/exports/
+/results/
+/report1/
+/PPC_backup/
+/handout/
+/handout_backup_*/
+/tmop/
+
+# Keep lightweight benchmark code trackable while ignoring generated outputs
+/benchmark/databases/
+/benchmark/datasets/
+/benchmark/features/
+/benchmark/models/
+/benchmark/reports/
+/benchmark/results/
+/benchmark/runs/
+
 # Model weights and tensor dumps
 *.pt
 *.pth

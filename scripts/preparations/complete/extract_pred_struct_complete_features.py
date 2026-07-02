@@ -486,7 +486,7 @@ def _extract_one(
             "pred_mapping_strict_error": _to_builtin(mapping["strict_error"]),
             "pred_mapping_details": _to_builtin(mapping),
             "pred_chain_ids": _to_builtin(sliced["chain_ids"]),
-            "spatial_scalar_feature_names": _to_builtin(sliced.get("spatial_scalar_feature_names", get_spatial_scalar_feature_names_v4())),
+            "spatial_scalar_feature_names": _to_builtin(get_spatial_scalar_feature_names_v4()),
             "normalization_stats": str(normalization_stats.get("_path", "")) if normalization_stats else "",
             "feature_semantics": "sequence-plus-predicted-structure PLC-v4 complete features; no experimental/fixed PDB coordinates used as inputs",
         }

@@ -63,7 +63,7 @@ training:
   max_train_samples: null
   max_val_samples: 0
   min_lr_scale: 0.02
-  num_workers: 4
+  num_workers: 2
   output_dir: runs/contact_site_esm_mlc_predstruct_scalar_physchem_contact2_profile_tcn4_seed42_e30_pairwise_si30_s7p5_5p5A_20260701
   pin_memory: true
   prefetch_factor: 1
@@ -77,3 +77,6 @@ training:
   warmup_ratio: 0.1
   warmup_steps: 0
   weight_decay: 0.05
+  batching: token_budget
+  max_batch_tokens: 32768
+  length_bucket_size: 512

@@ -19,6 +19,10 @@ from torch.utils.data import BatchSampler, DataLoader
 from ppcbind.data import ESMProteinSiteDataset, collate_esm_site_features
 from ppcbind.models import ESMSiteClassifier
 
+# Limit OpenMP threads to reduce futex contention when running multiple training
+# jobs with DataLoader workers. Empirically optimal value from sweep testing.
+torch.set_num_threads(4)
+
 try:
     import yaml
 except Exception:  # pragma: no cover

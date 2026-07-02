@@ -31,7 +31,7 @@ conda activate af3
 cd "${PROJECT_DIR}" || exit 1
 export PYTHONUNBUFFERED=1
 export PYTHONPATH="${PROJECT_DIR}/src:${PYTHONPATH:-}"
-export PYTORCH_ALLOC_CONF="${PYTORCH_ALLOC_CONF:-expandable_segments:True}"
+export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
 
 CMD=(python scripts/training/train_esm_site.py --config "${CONFIG}")
 

@@ -1,0 +1,73 @@
+data:
+  esm_root: features/esm2_t33_650M_UR50D_mlc/pt
+  label_root: features/contact_labels_5p5A
+  manifest: features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/chain_filtered_training/manifest.csv
+  split_dir: features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/chain_filtered_training
+  chain_filter_manifest: features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/pypropel_chain_filtered_no_len_limit/chain_manifest.csv
+  sequence_feature_root: features/esmfold_pred_struct_sequence_scalar_chain_filtered/pt
+  require_sequence_features: true
+model:
+  d_esm: 3840
+  d_seq: 90
+  d_model: 256
+  d_hidden: 512
+  dropout: 0.18
+  classifier_dropout: 0.35
+  max_chains: 128
+  use_chain_embedding: true
+  use_seq_features: true
+  use_position_features: true
+  use_global_context: true
+  use_contact_graph: true
+  contact_graph_layers: 1
+  contact_score_clip: 1.0
+  n_transformer_layers: 0
+training:
+  output_dir: runs/contact_site_esm_mlc_esmfold_chainfiltered_full_reg_seed42_e30_lr5e5_global_si30_deeptminter_5p5A_20260708_best_evalonly
+  device: cuda:0
+  seed: 42
+  epochs: 0
+  batch_size: 32
+  eval_batch_size: 32
+  num_workers: 0
+  pin_memory: false
+  preload: false
+  prefetch_factor: 1
+  batching: token_budget
+  max_batch_tokens: 32768
+  length_bucket_size: 1024
+  max_residues: 0
+  train_crop_mode: none
+  eval_crop_mode: none
+  max_train_samples: null
+  max_val_samples: 0
+  eval_max_batches: null
+  eval_test_each_epoch: true
+  lr: 5.0e-05
+  warmup_steps: 0
+  warmup_ratio: 0.1
+  min_lr_scale: 0.02
+  weight_decay: 0.05
+  label_smoothing: 0.03
+  threshold_grid: 0.01:0.99:0.01
+  topk_fracs: 0.05,0.10
+  selection_metric: f1_best_threshold
+  max_pos_weight: 20.0
+  grad_clip_norm: 1.0
+  grad_value_clip: 100.0
+  adam_eps: 1.0e-07
+  amp: true
+  progress: true
+  strict_ids: true
+  require_labels: true
+  strict_label_metadata: true
+  strict_sequence_feature_metadata: true
+  eval_only: true
+metadata:
+  label_cutoff_angstrom: 5.5
+  split_policy: global_pairwise_deeptminter_si30_chain_filtered_no_len_limit
+  structure_source: ESMFold exact-sequence unique-chain PDBs only
+  bridge_policy: no UniProt/TmAlphaFold/AFDB/PDBTM bridge
+  created_for: chain-filtered retraining after DeepTMInter-style global SI split assignment
+  metric_scope: val_each_epoch_and_test_each_epoch; checkpoint selection remains validation-only
+  source_config: configs/experiments/20260621_hpcue/pairwise_si30_s7p5_5p5A/predicted_structure_sequence/train_contact_site_esm_mlc_predstruct_full_seed42_cov0clust1_5p5A_20260620.yaml

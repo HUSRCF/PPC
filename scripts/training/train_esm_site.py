@@ -45,6 +45,7 @@ PATH_KEYS = {
     "label_root",
     "manifest",
     "split_dir",
+    "chain_filter_manifest",
     "sequence_feature_root",
     "prottrans_embedding_root",
     "contact_graph_root",
@@ -54,9 +55,9 @@ PATH_KEYS = {
 }
 
 
-def _read_ids(path: Path) -> list[str]:
+def _read_ids(path: Path, lowercase: bool = True) -> list[str]:
     return [
-        line.strip().lower()
+        line.strip().lower() if lowercase else line.strip()
         for line in path.read_text().splitlines()
         if line.strip() and not line.strip().startswith("#")
     ]
@@ -67,8 +68,18 @@ def _read_manifest(path: Path) -> dict[str, dict[str, Any]]:
     with path.open() as handle:
         reader = csv.DictReader(handle)
         for row in reader:
-            rows[row["pdb_id"].lower()] = row
+            key = row["pdb_id"].strip()
+            rows[key] = row
+            rows.setdefault(key.lower(), row)
     return rows
+
+
+def _split_ids_path(split_dir: Path, split: str, chain_filtered: bool) -> Path:
+    if chain_filtered:
+        chain_path = split_dir / f"{split}_chain_ids.txt"
+        if chain_path.exists():
+            return chain_path
+    return split_dir / f"{split}_ids.txt"
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:
@@ -181,7 +192,10 @@ def _lengths_from_manifest(manifest_path: Path) -> dict[str, int]:
         value = row.get("n_residues")
         if value is None or value == "":
             continue
-        lengths[pdb_id.lower()] = int(value)
+        key = str(pdb_id).strip()
+        length = int(value)
+        lengths[key] = length
+        lengths.setdefault(key.lower(), length)
     return lengths
 
 
@@ -296,6 +310,7 @@ def _build_loader(
     strict_sequence_feature_metadata: bool = True,
     require_contact_graph: bool = False,
     require_aux_contact_graph: bool = False,
+    chain_filter_manifest: Path | None = None,
 ) -> DataLoader:
     dataset = ESMProteinSiteDataset(
         esm_root=esm_root,
@@ -317,6 +332,7 @@ def _build_loader(
         strict_sequence_feature_metadata=strict_sequence_feature_metadata,
         require_contact_graph=require_contact_graph,
         require_aux_contact_graph=require_aux_contact_graph,
+        chain_filter_manifest=chain_filter_manifest,
     )
     use_length_batches = str(batching or "random").lower() != "random" or int(max_batch_tokens or 0) > 0
     loader_kwargs: dict[str, Any] = {
@@ -326,14 +342,30 @@ def _build_loader(
     }
     if use_length_batches:
         lengths: list[int] = []
-        for path in dataset.esm_paths:
-            pdb_id = path.parent.name.lower()
-            if path.stem.endswith("_esm2"):
+        sample_ids = getattr(dataset, "sample_ids", None)
+        fallback_ids: list[str] = []
+        for idx, path in enumerate(dataset.esm_paths):
+            pdb_id = str(sample_ids[idx]) if sample_ids is not None else path.parent.name.lower()
+            if sample_ids is None and path.stem.endswith("_esm2"):
                 pdb_id = path.stem[: -len("_esm2")].lower()
-            elif path.stem.endswith("_protein"):
+            elif sample_ids is None and path.stem.endswith("_protein"):
                 pdb_id = path.stem[: -len("_protein")].lower()
-            length = (lengths_by_id or {}).get(pdb_id)
-            lengths.append(int(length) if length is not None else _esm_length(path))
+            length = None
+            if lengths_by_id is not None:
+                length = lengths_by_id.get(pdb_id)
+                if length is None:
+                    length = lengths_by_id.get(pdb_id.lower())
+            if length is None:
+                fallback_ids.append(pdb_id)
+                length = _esm_length(path)
+            lengths.append(int(length))
+        if fallback_ids:
+            preview = ", ".join(fallback_ids[:5])
+            print(
+                f"[LengthAwareBatchSampler] manifest length missing for {len(fallback_ids)} "
+                f"examples; loaded ESM tensors for fallback lengths. first={preview}",
+                flush=True,
+            )
         loader_kwargs["batch_sampler"] = LengthAwareBatchSampler(
             lengths=lengths,
             batch_size=batch_size,
@@ -708,6 +740,7 @@ def main() -> int:
     parser.add_argument("--label-root", default="features/contact_labels", type=Path)
     parser.add_argument("--manifest", default="features/contact_labels/manifest.csv", type=Path)
     parser.add_argument("--split-dir", default="features/contact_labels/splits_mmseq30_tmk_no_len_limit", type=Path)
+    parser.add_argument("--chain-filter-manifest", default=None, type=Path)
     parser.add_argument("--sequence-feature-root", default=None, type=Path)
     parser.add_argument("--prottrans-embedding-root", default=None, type=Path)
     parser.add_argument("--contact-graph-root", default=None, type=Path)
@@ -777,9 +810,16 @@ def main() -> int:
     device = torch.device(args.device if torch.cuda.is_available() or not args.device.startswith("cuda") else "cpu")
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    train_ids = _limit_ids(_read_ids(args.split_dir / "train_ids.txt"), args.max_train_samples)
-    val_ids = _limit_ids(_read_ids(args.split_dir / "val_ids.txt"), args.max_val_samples)
-    test_ids = _read_ids(args.split_dir / "test_ids.txt")
+    chain_filtered = args.chain_filter_manifest is not None
+    train_ids = _limit_ids(
+        _read_ids(_split_ids_path(args.split_dir, "train", chain_filtered), lowercase=not chain_filtered),
+        args.max_train_samples,
+    )
+    val_ids = _limit_ids(
+        _read_ids(_split_ids_path(args.split_dir, "val", chain_filtered), lowercase=not chain_filtered),
+        args.max_val_samples,
+    )
+    test_ids = _read_ids(_split_ids_path(args.split_dir, "test", chain_filtered), lowercase=not chain_filtered)
     lengths_by_id = _lengths_from_manifest(args.manifest)
     pos_weight, train_pos, train_neg = _class_weight_from_manifest(args.manifest, train_ids, args.max_pos_weight)
     require_contact_graph = bool(model_config.get("use_contact_graph")) if args.require_contact_graph is None else bool(args.require_contact_graph)
@@ -813,6 +853,7 @@ def main() -> int:
         strict_sequence_feature_metadata=args.strict_sequence_feature_metadata,
         require_contact_graph=require_contact_graph,
         require_aux_contact_graph=args.require_aux_contact_graph,
+        chain_filter_manifest=args.chain_filter_manifest,
     )
     eval_batch_size = int(args.eval_batch_size) if int(args.eval_batch_size) > 0 else int(args.batch_size)
     val_loader = _build_loader(
@@ -844,6 +885,7 @@ def main() -> int:
         strict_sequence_feature_metadata=args.strict_sequence_feature_metadata,
         require_contact_graph=require_contact_graph,
         require_aux_contact_graph=args.require_aux_contact_graph,
+        chain_filter_manifest=args.chain_filter_manifest,
     )
     test_loader = (
         _build_loader(
@@ -875,6 +917,7 @@ def main() -> int:
             strict_sequence_feature_metadata=args.strict_sequence_feature_metadata,
             require_contact_graph=require_contact_graph,
             require_aux_contact_graph=args.require_aux_contact_graph,
+            chain_filter_manifest=args.chain_filter_manifest,
         )
         if args.eval_test_each_epoch
         else None
@@ -973,6 +1016,8 @@ def main() -> int:
             "thresholds_resolved": thresholds,
             "topk_fracs_resolved": topk_fracs,
             "input_policy": "ESM embeddings plus sequence-derived residue/global features only; optional ESM-predicted contact graph; no PDB coordinates or complete structure features",
+            "chain_filtered": chain_filtered,
+            "chain_filter_manifest": str(args.chain_filter_manifest) if args.chain_filter_manifest else None,
             "strict_ids": args.strict_ids,
             "require_labels": args.require_labels,
             "strict_label_metadata": args.strict_label_metadata,

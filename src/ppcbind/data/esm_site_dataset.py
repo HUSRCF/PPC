@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import random
 from collections import OrderedDict
 from pathlib import Path
@@ -130,6 +131,39 @@ def _esm_id(path: Path) -> str:
     if stem.endswith("_protein"):
         return stem[: -len("_protein")]
     return path.parent.name
+
+
+def _load_chain_filter_manifest(path: Path) -> dict[str, dict[str, Any]]:
+    rows: dict[str, dict[str, Any]] = {}
+    with path.open(newline="") as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            seq_id = _norm_text(row.get("seq_id"))
+            pdb_id = _norm_text(row.get("pdb_id")).lower()
+            chain_id = _norm_text(row.get("chain_id"))
+            if not seq_id or not pdb_id or not chain_id:
+                continue
+            rows[seq_id] = {
+                **row,
+                "seq_id": seq_id,
+                "pdb_id": pdb_id,
+                "chain_id": chain_id,
+                "n_residues": int(row.get("n_residues") or row.get("len_seq") or 0),
+            }
+    if not rows:
+        raise ValueError(f"{path}: no chain rows with seq_id/pdb_id/chain_id")
+    return rows
+
+
+def _chain_slice(chain_ids: list[Any], chain_id: str, sample_id: str) -> slice:
+    positions = [idx for idx, value in enumerate(chain_ids) if _norm_text(value) == chain_id]
+    if not positions:
+        raise ValueError(f"{sample_id}: chain {chain_id!r} not found in ESM metadata")
+    start = positions[0]
+    stop = positions[-1] + 1
+    if positions != list(range(start, stop)):
+        raise ValueError(f"{sample_id}: chain {chain_id!r} residues are not contiguous")
+    return slice(start, stop)
 
 
 def _load_labels(
@@ -514,6 +548,7 @@ class ESMProteinSiteDataset(Dataset):
         strict_sequence_feature_metadata: bool = True,
         require_contact_graph: bool = False,
         require_aux_contact_graph: bool = False,
+        chain_filter_manifest: str | Path | None = None,
     ) -> None:
         self.esm_root = Path(esm_root)
         self.label_root = Path(label_root) if label_root else None
@@ -532,10 +567,44 @@ class ESMProteinSiteDataset(Dataset):
         self.strict_sequence_feature_metadata = bool(strict_sequence_feature_metadata)
         self.require_contact_graph = bool(require_contact_graph)
         self.require_aux_contact_graph = bool(require_aux_contact_graph)
-        self.esm_paths = _discover_esm_paths(self.esm_root, ids)
+        self.chain_filter_manifest = Path(chain_filter_manifest) if chain_filter_manifest else None
+        self.chain_filter_rows = (
+            _load_chain_filter_manifest(self.chain_filter_manifest) if self.chain_filter_manifest is not None else None
+        )
+        self.sample_entries: list[dict[str, Any]] | None = None
+        if self.chain_filter_rows is not None:
+            sample_ids = [str(seq_id).strip() for seq_id in ids] if ids is not None else sorted(self.chain_filter_rows)
+            self.sample_entries = []
+            missing: list[str] = []
+            for sample_id in sample_ids:
+                row = self.chain_filter_rows.get(sample_id)
+                if row is None:
+                    missing.append(sample_id)
+                    continue
+                pdb_id = str(row["pdb_id"]).lower()
+                candidates = (
+                    self.esm_root / pdb_id / f"{pdb_id}_esm2.pt",
+                    self.esm_root / pdb_id / f"{pdb_id}_protein.pt",
+                    self.esm_root / f"{pdb_id}_esm2.pt",
+                    self.esm_root / f"{pdb_id}_protein.pt",
+                )
+                path = next((candidate for candidate in candidates if candidate.exists()), None)
+                if path is None:
+                    missing.append(sample_id)
+                    continue
+                self.sample_entries.append({"sample_id": sample_id, "path": path, **row})
+            if strict_ids and missing:
+                raise FileNotFoundError(
+                    f"Missing chain-filtered samples/files for {len(missing)} requested ids; examples={missing[:20]}"
+                )
+            self.esm_paths = [entry["path"] for entry in self.sample_entries]
+            self.sample_ids = [entry["sample_id"] for entry in self.sample_entries]
+        else:
+            self.esm_paths = _discover_esm_paths(self.esm_root, ids)
+            self.sample_ids = [_esm_id(path) for path in self.esm_paths]
         if not self.esm_paths:
             raise FileNotFoundError(f"No *_esm2.pt files under {self.esm_root}")
-        if strict_ids and self.requested_ids is not None:
+        if self.chain_filter_rows is None and strict_ids and self.requested_ids is not None:
             requested = set(self.requested_ids)
             discovered = {_esm_id(path).lower() for path in self.esm_paths}
             missing = sorted(requested - discovered)
@@ -560,25 +629,39 @@ class ESMProteinSiteDataset(Dataset):
 
     def _load_item(self, index: int) -> dict[str, Any]:
         path = self.esm_paths[index]
-        pdb_id = _esm_id(path)
+        entry = self.sample_entries[index] if self.sample_entries is not None else None
+        pdb_id = str(entry["pdb_id"]) if entry is not None else _esm_id(path)
+        sample_id = str(entry["sample_id"]) if entry is not None else pdb_id
         data = _torch_load(path)
         embeddings = torch.as_tensor(data["embeddings"], dtype=torch.float32)
         embeddings = torch.nan_to_num(embeddings, nan=0.0, posinf=0.0, neginf=0.0)
-        n_res = int(embeddings.shape[0])
-        labels, label_data = _load_labels(self.label_root, pdb_id, n_res, self.require_labels)
+        full_n_res = int(embeddings.shape[0])
+        labels, label_data = _load_labels(self.label_root, pdb_id, full_n_res, self.require_labels)
         if self.strict_label_metadata:
-            _compare_label_metadata(data, label_data, pdb_id, n_res)
-        chain_ids_raw = list(data.get("chain_ids", data.get("chain_id", [""] * n_res)))
-        if len(chain_ids_raw) != n_res:
-            raise ValueError(f"{pdb_id}: chain_ids length {len(chain_ids_raw)} != ESM length {n_res}")
-        residue_names = list(data.get("residue_names_1", data.get("residue_name_1", ["X"] * n_res)))
-        if len(residue_names) != n_res:
-            raise ValueError(f"{pdb_id}: residue_names_1 length {len(residue_names)} != ESM length {n_res}")
+            _compare_label_metadata(data, label_data, pdb_id, full_n_res)
+        chain_ids_raw = list(data.get("chain_ids", data.get("chain_id", [""] * full_n_res)))
+        if len(chain_ids_raw) != full_n_res:
+            raise ValueError(f"{pdb_id}: chain_ids length {len(chain_ids_raw)} != ESM length {full_n_res}")
+        residue_names = list(data.get("residue_names_1", data.get("residue_name_1", ["X"] * full_n_res)))
+        if len(residue_names) != full_n_res:
+            raise ValueError(f"{pdb_id}: residue_names_1 length {len(residue_names)} != ESM length {full_n_res}")
+        if entry is not None:
+            first_slice = _chain_slice(chain_ids_raw, str(entry["chain_id"]), sample_id)
+            embeddings = _slice_value(embeddings, first_slice)
+            labels = _slice_value(labels, first_slice)
+            chain_ids_raw = chain_ids_raw[first_slice]
+            residue_names = residue_names[first_slice]
+            expected_len = int(entry.get("n_residues") or 0)
+            if expected_len and int(embeddings.shape[0]) != expected_len:
+                raise ValueError(f"{sample_id}: chain length {embeddings.shape[0]} != manifest length {expected_len}")
+        else:
+            first_slice = slice(None)
+        n_res = int(embeddings.shape[0])
         chain_ids, chain_pos, chain_rel_pos = _local_chain_ids(chain_ids_raw)
         protein_rel_pos = torch.arange(n_res, dtype=torch.float32) / max(1, n_res - 1)
         seq_features = _load_external_sequence_features(
             self.sequence_feature_root,
-            pdb_id,
+            sample_id,
             n_res,
             residue_names,
             chain_ids_raw,
@@ -589,7 +672,7 @@ class ESMProteinSiteDataset(Dataset):
             seq_features = _sequence_features(residue_names)
         prottrans_embeddings = _load_external_prottrans_embeddings(
             self.prottrans_embedding_root,
-            pdb_id,
+            sample_id,
             n_res,
             residue_names,
             chain_ids_raw,
@@ -598,15 +681,16 @@ class ESMProteinSiteDataset(Dataset):
         if self.contact_graph_root is not None:
             contact_edge_index, contact_edge_scores = _load_external_contact_graph(
                 self.contact_graph_root,
-                pdb_id,
+                sample_id,
                 n_res,
                 self.require_contact_graph,
             )
         else:
-            contact_edge_index, contact_edge_scores = _load_contact_graph(data, pdb_id, n_res, self.require_contact_graph)
+            contact_edge_index, contact_edge_scores = _load_contact_graph(data, pdb_id, full_n_res, self.require_contact_graph)
+            contact_edge_index, contact_edge_scores = _slice_contact_graph(contact_edge_index, contact_edge_scores, first_slice)
         aux_contact_edge_index, aux_contact_edge_scores = _load_external_contact_graph(
             self.aux_contact_graph_root,
-            pdb_id,
+            sample_id,
             n_res,
             self.require_aux_contact_graph,
         )
@@ -619,7 +703,8 @@ class ESMProteinSiteDataset(Dataset):
             residue_slice,
         )
         item: dict[str, Any] = {
-            "pdb_id": pdb_id,
+            "pdb_id": sample_id,
+            "source_pdb_id": pdb_id,
             "esm_embeddings": _slice_value(embeddings, residue_slice),
             "seq_features": _slice_value(seq_features, residue_slice),
             "chain_ids": _slice_value(chain_ids, residue_slice),
@@ -633,6 +718,8 @@ class ESMProteinSiteDataset(Dataset):
             "aux_contact_edge_index": aux_contact_edge_index,
             "aux_contact_edge_scores": aux_contact_edge_scores,
         }
+        if entry is not None:
+            item["source_chain_id"] = str(entry["chain_id"])
         if prottrans_embeddings is not None:
             item["prottrans_embeddings"] = _slice_value(prottrans_embeddings, residue_slice)
         if residue_slice != slice(None):

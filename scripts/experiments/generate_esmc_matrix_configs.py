@@ -170,9 +170,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--run-suffix", default="20260711_hpc2")
+    parser.add_argument("--include-profiles", action="store_true")
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    for name, patch in _variants().items():
+    variants = _variants()
+    generated: dict[str, dict] = {}
+    for name, patch in variants.items():
         config = copy.deepcopy(_base())
         _merge(config, patch)
         config["training"]["output_dir"] = f"runs/contact_site_cfsi30_esmc_matrix_{name}_seed42_e30_{args.run_suffix}"
@@ -180,6 +183,37 @@ def main() -> int:
         path = args.output_dir / f"train_{name}_seed42.yaml"
         path.write_text(yaml.safe_dump(config, sort_keys=False, width=120))
         print(path)
+        generated[name] = config
+    if args.include_profiles:
+        profile_dir = args.output_dir / "profiles"
+        profile_dir.mkdir(parents=True, exist_ok=True)
+        profile_specs = (
+            ("m0_esm2_mlc", 4),
+            ("m0_esm2_mlc", 8),
+            ("m2_esmc_mlc_concat", 8),
+            ("m5_esm2_esmc_gated_residual", 8),
+        )
+        for name, workers in profile_specs:
+            config = copy.deepcopy(generated[name])
+            training = config["training"]
+            training.update(
+                {
+                    "output_dir": f"runs/profile_esmc_matrix_{name}_w{workers}_{args.run_suffix}",
+                    "epochs": 2,
+                    "num_workers": workers,
+                    "max_train_samples": 4096,
+                    "max_val_samples": 512,
+                    "eval_test_each_epoch": False,
+                    "progress": False,
+                }
+            )
+            config["metadata"]["profile_policy"] = (
+                "two epochs on 4096 train / 512 val chains; compare second-epoch data_wait_fraction, "
+                "residues_per_second, GPU utilization, and peak memory"
+            )
+            path = profile_dir / f"profile_{name}_w{workers}.yaml"
+            path.write_text(yaml.safe_dump(config, sort_keys=False, width=120))
+            print(path)
     return 0
 
 

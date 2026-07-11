@@ -188,14 +188,15 @@ def main() -> int:
         profile_dir = args.output_dir / "profiles"
         profile_dir.mkdir(parents=True, exist_ok=True)
         profile_specs = (
-            ("m0_esm2_mlc_w4", "m0_esm2_mlc", 4, 64, 65536),
-            ("m0_esm2_mlc_w8", "m0_esm2_mlc", 8, 64, 65536),
-            ("m2_esmc_mlc_concat_w8", "m2_esmc_mlc_concat", 8, 64, 65536),
-            ("m5_esm2_esmc_gated_residual_w8", "m5_esm2_esmc_gated_residual", 8, 64, 65536),
-            ("m0_esm2_mlc_w8_b128_t131k", "m0_esm2_mlc", 8, 128, 131072),
-            ("m5_esm2_esmc_gated_residual_w8_b96_t98k", "m5_esm2_esmc_gated_residual", 8, 96, 98304),
+            ("m0_esm2_mlc_w4", "m0_esm2_mlc", 4, 64, 65536, 2, 4),
+            ("m0_esm2_mlc_w8", "m0_esm2_mlc", 8, 64, 65536, 2, 4),
+            ("m0_esm2_mlc_w8_pf4_cache8", "m0_esm2_mlc", 8, 64, 65536, 4, 8),
+            ("m2_esmc_mlc_concat_w8", "m2_esmc_mlc_concat", 8, 64, 65536, 2, 4),
+            ("m5_esm2_esmc_gated_residual_w8", "m5_esm2_esmc_gated_residual", 8, 64, 65536, 2, 4),
+            ("m0_esm2_mlc_w8_b128_t131k", "m0_esm2_mlc", 8, 128, 131072, 2, 4),
+            ("m5_esm2_esmc_gated_residual_w8_b96_t98k", "m5_esm2_esmc_gated_residual", 8, 96, 98304, 2, 4),
         )
-        for profile_name, name, workers, batch_size, max_batch_tokens in profile_specs:
+        for profile_name, name, workers, batch_size, max_batch_tokens, prefetch_factor, cache_size in profile_specs:
             config = copy.deepcopy(generated[name])
             training = config["training"]
             training.update(
@@ -205,8 +206,8 @@ def main() -> int:
                     "batch_size": batch_size,
                     "eval_batch_size": batch_size,
                     "num_workers": workers,
-                    "prefetch_factor": 2,
-                    "payload_cache_size": 4,
+                    "prefetch_factor": prefetch_factor,
+                    "payload_cache_size": cache_size,
                     "max_batch_tokens": max_batch_tokens,
                     "max_train_samples": 4096,
                     "max_val_samples": 512,

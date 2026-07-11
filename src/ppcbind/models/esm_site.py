@@ -757,15 +757,20 @@ class ESMSiteClassifier(nn.Module):
             )
         c.dual_contact_fusion_mode = fusion_mode
         c.esm_layer_fusion = str(c.esm_layer_fusion or "concat").lower()
-        if c.esm_layer_fusion not in {"concat", "scalar_mix"}:
-            raise ValueError(f"Unsupported esm_layer_fusion={c.esm_layer_fusion!r}; use concat or scalar_mix")
+        if c.esm_layer_fusion not in {"concat", "scalar_mix", "last"}:
+            raise ValueError(f"Unsupported esm_layer_fusion={c.esm_layer_fusion!r}; use concat, scalar_mix, or last")
         c.esm_layer_count = max(1, int(c.esm_layer_count))
         c.prottrans_fusion_mode = str(c.prottrans_fusion_mode or "gated_residual").lower()
-        if c.prottrans_fusion_mode not in {"gated_residual", "add", "input_branch"}:
+        if c.prottrans_fusion_mode not in {"gated_residual", "add", "input_branch", "projected_concat"}:
             raise ValueError(
                 f"Unsupported prottrans_fusion_mode={c.prottrans_fusion_mode!r}; "
-                "use gated_residual, add, or input_branch"
+                "use gated_residual, add, input_branch, or projected_concat"
             )
+        if c.prottrans_fusion_mode == "projected_concat":
+            if not c.use_prottrans_embeddings:
+                raise ValueError("projected_concat requires use_prottrans_embeddings=true")
+            if c.d_model % 2 != 0:
+                raise ValueError(f"projected_concat requires an even d_model, got {c.d_model}")
         c.prottrans_gate_input_mode = str(c.prottrans_gate_input_mode or "full").lower()
         if c.prottrans_gate_input_mode not in {"full", "simple"}:
             raise ValueError(
@@ -778,15 +783,25 @@ class ESMSiteClassifier(nn.Module):
 
         esm_input_dim = c.d_esm
         self.esm_scalar_mix = None
+        self.esm_last_dim = None
         if c.esm_layer_fusion == "scalar_mix":
             if c.d_esm % c.esm_layer_count != 0:
                 raise ValueError(f"d_esm={c.d_esm} must be divisible by esm_layer_count={c.esm_layer_count}")
             esm_input_dim = c.d_esm // c.esm_layer_count
             self.esm_scalar_mix = ESMScalarMix(c.esm_layer_count)
+        elif c.esm_layer_fusion == "last":
+            if c.d_esm % c.esm_layer_count != 0:
+                raise ValueError(f"d_esm={c.d_esm} must be divisible by esm_layer_count={c.esm_layer_count}")
+            esm_input_dim = c.d_esm // c.esm_layer_count
+            self.esm_last_dim = esm_input_dim
+
+        projected_concat = c.prottrans_fusion_mode == "projected_concat"
+        esm_projected_dim = c.d_model // 2 if projected_concat else c.d_model
+        prottrans_projected_dim = c.d_model // 2 if projected_concat else c.d_model
 
         self.esm_proj = nn.Sequential(
-            nn.Linear(esm_input_dim, c.d_model),
-            nn.LayerNorm(c.d_model),
+            nn.Linear(esm_input_dim, esm_projected_dim),
+            nn.LayerNorm(esm_projected_dim),
             nn.GELU(),
             nn.Dropout(c.dropout),
         )
@@ -802,8 +817,8 @@ class ESMSiteClassifier(nn.Module):
         )
         self.prottrans_proj = (
             nn.Sequential(
-                nn.Linear(c.d_prottrans, c.d_model),
-                nn.LayerNorm(c.d_model),
+                nn.Linear(c.d_prottrans, prottrans_projected_dim),
+                nn.LayerNorm(prottrans_projected_dim),
                 nn.GELU(),
                 nn.Dropout(c.dropout),
             )
@@ -1041,6 +1056,8 @@ class ESMSiteClassifier(nn.Module):
         esm_input = _sanitize(esm_embeddings)
         if self.esm_scalar_mix is not None:
             esm_input = self.esm_scalar_mix(esm_input)
+        elif self.esm_last_dim is not None:
+            esm_input = esm_input[..., -self.esm_last_dim :]
         esm_branch = self.esm_proj(esm_input)
         if self.prottrans_proj is not None:
             if prottrans_embeddings is not None:
@@ -1069,6 +1086,8 @@ class ESMSiteClassifier(nn.Module):
                 esm_branch = _sanitize(esm_branch + alpha * prottrans_branch)
             elif c.prottrans_fusion_mode == "input_branch":
                 pass
+            elif c.prottrans_fusion_mode == "projected_concat":
+                esm_branch = _sanitize(torch.cat([esm_branch, prottrans_branch], dim=-1))
             else:
                 raise RuntimeError(f"unreachable prottrans_fusion_mode={c.prottrans_fusion_mode!r}")
         branches = [esm_branch]

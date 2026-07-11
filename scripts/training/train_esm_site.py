@@ -47,6 +47,7 @@ PATH_KEYS = {
     "split_dir",
     "chain_filter_manifest",
     "sequence_feature_root",
+    "primary_embedding_root",
     "prottrans_embedding_root",
     "contact_graph_root",
     "aux_contact_graph_root",
@@ -286,15 +287,19 @@ def _build_loader(
     label_root: Path,
     ids: list[str],
     sequence_feature_root: Path | None,
+    primary_embedding_root: Path | None,
     contact_graph_root: Path | None,
     aux_contact_graph_root: Path | None,
     prottrans_embedding_root: Path | None,
     require_sequence_features: bool,
+    require_primary_embeddings: bool,
     require_prottrans_embeddings: bool,
     batch_size: int,
     num_workers: int,
     pin_memory: bool,
     prefetch_factor: int | None,
+    persistent_workers: bool,
+    payload_cache_size: int,
     max_residues: int,
     crop_mode: str,
     seed: int,
@@ -317,10 +322,12 @@ def _build_loader(
         label_root=label_root,
         ids=ids,
         sequence_feature_root=sequence_feature_root,
+        primary_embedding_root=primary_embedding_root,
         prottrans_embedding_root=prottrans_embedding_root,
         contact_graph_root=contact_graph_root,
         aux_contact_graph_root=aux_contact_graph_root,
         require_sequence_features=require_sequence_features,
+        require_primary_embeddings=require_primary_embeddings,
         require_prottrans_embeddings=require_prottrans_embeddings,
         max_residues=max_residues,
         crop_mode=crop_mode,
@@ -333,6 +340,7 @@ def _build_loader(
         require_contact_graph=require_contact_graph,
         require_aux_contact_graph=require_aux_contact_graph,
         chain_filter_manifest=chain_filter_manifest,
+        payload_cache_size=payload_cache_size,
     )
     use_length_batches = str(batching or "random").lower() != "random" or int(max_batch_tokens or 0) > 0
     loader_kwargs: dict[str, Any] = {
@@ -379,6 +387,8 @@ def _build_loader(
         loader_kwargs["shuffle"] = shuffle
     if num_workers > 0 and prefetch_factor is not None and int(prefetch_factor) > 0:
         loader_kwargs["prefetch_factor"] = int(prefetch_factor)
+    if num_workers > 0:
+        loader_kwargs["persistent_workers"] = bool(persistent_workers)
     return DataLoader(dataset, **loader_kwargs)
 
 
@@ -742,10 +752,12 @@ def main() -> int:
     parser.add_argument("--split-dir", default="features/contact_labels/splits_mmseq30_tmk_no_len_limit", type=Path)
     parser.add_argument("--chain-filter-manifest", default=None, type=Path)
     parser.add_argument("--sequence-feature-root", default=None, type=Path)
+    parser.add_argument("--primary-embedding-root", default=None, type=Path)
     parser.add_argument("--prottrans-embedding-root", default=None, type=Path)
     parser.add_argument("--contact-graph-root", default=None, type=Path)
     parser.add_argument("--aux-contact-graph-root", default=None, type=Path)
     parser.add_argument("--require-sequence-features", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--require-primary-embeddings", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--require-prottrans-embeddings", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--strict-ids", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--require-labels", action=argparse.BooleanOptionalAction, default=True)
@@ -763,6 +775,8 @@ def main() -> int:
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--pin-memory", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--prefetch-factor", type=int, default=None)
+    parser.add_argument("--persistent-workers", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--payload-cache-size", type=int, default=0)
     parser.add_argument("--preload", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--batching", choices=["random", "length_sorted", "token_budget"], default="random")
     parser.add_argument("--max-batch-tokens", type=int, default=0)
@@ -829,15 +843,19 @@ def main() -> int:
         args.label_root,
         train_ids,
         args.sequence_feature_root,
+        args.primary_embedding_root,
         args.contact_graph_root,
         args.aux_contact_graph_root,
         args.prottrans_embedding_root,
         args.require_sequence_features,
+        args.require_primary_embeddings,
         args.require_prottrans_embeddings,
         args.batch_size,
         args.num_workers,
         args.pin_memory,
         args.prefetch_factor,
+        args.persistent_workers,
+        args.payload_cache_size,
         args.max_residues,
         args.train_crop_mode,
         args.seed,
@@ -861,15 +879,19 @@ def main() -> int:
         args.label_root,
         val_ids,
         args.sequence_feature_root,
+        args.primary_embedding_root,
         args.contact_graph_root,
         args.aux_contact_graph_root,
         args.prottrans_embedding_root,
         args.require_sequence_features,
+        args.require_primary_embeddings,
         args.require_prottrans_embeddings,
         eval_batch_size,
         args.num_workers,
         args.pin_memory,
         args.prefetch_factor,
+        args.persistent_workers,
+        args.payload_cache_size,
         args.max_residues,
         args.eval_crop_mode,
         args.seed + 1,
@@ -893,15 +915,19 @@ def main() -> int:
             args.label_root,
             test_ids,
             args.sequence_feature_root,
+            args.primary_embedding_root,
             args.contact_graph_root,
             args.aux_contact_graph_root,
             args.prottrans_embedding_root,
             args.require_sequence_features,
+            args.require_primary_embeddings,
             args.require_prottrans_embeddings,
             eval_batch_size,
             args.num_workers,
             args.pin_memory,
             args.prefetch_factor,
+            args.persistent_workers,
+            args.payload_cache_size,
             args.max_residues,
             args.eval_crop_mode,
             args.seed + 2,
@@ -1022,6 +1048,10 @@ def main() -> int:
             "require_labels": args.require_labels,
             "strict_label_metadata": args.strict_label_metadata,
             "strict_sequence_feature_metadata": args.strict_sequence_feature_metadata,
+            "primary_embedding_root": str(args.primary_embedding_root) if args.primary_embedding_root else None,
+            "require_primary_embeddings": args.require_primary_embeddings,
+            "persistent_workers": args.persistent_workers,
+            "payload_cache_size": args.payload_cache_size,
             "require_contact_graph_resolved": require_contact_graph,
             "require_aux_contact_graph": args.require_aux_contact_graph,
             "prottrans_embedding_root": str(args.prottrans_embedding_root) if args.prottrans_embedding_root else None,
@@ -1110,8 +1140,15 @@ def main() -> int:
         metrics: list[dict[str, int]] = []
         skipped_nonfinite = 0
         t0 = time.time()
+        train_loop_start = time.perf_counter()
+        last_step_end = train_loop_start
+        data_wait_seconds = 0.0
+        compute_seconds = 0.0
+        train_residues = 0
         progress_iter = _progress(train_loader, args.progress, len(train_loader), f"train {epoch}/{args.epochs}")
         for step, batch in enumerate(progress_iter, 1):
+            batch_ready = time.perf_counter()
+            data_wait_seconds += batch_ready - last_step_end
             global_step += 1
             if warmup_steps > 0 and global_step <= warmup_steps:
                 scale = min_lr_scale + (1.0 - min_lr_scale) * (global_step / warmup_steps)
@@ -1119,12 +1156,16 @@ def main() -> int:
             elif warmup_steps > 0 and global_step == warmup_steps + 1:
                 _set_lr(optimizer, base_lrs, 1.0)
             inputs, labels = _move_batch(batch, device)
+            train_residues += int((labels != -100).sum().item())
             optimizer.zero_grad(set_to_none=True)
             with torch.amp.autocast("cuda", enabled=args.amp and device.type == "cuda"):
                 logits = model(**inputs)["logits"]
                 loss = criterion(logits.reshape(-1, logits.shape[-1]), labels.reshape(-1))
             if not bool(torch.isfinite(logits).all()) or not bool(torch.isfinite(loss)):
                 skipped_nonfinite += 1
+                step_end = time.perf_counter()
+                compute_seconds += step_end - batch_ready
+                last_step_end = step_end
                 continue
             scaler.scale(loss).backward()
             scaler.unscale_(optimizer)
@@ -1134,11 +1175,17 @@ def main() -> int:
             if not bool(torch.isfinite(grad_norm)):
                 skipped_nonfinite += 1
                 optimizer.zero_grad(set_to_none=True)
+                step_end = time.perf_counter()
+                compute_seconds += step_end - batch_ready
+                last_step_end = step_end
                 continue
             scaler.step(optimizer)
             scaler.update()
             losses.append(float(loss.item()))
             metrics.append(_step_metrics(logits.detach(), labels))
+            step_end = time.perf_counter()
+            compute_seconds += step_end - batch_ready
+            last_step_end = step_end
             if step % 25 == 0:
                 merged = _merge_metrics(metrics[-25:])
                 window_loss = sum(losses[-25:]) / len(losses[-25:])
@@ -1162,6 +1209,12 @@ def main() -> int:
         train_metrics = _merge_metrics(metrics)
         train_metrics["loss"] = sum(losses) / max(1, len(losses))
         train_metrics["skipped_nonfinite"] = skipped_nonfinite
+        train_loop_seconds = time.perf_counter() - train_loop_start
+        train_metrics["train_loop_seconds"] = train_loop_seconds
+        train_metrics["data_wait_seconds"] = data_wait_seconds
+        train_metrics["compute_seconds"] = compute_seconds
+        train_metrics["data_wait_fraction"] = data_wait_seconds / max(1.0e-9, data_wait_seconds + compute_seconds)
+        train_metrics["residues_per_second"] = train_residues / max(1.0e-9, train_loop_seconds)
         val_metrics = _evaluate(
             model,
             val_loader,

@@ -6,7 +6,7 @@ import csv
 import random
 from collections import OrderedDict
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import torch
 from torch.utils.data import Dataset
@@ -370,6 +370,7 @@ def _load_external_prottrans_embeddings(
     residue_names: list[Any],
     chain_ids: list[Any],
     required: bool,
+    load_fn: Callable[[Path], Any] = _torch_load,
 ) -> torch.Tensor | None:
     """Load frozen ProtTrans/ProtBert-style per-residue embeddings.
 
@@ -398,7 +399,7 @@ def _load_external_prottrans_embeddings(
             raise FileNotFoundError(f"{pdb_id}: ProtTrans embedding file not found under {prottrans_embedding_root}")
         return None
 
-    data = _torch_load(path)
+    data = load_fn(path)
     if isinstance(data, dict):
         for key in ("prottrans_embeddings", "protbert_embeddings", "embeddings", "features", "residue_embeddings"):
             if key in data:
@@ -475,6 +476,7 @@ def _load_external_contact_graph(
     pdb_id: str,
     n_res: int,
     required: bool,
+    load_fn: Callable[[Path], Any] = _torch_load,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     if contact_graph_root is None:
         return torch.empty((2, 0), dtype=torch.long), torch.empty((0,), dtype=torch.float32)
@@ -491,7 +493,7 @@ def _load_external_contact_graph(
         if required:
             raise FileNotFoundError(f"{pdb_id}: external contact graph file not found under {contact_graph_root}")
         return torch.empty((2, 0), dtype=torch.long), torch.empty((0,), dtype=torch.float32)
-    data = _torch_load(path)
+    data = load_fn(path)
     if isinstance(data, dict) and "n_residues" in data and int(data["n_residues"]) != int(n_res):
         raise ValueError(f"{pdb_id}: external contact graph n_residues {data['n_residues']} != ESM length {n_res}")
     if isinstance(data, dict):
@@ -533,10 +535,12 @@ class ESMProteinSiteDataset(Dataset):
         label_root: str | Path | None = None,
         ids: list[str] | None = None,
         sequence_feature_root: str | Path | None = None,
+        primary_embedding_root: str | Path | None = None,
         prottrans_embedding_root: str | Path | None = None,
         contact_graph_root: str | Path | None = None,
         aux_contact_graph_root: str | Path | None = None,
         require_sequence_features: bool = False,
+        require_primary_embeddings: bool = False,
         require_prottrans_embeddings: bool = False,
         max_residues: int | None = None,
         crop_mode: str = "none",
@@ -549,14 +553,17 @@ class ESMProteinSiteDataset(Dataset):
         require_contact_graph: bool = False,
         require_aux_contact_graph: bool = False,
         chain_filter_manifest: str | Path | None = None,
+        payload_cache_size: int = 0,
     ) -> None:
         self.esm_root = Path(esm_root)
         self.label_root = Path(label_root) if label_root else None
         self.sequence_feature_root = Path(sequence_feature_root) if sequence_feature_root else None
+        self.primary_embedding_root = Path(primary_embedding_root) if primary_embedding_root else None
         self.prottrans_embedding_root = Path(prottrans_embedding_root) if prottrans_embedding_root else None
         self.contact_graph_root = Path(contact_graph_root) if contact_graph_root else None
         self.aux_contact_graph_root = Path(aux_contact_graph_root) if aux_contact_graph_root else None
         self.require_sequence_features = bool(require_sequence_features)
+        self.require_primary_embeddings = bool(require_primary_embeddings)
         self.require_prottrans_embeddings = bool(require_prottrans_embeddings)
         self.max_residues = int(max_residues) if max_residues else None
         self.crop_mode = crop_mode
@@ -568,6 +575,8 @@ class ESMProteinSiteDataset(Dataset):
         self.require_contact_graph = bool(require_contact_graph)
         self.require_aux_contact_graph = bool(require_aux_contact_graph)
         self.chain_filter_manifest = Path(chain_filter_manifest) if chain_filter_manifest else None
+        self.payload_cache_size = max(0, int(payload_cache_size))
+        self._payload_cache: OrderedDict[Path, Any] = OrderedDict()
         self.chain_filter_rows = (
             _load_chain_filter_manifest(self.chain_filter_manifest) if self.chain_filter_manifest is not None else None
         )
@@ -627,15 +636,35 @@ class ESMProteinSiteDataset(Dataset):
             return self._preloaded_items[index]
         return self._load_item(index)
 
+    def _load_payload(self, path: Path) -> Any:
+        if self.payload_cache_size <= 0:
+            return _torch_load(path)
+        key = path.resolve()
+        cached = self._payload_cache.pop(key, None)
+        if cached is not None:
+            self._payload_cache[key] = cached
+            return cached
+        payload = _torch_load(key)
+        self._payload_cache[key] = payload
+        while len(self._payload_cache) > self.payload_cache_size:
+            self._payload_cache.popitem(last=False)
+        return payload
+
     def _load_item(self, index: int) -> dict[str, Any]:
         path = self.esm_paths[index]
         entry = self.sample_entries[index] if self.sample_entries is not None else None
         pdb_id = str(entry["pdb_id"]) if entry is not None else _esm_id(path)
         sample_id = str(entry["sample_id"]) if entry is not None else pdb_id
-        data = _torch_load(path)
-        embeddings = torch.as_tensor(data["embeddings"], dtype=torch.float32)
-        embeddings = torch.nan_to_num(embeddings, nan=0.0, posinf=0.0, neginf=0.0)
-        full_n_res = int(embeddings.shape[0])
+        data = self._load_payload(path)
+        stored_embeddings = data.get("embeddings")
+        if stored_embeddings is not None:
+            full_n_res = int(stored_embeddings.shape[0])
+        else:
+            full_n_res = int(data.get("feature_n_residues") or len(data.get("chain_ids", ())))
+        if full_n_res <= 0:
+            raise ValueError(f"{pdb_id}: source payload does not define a positive residue count")
+        if stored_embeddings is None and self.primary_embedding_root is None:
+            raise ValueError(f"{pdb_id}: source payload has no embeddings and no primary_embedding_root was provided")
         labels, label_data = _load_labels(self.label_root, pdb_id, full_n_res, self.require_labels)
         if self.strict_label_metadata:
             _compare_label_metadata(data, label_data, pdb_id, full_n_res)
@@ -647,16 +676,30 @@ class ESMProteinSiteDataset(Dataset):
             raise ValueError(f"{pdb_id}: residue_names_1 length {len(residue_names)} != ESM length {full_n_res}")
         if entry is not None:
             first_slice = _chain_slice(chain_ids_raw, str(entry["chain_id"]), sample_id)
-            embeddings = _slice_value(embeddings, first_slice)
             labels = _slice_value(labels, first_slice)
             chain_ids_raw = chain_ids_raw[first_slice]
             residue_names = residue_names[first_slice]
-            expected_len = int(entry.get("n_residues") or 0)
-            if expected_len and int(embeddings.shape[0]) != expected_len:
-                raise ValueError(f"{sample_id}: chain length {embeddings.shape[0]} != manifest length {expected_len}")
         else:
             first_slice = slice(None)
-        n_res = int(embeddings.shape[0])
+        n_res = len(chain_ids_raw)
+        expected_len = int(entry.get("n_residues") or 0) if entry is not None else 0
+        if expected_len and n_res != expected_len:
+            raise ValueError(f"{sample_id}: chain length {n_res} != manifest length {expected_len}")
+        if self.primary_embedding_root is not None:
+            embeddings = _load_external_prottrans_embeddings(
+                self.primary_embedding_root,
+                sample_id,
+                n_res,
+                residue_names,
+                chain_ids_raw,
+                self.require_primary_embeddings,
+                load_fn=self._load_payload,
+            )
+            if embeddings is None:
+                raise FileNotFoundError(f"{sample_id}: primary embedding is unavailable")
+        else:
+            embeddings = torch.as_tensor(_slice_value(stored_embeddings, first_slice), dtype=torch.float32)
+            embeddings = torch.nan_to_num(embeddings, nan=0.0, posinf=0.0, neginf=0.0)
         chain_ids, chain_pos, chain_rel_pos = _local_chain_ids(chain_ids_raw)
         protein_rel_pos = torch.arange(n_res, dtype=torch.float32) / max(1, n_res - 1)
         seq_features = _load_external_sequence_features(
@@ -677,6 +720,7 @@ class ESMProteinSiteDataset(Dataset):
             residue_names,
             chain_ids_raw,
             self.require_prottrans_embeddings,
+            load_fn=self._load_payload,
         )
         if self.contact_graph_root is not None:
             contact_edge_index, contact_edge_scores = _load_external_contact_graph(
@@ -684,6 +728,7 @@ class ESMProteinSiteDataset(Dataset):
                 sample_id,
                 n_res,
                 self.require_contact_graph,
+                load_fn=self._load_payload,
             )
         else:
             contact_edge_index, contact_edge_scores = _load_contact_graph(data, pdb_id, full_n_res, self.require_contact_graph)
@@ -693,6 +738,7 @@ class ESMProteinSiteDataset(Dataset):
             sample_id,
             n_res,
             self.require_aux_contact_graph,
+            load_fn=self._load_payload,
         )
 
         residue_slice = self._select_slice(n_res)

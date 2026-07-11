@@ -188,19 +188,24 @@ def main() -> int:
         profile_dir = args.output_dir / "profiles"
         profile_dir.mkdir(parents=True, exist_ok=True)
         profile_specs = (
-            ("m0_esm2_mlc", 4),
-            ("m0_esm2_mlc", 8),
-            ("m2_esmc_mlc_concat", 8),
-            ("m5_esm2_esmc_gated_residual", 8),
+            ("m0_esm2_mlc_w4", "m0_esm2_mlc", 4, 64, 65536),
+            ("m0_esm2_mlc_w8", "m0_esm2_mlc", 8, 64, 65536),
+            ("m2_esmc_mlc_concat_w8", "m2_esmc_mlc_concat", 8, 64, 65536),
+            ("m5_esm2_esmc_gated_residual_w8", "m5_esm2_esmc_gated_residual", 8, 64, 65536),
+            ("m0_esm2_mlc_w8_b128_t131k", "m0_esm2_mlc", 8, 128, 131072),
+            ("m5_esm2_esmc_gated_residual_w8_b96_t98k", "m5_esm2_esmc_gated_residual", 8, 96, 98304),
         )
-        for name, workers in profile_specs:
+        for profile_name, name, workers, batch_size, max_batch_tokens in profile_specs:
             config = copy.deepcopy(generated[name])
             training = config["training"]
             training.update(
                 {
-                    "output_dir": f"runs/profile_esmc_matrix_{name}_w{workers}_{args.run_suffix}",
+                    "output_dir": f"runs/profile_esmc_matrix_{profile_name}_{args.run_suffix}",
                     "epochs": 2,
+                    "batch_size": batch_size,
+                    "eval_batch_size": batch_size,
                     "num_workers": workers,
+                    "max_batch_tokens": max_batch_tokens,
                     "max_train_samples": 4096,
                     "max_val_samples": 512,
                     "eval_test_each_epoch": False,
@@ -211,7 +216,7 @@ def main() -> int:
                 "two epochs on 4096 train / 512 val chains; compare second-epoch data_wait_fraction, "
                 "residues_per_second, GPU utilization, and peak memory"
             )
-            path = profile_dir / f"profile_{name}_w{workers}.yaml"
+            path = profile_dir / f"profile_{profile_name}.yaml"
             path.write_text(yaml.safe_dump(config, sort_keys=False, width=120))
             print(path)
     return 0

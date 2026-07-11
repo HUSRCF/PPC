@@ -202,8 +202,15 @@ def _lengths_from_manifest(manifest_path: Path) -> dict[str, int]:
 
 def _esm_length(path: Path) -> int:
     data = torch.load(path, map_location="cpu", weights_only=False)
-    value = data["embeddings"] if isinstance(data, dict) else data
-    return int(value.shape[0])
+    if isinstance(data, dict):
+        value = data.get("embeddings")
+        if value is not None:
+            return int(value.shape[0])
+        length = int(data.get("feature_n_residues") or len(data.get("chain_ids", ())))
+        if length > 0:
+            return length
+        raise ValueError(f"Cannot infer residue count from compact payload: {path}")
+    return int(data.shape[0])
 
 
 class LengthAwareBatchSampler(BatchSampler):

@@ -3,7 +3,7 @@
 #SBATCH --partition=i64m1tga800ue
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=12
+#SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:1
 #SBATCH --mem=160G
 #SBATCH --time=48:00:00

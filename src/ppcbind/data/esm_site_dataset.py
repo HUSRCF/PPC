@@ -92,9 +92,12 @@ AA3_TO_1 = {
 
 def _torch_load(path: Path) -> Any:
     try:
-        return torch.load(path, map_location="cpu", weights_only=False)
-    except TypeError:
-        return torch.load(path, map_location="cpu")
+        return torch.load(path, map_location="cpu", weights_only=False, mmap=True)
+    except (TypeError, RuntimeError):
+        try:
+            return torch.load(path, map_location="cpu", weights_only=False)
+        except TypeError:
+            return torch.load(path, map_location="cpu")
 
 
 def _norm_text(value: Any) -> str:

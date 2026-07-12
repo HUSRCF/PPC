@@ -40,6 +40,8 @@ The training script now clears gradients immediately before validation and perfo
 - validation logits have `requires_grad=False`;
 - with `ratio_loss_weight=0`, CE, CE+Dice, Focal+Dice, and chain-mean CE remain bitwise equal to the previous implementation (`torch.equal`).
 
+The checks also passed inside real HPC2 M7c confirmation training, not only in the synthetic test. At the latest inspected epochs for seeds 43 and 44, both validation records reported `eval_gradient_isolation_checked=true`, `eval_parameter_grads_present=0`, `eval_parameter_version_changes=0`, and `eval_logits_require_grad=false`.
+
 When `eval_test_each_epoch=false`, the training script now does not read test IDs and does not construct a test loader. M8 uses this setting and selects checkpoints only by validation chain-macro AP.
 
 ## SI30 Evidence

@@ -32,19 +32,24 @@ The principal F1/MCC columns below use the validation-selected epoch and validat
 selected threshold. `Oracle F1` is retained only as a diagnostic and is not used for
 model or threshold selection.
 
-| Variant | Epoch | Val F1@thr | Test F1@val-thr | Test MCC@val-thr | Test AUPRC | Test AUROC | F1@0.5 | F1@0.6 | Oracle F1@thr |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| M0 | 17 | 0.6665@0.58 | 0.6372 | 0.5040 | 0.7003 | 0.8454 | 0.6495 | 0.6332 | 0.6555@0.35 |
-| M1 | 9 | 0.6765@0.48 | 0.6510 | 0.5201 | 0.7092 | 0.8485 | 0.6475 | 0.6155 | 0.6578@0.39 |
-| M2 | 17 | **0.6835@0.51** | 0.6425 | 0.5123 | 0.7136 | 0.8423 | 0.6438 | 0.6330 | 0.6557@0.29 |
-| M3 | 24 | 0.6728@0.52 | **0.6585** | 0.5218 | **0.7292** | 0.8569 | 0.6599 | 0.6512 | 0.6614@0.41 |
-| M4 | 15 | 0.6750@0.45 | 0.6414 | 0.5134 | 0.7146 | 0.8509 | 0.6330 | 0.6132 | 0.6627@0.23 |
-| M5 | 6 | 0.6813@0.60 | 0.6536 | **0.5250** | 0.7245 | **0.8594** | **0.6639** | **0.6536** | **0.6675@0.42** |
+| Variant | Epoch | Val F1@thr | Test F1@val-thr | Test MCC@val-thr | Test AUPRC | Chain-macro AP | Test AUROC | F1@0.5 | F1@0.6 | Oracle F1@thr |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| M0 | 17 | 0.6665@0.58 | 0.6372 | 0.5040 | 0.7003 | 0.6667 | 0.8454 | 0.6495 | 0.6332 | 0.6555@0.35 |
+| M1 | 9 | 0.6765@0.48 | 0.6510 | 0.5201 | 0.7092 | 0.6805 | 0.8485 | 0.6475 | 0.6155 | 0.6578@0.39 |
+| M2 | 17 | **0.6835@0.51** | 0.6425 | 0.5123 | 0.7136 | 0.6761 | 0.8423 | 0.6438 | 0.6330 | 0.6557@0.29 |
+| M3 | 24 | 0.6728@0.52 | **0.6585** | 0.5218 | **0.7292** | 0.6821 | 0.8569 | 0.6599 | 0.6512 | 0.6614@0.41 |
+| M4 | 15 | 0.6750@0.45 | 0.6414 | 0.5134 | 0.7146 | 0.6715 | 0.8509 | 0.6330 | 0.6132 | 0.6627@0.23 |
+| M5 | 6 | 0.6813@0.60 | 0.6536 | **0.5250** | 0.7245 | **0.6879** | **0.8594** | **0.6639** | **0.6536** | **0.6675@0.42** |
 
 M5 versus M0 at the frozen validation threshold is +0.0164 F1 and +0.0210 MCC;
 threshold-independent deltas are +0.0242 AUPRC and +0.0140 AUROC. These are test point
 estimates, not the selection rule. M2 has the highest validation F1 and is therefore the
 ESM-C member used by M6. Selecting M3 or M5 after inspecting test would be test leakage.
+
+Chain-macro AP is the unweighted mean of AP computed separately for each test chain.
+All 2,392 test chains contain at least one positive and one negative residue, so no
+single-class-chain convention affects these values. The previous best model has
+chain-macro AP 0.6668.
 
 ## M6 validation-only ensemble
 
@@ -56,6 +61,7 @@ values were frozen before test replay.
 | Test F1 at validation threshold | 0.6372 | 0.6425 | **0.6661** |
 | Test MCC at validation threshold | 0.5040 | 0.5123 | **0.5440** |
 | Test AUPRC | 0.7003 | 0.7136 | **0.7411** |
+| Chain-macro AP | 0.6667 | 0.6761 | **0.7000** |
 | Test AUROC | 0.8454 | 0.8423 | **0.8662** |
 | F1 / MCC at 0.5 | 0.6495 / 0.5081 | 0.6438 / 0.5130 | **0.6684 / 0.5443** |
 | F1 / MCC at 0.6 | 0.6332 / 0.5025 | 0.6330 / 0.5113 | **0.6522 / 0.5383** |
@@ -78,7 +84,8 @@ MAE win. Full per-chain and bootstrap artifacts are under `m6/effect_site_ratio/
 The earlier high-dropout baseline was reported as test F1 0.6596. That number is the
 test-oracle value at threshold 0.40. Its validation-frozen test F1/MCC are 0.63750/0.50782
 at validation threshold 0.62. Formal M0 gives 0.63723/0.50402 at validation threshold
-0.58, with AUPRC 0.70033 versus 0.70186 previously. The frozen control is therefore
+0.58, with AUPRC 0.70033 versus 0.70186 previously and chain-macro AP 0.66666 versus
+0.66679. The frozen control is therefore
 reproduced; the matrix is not using the known bad local AMP diagnostic as its baseline.
 
 M0 changes only the loader/storage and fixed matrix context relative to that older run:
@@ -113,6 +120,11 @@ about 2x slower. The remaining bottleneck is storage bandwidth/small-file I/O, n
   all completed with exit code 0 and empty stderr.
 - M6 machine-readable outputs: `m6/m6_summary.json`, `m6/m6_test_predictions.npz`,
   and `m6_scores/*.npz` beside this report.
+- Chain-macro AP outputs: `macro_ap/chain_macro_ap_summary.{json,tsv,md}` and
+  `macro_ap/*_per_chain.tsv`. M1/M3/M4 score exports came from completed HPC2 jobs
+  `9967466`, `9967467`, and `9967470`; M5 was exported on local AMD GPU0 from the
+  archived checkpoint after the HPC2 fallback remained pending. All exports contain
+  the same 2,392 chain IDs and residue-label arrays.
 
 Protocol caveat: `eval_test_each_epoch=true` exposed test metrics during development,
 although checkpoints and thresholds were selected from validation only. These are

@@ -65,7 +65,7 @@ chain-macro-AP checkpoint selection, secondary F1/AP checkpoints, and no per-epo
 M7e is launched only if M7b improves validation chain-macro AP by at least 0.005 without
 a material pooled-AP regression.
 
-The primary jobs were submitted on 2026-07-12 with a six-hour Slurm time limit. This
+The primary jobs were submitted on 2026-07-12 with a twelve-hour Slurm time limit. This
 changes only the scheduler reservation and leaves every training parameter unchanged.
 
 Promotion gate: advance a candidate only if validation chain-macro AP improves by at
@@ -85,6 +85,12 @@ Keep the learned blend only if it improves both validation chain-macro AP and po
 over M7 and the unweighted blend, while frozen-threshold F1/MCC do not regress. Otherwise
 publish the single model or unweighted blend. Do not use a stacking MLP, three-member
 ensemble, per-chain threshold, or test-fitted calibration.
+
+Implementation: `scripts/analysis/build_validation_logit_ensemble.py`. It evaluates the
+full alpha grid on validation chain-macro AP, uses pooled validation AP only as a
+tie-breaker, freezes alpha, then selects the operating threshold on validation F1. It
+also emits the unweighted logit mean as a mandatory control and records an explicit
+validation-only promotion decision before reporting test metrics.
 
 ## Seed and Uncertainty Protocol
 

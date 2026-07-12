@@ -1,0 +1,85 @@
+data:
+  esm_root: features/esm2_mlc_chain_cache_20260711/compact_pdb
+  primary_embedding_root: features/esmc_600m_2024_12_mlc_l12_l24_l36/by_chain
+  contact_graph_root: features/esm2_mlc_chain_cache_20260711/by_chain
+  label_root: features/contact_labels_5p5A
+  manifest: features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/chain_filtered_training/manifest.csv
+  split_dir: features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/chain_filtered_training
+  chain_filter_manifest: features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/pypropel_chain_filtered_no_len_limit/chain_manifest.csv
+  sequence_feature_root: features/esmfold_pred_struct_sequence_scalar_chain_filtered/pt
+  require_sequence_features: true
+  require_primary_embeddings: true
+  require_contact_graph: true
+model:
+  d_esm: 3456
+  d_seq: 90
+  d_model: 256
+  d_hidden: 512
+  dropout: 0.25
+  classifier_dropout: 0.45
+  max_chains: 128
+  use_chain_embedding: true
+  use_seq_features: true
+  use_position_features: true
+  use_global_context: true
+  use_contact_graph: true
+  contact_graph_layers: 1
+  contact_score_clip: 1.0
+  n_transformer_layers: 0
+  esm_layer_fusion: concat
+  esm_layer_count: 3
+training:
+  output_dir: runs/contact_site_cfsi30_esmc_matrix_m2_esmc_mlc_concat_seed44_e30_20260712_seedscan_hpc2
+  device: cuda:0
+  seed: 44
+  epochs: 30
+  batch_size: 64
+  eval_batch_size: 64
+  num_workers: 8
+  pin_memory: true
+  prefetch_factor: 4
+  persistent_workers: true
+  payload_cache_size: 8
+  preload: false
+  batching: token_budget
+  max_batch_tokens: 65536
+  length_bucket_size: 1024
+  max_residues: 0
+  train_crop_mode: none
+  eval_crop_mode: none
+  max_train_samples: null
+  max_val_samples: 0
+  eval_max_batches: null
+  eval_test_each_epoch: false
+  lr: 5.0e-05
+  warmup_steps: 0
+  warmup_ratio: 0.1
+  min_lr_scale: 0.02
+  weight_decay: 0.1
+  label_smoothing: 0.05
+  threshold_grid: 0.01:0.99:0.01
+  topk_fracs: 0.05,0.10
+  selection_metric: f1_best_threshold
+  max_pos_weight: 20.0
+  grad_clip_norm: 1.0
+  grad_value_clip: 100.0
+  adam_eps: 1.0e-07
+  amp: true
+  progress: true
+  strict_ids: true
+  require_labels: true
+  strict_label_metadata: false
+  strict_sequence_feature_metadata: false
+  save_metric_checkpoints: f1_best_threshold,pr_auc,chain_ap_macro
+metadata:
+  label_cutoff_angstrom: 5.5
+  split_policy: global_pairwise_deeptminter_si30_chain_filtered_no_len_limit
+  structure_source: ESMFold exact-sequence unique-chain PDBs only
+  bridge_policy: no UniProt/TmAlphaFold/AFDB/PDBTM bridge
+  contact_prior: frozen ESM2 contact graph; top_k=16, min_score=0.05, min_seq_sep=6, bidirectional
+  selection_policy: checkpoint and threshold selected on validation only; test evaluated at frozen validation threshold
+  loader_policy: chain-level exact-sequence payloads + compact PDB metadata; batch64/tokens65536/workers8/prefetch4/persistent/cache8
+  parent_hyperparameters: hp_highdrop_wd1e1_ls5e2 seed42
+  representation: ESM-C blocks 12/24/36 concat (3456D)
+  matrix_variant: m2_esmc_mlc_concat
+  seed_protocol: seed=44; checkpoint selection=f1_best_threshold; test_each_epoch=False

@@ -170,20 +170,51 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--run-suffix", default="20260711_hpc2")
+    parser.add_argument("--seeds", default="42", help="Comma-separated random seeds")
+    parser.add_argument("--variants", default="", help="Comma-separated variant names; empty means all")
+    parser.add_argument("--selection-metric", default="f1_best_threshold")
+    parser.add_argument("--save-metric-checkpoints", default="")
+    parser.add_argument(
+        "--eval-test-each-epoch",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
     parser.add_argument("--include-profiles", action="store_true")
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
     variants = _variants()
+    seeds = [int(value.strip()) for value in args.seeds.split(",") if value.strip()]
+    if not seeds:
+        raise ValueError("At least one seed is required")
+    requested_variants = [value.strip() for value in args.variants.split(",") if value.strip()]
+    if requested_variants:
+        unknown = sorted(set(requested_variants) - set(variants))
+        if unknown:
+            raise ValueError(f"Unknown variants: {unknown}; available={sorted(variants)}")
+        variants = {name: variants[name] for name in requested_variants}
     generated: dict[str, dict] = {}
     for name, patch in variants.items():
-        config = copy.deepcopy(_base())
-        _merge(config, patch)
-        config["training"]["output_dir"] = f"runs/contact_site_cfsi30_esmc_matrix_{name}_seed42_e30_{args.run_suffix}"
-        config["metadata"]["matrix_variant"] = name
-        path = args.output_dir / f"train_{name}_seed42.yaml"
-        path.write_text(yaml.safe_dump(config, sort_keys=False, width=120))
-        print(path)
-        generated[name] = config
+        variant_config = copy.deepcopy(_base())
+        _merge(variant_config, patch)
+        variant_config["training"]["selection_metric"] = args.selection_metric
+        variant_config["training"]["eval_test_each_epoch"] = args.eval_test_each_epoch
+        if args.save_metric_checkpoints:
+            variant_config["training"]["save_metric_checkpoints"] = args.save_metric_checkpoints
+        variant_config["metadata"]["matrix_variant"] = name
+        generated[name] = copy.deepcopy(variant_config)
+        for seed in seeds:
+            config = copy.deepcopy(variant_config)
+            config["training"]["seed"] = seed
+            config["training"]["output_dir"] = (
+                f"runs/contact_site_cfsi30_esmc_matrix_{name}_seed{seed}_e30_{args.run_suffix}"
+            )
+            config["metadata"]["seed_protocol"] = (
+                f"seed={seed}; checkpoint selection={args.selection_metric}; "
+                f"test_each_epoch={args.eval_test_each_epoch}"
+            )
+            path = args.output_dir / f"train_{name}_seed{seed}.yaml"
+            path.write_text(yaml.safe_dump(config, sort_keys=False, width=120))
+            print(path)
     if args.include_profiles:
         profile_dir = args.output_dir / "profiles"
         profile_dir.mkdir(parents=True, exist_ok=True)
@@ -197,6 +228,8 @@ def main() -> int:
             ("m5_esm2_esmc_gated_residual_w8_b96_t98k", "m5_esm2_esmc_gated_residual", 8, 96, 98304, 2, 4),
         )
         for profile_name, name, workers, batch_size, max_batch_tokens, prefetch_factor, cache_size in profile_specs:
+            if name not in generated:
+                continue
             config = copy.deepcopy(generated[name])
             training = config["training"]
             training.update(

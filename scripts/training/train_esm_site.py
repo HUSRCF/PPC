@@ -165,6 +165,19 @@ def _parse_float_grid(value: Any, default: list[float]) -> list[float]:
     return [float(x) for x in text.split(",") if x.strip()]
 
 
+def _parse_metric_names(value: Any) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, (list, tuple)):
+        names = [str(item).strip() for item in value]
+    else:
+        names = [item.strip() for item in str(value).split(",")]
+    names = [name for name in names if name]
+    if len(names) != len(set(names)):
+        raise ValueError(f"Duplicate metric in save_metric_checkpoints: {names}")
+    return names
+
+
 def _frac_label(frac: float) -> str:
     pct = frac * 100.0
     if abs(pct - round(pct)) < 1.0e-6:
@@ -559,6 +572,41 @@ def _topk_metrics(per_protein: list[tuple[str, torch.Tensor, torch.Tensor]], top
     return out
 
 
+def _chain_macro_metrics(
+    per_protein: list[tuple[str, torch.Tensor, torch.Tensor]],
+) -> dict[str, float | int | None]:
+    if average_precision_score is None:
+        return {
+            "chain_ap_macro": None,
+            "chain_ap_n_chains": len(per_protein),
+            "chain_ap_all_negative": 0,
+            "chain_ap_all_positive": 0,
+        }
+    average_precisions: list[float] = []
+    all_negative = 0
+    all_positive = 0
+    for _, scores, targets in per_protein:
+        n_residues = int(targets.numel())
+        if n_residues <= 0:
+            continue
+        n_positive = int(targets.sum().item())
+        if n_positive == 0:
+            average_precisions.append(0.0)
+            all_negative += 1
+        else:
+            average_precisions.append(
+                float(average_precision_score(targets.numpy(), scores.float().numpy()))
+            )
+        if n_positive == n_residues:
+            all_positive += 1
+    return {
+        "chain_ap_macro": sum(average_precisions) / max(1, len(average_precisions)),
+        "chain_ap_n_chains": len(average_precisions),
+        "chain_ap_all_negative": all_negative,
+        "chain_ap_all_positive": all_positive,
+    }
+
+
 def _score_metrics(
     score_chunks: list[torch.Tensor],
     target_chunks: list[torch.Tensor],
@@ -574,6 +622,7 @@ def _score_metrics(
         **_auc_metrics(scores, targets),
         **_threshold_metrics(scores, targets, thresholds),
         **_topk_metrics(per_protein, topk_fracs),
+        **_chain_macro_metrics(per_protein),
     }
 
 
@@ -811,6 +860,11 @@ def main() -> int:
     parser.add_argument("--threshold-grid", default="0.01:0.99:0.01")
     parser.add_argument("--topk-fracs", default="0.05,0.10")
     parser.add_argument("--selection-metric", default="f1")
+    parser.add_argument(
+        "--save-metric-checkpoints",
+        default="",
+        help="Comma-separated validation metrics saved as best_<metric>.pt in addition to best.pt",
+    )
     parser.add_argument("--grad-clip-norm", type=float, default=1.0)
     parser.add_argument("--grad-value-clip", type=float, default=100.0)
     parser.add_argument("--adam-eps", type=float, default=1e-7)
@@ -825,6 +879,7 @@ def main() -> int:
 
     thresholds = _parse_float_grid(args.threshold_grid, [i / 100.0 for i in range(1, 100)])
     topk_fracs = _parse_float_grid(args.topk_fracs, [0.05, 0.10])
+    save_metric_checkpoints = _parse_metric_names(args.save_metric_checkpoints)
 
     random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -1048,6 +1103,7 @@ def main() -> int:
             "min_lr_scale_resolved": min_lr_scale,
             "thresholds_resolved": thresholds,
             "topk_fracs_resolved": topk_fracs,
+            "save_metric_checkpoints_resolved": save_metric_checkpoints,
             "input_policy": "ESM embeddings plus sequence-derived residue/global features only; optional ESM-predicted contact graph; no PDB coordinates or complete structure features",
             "chain_filtered": chain_filtered,
             "chain_filter_manifest": str(args.chain_filter_manifest) if args.chain_filter_manifest else None,
@@ -1075,6 +1131,7 @@ def main() -> int:
     log_path = args.output_dir / "metrics.jsonl"
     best_metric = -1.0
     best_metric_name = str(args.selection_metric)
+    best_saved_metrics = {name: float("-inf") for name in save_metric_checkpoints}
     global_step = 0
     print(json.dumps({"event": "start", **run_config}, default=str), flush=True)
 
@@ -1277,6 +1334,14 @@ def main() -> int:
         if float(current_metric) > best_metric:
             best_metric = float(current_metric)
             torch.save(ckpt, args.output_dir / "best.pt")
+        for metric_name in save_metric_checkpoints:
+            metric_value = val_metrics.get(metric_name)
+            if not isinstance(metric_value, (int, float)) or not math.isfinite(float(metric_value)):
+                raise ValueError(f"Validation metric {metric_name!r} is unavailable or non-finite")
+            if float(metric_value) > best_saved_metrics[metric_name]:
+                best_saved_metrics[metric_name] = float(metric_value)
+                safe_name = "".join(char if char.isalnum() or char in {"_", "-"} else "_" for char in metric_name)
+                torch.save(ckpt, args.output_dir / f"best_{safe_name}.pt")
 
     print(
         json.dumps(
@@ -1284,6 +1349,7 @@ def main() -> int:
                 "event": "done",
                 "best_metric": best_metric,
                 "selection_metric": best_metric_name,
+                "best_saved_metrics": best_saved_metrics,
                 "output_dir": str(args.output_dir),
             }
         ),

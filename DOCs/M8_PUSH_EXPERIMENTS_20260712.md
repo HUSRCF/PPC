@@ -57,7 +57,7 @@ It reads validation metrics from `best.pt` only and rejects checkpoints whose co
 - The assertions passed in live M7c seed-43/44 HPC2 training.
 - Local split/cache audit passed across all 20,240 chains.
 - Fresh 110-thread DeepTMInter SI30 recomputation found zero SI>=0.30 violations on both candidate routes.
-- HPC2-local path audit job: `9970021`.
+- HPC2-local path audit: `9970021` reached the final evidence-read step but failed because the remote host does not contain the local SI-summary directory. The corrected path-only audit is `9970041`; SI evidence is supplied by the completed local 110-thread rerun.
 
 ## Reproducibility
 

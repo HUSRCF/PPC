@@ -695,6 +695,7 @@ class ResidueSiteLoss(nn.Module):
         dice_weight: float,
         focal_gamma: float,
         focal_alpha: float | None,
+        reduction: str,
         device: torch.device,
     ) -> None:
         super().__init__()
@@ -704,6 +705,11 @@ class ResidueSiteLoss(nn.Module):
         self.dice_weight = max(0.0, float(dice_weight))
         self.focal_gamma = max(0.0, float(focal_gamma))
         self.focal_alpha = None if focal_alpha is None or focal_alpha < 0 else max(0.0, min(1.0, float(focal_alpha)))
+        self.reduction = str(reduction or "residue_mean").lower()
+        if self.reduction not in {"residue_mean", "chain_mean"}:
+            raise ValueError(f"Unsupported loss_reduction={reduction!r}; use residue_mean or chain_mean")
+        if self.reduction == "chain_mean" and self.loss_type != "ce":
+            raise ValueError("chain_mean currently supports loss_type=ce only")
         self.ce = nn.CrossEntropyLoss(
             weight=torch.tensor([1.0, pos_weight], dtype=torch.float32, device=device),
             ignore_index=-100,
@@ -711,6 +717,30 @@ class ResidueSiteLoss(nn.Module):
         )
 
     def forward(self, logits: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
+        if self.reduction == "chain_mean":
+            if logits.ndim != 3 or labels.ndim != 2 or logits.shape[:2] != labels.shape:
+                raise ValueError(
+                    "chain_mean requires logits [batch, residues, classes] and labels [batch, residues]"
+                )
+            flat_labels = labels.reshape(-1)
+            token_losses = torch.nn.functional.cross_entropy(
+                logits.reshape(-1, logits.shape[-1]),
+                flat_labels,
+                weight=self.ce.weight,
+                ignore_index=self.ce.ignore_index,
+                label_smoothing=self.ce.label_smoothing,
+                reduction="none",
+            ).reshape_as(labels)
+            valid = labels != self.ce.ignore_index
+            safe_labels = labels.masked_fill(~valid, 0)
+            token_weights = self.ce.weight[safe_labels] * valid
+            chain_denominators = token_weights.sum(dim=1)
+            chain_losses = token_losses.sum(dim=1) / chain_denominators.clamp_min(1.0e-12)
+            valid_chains = chain_denominators > 0
+            return (chain_losses * valid_chains).sum() / valid_chains.sum().clamp_min(1)
+
+        logits = logits.reshape(-1, logits.shape[-1])
+        labels = labels.reshape(-1)
         if self.loss_type == "ce":
             return self.ce(logits, labels)
         valid = labels != -100
@@ -767,7 +797,7 @@ def _evaluate(
         for step, batch in enumerate(progress_iter, 1):
             inputs, labels = _move_batch(batch, device)
             logits = model(**inputs)["logits"]
-            loss = criterion(logits.reshape(-1, logits.shape[-1]), labels.reshape(-1))
+            loss = criterion(logits, labels)
             if not bool(torch.isfinite(logits).all()) or not bool(torch.isfinite(loss)):
                 skipped_nonfinite += 1
                 continue
@@ -854,6 +884,7 @@ def main() -> int:
     parser.add_argument("--max-pos-weight", type=float, default=20.0)
     parser.add_argument("--label-smoothing", type=float, default=0.0)
     parser.add_argument("--loss-type", choices=["ce", "ce_dice", "focal", "focal_dice"], default="ce")
+    parser.add_argument("--loss-reduction", choices=["residue_mean", "chain_mean"], default="residue_mean")
     parser.add_argument("--dice-weight", type=float, default=0.0)
     parser.add_argument("--focal-gamma", type=float, default=2.0)
     parser.add_argument("--focal-alpha", type=float, default=-1.0)
@@ -1061,6 +1092,7 @@ def main() -> int:
         dice_weight=args.dice_weight,
         focal_gamma=args.focal_gamma,
         focal_alpha=args.focal_alpha,
+        reduction=args.loss_reduction,
         device=device,
     )
     optimizer = torch.optim.AdamW(
@@ -1224,7 +1256,7 @@ def main() -> int:
             optimizer.zero_grad(set_to_none=True)
             with torch.amp.autocast("cuda", enabled=args.amp and device.type == "cuda"):
                 logits = model(**inputs)["logits"]
-                loss = criterion(logits.reshape(-1, logits.shape[-1]), labels.reshape(-1))
+                loss = criterion(logits, labels)
             if not bool(torch.isfinite(logits).all()) or not bool(torch.isfinite(loss)):
                 skipped_nonfinite += 1
                 step_end = time.perf_counter()

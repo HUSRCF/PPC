@@ -607,6 +607,31 @@ def _chain_macro_metrics(
     }
 
 
+def _chain_ratio_metrics(
+    per_protein: list[tuple[str, torch.Tensor, torch.Tensor]],
+) -> dict[str, float | int | None]:
+    errors: list[float] = []
+    for _, scores, targets in per_protein:
+        if scores.numel() == 0:
+            continue
+        predicted_ratio = float(scores.float().mean().item())
+        observed_ratio = float(targets.float().mean().item())
+        errors.append(predicted_ratio - observed_ratio)
+    if not errors:
+        return {
+            "chain_ratio_n_chains": 0,
+            "chain_ratio_mae_raw": None,
+            "chain_ratio_rmse_raw": None,
+            "chain_ratio_bias_raw": None,
+        }
+    return {
+        "chain_ratio_n_chains": len(errors),
+        "chain_ratio_mae_raw": sum(abs(error) for error in errors) / len(errors),
+        "chain_ratio_rmse_raw": math.sqrt(sum(error * error for error in errors) / len(errors)),
+        "chain_ratio_bias_raw": sum(errors) / len(errors),
+    }
+
+
 def _score_metrics(
     score_chunks: list[torch.Tensor],
     target_chunks: list[torch.Tensor],
@@ -623,6 +648,7 @@ def _score_metrics(
         **_threshold_metrics(scores, targets, thresholds),
         **_topk_metrics(per_protein, topk_fracs),
         **_chain_macro_metrics(per_protein),
+        **_chain_ratio_metrics(per_protein),
     }
 
 
@@ -696,6 +722,7 @@ class ResidueSiteLoss(nn.Module):
         focal_gamma: float,
         focal_alpha: float | None,
         reduction: str,
+        ratio_loss_weight: float,
         device: torch.device,
     ) -> None:
         super().__init__()
@@ -710,6 +737,7 @@ class ResidueSiteLoss(nn.Module):
             raise ValueError(f"Unsupported loss_reduction={reduction!r}; use residue_mean or chain_mean")
         if self.reduction == "chain_mean" and self.loss_type != "ce":
             raise ValueError("chain_mean currently supports loss_type=ce only")
+        self.ratio_loss_weight = max(0.0, float(ratio_loss_weight))
         self.ce = nn.CrossEntropyLoss(
             weight=torch.tensor([1.0, pos_weight], dtype=torch.float32, device=device),
             ignore_index=-100,
@@ -717,6 +745,8 @@ class ResidueSiteLoss(nn.Module):
         )
 
     def forward(self, logits: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
+        batched_logits = logits
+        batched_labels = labels
         if self.reduction == "chain_mean":
             if logits.ndim != 3 or labels.ndim != 2 or logits.shape[:2] != labels.shape:
                 raise ValueError(
@@ -737,41 +767,60 @@ class ResidueSiteLoss(nn.Module):
             chain_denominators = token_weights.sum(dim=1)
             chain_losses = token_losses.sum(dim=1) / chain_denominators.clamp_min(1.0e-12)
             valid_chains = chain_denominators > 0
-            return (chain_losses * valid_chains).sum() / valid_chains.sum().clamp_min(1)
-
-        logits = logits.reshape(-1, logits.shape[-1])
-        labels = labels.reshape(-1)
-        if self.loss_type == "ce":
-            return self.ce(logits, labels)
-        valid = labels != -100
-        if not bool(valid.any()):
-            return logits.sum() * 0.0
-        valid_logits = logits[valid]
-        valid_labels = labels[valid].long()
-        if self.loss_type.startswith("focal"):
-            log_probs = torch.log_softmax(valid_logits.float(), dim=-1)
-            probs = torch.exp(log_probs)
-            target_log_probs = log_probs.gather(1, valid_labels.view(-1, 1)).squeeze(1)
-            target_probs = probs.gather(1, valid_labels.view(-1, 1)).squeeze(1)
-            focal = -((1.0 - target_probs).clamp_min(1.0e-6) ** self.focal_gamma) * target_log_probs
-            if self.focal_alpha is not None:
-                alpha = torch.where(
-                    valid_labels == 1,
-                    torch.full_like(focal, self.focal_alpha),
-                    torch.full_like(focal, 1.0 - self.focal_alpha),
-                )
-                focal = focal * alpha
-            base = focal.mean()
+            base = (chain_losses * valid_chains).sum() / valid_chains.sum().clamp_min(1)
         else:
-            base = self.ce(logits, labels)
-        if "dice" not in self.loss_type or self.dice_weight <= 0.0:
+            flat_logits = logits.reshape(-1, logits.shape[-1])
+            flat_labels = labels.reshape(-1)
+            if self.loss_type == "ce":
+                base = self.ce(flat_logits, flat_labels)
+            else:
+                valid = flat_labels != -100
+                if not bool(valid.any()):
+                    base = flat_logits.sum() * 0.0
+                else:
+                    valid_logits = flat_logits[valid]
+                    valid_labels = flat_labels[valid].long()
+                    if self.loss_type.startswith("focal"):
+                        log_probs = torch.log_softmax(valid_logits.float(), dim=-1)
+                        probs = torch.exp(log_probs)
+                        target_log_probs = log_probs.gather(1, valid_labels.view(-1, 1)).squeeze(1)
+                        target_probs = probs.gather(1, valid_labels.view(-1, 1)).squeeze(1)
+                        focal = -((1.0 - target_probs).clamp_min(1.0e-6) ** self.focal_gamma) * target_log_probs
+                        if self.focal_alpha is not None:
+                            alpha = torch.where(
+                                valid_labels == 1,
+                                torch.full_like(focal, self.focal_alpha),
+                                torch.full_like(focal, 1.0 - self.focal_alpha),
+                            )
+                            focal = focal * alpha
+                        base = focal.mean()
+                    else:
+                        base = self.ce(flat_logits, flat_labels)
+                    if "dice" in self.loss_type and self.dice_weight > 0.0:
+                        scores = torch.softmax(valid_logits.float(), dim=-1)[:, 1]
+                        targets = (valid_labels == 1).float()
+                        intersection = (scores * targets).sum()
+                        denom = scores.sum() + targets.sum()
+                        dice = 1.0 - (2.0 * intersection + 1.0) / (denom + 1.0)
+                        base = base + self.dice_weight * dice.to(dtype=base.dtype)
+
+        if self.ratio_loss_weight <= 0.0:
             return base
-        scores = torch.softmax(valid_logits.float(), dim=-1)[:, 1]
-        targets = (valid_labels == 1).float()
-        intersection = (scores * targets).sum()
-        denom = scores.sum() + targets.sum()
-        dice = 1.0 - (2.0 * intersection + 1.0) / (denom + 1.0)
-        return base + self.dice_weight * dice.to(dtype=base.dtype)
+        if batched_logits.ndim != 3 or batched_labels.ndim != 2 or batched_logits.shape[:2] != batched_labels.shape:
+            raise ValueError("ratio loss requires logits [batch, residues, classes] and labels [batch, residues]")
+        valid = batched_labels != self.ce.ignore_index
+        counts = valid.sum(dim=1)
+        valid_chains = counts > 0
+        if not bool(valid_chains.any()):
+            return base
+        positive_scores = torch.softmax(batched_logits.float(), dim=-1)[..., 1]
+        predicted_ratio = (positive_scores * valid).sum(dim=1) / counts.clamp_min(1)
+        observed_ratio = ((batched_labels == 1) & valid).sum(dim=1).float() / counts.clamp_min(1)
+        ratio_mse = torch.nn.functional.mse_loss(
+            predicted_ratio[valid_chains],
+            observed_ratio[valid_chains],
+        )
+        return base + self.ratio_loss_weight * ratio_mse.to(dtype=base.dtype)
 
 
 def _evaluate(
@@ -784,19 +833,33 @@ def _evaluate(
     desc: str,
     thresholds: list[float],
     topk_fracs: list[float],
+    strict_gradient_isolation: bool,
 ) -> dict[str, Any]:
     model.eval()
+    parameter_versions = {name: parameter._version for name, parameter in model.named_parameters()}
+    if strict_gradient_isolation:
+        stale_grads = [name for name, parameter in model.named_parameters() if parameter.grad is not None]
+        if stale_grads:
+            raise RuntimeError(
+                f"{desc}: evaluation started with {len(stale_grads)} parameter gradients; first={stale_grads[:5]}"
+            )
     losses: list[float] = []
     metrics: list[dict[str, int]] = []
     score_chunks: list[torch.Tensor] = []
     target_chunks: list[torch.Tensor] = []
     per_protein: list[tuple[str, torch.Tensor, torch.Tensor]] = []
     skipped_nonfinite = 0
+    logits_require_grad = False
     with torch.no_grad():
+        if strict_gradient_isolation and torch.is_grad_enabled():
+            raise RuntimeError(f"{desc}: torch gradient mode remained enabled inside no_grad")
         progress_iter = _progress(loader, show_progress, len(loader), desc)
         for step, batch in enumerate(progress_iter, 1):
             inputs, labels = _move_batch(batch, device)
             logits = model(**inputs)["logits"]
+            logits_require_grad = logits_require_grad or bool(logits.requires_grad)
+            if strict_gradient_isolation and logits.requires_grad:
+                raise RuntimeError(f"{desc}: evaluation logits unexpectedly require gradients")
             loss = criterion(logits, labels)
             if not bool(torch.isfinite(logits).all()) or not bool(torch.isfinite(loss)):
                 skipped_nonfinite += 1
@@ -822,10 +885,26 @@ def _evaluate(
                 progress_iter.set_postfix(loss=f"{losses[-1]:.4f}", skipped=skipped_nonfinite)
             if max_batches is not None and step >= max_batches:
                 break
+    gradient_names = [name for name, parameter in model.named_parameters() if parameter.grad is not None]
+    version_changes = [
+        name
+        for name, parameter in model.named_parameters()
+        if parameter._version != parameter_versions[name]
+    ]
+    if strict_gradient_isolation and (gradient_names or version_changes):
+        raise RuntimeError(
+            f"{desc}: evaluation isolation failed; gradients={gradient_names[:5]} "
+            f"parameter_version_changes={version_changes[:5]}"
+        )
     merged = _merge_metrics(metrics)
     merged.update(_score_metrics(score_chunks, target_chunks, per_protein, thresholds, topk_fracs))
     merged["loss"] = sum(losses) / max(1, len(losses))
     merged["skipped_nonfinite"] = skipped_nonfinite
+    merged["eval_gradient_isolation_checked"] = bool(strict_gradient_isolation)
+    merged["eval_grad_mode_enabled"] = False
+    merged["eval_logits_require_grad"] = bool(logits_require_grad)
+    merged["eval_parameter_grads_present"] = len(gradient_names)
+    merged["eval_parameter_version_changes"] = len(version_changes)
     return merged
 
 
@@ -885,6 +964,7 @@ def main() -> int:
     parser.add_argument("--label-smoothing", type=float, default=0.0)
     parser.add_argument("--loss-type", choices=["ce", "ce_dice", "focal", "focal_dice"], default="ce")
     parser.add_argument("--loss-reduction", choices=["residue_mean", "chain_mean"], default="residue_mean")
+    parser.add_argument("--ratio-loss-weight", type=float, default=0.0)
     parser.add_argument("--dice-weight", type=float, default=0.0)
     parser.add_argument("--focal-gamma", type=float, default=2.0)
     parser.add_argument("--focal-alpha", type=float, default=-1.0)
@@ -900,6 +980,7 @@ def main() -> int:
     parser.add_argument("--grad-value-clip", type=float, default=100.0)
     parser.add_argument("--adam-eps", type=float, default=1e-7)
     parser.add_argument("--amp", action="store_true")
+    parser.add_argument("--strict-eval-gradient-isolation", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--progress", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
 
@@ -926,7 +1007,11 @@ def main() -> int:
         _read_ids(_split_ids_path(args.split_dir, "val", chain_filtered), lowercase=not chain_filtered),
         args.max_val_samples,
     )
-    test_ids = _read_ids(_split_ids_path(args.split_dir, "test", chain_filtered), lowercase=not chain_filtered)
+    test_ids = (
+        _read_ids(_split_ids_path(args.split_dir, "test", chain_filtered), lowercase=not chain_filtered)
+        if args.eval_test_each_epoch
+        else []
+    )
     lengths_by_id = _lengths_from_manifest(args.manifest)
     pos_weight, train_pos, train_neg = _class_weight_from_manifest(args.manifest, train_ids, args.max_pos_weight)
     require_contact_graph = bool(model_config.get("use_contact_graph")) if args.require_contact_graph is None else bool(args.require_contact_graph)
@@ -1093,6 +1178,7 @@ def main() -> int:
         focal_gamma=args.focal_gamma,
         focal_alpha=args.focal_alpha,
         reduction=args.loss_reduction,
+        ratio_loss_weight=args.ratio_loss_weight,
         device=device,
     )
     optimizer = torch.optim.AdamW(
@@ -1168,6 +1254,7 @@ def main() -> int:
     print(json.dumps({"event": "start", **run_config}, default=str), flush=True)
 
     if args.eval_only or args.epochs <= 0:
+        model.zero_grad(set_to_none=True)
         val_metrics = _evaluate(
             model,
             val_loader,
@@ -1178,6 +1265,7 @@ def main() -> int:
             desc="val eval-only",
             thresholds=thresholds,
             topk_fracs=topk_fracs,
+            strict_gradient_isolation=args.strict_eval_gradient_isolation,
         )
         test_metrics = None
         test_at_val_threshold = None
@@ -1192,6 +1280,7 @@ def main() -> int:
                 desc="test eval-only",
                 thresholds=thresholds,
                 topk_fracs=topk_fracs,
+                strict_gradient_isolation=args.strict_eval_gradient_isolation,
             )
             test_at_val_threshold = _metrics_at_threshold(test_metrics, val_metrics.get("best_threshold"))
         record = {
@@ -1311,6 +1400,7 @@ def main() -> int:
         train_metrics["compute_seconds"] = compute_seconds
         train_metrics["data_wait_fraction"] = data_wait_seconds / max(1.0e-9, data_wait_seconds + compute_seconds)
         train_metrics["residues_per_second"] = train_residues / max(1.0e-9, train_loop_seconds)
+        optimizer.zero_grad(set_to_none=True)
         val_metrics = _evaluate(
             model,
             val_loader,
@@ -1321,6 +1411,7 @@ def main() -> int:
             desc=f"val {epoch}/{args.epochs}",
             thresholds=thresholds,
             topk_fracs=topk_fracs,
+            strict_gradient_isolation=args.strict_eval_gradient_isolation,
         )
         test_metrics = None
         test_at_val_threshold = None
@@ -1335,6 +1426,7 @@ def main() -> int:
                 desc=f"test {epoch}/{args.epochs}",
                 thresholds=thresholds,
                 topk_fracs=topk_fracs,
+                strict_gradient_isolation=args.strict_eval_gradient_isolation,
             )
             test_at_val_threshold = _metrics_at_threshold(test_metrics, val_metrics.get("best_threshold"))
         record = {

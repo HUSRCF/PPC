@@ -1,0 +1,424 @@
+{
+  "status": "pass",
+  "inputs": {
+    "config": "/media/990Pro/ProtBind/PPC/configs/experiments/20260712_m8_screen_hpc2/train_m8d_tcn2_ratio01_seed42.yaml",
+    "training_script": "/media/990Pro/ProtBind/PPC/scripts/training/train_esm_site.py",
+    "split_dir": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/chain_filtered_training",
+    "chain_manifest": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/pypropel_chain_filtered_no_len_limit/chain_manifest.csv",
+    "training_manifest": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/chain_filtered_training/manifest.csv",
+    "sha256": {
+      "config": "c456e394a9b018160ab5df4d318b7245ac5f84c749b396930c718624521c0c60",
+      "training_script": "fef20d008870c151dfe5fc29d93cd4bab9b59554f4a8104ce3fef821852563f8",
+      "chain_manifest": "aa1a6f4a645e81dab23f1ccc2f0e4149de81de126ef10d38fa16c50b3637179d",
+      "training_manifest": "449a96b46eb9518fd4ada6f72c9107f4be61564c26cb4f624ab1c1417f8d4627",
+      "train_ids": "6ef0a58f3c87deeac2acda198d801246995e7b7721946d109bf8c26fdf2f4503",
+      "val_ids": "8a8c7e99e317b050ad90200fed87fbf9c02724819058871ea58f7829f6785114",
+      "test_ids": "6ab9160e7e26b95f6a6d859ee2daadc1a05db44a16f3ae81ff7082d8d9c14e59"
+    }
+  },
+  "split_counts": {
+    "train": 14052,
+    "val": 3796,
+    "test": 2392
+  },
+  "duplicate_ids": {
+    "train": {
+      "count": 0,
+      "examples": []
+    },
+    "val": {
+      "count": 0,
+      "examples": []
+    },
+    "test": {
+      "count": 0,
+      "examples": []
+    }
+  },
+  "manifest_coverage": {
+    "split_union": 20240,
+    "chain_manifest_rows": 20240,
+    "training_manifest_rows": 20240,
+    "missing_chain_manifest": [],
+    "extra_chain_manifest": [],
+    "missing_training_manifest": [],
+    "extra_training_manifest": [],
+    "split_field_mismatches": []
+  },
+  "identity_audits": {
+    "seq_id": {
+      "cross_split": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    },
+    "pdb_id": {
+      "unique_counts": {
+        "train": 4192,
+        "val": 1028,
+        "test": 630
+      },
+      "cross_split": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    },
+    "component_id": {
+      "unique_counts": {
+        "train": 240,
+        "val": 55,
+        "test": 43
+      },
+      "cross_split": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    },
+    "seq_sha1": {
+      "unique_counts": {
+        "train": 4868,
+        "val": 1075,
+        "test": 724
+      },
+      "cross_split": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    },
+    "exact_group_id": {
+      "unique_counts": {
+        "train": 4868,
+        "val": 1062,
+        "test": 716
+      },
+      "cross_split": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    },
+    "representative_id": {
+      "unique_counts": {
+        "train": 4868,
+        "val": 1062,
+        "test": 716
+      },
+      "cross_split": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    }
+  },
+  "resolved_path_audits": {
+    "source_esm": {
+      "configured": true,
+      "root": "/media/990Pro/ProtBind/PPC/features/esm2_mlc_chain_cache_20260711/compact_pdb",
+      "resolved_unique_paths": {
+        "train": 4192,
+        "val": 1028,
+        "test": 630
+      },
+      "resolved_symlink_references": 0,
+      "missing": {
+        "train": {
+          "count": 0,
+          "examples": []
+        },
+        "val": {
+          "count": 0,
+          "examples": []
+        },
+        "test": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "cross_split_resolved_path_overlap": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    },
+    "labels": {
+      "configured": true,
+      "root": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A",
+      "resolved_unique_paths": {
+        "train": 4192,
+        "val": 1028,
+        "test": 630
+      },
+      "resolved_symlink_references": 0,
+      "missing": {
+        "train": {
+          "count": 0,
+          "examples": []
+        },
+        "val": {
+          "count": 0,
+          "examples": []
+        },
+        "test": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "cross_split_resolved_path_overlap": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    },
+    "sequence_features": {
+      "configured": true,
+      "root": "/media/990Pro/ProtBind/PPC/features/esmfold_pred_struct_sequence_scalar_chain_filtered/pt",
+      "resolved_unique_paths": {
+        "train": 14052,
+        "val": 3796,
+        "test": 2392
+      },
+      "resolved_symlink_references": 0,
+      "missing": {
+        "train": {
+          "count": 0,
+          "examples": []
+        },
+        "val": {
+          "count": 0,
+          "examples": []
+        },
+        "test": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "cross_split_resolved_path_overlap": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    },
+    "primary_embeddings": {
+      "configured": true,
+      "root": "/media/990Pro/ProtBind/PPC/features/esmc_600m_2024_12_mlc_l12_l24_l36/by_chain",
+      "resolved_unique_paths": {
+        "train": 4868,
+        "val": 1075,
+        "test": 724
+      },
+      "resolved_symlink_references": 20240,
+      "missing": {
+        "train": {
+          "count": 0,
+          "examples": []
+        },
+        "val": {
+          "count": 0,
+          "examples": []
+        },
+        "test": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "cross_split_resolved_path_overlap": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    },
+    "prottrans_embeddings": {
+      "configured": false,
+      "root": null
+    },
+    "contact_graphs": {
+      "configured": true,
+      "root": "/media/990Pro/ProtBind/PPC/features/esm2_mlc_chain_cache_20260711/by_chain",
+      "resolved_unique_paths": {
+        "train": 4868,
+        "val": 1075,
+        "test": 724
+      },
+      "resolved_symlink_references": 20240,
+      "missing": {
+        "train": {
+          "count": 0,
+          "examples": []
+        },
+        "val": {
+          "count": 0,
+          "examples": []
+        },
+        "test": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "cross_split_resolved_path_overlap": {
+        "train-val": {
+          "count": 0,
+          "examples": []
+        },
+        "train-test": {
+          "count": 0,
+          "examples": []
+        },
+        "val-test": {
+          "count": 0,
+          "examples": []
+        }
+      }
+    },
+    "aux_contact_graphs": {
+      "configured": false,
+      "root": null
+    }
+  },
+  "training_protocol": {
+    "test_split_loaded": false,
+    "selection_metric": "chain_ap_macro",
+    "strict_eval_gradient_isolation": true,
+    "evaluate_function": {
+      "start_line": 826,
+      "end_line": 908,
+      "calls_model_eval": true,
+      "uses_torch_no_grad": true,
+      "contains_backward_call": false,
+      "contains_optimizer_or_scaler_step": false,
+      "checks_logits_requires_grad": true,
+      "checks_parameter_versions": true
+    }
+  },
+  "si30_evidence": {
+    "definition": "DeepTMInter SequenceIdentity.py: BLOSUM62 globalds, gap_open=-10, gap_extend=-0.5, matches/full_gapped_alignment_length",
+    "candidate_generator": {
+      "hits": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260711/mmseqs_candidates_minid15_e100.tsv",
+      "role": "candidate recall only; not an exhaustive dynamic-programming all-pairs enumeration",
+      "command": "mmseqs easy-search unique_sequences.fasta unique_sequences.fasta mmseqs_candidates_minid15_e100.tsv mmseqs_tmp --min-seq-id 0.15 -c 0.0 --cov-mode 0 --seq-id-mode 0 -s 8.5 -e 100 --max-seqs 10000 --threads 110 --format-output query,target,pident,alnlen,qcov,tcov,evalue,bits"
+    },
+    "n_unique_sequences": 6667,
+    "counts_by_split": {
+      "train": 4868,
+      "val": 1075,
+      "test": 724
+    },
+    "n_cross_split_candidate_pairs": 252542,
+    "threshold": 0.3,
+    "n_si30_violations": 0,
+    "max_cross_split_global_identity": 0.2826855123674912,
+    "by_split_pair": {
+      "train-test": {
+        "n_candidates": 76305,
+        "max_global_identity": 0.2826855123674912
+      },
+      "val-test": {
+        "n_candidates": 28665,
+        "max_global_identity": 0.28175895765472314
+      },
+      "train-val": {
+        "n_candidates": 147572,
+        "max_global_identity": 0.2802547770700637
+      }
+    },
+    "candidate_recall_limitation": "Zero violations proves zero only among MMseqs2-recalled candidates; it is a high-sensitivity audit, not a mathematical exhaustive-all-pairs proof.",
+    "outputs": {
+      "all_candidates": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260711/cross_split_candidates_global_aligned.tsv",
+      "violations": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260711/cross_split_si30_violations.tsv"
+    }
+  },
+  "failures": []
+}

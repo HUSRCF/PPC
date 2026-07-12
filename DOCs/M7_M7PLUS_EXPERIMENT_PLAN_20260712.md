@@ -50,6 +50,22 @@ two-member logit blend and threshold on validation, and evaluate test once. Repo
 three seed-specific M6 results as mean +/- standard deviation. Also form one seed-averaged
 M6 by averaging family logits before validation-only blend/threshold selection.
 
+The seed-specific runs and dependency-locked exports completed successfully. The
+historical M6 protocol gives the following test mean +/- sample SD over seeds 42/43/44:
+
+| Metric | Mean | SD |
+|---|---:|---:|
+| Frozen-threshold F1 | 0.668064 | 0.003192 |
+| Frozen-threshold MCC | 0.546171 | 0.002318 |
+| Pooled AP | 0.739351 | 0.003141 |
+| AUROC | 0.867349 | 0.001058 |
+| Chain-macro AP | 0.698436 | 0.001677 |
+| Raw effect-site-ratio MAE | 0.102598 | 0.012451 |
+
+F1/MCC and ranking metrics are reasonably stable, while raw score calibration is more
+seed-sensitive. The seed-averaged-logit M6 remains a separate pending aggregate; the
+table above is the mean of three independently validation-selected M6 models.
+
 ## M7 Single-Model Screen
 
 | ID | Change | Question | Priority | Slurm job |
@@ -72,6 +88,22 @@ Promotion gate: advance a candidate only if validation chain-macro AP improves b
 least 0.005 over M7a and pooled AP does not decline by more than 0.002. Confirm the top
 two candidates with seeds 43 and 44. Choose M7 by seed-mean validation chain-macro AP,
 not by the best seed.
+
+### Screening Result
+
+All four seed-42 jobs completed without OOM, runtime exceptions, or non-finite skips.
+
+| ID | Best epoch | Validation macro AP | Delta vs M7a | Validation pooled AP | Decision |
+|---|---:|---:|---:|---:|---|
+| M7a | 11 | 0.723554 | +0.000000 | 0.750322 | Control |
+| M7b | 13 | 0.724197 | +0.000643 | 0.748572 | Reject |
+| M7c | 20 | 0.739431 | +0.015877 | 0.753759 | Advance |
+| M7d | 6 | 0.725383 | +0.001829 | 0.753857 | Reject |
+
+Only M7c clears both gates. M7b shows that chain-balanced loss alone is insufficient;
+the useful signal comes from the added gated local-context blocks. M7e is not triggered
+because its prerequisite M7b gain was not met. Confirmation therefore compares M7c
+against the M7a protocol control at seeds 43 and 44, without evaluating test.
 
 ## M7+ Ensemble
 

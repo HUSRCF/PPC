@@ -52,18 +52,21 @@ M6 by averaging family logits before validation-only blend/threshold selection.
 
 ## M7 Single-Model Screen
 
-| ID | Change | Question | Priority |
-|---|---|---|---|
-| M7a | M2 clean; macro-AP checkpoint selection | Protocol control | Must run |
-| M7b | M7a + per-chain mean weighted CE | Does chain-balanced training improve unseen-chain ranking? | Must run |
-| M7c | M7b + two gated depthwise TCN blocks | Does cheap local sequence context improve motifs? | Must run |
-| M7d | M5 gated ESM2/ESM-C fusion + per-chain mean CE | Does dual-representation fusion survive a fair loss/selection protocol? | Must run |
-| M7e | M7b with one sparse graph-transformer layer replacing the simple contact block | Does richer nonlocal message passing help? | Conditional |
+| ID | Change | Question | Priority | Slurm job |
+|---|---|---|---|---:|
+| M7a | M2 clean; macro-AP checkpoint selection | Protocol control | Must run | 9968013 |
+| M7b | M7a + per-chain mean weighted CE | Does chain-balanced training improve unseen-chain ranking? | Must run | 9968015 |
+| M7c | M7b + two gated depthwise TCN blocks | Does cheap local sequence context improve motifs? | Must run | 9968055 |
+| M7d | M5 gated ESM2/ESM-C fusion + per-chain mean CE | Does dual-representation fusion survive a fair loss/selection protocol? | Must run | 9968056 |
+| M7e | M7b with one sparse graph-transformer layer replacing the simple contact block | Does richer nonlocal message passing help? | Conditional | not submitted |
 
 All primary variants use seed 42 for screening, 30 epochs, the optimized loader profile,
 chain-macro-AP checkpoint selection, secondary F1/AP checkpoints, and no per-epoch test.
 M7e is launched only if M7b improves validation chain-macro AP by at least 0.005 without
 a material pooled-AP regression.
+
+The primary jobs were submitted on 2026-07-12 with a six-hour Slurm time limit. This
+changes only the scheduler reservation and leaves every training parameter unchanged.
 
 Promotion gate: advance a candidate only if validation chain-macro AP improves by at
 least 0.005 over M7a and pooled AP does not decline by more than 0.002. Confirm the top

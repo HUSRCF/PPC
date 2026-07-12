@@ -63,8 +63,25 @@ historical M6 protocol gives the following test mean +/- sample SD over seeds 42
 | Raw effect-site-ratio MAE | 0.102598 | 0.012451 |
 
 F1/MCC and ranking metrics are reasonably stable, while raw score calibration is more
-seed-sensitive. The seed-averaged-logit M6 remains a separate pending aggregate; the
-table above is the mean of three independently validation-selected M6 models.
+seed-sensitive. The table above is the mean of three independently validation-selected
+M6 models.
+
+The deployable seed-averaged M6 was then formed by averaging seeds 42/43/44 in logit
+space within each M0/M2 family before validation-only family blending and threshold
+selection. Validation selected `0.40 * M0 + 0.60 * M2` and threshold `0.60`.
+
+| Seed-averaged M6 test metric | Value |
+|---|---:|
+| Frozen-threshold F1 | 0.6738 |
+| Frozen-threshold MCC | 0.5577 |
+| Pooled AP | 0.7494 |
+| AUROC | 0.8737 |
+| Chain-macro AP | 0.7076 |
+| Raw / thresholded ratio MAE | 0.1002 / 0.0771 |
+
+This aggregate is better than the mean seed-specific M6 on F1, MCC, pooled AP, AUROC,
+and chain-macro AP. All averaging inputs were exactly aligned by chain, residue, and
+label before logits were combined; blend and threshold selection remained validation-only.
 
 ## M7 Single-Model Screen
 

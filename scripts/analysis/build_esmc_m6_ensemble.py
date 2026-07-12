@@ -140,6 +140,9 @@ def chain_metrics(labels: np.ndarray, scores: np.ndarray, lengths: list[int], th
     top_precision: dict[int, list[float]] = {20: [], 10: [], 5: []}
     top_hits: dict[int, int] = {20: 0, 10: 0, 5: 0}
     top_totals: dict[int, int] = {20: 0, 10: 0, 5: 0}
+    average_precisions: list[float] = []
+    all_negative = 0
+    all_positive = 0
     raw_ratio_errors: list[float] = []
     thresholded_ratio_errors: list[float] = []
     offset = 0
@@ -147,6 +150,14 @@ def chain_metrics(labels: np.ndarray, scores: np.ndarray, lengths: list[int], th
         chain_labels = labels[offset : offset + length]
         chain_scores = scores[offset : offset + length]
         offset += length
+        positives = int(chain_labels.sum())
+        if positives == 0:
+            average_precisions.append(0.0)
+            all_negative += 1
+        else:
+            average_precisions.append(float(average_precision_score(chain_labels, chain_scores)))
+        if positives == length:
+            all_positive += 1
         true_ratio = float(chain_labels.mean())
         raw_ratio_errors.append(abs(float(chain_scores.mean()) - true_ratio))
         thresholded_ratio_errors.append(abs(float(np.mean(chain_scores >= threshold)) - true_ratio))
@@ -158,6 +169,10 @@ def chain_metrics(labels: np.ndarray, scores: np.ndarray, lengths: list[int], th
             top_hits[denominator] += hits
             top_totals[denominator] += k
     result: dict[str, float | int] = {
+        "chain_ap_macro": float(np.mean(average_precisions)),
+        "chain_ap_n_chains": len(average_precisions),
+        "chain_ap_all_negative": all_negative,
+        "chain_ap_all_positive": all_positive,
         "chain_effect_site_ratio_mae_raw": float(np.mean(raw_ratio_errors)),
         "chain_effect_site_ratio_mae_thresholded": float(np.mean(thresholded_ratio_errors)),
     }
@@ -274,6 +289,7 @@ def main() -> int:
 - Validation-selected threshold: `{threshold:.2f}`
 - Test F1/MCC at frozen threshold: `{selected_test['f1']:.4f}` / `{selected_test['mcc']:.4f}`
 - Test AUPRC/AP/AUROC: `{test['auprc']:.4f}` / `{test['average_precision']:.4f}` / `{test['auroc']:.4f}`
+- Test chain-macro AP: `{test['chain_ap_macro']:.4f}`
 - Test F1/MCC at 0.5: `{test['threshold_0_5']['f1']:.4f}` / `{test['threshold_0_5']['mcc']:.4f}`
 - Test F1/MCC at 0.6: `{test['threshold_0_6']['f1']:.4f}` / `{test['threshold_0_6']['mcc']:.4f}`
 - Test oracle best F1@threshold / best MCC@threshold (diagnostic only): `{test['test_oracle_diagnostics']['best_F1']:.4f}@{test['test_oracle_diagnostics']['best_F1_threshold']:.4f}` / `{test['test_oracle_diagnostics']['best_MCC']:.4f}@{test['test_oracle_diagnostics']['best_MCC_threshold']:.3f}`

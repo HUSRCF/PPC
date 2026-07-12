@@ -105,6 +105,13 @@ the useful signal comes from the added gated local-context blocks. M7e is not tr
 because its prerequisite M7b gain was not met. Confirmation therefore compares M7c
 against the M7a protocol control at seeds 43 and 44, without evaluating test.
 
+| Confirmation | Seed | Slurm job | Test during training |
+|---|---:|---:|---|
+| M7a control | 43 | 9969262 | hidden |
+| M7a control | 44 | 9969266 | hidden |
+| M7c candidate | 43 | 9969267 | hidden |
+| M7c candidate | 44 | 9969268 | hidden |
+
 ## M7+ Ensemble
 
 M7+ is deliberately restricted to two simple candidates:

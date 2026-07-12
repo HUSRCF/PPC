@@ -51,7 +51,12 @@ The existing high-sensitivity DeepTMInter-style audit reports:
 - maximum cross-split global identity `0.2826855`;
 - SI >= `0.30` violations: `0`.
 
-A fresh 110-thread rerun was launched in tmux session `ppc_si30_audit_0712`. It regenerates and hash-checks the sequence universe, then recomputes both the high-sensitivity and exhaustive-profile candidate alignments from scratch. It intentionally reuses the SHA-recorded MMseqs candidate files; therefore the remaining limitation is candidate recall rather than alignment reproducibility. This is not a mathematical all-pairs dynamic-programming proof.
+A fresh 110-thread rerun completed in tmux session `ppc_si30_audit_0712`. It regenerated and hash-checked the sequence universe, then recomputed both alignment routes from scratch:
+
+- high-sensitivity route: `252,542` cross-split candidates, `0` violations, maximum SI `0.2826855`;
+- exhaustive-profile route: `55,419` cross-split candidates, `0` violations, maximum SI `0.2826855`.
+
+The rerun intentionally reused the SHA-recorded MMseqs candidate files; therefore the remaining limitation is candidate recall rather than alignment reproducibility. This is not a mathematical all-pairs dynamic-programming proof.
 
 ## Validation Overfitting Control
 
@@ -68,3 +73,4 @@ Repeated model selection on validation is not train/test leakage, but it can ove
 - Human-readable audit: `benchmark/audits/esm_site_data_isolation_20260712/README.md`
 - Reusable audit script: `scripts/analysis/audit_esm_site_data_isolation.py`
 - Training runtime checks: `scripts/training/train_esm_site.py`
+- Fresh SI rerun: `features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260712_rerun/`

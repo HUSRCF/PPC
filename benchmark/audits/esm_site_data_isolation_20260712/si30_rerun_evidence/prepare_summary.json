@@ -1,0 +1,14 @@
+{
+  "manifest": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/pypropel_chain_filtered_no_len_limit/nonredundant_exact_seq/nr_chain_manifest.csv",
+  "dataset": "/media/990Pro/ProtBind/PPC/data/qc/tmk_no_len_limit/dataset.csv",
+  "fasta": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260712_rerun/unique_sequences.fasta",
+  "sequence_split_map": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260712_rerun/sequence_split_map.tsv",
+  "n_unique_sequences": 6667,
+  "counts_by_split": {
+    "train": 4868,
+    "val": 1075,
+    "test": 724
+  },
+  "all_sequence_sha1_verified": true,
+  "cross_split_exact_duplicates": 0
+}

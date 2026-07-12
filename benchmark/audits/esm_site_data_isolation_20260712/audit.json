@@ -388,7 +388,7 @@
     "candidate_generator": {
       "hits": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260711/mmseqs_candidates_minid15_e100.tsv",
       "role": "candidate recall only; not an exhaustive dynamic-programming all-pairs enumeration",
-      "command": "mmseqs easy-search unique_sequences.fasta unique_sequences.fasta mmseqs_candidates_minid15_e100.tsv mmseqs_tmp --min-seq-id 0.15 -c 0.0 --cov-mode 0 --seq-id-mode 0 -s 8.5 -e 100 --max-seqs 10000 --threads 110 --format-output query,target,pident,alnlen,qcov,tcov,evalue,bits"
+      "command": "reused SHA-recorded 20260711 high-sensitivity MMseqs candidate set; DeepTMInter global alignments recomputed from scratch"
     },
     "n_unique_sequences": 6667,
     "counts_by_split": {
@@ -416,8 +416,8 @@
     },
     "candidate_recall_limitation": "Zero violations proves zero only among MMseqs2-recalled candidates; it is a high-sensitivity audit, not a mathematical exhaustive-all-pairs proof.",
     "outputs": {
-      "all_candidates": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260711/cross_split_candidates_global_aligned.tsv",
-      "violations": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260711/cross_split_si30_violations.tsv"
+      "all_candidates": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260712_rerun/cross_split_candidates_global_aligned.tsv",
+      "violations": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260712_rerun/cross_split_si30_violations.tsv"
     }
   },
   "failures": []

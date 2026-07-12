@@ -1,0 +1,37 @@
+{
+  "definition": "DeepTMInter SequenceIdentity.py: BLOSUM62 globalds, gap_open=-10, gap_extend=-0.5, matches/full_gapped_alignment_length",
+  "candidate_generator": {
+    "hits": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260711/exhaustive/mmseqs_candidates_exhaustive_minid15_e100.tsv",
+    "role": "candidate recall only; not an exhaustive dynamic-programming all-pairs enumeration",
+    "command": "reused SHA-recorded 20260711 exhaustive-profile MMseqs candidate set; DeepTMInter global alignments recomputed from scratch"
+  },
+  "n_unique_sequences": 6667,
+  "counts_by_split": {
+    "train": 4868,
+    "val": 1075,
+    "test": 724
+  },
+  "n_cross_split_candidate_pairs": 55419,
+  "threshold": 0.3,
+  "n_si30_violations": 0,
+  "max_cross_split_global_identity": 0.2826855123674912,
+  "by_split_pair": {
+    "train-test": {
+      "n_candidates": 12324,
+      "max_global_identity": 0.2826855123674912
+    },
+    "val-test": {
+      "n_candidates": 5140,
+      "max_global_identity": 0.28175895765472314
+    },
+    "train-val": {
+      "n_candidates": 37955,
+      "max_global_identity": 0.2692307692307692
+    }
+  },
+  "candidate_recall_limitation": "Zero violations proves zero only among MMseqs2-recalled candidates; it is a high-sensitivity audit, not a mathematical exhaustive-all-pairs proof.",
+  "outputs": {
+    "all_candidates": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260712_rerun/exhaustive/cross_split_candidates_global_aligned.tsv",
+    "violations": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260712_rerun/exhaustive/cross_split_si30_violations.tsv"
+  }
+}

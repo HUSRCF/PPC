@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import inspect
 import tempfile
 from pathlib import Path
 
@@ -11,6 +12,23 @@ import torch
 
 from ppcbind.data import ESMProteinSiteDataset
 from ppcbind.models import ESMSiteClassifier
+
+
+def _assert_repo_model_import() -> None:
+    relative_model = Path("src/ppcbind/models/esm_site.py")
+    expected = next(
+        (
+            (parent / relative_model).resolve()
+            for parent in Path(__file__).resolve().parents
+            if (parent / relative_model).is_file()
+        ),
+        None,
+    )
+    if expected is None:
+        raise AssertionError(f"cannot locate repository model {relative_model}")
+    actual = Path(inspect.getfile(ESMSiteClassifier)).resolve()
+    if actual != expected:
+        raise AssertionError(f"ESMSiteClassifier imported from {actual}, expected {expected}")
 
 
 def _write_manifest(path: Path) -> None:
@@ -99,7 +117,6 @@ def _test_dual_fusion_backward(base: dict, mode: str) -> ESMSiteClassifier:
         "use_prottrans_embeddings": True,
         "d_prottrans": 9,
         "prottrans_fusion_mode": mode,
-        "prottrans_gate_bias": 0.0,
         "prottrans_interaction_rank": 4,
         "dropout": 0.0,
     }
@@ -118,6 +135,26 @@ def _test_dual_fusion_backward(base: dict, mode: str) -> ESMSiteClassifier:
     if esm.grad is None or secondary.grad is None:
         raise AssertionError(f"{mode} did not backpropagate into both embedding streams")
     return model
+
+
+def _assert_strict_round_trip(
+    model: ESMSiteClassifier,
+    *,
+    required_prefixes: tuple[str, ...],
+    forbidden_prefixes: tuple[str, ...],
+) -> None:
+    state = model.state_dict()
+    keys = tuple(state)
+    for prefix in required_prefixes:
+        if not any(key.startswith(prefix) for key in keys):
+            raise AssertionError(f"missing expected state_dict prefix {prefix!r}")
+    for prefix in forbidden_prefixes:
+        if any(key.startswith(prefix) for key in keys):
+            raise AssertionError(f"unexpected state_dict prefix {prefix!r}")
+    clone = ESMSiteClassifier(model.config)
+    incompatible = clone.load_state_dict(state, strict=True)
+    if incompatible.missing_keys or incompatible.unexpected_keys:
+        raise AssertionError(f"strict state_dict round trip failed: {incompatible}")
 
 
 def _test_models() -> None:
@@ -146,20 +183,50 @@ def _test_models() -> None:
     )
     if model.esm_proj[0].out_features != 4 or model.prottrans_proj[0].out_features != 4:
         raise AssertionError("projected_concat did not split d_model evenly")
+    legacy = _test_dual_fusion_backward(base, "gated_residual")
+    legacy_bias = legacy.prottrans_gate[1].bias
+    if not torch.equal(legacy_bias, torch.full_like(legacy_bias, -2.0)):
+        raise AssertionError("legacy gated_residual default gate bias changed")
+    _assert_strict_round_trip(
+        legacy,
+        required_prefixes=("prottrans_gate.",),
+        forbidden_prefixes=("prottrans_fusion_norm.", "prottrans_interaction."),
+    )
     convex = _test_dual_fusion_backward(base, "convex_gate")
     gate_linear = convex.prottrans_gate[1]
     if torch.count_nonzero(gate_linear.weight).item() != 0:
         raise AssertionError("convex_gate must initialize as an exact equal-weight mixture")
+    if torch.count_nonzero(gate_linear.bias).item() != 0:
+        raise AssertionError("convex_gate default bias must initialize to zero")
+    gate_input_dim = gate_linear.in_features
+    gate = convex.prottrans_gate(torch.randn(2, 7, gate_input_dim))
+    if not torch.equal(gate, torch.full_like(gate, 0.5)):
+        raise AssertionError("convex_gate default must produce an exact 0.5 mixture")
     if convex.prottrans_fusion_norm is None:
         raise AssertionError("convex_gate is missing post-fusion normalization")
+    _assert_strict_round_trip(
+        convex,
+        required_prefixes=("prottrans_gate.", "prottrans_fusion_norm."),
+        forbidden_prefixes=("prottrans_interaction.",),
+    )
     bilinear = _test_dual_fusion_backward(base, "symmetric_bilinear")
     if bilinear.prottrans_interaction is None or bilinear.prottrans_fusion_norm is None:
         raise AssertionError("symmetric_bilinear modules were not constructed")
     if bilinear.prottrans_interaction_scale is None:
         raise AssertionError("symmetric_bilinear interaction scale was not constructed")
+    _assert_strict_round_trip(
+        bilinear,
+        required_prefixes=(
+            "prottrans_fusion_norm.",
+            "prottrans_interaction.",
+            "prottrans_interaction_scale",
+        ),
+        forbidden_prefixes=("prottrans_gate.",),
+    )
 
 
 def main() -> int:
+    _assert_repo_model_import()
     with tempfile.TemporaryDirectory(prefix="ppc_esmc_smoke_") as tmp:
         _test_loader(Path(tmp))
     _test_models()

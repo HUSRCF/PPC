@@ -34,6 +34,7 @@ class ESMSiteConfig:
     prottrans_fusion_mode: str = "gated_residual"
     prottrans_gate_input_mode: str = "full"
     prottrans_gate_bias: float = -2.0
+    prottrans_convex_gate_bias: float = 0.0
     prottrans_residual_alpha_init: float = 1.0
     prottrans_residual_alpha_trainable: bool = False
     prottrans_interaction_rank: int = 64
@@ -846,7 +847,10 @@ class ESMSiteClassifier(nn.Module):
             if isinstance(gate_linear, nn.Linear):
                 if c.prottrans_fusion_mode == "convex_gate":
                     nn.init.zeros_(gate_linear.weight)
-                nn.init.constant_(gate_linear.bias, float(c.prottrans_gate_bias))
+                    gate_bias = c.prottrans_convex_gate_bias
+                else:
+                    gate_bias = c.prottrans_gate_bias
+                nn.init.constant_(gate_linear.bias, float(gate_bias))
         self.prottrans_fusion_norm = (
             nn.LayerNorm(c.d_model)
             if self.prottrans_proj is not None

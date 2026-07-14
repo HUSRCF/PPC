@@ -78,7 +78,9 @@ Smoke validation:
   original positions 27--1,025, while QC declares positions 1--26 as SIGNAL.
   HPC2 Slurm RF job `9979797` completed in 3 s. Strict reverse mapping expands
   the sequence to six chains / 6,150 residues and zero-fills exactly 26 unique
-  residues / 156 chain-expanded residues.
+  residues / 156 chain-expanded residues. The independent validator passed on
+  a frozen one-sequence source bundle; output SHA-256 is
+  `a97ea7347aa6f0fda6009a90d70566f178d1c5259feebaea1d46f40434b28eb6`.
 
 The 14-chain smoke AUPRC/AUROC were 0.1059/0.5561. These longest-first chains
 are a nonrepresentative engineering smoke subset, so these metrics are excluded

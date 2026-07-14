@@ -39,6 +39,10 @@ class ESMSiteConfig:
     prottrans_residual_alpha_trainable: bool = False
     prottrans_interaction_rank: int = 64
     prottrans_interaction_scale_init: float = 0.1
+    prottrans_layer_count: int = 1
+    prottrans_residual_dim: int = 64
+    prottrans_residual_hidden: int = 64
+    prottrans_residual_dropout: float = 0.0
     use_position_features: bool = True
     use_global_context: bool = True
     use_contact_graph: bool = False
@@ -118,6 +122,29 @@ class ESMScalarMix(nn.Module):
         y = x.view(*x.shape[:-1], self.n_layers, layer_dim)
         weights = torch.softmax(self.logits.float(), dim=0).to(dtype=x.dtype)
         return _sanitize(self.scale.to(dtype=x.dtype) * (y * weights.view(*((1,) * (y.ndim - 2)), self.n_layers, 1)).sum(dim=-2))
+
+
+class LayerwiseResidualProjector(nn.Module):
+    """Normalize each frozen-encoder layer before a narrow residual projection."""
+
+    def __init__(self, d_input: int, n_layers: int, d_output: int, dropout: float) -> None:
+        super().__init__()
+        self.n_layers = max(1, int(n_layers))
+        if d_input % self.n_layers != 0:
+            raise ValueError(f"d_input={d_input} must be divisible by n_layers={self.n_layers}")
+        self.layer_dim = d_input // self.n_layers
+        self.layer_norms = nn.ModuleList(nn.LayerNorm(self.layer_dim) for _ in range(self.n_layers))
+        self.proj = nn.Sequential(
+            nn.Linear(d_input, d_output),
+            nn.LayerNorm(d_output),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        layers = x.split(self.layer_dim, dim=-1)
+        normalized = torch.cat([norm(layer) for norm, layer in zip(self.layer_norms, layers)], dim=-1)
+        return _sanitize(self.proj(normalized))
 
 
 class TCNContextBlock(nn.Module):
@@ -764,6 +791,10 @@ class ESMSiteClassifier(nn.Module):
             raise ValueError(f"Unsupported esm_layer_fusion={c.esm_layer_fusion!r}; use concat, scalar_mix, or last")
         c.esm_layer_count = max(1, int(c.esm_layer_count))
         c.prottrans_fusion_mode = str(c.prottrans_fusion_mode or "gated_residual").lower()
+        conditional_residual_modes = {
+            "zero_init_logit_residual",
+            "zero_init_pre_contact_residual",
+        }
         if c.prottrans_fusion_mode not in {
             "gated_residual",
             "add",
@@ -771,11 +802,15 @@ class ESMSiteClassifier(nn.Module):
             "projected_concat",
             "convex_gate",
             "symmetric_bilinear",
+            *conditional_residual_modes,
         }:
             raise ValueError(
                 f"Unsupported prottrans_fusion_mode={c.prottrans_fusion_mode!r}; "
-                "use gated_residual, add, input_branch, projected_concat, convex_gate, or symmetric_bilinear"
+                "use gated_residual, add, input_branch, projected_concat, convex_gate, symmetric_bilinear, "
+                "zero_init_logit_residual, or zero_init_pre_contact_residual"
             )
+        if c.prottrans_fusion_mode in conditional_residual_modes and not c.use_prottrans_embeddings:
+            raise ValueError(f"{c.prottrans_fusion_mode} requires use_prottrans_embeddings=true")
         if c.prottrans_fusion_mode == "projected_concat":
             if not c.use_prottrans_embeddings:
                 raise ValueError("projected_concat requires use_prottrans_embeddings=true")
@@ -805,6 +840,7 @@ class ESMSiteClassifier(nn.Module):
             esm_input_dim = c.d_esm // c.esm_layer_count
             self.esm_last_dim = esm_input_dim
 
+        conditional_residual = c.prottrans_fusion_mode in conditional_residual_modes
         projected_concat = c.prottrans_fusion_mode == "projected_concat"
         esm_projected_dim = c.d_model // 2 if projected_concat else c.d_model
         prottrans_projected_dim = c.d_model // 2 if projected_concat else c.d_model
@@ -825,16 +861,22 @@ class ESMSiteClassifier(nn.Module):
             if c.use_seq_features
             else None
         )
-        self.prottrans_proj = (
-            nn.Sequential(
+        if c.use_prottrans_embeddings and conditional_residual:
+            self.prottrans_proj = LayerwiseResidualProjector(
+                c.d_prottrans,
+                c.prottrans_layer_count,
+                max(1, int(c.prottrans_residual_dim)),
+                max(0.0, float(c.prottrans_residual_dropout)),
+            )
+        elif c.use_prottrans_embeddings:
+            self.prottrans_proj = nn.Sequential(
                 nn.Linear(c.d_prottrans, prottrans_projected_dim),
                 nn.LayerNorm(prottrans_projected_dim),
                 nn.GELU(),
                 nn.Dropout(c.dropout),
             )
-            if c.use_prottrans_embeddings
-            else None
-        )
+        else:
+            self.prottrans_proj = None
         self.prottrans_gate = None
         gate_input_mult = 4 if c.prottrans_gate_input_mode == "full" else 2
         if self.prottrans_proj is not None and c.prottrans_fusion_mode in {"gated_residual", "convex_gate"}:
@@ -878,6 +920,25 @@ class ESMSiteClassifier(nn.Module):
                 self.register_buffer("prottrans_residual_alpha", alpha)
         else:
             self.prottrans_residual_alpha = None
+        self.prottrans_residual_main_norm = None
+        self.prottrans_residual_feature_norm = None
+        self.prottrans_residual_adapter = None
+        if conditional_residual:
+            residual_dim = max(1, int(c.prottrans_residual_dim))
+            residual_hidden = max(1, int(c.prottrans_residual_hidden))
+            residual_output = c.n_classes if c.prottrans_fusion_mode == "zero_init_logit_residual" else c.d_model
+            self.prottrans_residual_main_norm = nn.LayerNorm(c.d_model)
+            self.prottrans_residual_feature_norm = nn.LayerNorm(residual_dim)
+            self.prottrans_residual_adapter = nn.Sequential(
+                nn.Linear(c.d_model + residual_dim, residual_hidden),
+                nn.SiLU(),
+                nn.Dropout(max(0.0, float(c.prottrans_residual_dropout))),
+                nn.Linear(residual_hidden, residual_output),
+            )
+            output_layer = self.prottrans_residual_adapter[-1]
+            assert isinstance(output_layer, nn.Linear)
+            nn.init.zeros_(output_layer.weight)
+            nn.init.zeros_(output_layer.bias)
         self.chain_embedding = nn.Embedding(c.max_chains, c.d_model) if c.use_chain_embedding else None
         self.position_proj = (
             nn.Sequential(
@@ -1093,12 +1154,22 @@ class ESMSiteClassifier(nn.Module):
         elif self.esm_last_dim is not None:
             esm_input = esm_input[..., -self.esm_last_dim :]
         esm_branch = self.esm_proj(esm_input)
+        prottrans_branch = None
         if self.prottrans_proj is not None:
             if prottrans_embeddings is not None:
                 prottrans_branch = self.prottrans_proj(_sanitize(prottrans_embeddings, clip=10.0))
-            else:
+            elif c.prottrans_fusion_mode not in {
+                "zero_init_logit_residual",
+                "zero_init_pre_contact_residual",
+            }:
                 prottrans_branch = torch.zeros_like(esm_branch)
-            if c.prottrans_fusion_mode in {"gated_residual", "convex_gate"}:
+            if c.prottrans_fusion_mode in {
+                "zero_init_logit_residual",
+                "zero_init_pre_contact_residual",
+            }:
+                pass
+            elif c.prottrans_fusion_mode in {"gated_residual", "convex_gate"}:
+                assert prottrans_branch is not None
                 if c.prottrans_gate_input_mode == "simple":
                     gate_input = torch.cat([esm_branch, prottrans_branch], dim=-1)
                 else:
@@ -1125,6 +1196,7 @@ class ESMSiteClassifier(nn.Module):
                         _sanitize(gate * esm_branch + (1.0 - gate) * prottrans_branch)
                     )
             elif c.prottrans_fusion_mode == "add":
+                assert prottrans_branch is not None
                 alpha = self.prottrans_residual_alpha.to(dtype=prottrans_branch.dtype, device=prottrans_branch.device)
                 esm_branch = _sanitize(esm_branch + alpha * prottrans_branch)
             elif c.prottrans_fusion_mode == "symmetric_bilinear":
@@ -1146,6 +1218,7 @@ class ESMSiteClassifier(nn.Module):
             elif c.prottrans_fusion_mode == "input_branch":
                 pass
             elif c.prottrans_fusion_mode == "projected_concat":
+                assert prottrans_branch is not None
                 esm_branch = _sanitize(torch.cat([esm_branch, prottrans_branch], dim=-1))
             else:
                 raise RuntimeError(f"unreachable prottrans_fusion_mode={c.prottrans_fusion_mode!r}")
@@ -1205,6 +1278,21 @@ class ESMSiteClassifier(nn.Module):
 
         for block in self.tcn_blocks:
             h = block(h, mask)
+
+        if c.prottrans_fusion_mode == "zero_init_pre_contact_residual" and prottrans_branch is not None:
+            assert self.prottrans_residual_main_norm is not None
+            assert self.prottrans_residual_feature_norm is not None
+            assert self.prottrans_residual_adapter is not None
+            main_context = h.detach()
+            residual_input = torch.cat(
+                [
+                    self.prottrans_residual_main_norm(main_context),
+                    self.prottrans_residual_feature_norm(prottrans_branch),
+                ],
+                dim=-1,
+            )
+            delta_h = self.prottrans_residual_adapter(residual_input).to(dtype=h.dtype)
+            h = _sanitize(h + delta_h).masked_fill(~mask.unsqueeze(-1), 0.0)
 
         for block in self.contact_blocks:
             h = block(h, mask, contact_edge_index, contact_edge_scores)
@@ -1273,5 +1361,19 @@ class ESMSiteClassifier(nn.Module):
 
         h = self.final_norm(_sanitize(h)).masked_fill(~mask.unsqueeze(-1), 0.0)
         logits = _sanitize(self.classifier(h))
+        if c.prottrans_fusion_mode == "zero_init_logit_residual" and prottrans_branch is not None:
+            assert self.prottrans_residual_main_norm is not None
+            assert self.prottrans_residual_feature_norm is not None
+            assert self.prottrans_residual_adapter is not None
+            main_context = h.detach()
+            residual_input = torch.cat(
+                [
+                    self.prottrans_residual_main_norm(main_context),
+                    self.prottrans_residual_feature_norm(prottrans_branch),
+                ],
+                dim=-1,
+            )
+            delta_logits = self.prottrans_residual_adapter(residual_input).to(dtype=logits.dtype)
+            logits = _sanitize(logits + delta_logits)
         logits = logits.masked_fill(~mask.unsqueeze(-1), 0.0)
         return {"logits": logits, "h_residue": h}

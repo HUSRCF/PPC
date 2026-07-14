@@ -138,6 +138,14 @@ def _apply_config(args: argparse.Namespace, config: dict[str, Any]) -> dict[str,
     return dict(_section(config, "model"))
 
 
+def _set_frozen_backbone_eval(model: nn.Module) -> None:
+    """Disable stochastic backbone layers while training prottrans residual modules."""
+
+    for name, module in model.named_children():
+        if not name.startswith("prottrans_"):
+            module.eval()
+
+
 def _limit_ids(ids: list[str], limit: int | None) -> list[str]:
     if limit is None or limit <= 0:
         return ids
@@ -955,6 +963,7 @@ def main() -> int:
     parser.add_argument("--eval-test-each-epoch", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--eval-only", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--freeze-non-prottrans", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--frozen-backbone-eval", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--lr", type=float, default=5e-5)
     parser.add_argument("--warmup-steps", type=int, default=0)
     parser.add_argument("--warmup-ratio", type=float, default=0.05)
@@ -1128,6 +1137,12 @@ def main() -> int:
     )
 
     model = ESMSiteClassifier(model_config).to(device)
+    conditional_residual_mode = str(model_config.get("prottrans_fusion_mode", "")).lower() in {
+        "zero_init_logit_residual",
+        "zero_init_pre_contact_residual",
+    }
+    if conditional_residual_mode and args.init_checkpoint is None:
+        raise ValueError("zero-init conditional residual modes require init_checkpoint")
     init_report: dict[str, Any] | None = None
     if args.init_checkpoint is not None:
         checkpoint = torch.load(args.init_checkpoint, map_location="cpu", weights_only=False)
@@ -1154,10 +1169,24 @@ def main() -> int:
             f"and {len(load_result.unexpected_keys)} unexpected keys",
             flush=True,
         )
+        if conditional_residual_mode:
+            invalid_missing = [key for key in init_report["missing_keys"] if not key.startswith("prottrans_")]
+            unexpected = list(init_report["unexpected_keys"])
+            if invalid_missing or unexpected:
+                raise RuntimeError(
+                    "Conditional residual warm-start is not backbone-compatible: "
+                    f"non-prottrans missing keys={invalid_missing}, unexpected keys={unexpected}"
+                )
     if args.freeze_non_prottrans:
+        if args.init_checkpoint is None:
+            raise ValueError("freeze_non_prottrans requires init_checkpoint; refusing to freeze a random backbone")
+        assert init_report is not None
         for name, param in model.named_parameters():
             if not name.startswith("prottrans_"):
                 param.requires_grad_(False)
+        trainable_names = [name for name, param in model.named_parameters() if param.requires_grad]
+        if not trainable_names or any(not name.startswith("prottrans_") for name in trainable_names):
+            raise RuntimeError(f"Invalid residual-only trainable parameter set: {trainable_names}")
         n_trainable = sum(param.numel() for param in model.parameters() if param.requires_grad)
         n_frozen = sum(param.numel() for param in model.parameters() if not param.requires_grad)
         print(
@@ -1182,7 +1211,7 @@ def main() -> int:
         device=device,
     )
     optimizer = torch.optim.AdamW(
-        model.parameters(),
+        [param for param in model.parameters() if param.requires_grad],
         lr=args.lr,
         weight_decay=args.weight_decay,
         eps=args.adam_eps,
@@ -1321,6 +1350,8 @@ def main() -> int:
 
     for epoch in range(1, args.epochs + 1):
         model.train()
+        if args.freeze_non_prottrans and args.frozen_backbone_eval:
+            _set_frozen_backbone_eval(model)
         losses: list[float] = []
         metrics: list[dict[str, int]] = []
         skipped_nonfinite = 0

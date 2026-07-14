@@ -76,14 +76,14 @@ build_one() {
         --aaindex "$AAINDEX" \
         --output "$OUTPUT_DIR/${run_id}A.features.tsv" \
         --qc-json "$QC_DIR/${run_id}A.features.qc.json" \
-        --require-full-residue-coverage \
         > "$LOG_DIR/${run_id}.feature.stdout.log" \
         2> "$LOG_DIR/${run_id}.feature.stderr.log"
 }
 export PY BUILDER AAINDEX FEATURE_DIR OUTPUT_DIR QC_DIR LOG_DIR
 export -f build_one
 
-record_status started "workers=$WORKERS poll_seconds=$POLL_SECONDS expected=$EXPECTED_UNIQUE"
+record_status started \
+    "workers=$WORKERS poll_seconds=$POLL_SECONDS expected=$EXPECTED_UNIQUE official_omissions=qc_zero_fill"
 failure_streak=0
 while true; do
     if [[ -e "$STOP_FILE" ]]; then

@@ -238,6 +238,7 @@ def parse_phobius(
 ) -> tuple[list[Segment], list[int | None], list[str | None], set[int]]:
     raw_segments: list[tuple[str, int, int]] = []
     signal_positions: set[int] = set()
+    signal_region_positions: set[int] = set()
 
     with path.open("r", encoding="ascii") as handle:
         for line_number, raw in enumerate(handle, 1):
@@ -264,12 +265,23 @@ def parse_phobius(
                     label = "O"
                 elif "CYTOPLASMIC" in annotation:
                     label = "I"
+                elif annotation in {"N-REGION.", "H-REGION.", "C-REGION."}:
+                    signal_region_positions.update(range(start, end + 1))
+                    continue
                 else:
                     raise FeatureBuildError(
                         f"{path}:{line_number}: unrecognized DOMAIN annotation "
                         f"{match.group('annotation')!r}"
                     )
             raw_segments.append((label, start, end))
+
+    signal_region_outside_signal = signal_region_positions - signal_positions
+    if signal_region_outside_signal:
+        preview = sorted(signal_region_outside_signal)[:10]
+        raise FeatureBuildError(
+            f"{path}: signal-region DOMAIN residues are outside SIGNAL; "
+            f"first={preview}"
+        )
 
     if not raw_segments:
         raise FeatureBuildError(f"{path}: no I/M/O Phobius segments")

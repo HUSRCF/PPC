@@ -36,7 +36,7 @@ OUTPUT_COLUMNS = ("seq_id", "position", "residue", "score", "method")
 RUN_ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*\Z")
 SEQUENCE_RE = re.compile(r"[A-Z]+\Z")
 SHA256_RE = re.compile(r"[0-9a-f]{64}\Z")
-SUMMARY_SCHEMA = "mbpred_adapted_residue_predictions/v1"
+SUMMARY_SCHEMA = "mbpred_adapted_residue_predictions/v2"
 SUMMARY_KEYS = {
     "schema",
     "method",
@@ -46,14 +46,22 @@ SUMMARY_KEYS = {
     "canonical_inputs",
     "score_dir",
     "score_pattern",
+    "feature_qc_dir",
+    "feature_qc_pattern",
     "n_manifest_unique",
     "n_available_score_files",
+    "n_available_feature_qc_files",
     "n_selected_unique",
     "n_output_chains",
     "n_output_residues",
+    "n_rf_scored_unique_residues",
+    "n_zero_filled_unique_residues",
+    "n_zero_filled_output_residues",
     "selected_run_ids",
     "score_file_sha256",
     "score_bundle_sha256",
+    "feature_qc_file_sha256",
+    "feature_qc_bundle_sha256",
     "output_tsv",
     "output_sha256",
     "publication_contract",
@@ -73,6 +81,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--reverse-map", type=Path, required=True)
     parser.add_argument("--score-dir", type=Path, required=True)
     parser.add_argument("--score-pattern", default="{run_id}.csv")
+    parser.add_argument("--feature-qc-dir", type=Path, required=True)
+    parser.add_argument(
+        "--feature-qc-pattern", default="{run_id}A.features.qc.json"
+    )
     parser.add_argument("--predictions-tsv", type=Path, required=True)
     parser.add_argument("--summary-json", type=Path, required=True)
     parser.add_argument("--expected-method", default="MBPred_adapted")
@@ -258,15 +270,15 @@ def validate_universe(
             raise ValueError(f"{seq_id}: label/reverse-map hash mismatch")
 
 
-def validate_pattern(pattern: str) -> None:
+def validate_pattern(pattern: str, option: str, root_option: str) -> None:
     if pattern.count("{run_id}") != 1:
-        raise ValueError("--score-pattern must contain {run_id} exactly once")
+        raise ValueError(f"{option} must contain {{run_id}} exactly once")
     remainder = pattern.replace("{run_id}", "")
     if "{" in remainder or "}" in remainder:
-        raise ValueError("--score-pattern contains an unsupported format field")
+        raise ValueError(f"{option} contains an unsupported format field")
     rendered = Path(pattern.format(run_id="dtm0001"))
     if rendered.is_absolute() or ".." in rendered.parts:
-        raise ValueError("--score-pattern must remain below --score-dir")
+        raise ValueError(f"{option} must remain below {root_option}")
 
 
 def select_run_ids(args: argparse.Namespace, manifest: dict[str, dict[str, str]]) -> list[str]:
@@ -306,9 +318,52 @@ def score_to_votes(score_text: str, context: str) -> int:
     return votes
 
 
-def read_score(path: Path, expected_sequence: str) -> tuple[list[int], str]:
-    votes: list[int] = []
-    residues: list[str] = []
+def read_feature_qc(
+    path: Path, run_id: str, manifest_row: dict[str, str]
+) -> tuple[set[int], str]:
+    raw = path.read_bytes()
+    try:
+        data = json.loads(raw)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"{path}: invalid feature-QC JSON") from exc
+    if not isinstance(data, dict) or data.get("schema_version") != 1:
+        raise ValueError(f"{path}: unsupported feature-QC schema")
+    if data.get("protein_id") != f"{run_id}A":
+        raise ValueError(f"{path}: protein_id mismatch")
+    sequence_length = len(manifest_row["sequence"])
+    if data.get("sequence_length") != sequence_length:
+        raise ValueError(f"{path}: sequence length mismatch")
+    if data.get("sequence_sha256") != manifest_row["seq_sha256"]:
+        raise ValueError(f"{path}: sequence SHA256 mismatch")
+
+    omitted_groups: list[set[int]] = []
+    for key in ("signal_omitted_positions", "singleton_segment_omitted_positions"):
+        positions = data.get(key)
+        if (
+            not isinstance(positions, list)
+            or any(not isinstance(position, int) for position in positions)
+            or positions != sorted(set(positions))
+            or any(not 1 <= position <= sequence_length for position in positions)
+        ):
+            raise ValueError(f"{path}: invalid {key}")
+        omitted_groups.append(set(positions))
+    if omitted_groups[0] & omitted_groups[1]:
+        raise ValueError(f"{path}: overlapping signal/singleton omitted positions")
+    omitted = omitted_groups[0] | omitted_groups[1]
+    if data.get("output_row_count") != sequence_length - len(omitted):
+        raise ValueError(f"{path}: output row count/omission mismatch")
+
+    output = data.get("output")
+    if not isinstance(output, dict) or set(output) != {"path", "sha256"}:
+        raise ValueError(f"{path}: invalid feature output provenance")
+    output_path = Path(output["path"])
+    if not output_path.is_file() or sha256_file(output_path) != output["sha256"]:
+        raise ValueError(f"{path}: feature output path/hash mismatch")
+    return omitted, hashlib.sha256(raw).hexdigest()
+
+
+def read_score(path: Path, expected_sequence: str) -> tuple[dict[int, int], str]:
+    votes_by_position: dict[int, int] = {}
     raw = path.read_bytes()
     try:
         text = raw.decode("utf-8")
@@ -322,25 +377,56 @@ def read_score(path: Path, expected_sequence: str) -> tuple[list[int], str]:
             raise ValueError(f"{path}: empty score file") from exc
         if tuple(header) != RF_SCORE_COLUMNS:
             raise ValueError(f"{path}: unexpected RF score columns {header}")
-        for expected_position, fields in enumerate(reader, start=1):
+        previous_position = 0
+        for expected_row_number, fields in enumerate(reader, start=1):
             if len(fields) != 4:
-                raise ValueError(f"{path}:{expected_position + 1}: expected four fields")
+                raise ValueError(f"{path}:{expected_row_number + 1}: expected four fields")
             # The first header is blank because R writes numeric row names into that column.
             row_name, residue, position_text, score_text = fields
             try:
                 row_number = int(row_name)
                 position = int(position_text)
             except ValueError as exc:
-                raise ValueError(f"{path}:{expected_position + 1}: invalid row/position") from exc
-            if row_number != expected_position or position != expected_position:
-                raise ValueError(f"{path}:{expected_position + 1}: non-contiguous coordinates")
-            if not re.fullmatch(r"[A-Z]", residue):
-                raise ValueError(f"{path}:{expected_position + 1}: invalid residue")
-            residues.append(residue)
-            votes.append(score_to_votes(score_text, f"{path}:{expected_position + 1}"))
-    if "".join(residues) != expected_sequence:
-        raise ValueError(f"{path}: exact score/manifest sequence mismatch")
-    return votes, hashlib.sha256(raw).hexdigest()
+                raise ValueError(
+                    f"{path}:{expected_row_number + 1}: invalid row/position"
+                ) from exc
+            if row_number != expected_row_number:
+                raise ValueError(f"{path}:{expected_row_number + 1}: non-contiguous R row name")
+            if not 1 <= position <= len(expected_sequence) or position <= previous_position:
+                raise ValueError(
+                    f"{path}:{expected_row_number + 1}: invalid/non-increasing sequence position"
+                )
+            if residue != expected_sequence[position - 1]:
+                raise ValueError(
+                    f"{path}:{expected_row_number + 1}: residue/manifest mismatch at {position}"
+                )
+            votes_by_position[position] = score_to_votes(
+                score_text, f"{path}:{expected_row_number + 1}"
+            )
+            previous_position = position
+    if not votes_by_position:
+        raise ValueError(f"{path}: no RF-scored residue rows")
+    return votes_by_position, hashlib.sha256(raw).hexdigest()
+
+
+def expand_score_votes(
+    run_id: str,
+    sequence_length: int,
+    omitted_positions: set[int],
+    votes_by_position: dict[int, int],
+) -> list[int]:
+    expected_scored_positions = set(range(1, sequence_length + 1)) - omitted_positions
+    if set(votes_by_position) != expected_scored_positions:
+        missing = sorted(expected_scored_positions - set(votes_by_position))[:20]
+        extra = sorted(set(votes_by_position) - expected_scored_positions)[:20]
+        raise ValueError(
+            f"{run_id}: RF positions do not match feature-QC omissions; "
+            f"missing={missing} extra={extra}"
+        )
+    full_votes = [0] * sequence_length
+    for position, vote_count in votes_by_position.items():
+        full_votes[position - 1] = vote_count
+    return full_votes
 
 
 def bundle_hash(score_hashes: dict[str, str]) -> str:
@@ -371,7 +457,12 @@ def validate_summary(
     selected_seq_ids: list[str],
     output_rows: int,
     available_score_files: int,
+    available_feature_qc_files: int,
     score_hashes: dict[str, str],
+    feature_qc_hashes: dict[str, str],
+    n_rf_scored_unique_residues: int,
+    n_zero_filled_unique_residues: int,
+    n_zero_filled_output_residues: int,
     output_sha256: str,
 ) -> dict[str, object]:
     summary = json.loads(summary_path.read_text())
@@ -388,12 +479,19 @@ def validate_summary(
         "scope": expected_scope,
         "score_dir": str(args.score_dir.resolve()),
         "score_pattern": args.score_pattern,
+        "feature_qc_dir": str(args.feature_qc_dir.resolve()),
+        "feature_qc_pattern": args.feature_qc_pattern,
         "n_manifest_unique": EXPECTED_UNIQUE,
         "n_available_score_files": available_score_files,
+        "n_available_feature_qc_files": available_feature_qc_files,
         "n_selected_unique": len(selected_run_ids),
         "n_output_chains": len(selected_seq_ids),
         "n_output_residues": output_rows,
+        "n_rf_scored_unique_residues": n_rf_scored_unique_residues,
+        "n_zero_filled_unique_residues": n_zero_filled_unique_residues,
+        "n_zero_filled_output_residues": n_zero_filled_output_residues,
         "score_bundle_sha256": bundle_hash(score_hashes),
+        "feature_qc_bundle_sha256": bundle_hash(feature_qc_hashes),
         "output_tsv": str(args.predictions_tsv.resolve()),
         "output_sha256": output_sha256,
     }
@@ -413,6 +511,10 @@ def validate_summary(
         "positive_score_grid": f"1/{RF_TREES}",
         "grid_absolute_tolerance": SCORE_GRID_ATOL,
         "input_columns": list(RF_SCORE_COLUMNS),
+        "source_position_semantics": "AA stores original one-based Res_num",
+        "omitted_residue_policy": (
+            "score=0 only where feature QC declares SIGNAL/singleton omission"
+        ),
     }
     if summary["rf_contract"] != expected_rf_contract:
         raise ValueError(f"{summary_path}: rf_contract mismatch")
@@ -433,18 +535,27 @@ def validate_summary(
         raise ValueError(f"{summary_path}: selected_run_ids mismatch")
     if summary["score_file_sha256"] != dict(sorted(score_hashes.items())):
         raise ValueError(f"{summary_path}: per-score SHA256 mapping mismatch")
+    if summary["feature_qc_file_sha256"] != dict(sorted(feature_qc_hashes.items())):
+        raise ValueError(f"{summary_path}: per-feature-QC SHA256 mapping mismatch")
     if not isinstance(summary["publication_contract"], str) or "output_sha256" not in summary[
         "publication_contract"
     ]:
         raise ValueError(f"{summary_path}: invalid publication contract")
-    if not isinstance(summary["qc"], str) or "1/500" not in summary["qc"]:
+    if (
+        not isinstance(summary["qc"], str)
+        or "1/500" not in summary["qc"]
+        or "zero fill" not in summary["qc"]
+    ):
         raise ValueError(f"{summary_path}: invalid QC declaration")
     return summary
 
 
 def main() -> None:
     args = parse_args()
-    validate_pattern(args.score_pattern)
+    validate_pattern(args.score_pattern, "--score-pattern", "--score-dir")
+    validate_pattern(
+        args.feature_qc_pattern, "--feature-qc-pattern", "--feature-qc-dir"
+    )
     if not args.expected_method or any(char in args.expected_method for char in "\t\r\n"):
         raise ValueError("--expected-method must be non-empty and contain no tab/newline")
     if not args.predictions_tsv.is_file() or not args.summary_json.is_file():
@@ -460,7 +571,12 @@ def main() -> None:
     paths = {
         run_id: args.score_dir / args.score_pattern.format(run_id=run_id) for run_id in manifest
     }
+    feature_qc_paths = {
+        run_id: args.feature_qc_dir / args.feature_qc_pattern.format(run_id=run_id)
+        for run_id in manifest
+    }
     available_score_files = sum(path.is_file() for path in paths.values())
+    available_feature_qc_files = sum(path.is_file() for path in feature_qc_paths.values())
     missing = [run_id for run_id in selected_run_ids if not paths[run_id].is_file()]
     if missing:
         raise FileNotFoundError(f"missing {len(missing)} selected RF score files; first={missing[:20]}")
@@ -468,13 +584,45 @@ def main() -> None:
         raise FileNotFoundError(
             f"full validation requires {EXPECTED_UNIQUE} RF score files, got {available_score_files}"
         )
+    missing_qc = [run_id for run_id in selected_run_ids if not feature_qc_paths[run_id].is_file()]
+    if missing_qc:
+        raise FileNotFoundError(
+            f"missing {len(missing_qc)} selected feature-QC files; first={missing_qc[:20]}"
+        )
+    if not args.allow_partial and available_feature_qc_files != EXPECTED_UNIQUE:
+        raise FileNotFoundError(
+            f"full validation requires {EXPECTED_UNIQUE} feature-QC files, "
+            f"got {available_feature_qc_files}"
+        )
 
     score_votes: dict[str, list[int]] = {}
     score_hashes: dict[str, str] = {}
+    feature_qc_hashes: dict[str, str] = {}
+    scored_residue_counts: dict[str, int] = {}
+    omitted_residue_counts: dict[str, int] = {}
     for run_id in selected_run_ids:
-        votes, digest = read_score(paths[run_id], manifest[run_id]["sequence"])
-        score_votes[run_id] = votes
+        manifest_row = manifest[run_id]
+        omitted_positions, feature_qc_digest = read_feature_qc(
+            feature_qc_paths[run_id], run_id, manifest_row
+        )
+        votes_by_position, digest = read_score(paths[run_id], manifest_row["sequence"])
+        score_votes[run_id] = expand_score_votes(
+            run_id,
+            len(manifest_row["sequence"]),
+            omitted_positions,
+            votes_by_position,
+        )
         score_hashes[run_id] = digest
+        feature_qc_hashes[run_id] = feature_qc_digest
+        scored_residue_counts[run_id] = len(votes_by_position)
+        omitted_residue_counts[run_id] = len(omitted_positions)
+
+    n_rf_scored_unique_residues = sum(scored_residue_counts.values())
+    n_zero_filled_unique_residues = sum(omitted_residue_counts.values())
+    n_zero_filled_output_residues = sum(
+        omitted_residue_counts[run_id] * int(manifest[run_id]["n_chains"])
+        for run_id in selected_run_ids
+    )
 
     selected_seq_ids = sorted(
         seq_id for seq_id, row in reverse.items() if row["run_id"] in selected_set
@@ -545,7 +693,12 @@ def main() -> None:
         selected_seq_ids,
         output_rows,
         available_score_files,
+        available_feature_qc_files,
         score_hashes,
+        feature_qc_hashes,
+        n_rf_scored_unique_residues,
+        n_zero_filled_unique_residues,
+        n_zero_filled_output_residues,
         output_sha256,
     )
     result = {
@@ -557,9 +710,13 @@ def main() -> None:
         "n_residues": output_rows,
         "output_sha256": output_sha256,
         "score_bundle_sha256": bundle_hash(score_hashes),
+        "feature_qc_bundle_sha256": bundle_hash(feature_qc_hashes),
+        "n_zero_filled_unique_residues": n_zero_filled_unique_residues,
+        "n_zero_filled_output_residues": n_zero_filled_output_residues,
         "checks": (
             "canonical hard counts; exact case-sensitive mapping; independent source-score "
-            "reconstruction; no duplicate/missing residues; finite 1/500-grid scores; commit marker"
+            "reconstruction; feature-QC-authorized zero fill; no duplicate/missing residues; "
+            "finite 1/500-grid scores; commit marker"
         ),
     }
     print(json.dumps(result, indent=2, sort_keys=True))

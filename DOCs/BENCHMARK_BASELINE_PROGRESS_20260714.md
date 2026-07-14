@@ -125,3 +125,23 @@ environment.
   bound with a leakage-controlled ablation beside them.
 - Structure-based methods continue to use exact-sequence, chain-only ESMFold
   structures; no UniProt/PDBTM/TmAlphaFold/AFDB bridge is permitted.
+
+## Continuation checkpoint (2026-07-14 16:56 CST)
+
+- Three lock-safe DeepTMInter workers were added without restarting the
+  original eight. The active sessions are `deeptminter_full_8x16_0714` and
+  `deeptminter_extra3_0714`; 11 distinct run IDs were confirmed active. The
+  theoretical CPU ceiling is 176/192 threads, leaving 16 for I/O and system
+  work. At launch, star still reported 342 GiB available memory.
+- The reviewed two-worker MBPred sidecar is active as
+  `mbpred_feature_watch_0714`. It polls every five minutes, requires the
+  FreeContact completion marker and all input files, retries failed batches at
+  most three consecutive times, and hard-stops at the 724-unique contract.
+  Its star PPC commit is `a64d173`.
+- The incremental path reached 21 unique feature tables and 21 RF outputs.
+  Strict reverse mapping produced 25 case-sensitive chains / 27,440 residues;
+  all source hashes, residue coordinates, and 1/500 score-grid checks passed.
+  The partial TSV SHA-256 is
+  `1dc7dede04bb80a3158e7a625ad73c2d5ba349bb7ca3f6adca89adf43f1b3563`.
+- This remains a smoke checkpoint. Formal DeepTMInter and MBPred rows still
+  require all 724 unique sequences and the complete 2,392-chain collector.

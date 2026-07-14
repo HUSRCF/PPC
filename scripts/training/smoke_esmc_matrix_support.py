@@ -92,6 +92,34 @@ def _run_model(config: dict, esm_dim: int, secondary_dim: int | None = None) -> 
     return model
 
 
+def _test_dual_fusion_backward(base: dict, mode: str) -> ESMSiteClassifier:
+    config = {
+        **base,
+        "esm_layer_fusion": "concat",
+        "use_prottrans_embeddings": True,
+        "d_prottrans": 9,
+        "prottrans_fusion_mode": mode,
+        "prottrans_gate_bias": 0.0,
+        "prottrans_interaction_rank": 4,
+        "dropout": 0.0,
+    }
+    model = ESMSiteClassifier(config).train()
+    esm = torch.randn(2, 7, 12, requires_grad=True)
+    secondary = torch.randn(2, 7, 9, requires_grad=True)
+    logits = model(
+        esm_embeddings=esm,
+        prottrans_embeddings=secondary,
+        protein_mask=torch.ones(2, 7, dtype=torch.bool),
+    )["logits"]
+    logits.square().mean().backward()
+    for name, parameter in model.named_parameters():
+        if parameter.requires_grad and parameter.grad is not None and not torch.isfinite(parameter.grad).all():
+            raise AssertionError(f"non-finite {mode} gradient in {name}")
+    if esm.grad is None or secondary.grad is None:
+        raise AssertionError(f"{mode} did not backpropagate into both embedding streams")
+    return model
+
+
 def _test_models() -> None:
     base = {
         "d_esm": 12,
@@ -118,6 +146,17 @@ def _test_models() -> None:
     )
     if model.esm_proj[0].out_features != 4 or model.prottrans_proj[0].out_features != 4:
         raise AssertionError("projected_concat did not split d_model evenly")
+    convex = _test_dual_fusion_backward(base, "convex_gate")
+    gate_linear = convex.prottrans_gate[1]
+    if torch.count_nonzero(gate_linear.weight).item() != 0:
+        raise AssertionError("convex_gate must initialize as an exact equal-weight mixture")
+    if convex.prottrans_fusion_norm is None:
+        raise AssertionError("convex_gate is missing post-fusion normalization")
+    bilinear = _test_dual_fusion_backward(base, "symmetric_bilinear")
+    if bilinear.prottrans_interaction is None or bilinear.prottrans_fusion_norm is None:
+        raise AssertionError("symmetric_bilinear modules were not constructed")
+    if bilinear.prottrans_interaction_scale is None:
+        raise AssertionError("symmetric_bilinear interaction scale was not constructed")
 
 
 def main() -> int:

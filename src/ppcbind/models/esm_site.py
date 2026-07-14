@@ -36,6 +36,8 @@ class ESMSiteConfig:
     prottrans_gate_bias: float = -2.0
     prottrans_residual_alpha_init: float = 1.0
     prottrans_residual_alpha_trainable: bool = False
+    prottrans_interaction_rank: int = 64
+    prottrans_interaction_scale_init: float = 0.1
     use_position_features: bool = True
     use_global_context: bool = True
     use_contact_graph: bool = False
@@ -761,10 +763,17 @@ class ESMSiteClassifier(nn.Module):
             raise ValueError(f"Unsupported esm_layer_fusion={c.esm_layer_fusion!r}; use concat, scalar_mix, or last")
         c.esm_layer_count = max(1, int(c.esm_layer_count))
         c.prottrans_fusion_mode = str(c.prottrans_fusion_mode or "gated_residual").lower()
-        if c.prottrans_fusion_mode not in {"gated_residual", "add", "input_branch", "projected_concat"}:
+        if c.prottrans_fusion_mode not in {
+            "gated_residual",
+            "add",
+            "input_branch",
+            "projected_concat",
+            "convex_gate",
+            "symmetric_bilinear",
+        }:
             raise ValueError(
                 f"Unsupported prottrans_fusion_mode={c.prottrans_fusion_mode!r}; "
-                "use gated_residual, add, input_branch, or projected_concat"
+                "use gated_residual, add, input_branch, projected_concat, convex_gate, or symmetric_bilinear"
             )
         if c.prottrans_fusion_mode == "projected_concat":
             if not c.use_prottrans_embeddings:
@@ -827,7 +836,7 @@ class ESMSiteClassifier(nn.Module):
         )
         self.prottrans_gate = None
         gate_input_mult = 4 if c.prottrans_gate_input_mode == "full" else 2
-        if self.prottrans_proj is not None and c.prottrans_fusion_mode == "gated_residual":
+        if self.prottrans_proj is not None and c.prottrans_fusion_mode in {"gated_residual", "convex_gate"}:
             self.prottrans_gate = nn.Sequential(
                 nn.LayerNorm(c.d_model * gate_input_mult),
                 nn.Linear(c.d_model * gate_input_mult, c.d_model),
@@ -835,7 +844,28 @@ class ESMSiteClassifier(nn.Module):
             )
             gate_linear = self.prottrans_gate[1]
             if isinstance(gate_linear, nn.Linear):
+                if c.prottrans_fusion_mode == "convex_gate":
+                    nn.init.zeros_(gate_linear.weight)
                 nn.init.constant_(gate_linear.bias, float(c.prottrans_gate_bias))
+        self.prottrans_fusion_norm = (
+            nn.LayerNorm(c.d_model)
+            if self.prottrans_proj is not None
+            and c.prottrans_fusion_mode in {"convex_gate", "symmetric_bilinear"}
+            else None
+        )
+        self.prottrans_interaction = None
+        self.prottrans_interaction_scale = None
+        if self.prottrans_proj is not None and c.prottrans_fusion_mode == "symmetric_bilinear":
+            interaction_rank = min(c.d_model, max(1, int(c.prottrans_interaction_rank)))
+            self.prottrans_interaction = nn.Sequential(
+                nn.Linear(c.d_model, interaction_rank),
+                nn.SiLU(),
+                nn.Linear(interaction_rank, c.d_model),
+                nn.Dropout(c.dropout),
+            )
+            self.prottrans_interaction_scale = nn.Parameter(
+                torch.tensor(float(c.prottrans_interaction_scale_init), dtype=torch.float32)
+            )
         alpha = torch.tensor(float(c.prottrans_residual_alpha_init), dtype=torch.float32)
         if self.prottrans_proj is not None and c.prottrans_fusion_mode in {"gated_residual", "add"}:
             if bool(c.prottrans_residual_alpha_trainable):
@@ -1064,7 +1094,7 @@ class ESMSiteClassifier(nn.Module):
                 prottrans_branch = self.prottrans_proj(_sanitize(prottrans_embeddings, clip=10.0))
             else:
                 prottrans_branch = torch.zeros_like(esm_branch)
-            if c.prottrans_fusion_mode == "gated_residual":
+            if c.prottrans_fusion_mode in {"gated_residual", "convex_gate"}:
                 if c.prottrans_gate_input_mode == "simple":
                     gate_input = torch.cat([esm_branch, prottrans_branch], dim=-1)
                 else:
@@ -1079,11 +1109,36 @@ class ESMSiteClassifier(nn.Module):
                     )
                 assert self.prottrans_gate is not None
                 gate = self.prottrans_gate(gate_input).to(dtype=prottrans_branch.dtype)
-                alpha = self.prottrans_residual_alpha.to(dtype=prottrans_branch.dtype, device=prottrans_branch.device)
-                esm_branch = _sanitize(esm_branch + alpha * gate * prottrans_branch)
+                if c.prottrans_fusion_mode == "gated_residual":
+                    alpha = self.prottrans_residual_alpha.to(
+                        dtype=prottrans_branch.dtype,
+                        device=prottrans_branch.device,
+                    )
+                    esm_branch = _sanitize(esm_branch + alpha * gate * prottrans_branch)
+                elif prottrans_embeddings is not None:
+                    assert self.prottrans_fusion_norm is not None
+                    esm_branch = self.prottrans_fusion_norm(
+                        _sanitize(gate * esm_branch + (1.0 - gate) * prottrans_branch)
+                    )
             elif c.prottrans_fusion_mode == "add":
                 alpha = self.prottrans_residual_alpha.to(dtype=prottrans_branch.dtype, device=prottrans_branch.device)
                 esm_branch = _sanitize(esm_branch + alpha * prottrans_branch)
+            elif c.prottrans_fusion_mode == "symmetric_bilinear":
+                if prottrans_embeddings is not None:
+                    assert self.prottrans_fusion_norm is not None
+                    assert self.prottrans_interaction is not None
+                    assert self.prottrans_interaction_scale is not None
+                    mean_branch = 0.5 * (esm_branch + prottrans_branch)
+                    interaction = self.prottrans_interaction(
+                        _sanitize(esm_branch * prottrans_branch, clip=100.0)
+                    )
+                    scale = torch.tanh(self.prottrans_interaction_scale).to(
+                        dtype=interaction.dtype,
+                        device=interaction.device,
+                    )
+                    esm_branch = self.prottrans_fusion_norm(
+                        _sanitize(mean_branch + scale * interaction)
+                    )
             elif c.prottrans_fusion_mode == "input_branch":
                 pass
             elif c.prottrans_fusion_mode == "projected_concat":

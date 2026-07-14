@@ -91,11 +91,12 @@ def main() -> int:
         raise ValueError("dual-config requires data and training mappings")
     split_dir = Path(data["split_dir"])
     chain_manifest_path = Path(data["chain_filter_manifest"])
-    val_ids = _read_ids(split_dir / "val_ids.txt")
-    if len(val_ids) != len(set(val_ids)):
+    val_ids = _read_ids(split_dir / "val_ids.txt", lowercase=False)
+    normalized_val_ids = [seq_id.strip().lower() for seq_id in val_ids]
+    if len(normalized_val_ids) != len(set(normalized_val_ids)):
         raise ValueError("Duplicate chain IDs in validation split")
     manifest = _manifest_rows(chain_manifest_path)
-    missing_manifest = sorted(set(val_ids) - set(manifest))
+    missing_manifest = sorted(set(normalized_val_ids) - set(manifest))
     if missing_manifest:
         raise KeyError(f"Validation IDs missing from chain manifest: {missing_manifest[:20]}")
 
@@ -201,7 +202,7 @@ def main() -> int:
                 component_ids.append(row["component_id"].strip())
                 seen.add(seq_id)
 
-    if seen != set(val_ids):
+    if seen != set(normalized_val_ids):
         raise ValueError(f"Validation coverage mismatch: expected={len(val_ids)} observed={len(seen)}")
     payload = {
         "labels": np.concatenate(labels_chunks),

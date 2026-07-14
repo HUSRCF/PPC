@@ -60,9 +60,21 @@ def _load_model(path: Path, device: torch.device) -> tuple[ESMSiteClassifier, di
     return model, config, checkpoint
 
 
+def _canonical_seq_id(value: str) -> str:
+    pdb_id, separator, chain_id = value.strip().partition("__")
+    if not separator or not pdb_id or not chain_id:
+        raise ValueError(f"Invalid chain seq_id: {value!r}")
+    return f"{pdb_id.lower()}__{chain_id}"
+
+
 def _manifest_rows(path: Path) -> dict[str, dict[str, str]]:
     with path.open(newline="") as handle:
-        rows = {row["seq_id"].strip().lower(): row for row in csv.DictReader(handle)}
+        rows: dict[str, dict[str, str]] = {}
+        for row in csv.DictReader(handle):
+            seq_id = _canonical_seq_id(row["seq_id"])
+            if seq_id in rows:
+                raise ValueError(f"Duplicate case-sensitive chain seq_id in manifest: {seq_id}")
+            rows[seq_id] = row
     if not rows:
         raise ValueError(f"Empty chain manifest: {path}")
     return rows
@@ -102,11 +114,11 @@ def main() -> int:
     split_dir = Path(data["split_dir"])
     chain_manifest_path = Path(data["chain_filter_manifest"])
     split_ids = _read_ids(split_dir / f"{args.split}_ids.txt", lowercase=False)
-    normalized_split_ids = [seq_id.strip().lower() for seq_id in split_ids]
-    if len(normalized_split_ids) != len(set(normalized_split_ids)):
+    canonical_split_ids = [_canonical_seq_id(seq_id) for seq_id in split_ids]
+    if len(canonical_split_ids) != len(set(canonical_split_ids)):
         raise ValueError(f"Duplicate chain IDs in {args.split} split")
     manifest = _manifest_rows(chain_manifest_path)
-    missing_manifest = sorted(set(normalized_split_ids) - set(manifest))
+    missing_manifest = sorted(set(canonical_split_ids) - set(manifest))
     if missing_manifest:
         raise KeyError(f"{args.split} IDs missing from chain manifest: {missing_manifest[:20]}")
 
@@ -187,7 +199,7 @@ def main() -> int:
             mask_cpu = batch["protein_mask"].bool().cpu() & (labels_cpu >= 0)
 
             for item_index, raw_id in enumerate(batch["pdb_id"]):
-                seq_id = str(raw_id).strip().lower()
+                seq_id = _canonical_seq_id(str(raw_id))
                 if seq_id in seen:
                     raise ValueError(f"Duplicate {args.split} chain from loader: {seq_id}")
                 row = manifest.get(seq_id)
@@ -212,7 +224,7 @@ def main() -> int:
                 component_ids.append(row["component_id"].strip())
                 seen.add(seq_id)
 
-    if seen != set(normalized_split_ids):
+    if seen != set(canonical_split_ids):
         raise ValueError(f"{args.split} coverage mismatch: expected={len(split_ids)} observed={len(seen)}")
     payload = {
         "labels": np.concatenate(labels_chunks),

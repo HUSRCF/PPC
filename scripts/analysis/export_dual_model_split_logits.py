@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Export aligned validation logits from ESMC-primary and ESM2-secondary models."""
+"""Export aligned split logits from ESMC-primary and ESM2-secondary models."""
 
 from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -71,6 +72,14 @@ def _path(value: Any) -> Path | None:
     return None if value in (None, "") else Path(value)
 
 
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dual-config", required=True, type=Path)
@@ -78,6 +87,7 @@ def main() -> int:
     parser.add_argument("--secondary-checkpoint", required=True, type=Path)
     parser.add_argument("--out-npz", required=True, type=Path)
     parser.add_argument("--summary-json", required=True, type=Path)
+    parser.add_argument("--split", choices=["val", "test"], required=True)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--num-workers", type=int, default=8)
@@ -91,14 +101,14 @@ def main() -> int:
         raise ValueError("dual-config requires data and training mappings")
     split_dir = Path(data["split_dir"])
     chain_manifest_path = Path(data["chain_filter_manifest"])
-    val_ids = _read_ids(split_dir / "val_ids.txt", lowercase=False)
-    normalized_val_ids = [seq_id.strip().lower() for seq_id in val_ids]
-    if len(normalized_val_ids) != len(set(normalized_val_ids)):
-        raise ValueError("Duplicate chain IDs in validation split")
+    split_ids = _read_ids(split_dir / f"{args.split}_ids.txt", lowercase=False)
+    normalized_split_ids = [seq_id.strip().lower() for seq_id in split_ids]
+    if len(normalized_split_ids) != len(set(normalized_split_ids)):
+        raise ValueError(f"Duplicate chain IDs in {args.split} split")
     manifest = _manifest_rows(chain_manifest_path)
-    missing_manifest = sorted(set(normalized_val_ids) - set(manifest))
+    missing_manifest = sorted(set(normalized_split_ids) - set(manifest))
     if missing_manifest:
-        raise KeyError(f"Validation IDs missing from chain manifest: {missing_manifest[:20]}")
+        raise KeyError(f"{args.split} IDs missing from chain manifest: {missing_manifest[:20]}")
 
     device = torch.device(args.device)
     primary, primary_config, primary_checkpoint = _load_model(args.primary_checkpoint, device)
@@ -109,7 +119,7 @@ def main() -> int:
     loader = _build_loader(
         Path(data["esm_root"]),
         Path(data["label_root"]),
-        val_ids,
+        split_ids,
         _path(data.get("sequence_feature_root")),
         _path(data.get("primary_embedding_root")),
         _path(data.get("contact_graph_root")),
@@ -179,16 +189,16 @@ def main() -> int:
             for item_index, raw_id in enumerate(batch["pdb_id"]):
                 seq_id = str(raw_id).strip().lower()
                 if seq_id in seen:
-                    raise ValueError(f"Duplicate validation chain from loader: {seq_id}")
+                    raise ValueError(f"Duplicate {args.split} chain from loader: {seq_id}")
                 row = manifest.get(seq_id)
                 if row is None:
                     raise KeyError(f"Loader chain missing from manifest: {seq_id}")
-                if row.get("split", "").strip().lower() != "val":
-                    raise ValueError(f"Non-validation chain in validation export: {seq_id} split={row.get('split')}")
+                if row.get("split", "").strip().lower() != args.split:
+                    raise ValueError(f"Wrong-split chain in {args.split} export: {seq_id} split={row.get('split')}")
                 valid = mask_cpu[item_index]
                 n_residues = int(valid.sum().item())
                 if n_residues <= 0:
-                    raise ValueError(f"No labeled residues for validation chain: {seq_id}")
+                    raise ValueError(f"No labeled residues for {args.split} chain: {seq_id}")
                 chain_index = len(chain_ids)
                 labels_chunks.append(labels_cpu[item_index, valid].numpy().astype(np.int8, copy=False))
                 primary_chunks.append(primary_log_odds[item_index, valid].numpy().astype(np.float32, copy=False))
@@ -202,8 +212,8 @@ def main() -> int:
                 component_ids.append(row["component_id"].strip())
                 seen.add(seq_id)
 
-    if seen != set(normalized_val_ids):
-        raise ValueError(f"Validation coverage mismatch: expected={len(val_ids)} observed={len(seen)}")
+    if seen != set(normalized_split_ids):
+        raise ValueError(f"{args.split} coverage mismatch: expected={len(split_ids)} observed={len(seen)}")
     payload = {
         "labels": np.concatenate(labels_chunks),
         "primary_logit": np.concatenate(primary_chunks),
@@ -219,7 +229,7 @@ def main() -> int:
     args.out_npz.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(args.out_npz, **payload)
     summary = {
-        "scope": "validation_only",
+        "scope": args.split,
         "dual_config": str(args.dual_config),
         "primary_checkpoint": str(args.primary_checkpoint),
         "primary_epoch": primary_checkpoint.get("epoch"),
@@ -227,14 +237,15 @@ def main() -> int:
         "secondary_checkpoint": str(args.secondary_checkpoint),
         "secondary_epoch": secondary_checkpoint.get("epoch"),
         "secondary_d_esm": expected_secondary_dim,
-        "out_npz": str(args.out_npz),
+        "out_npz": str(args.out_npz.resolve()),
+        "out_npz_sha256": _sha256(args.out_npz),
         "chains": len(chain_ids),
         "source_pdbs": len(set(source_pdb_ids)),
         "components": len(set(component_ids)),
         "residues": int(payload["labels"].size),
         "positive_residues": int(payload["labels"].sum()),
         "coverage_exact": True,
-        "test_accessed": False,
+        "test_accessed": args.split == "test",
     }
     args.summary_json.parent.mkdir(parents=True, exist_ok=True)
     args.summary_json.write_text(json.dumps(summary, indent=2) + "\n")

@@ -92,10 +92,12 @@ Current run root:
 
 As DeepTMInter emits each `.evfold`, MBPred features are generated without
 waiting for GaussDCA or DeepTMInter model inference. The repaired two-worker
-watcher resumed at 23:30 CST and had reached 182 feature/QC pairs at the latest
-snapshot, including the formerly failing SIGNAL case. There are currently 22
-official RF outputs. Final publication still requires 724 RF files and the
-hard-locked 2,392-chain / 1,036,256-residue collector pass.
+watcher resumed at 23:30 CST and had reached 244 feature/QC pairs at the latest
+snapshot, including the formerly failing SIGNAL case. HPC2 Slurm job `9979910`
+processed a 232-feature snapshot with 16 CPU workers in 37 s (2.27 GiB peak
+RSS); all 232 atomic RF outputs were synced back to star. Final publication
+still requires 724 RF files and the hard-locked 2,392-chain / 1,036,256-residue
+collector pass.
 
 ## EDLMPPI
 
@@ -167,9 +169,9 @@ diagnostics are retained under the same policy as the other methods.
   FreeContact completion marker and all input files, retries failed batches at
   most three consecutive times, and hard-stops at the 724-unique contract.
   Its current fix is star PPC commit `973f87a`.
-- The repaired feature path reached 182 unique feature tables at this snapshot,
-  and the formerly failing `dtm0184` SIGNAL case now passes. There are 22 RF
-  outputs, including the independently submitted real-SIGNAL smoke.
+- The repaired feature path reached 244 unique feature tables at this snapshot,
+  and the formerly failing `dtm0184` SIGNAL case now passes. The latest HPC2
+  batch returned 232 structurally validated RF outputs to star.
 - Spatom is complete and has been promoted to the main benchmark table.
   DeepTMInter and MBPred remain in-progress rows and still require all 724
   unique sequences plus the complete 2,392-chain collector pass.

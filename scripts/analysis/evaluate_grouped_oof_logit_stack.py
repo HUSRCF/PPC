@@ -26,16 +26,39 @@ def _f1(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     return float(2 * tp / max(1, 2 * tp + fp + fn))
 
 
-def _best_threshold(y_true: np.ndarray, scores: np.ndarray, metric: str) -> float:
-    best_threshold = 0.5
-    best_value = float("-inf")
-    for threshold in np.arange(0.01, 1.0, 0.01):
-        predicted = scores >= threshold
-        value = _f1(y_true, predicted) if metric == "f1" else float(matthews_corrcoef(y_true, predicted))
-        if value > best_value:
-            best_value = value
-            best_threshold = float(round(threshold, 2))
-    return best_threshold
+def _best_thresholds(y_true: np.ndarray, scores: np.ndarray) -> tuple[float, float]:
+    """Find fixed-grid F1/MCC thresholds with one score sort."""
+
+    order = np.argsort(scores, kind="stable")
+    sorted_scores = scores[order]
+    sorted_labels = y_true[order].astype(np.int64, copy=False)
+    positive_prefix = np.concatenate(([0], np.cumsum(sorted_labels, dtype=np.int64)))
+    thresholds = np.arange(0.01, 1.0, 0.01)
+    split = np.searchsorted(sorted_scores, thresholds, side="left")
+    total_positive = int(positive_prefix[-1])
+    positives_below = positive_prefix[split]
+    tp = total_positive - positives_below
+    fn = positives_below
+    predicted_positive = y_true.size - split
+    fp = predicted_positive - tp
+    tn = split - fn
+    f1_denom = 2 * tp + fp + fn
+    f1_values = np.divide(2 * tp, f1_denom, out=np.zeros_like(tp, dtype=np.float64), where=f1_denom > 0)
+    mcc_denom = (
+        (tp + fp).astype(np.float64)
+        * (tp + fn).astype(np.float64)
+        * (tn + fp).astype(np.float64)
+        * (tn + fn).astype(np.float64)
+    )
+    mcc_values = np.divide(
+        tp * tn - fp * fn,
+        np.sqrt(mcc_denom),
+        out=np.zeros_like(tp, dtype=np.float64),
+        where=mcc_denom > 0,
+    )
+    return float(round(thresholds[int(np.argmax(f1_values))], 2)), float(
+        round(thresholds[int(np.argmax(mcc_values))], 2)
+    )
 
 
 def _chain_macro_ap(y_true: np.ndarray, scores: np.ndarray, chain_index: np.ndarray) -> tuple[float, int, int]:
@@ -131,8 +154,7 @@ def main() -> int:
         held_scores = model.predict_proba(features[held_idx])[:, 1]
         oof_scores[held_idx] = held_scores
 
-        stack_f1_threshold = _best_threshold(labels[train_idx], train_scores, "f1")
-        stack_mcc_threshold = _best_threshold(labels[train_idx], train_scores, "mcc")
+        stack_f1_threshold, stack_mcc_threshold = _best_thresholds(labels[train_idx], train_scores)
         oof_f1_pred[held_idx] = held_scores >= stack_f1_threshold
         oof_mcc_pred[held_idx] = held_scores >= stack_mcc_threshold
         for logit, f1_out, mcc_out in (
@@ -141,8 +163,7 @@ def main() -> int:
         ):
             train_base_scores = _sigmoid(logit[train_idx])
             held_base_scores = _sigmoid(logit[held_idx])
-            f1_threshold = _best_threshold(labels[train_idx], train_base_scores, "f1")
-            mcc_threshold = _best_threshold(labels[train_idx], train_base_scores, "mcc")
+            f1_threshold, mcc_threshold = _best_thresholds(labels[train_idx], train_base_scores)
             f1_out[held_idx] = held_base_scores >= f1_threshold
             mcc_out[held_idx] = held_base_scores >= mcc_threshold
 

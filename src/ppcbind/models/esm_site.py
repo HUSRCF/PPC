@@ -85,6 +85,11 @@ class ESMSiteConfig:
     esm_layer_fusion: str = "concat"
     esm_layer_count: int = 1
     input_fusion_mode: str = "add"
+    use_chain_ratio_head: bool = False
+    chain_ratio_head_hidden: int = 128
+    chain_ratio_head_dropout: float = 0.10
+    chain_ratio_head_detach: bool = True
+    chain_ratio_head_init_ratio: float = 0.30
     extra: dict[str, Any] = field(default_factory=dict)
 
 
@@ -1131,6 +1136,21 @@ class ESMSiteClassifier(nn.Module):
             nn.Dropout(c.classifier_dropout),
             nn.Linear(c.d_hidden, c.n_classes),
         )
+        self.chain_ratio_head = None
+        if c.use_chain_ratio_head:
+            ratio_hidden = max(1, int(c.chain_ratio_head_hidden))
+            self.chain_ratio_head = nn.Sequential(
+                nn.LayerNorm(c.d_model * 2),
+                nn.Linear(c.d_model * 2, ratio_hidden),
+                nn.SiLU(),
+                nn.Dropout(max(0.0, float(c.chain_ratio_head_dropout))),
+                nn.Linear(ratio_hidden, 1),
+            )
+            ratio_output = self.chain_ratio_head[-1]
+            assert isinstance(ratio_output, nn.Linear)
+            init_ratio = min(1.0 - 1.0e-6, max(1.0e-6, float(c.chain_ratio_head_init_ratio)))
+            nn.init.zeros_(ratio_output.weight)
+            nn.init.constant_(ratio_output.bias, math.log(init_ratio / (1.0 - init_ratio)))
 
     def forward(
         self,
@@ -1145,7 +1165,7 @@ class ESMSiteClassifier(nn.Module):
         contact_edge_scores: torch.Tensor | None = None,
         aux_contact_edge_index: torch.Tensor | None = None,
         aux_contact_edge_scores: torch.Tensor | None = None,
-    ) -> dict[str, torch.Tensor]:
+    ) -> dict[str, torch.Tensor | None]:
         c = self.config
         mask = protein_mask.bool()
         esm_input = _sanitize(esm_embeddings)
@@ -1361,6 +1381,16 @@ class ESMSiteClassifier(nn.Module):
 
         h = self.final_norm(_sanitize(h)).masked_fill(~mask.unsqueeze(-1), 0.0)
         logits = _sanitize(self.classifier(h))
+        chain_ratio_logits = None
+        if self.chain_ratio_head is not None:
+            ratio_features = h.detach() if c.chain_ratio_head_detach else h
+            ratio_denom = mask.sum(dim=1, keepdim=True).clamp_min(1).to(dtype=ratio_features.dtype)
+            ratio_mean = ratio_features.sum(dim=1) / ratio_denom
+            ratio_max = ratio_features.masked_fill(~mask.unsqueeze(-1), -1.0e4).max(dim=1).values
+            ratio_max = torch.where(torch.isfinite(ratio_max), ratio_max, torch.zeros_like(ratio_max))
+            chain_ratio_logits = _sanitize(
+                self.chain_ratio_head(torch.cat([ratio_mean, ratio_max], dim=-1)).squeeze(-1)
+            )
         if c.prottrans_fusion_mode == "zero_init_logit_residual" and prottrans_branch is not None:
             assert self.prottrans_residual_main_norm is not None
             assert self.prottrans_residual_feature_norm is not None
@@ -1376,4 +1406,4 @@ class ESMSiteClassifier(nn.Module):
             delta_logits = self.prottrans_residual_adapter(residual_input).to(dtype=logits.dtype)
             logits = _sanitize(logits + delta_logits)
         logits = logits.masked_fill(~mask.unsqueeze(-1), 0.0)
-        return {"logits": logits, "h_residue": h}
+        return {"logits": logits, "h_residue": h, "chain_ratio_logits": chain_ratio_logits}

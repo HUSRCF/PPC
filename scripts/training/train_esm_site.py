@@ -643,6 +643,25 @@ def _chain_ratio_metrics(
     }
 
 
+def _chain_ratio_head_metrics(errors: list[float]) -> dict[str, float | int | None]:
+    if not errors:
+        return {
+            "chain_ratio_head_n_chains": 0,
+            "chain_ratio_head_mae": None,
+            "neg_chain_ratio_head_mae": None,
+            "chain_ratio_head_rmse": None,
+            "chain_ratio_head_bias": None,
+        }
+    mae = sum(abs(error) for error in errors) / len(errors)
+    return {
+        "chain_ratio_head_n_chains": len(errors),
+        "chain_ratio_head_mae": mae,
+        "neg_chain_ratio_head_mae": -mae,
+        "chain_ratio_head_rmse": math.sqrt(sum(error * error for error in errors) / len(errors)),
+        "chain_ratio_head_bias": sum(errors) / len(errors),
+    }
+
+
 def _score_metrics(
     score_chunks: list[torch.Tensor],
     target_chunks: list[torch.Tensor],
@@ -755,7 +774,12 @@ class ResidueSiteLoss(nn.Module):
             label_smoothing=max(0.0, min(1.0, float(label_smoothing))),
         )
 
-    def forward(self, logits: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self,
+        logits: torch.Tensor,
+        labels: torch.Tensor,
+        chain_ratio_logits: torch.Tensor | None = None,
+    ) -> torch.Tensor:
         batched_logits = logits
         batched_labels = labels
         if self.reduction == "chain_mean":
@@ -824,8 +848,16 @@ class ResidueSiteLoss(nn.Module):
         valid_chains = counts > 0
         if not bool(valid_chains.any()):
             return base
-        positive_scores = torch.softmax(batched_logits.float(), dim=-1)[..., 1]
-        predicted_ratio = (positive_scores * valid).sum(dim=1) / counts.clamp_min(1)
+        if chain_ratio_logits is None:
+            positive_scores = torch.softmax(batched_logits.float(), dim=-1)[..., 1]
+            predicted_ratio = (positive_scores * valid).sum(dim=1) / counts.clamp_min(1)
+        else:
+            if chain_ratio_logits.numel() != batched_logits.shape[0]:
+                raise ValueError(
+                    "chain_ratio_logits must contain one scalar per batch item; "
+                    f"got shape={tuple(chain_ratio_logits.shape)} batch={batched_logits.shape[0]}"
+                )
+            predicted_ratio = torch.sigmoid(chain_ratio_logits.float().reshape(-1))
         observed_ratio = ((batched_labels == 1) & valid).sum(dim=1).float() / counts.clamp_min(1)
         ratio_mse = torch.nn.functional.mse_loss(
             predicted_ratio[valid_chains],
@@ -859,6 +891,7 @@ def _evaluate(
     score_chunks: list[torch.Tensor] = []
     target_chunks: list[torch.Tensor] = []
     per_protein: list[tuple[str, torch.Tensor, torch.Tensor]] = []
+    chain_ratio_head_errors: list[float] = []
     skipped_nonfinite = 0
     logits_require_grad = False
     with torch.no_grad():
@@ -867,24 +900,36 @@ def _evaluate(
         progress_iter = _progress(loader, show_progress, len(loader), desc)
         for step, batch in enumerate(progress_iter, 1):
             inputs, labels = _move_batch(batch, device)
-            logits = model(**inputs)["logits"]
+            outputs = model(**inputs)
+            logits = outputs["logits"]
+            chain_ratio_logits = outputs.get("chain_ratio_logits")
             logits_require_grad = logits_require_grad or bool(logits.requires_grad)
             if strict_gradient_isolation and logits.requires_grad:
                 raise RuntimeError(f"{desc}: evaluation logits unexpectedly require gradients")
-            loss = criterion(logits, labels)
-            if not bool(torch.isfinite(logits).all()) or not bool(torch.isfinite(loss)):
+            loss = criterion(logits, labels, chain_ratio_logits)
+            finite_ratio_head = chain_ratio_logits is None or bool(torch.isfinite(chain_ratio_logits).all())
+            if not bool(torch.isfinite(logits).all()) or not finite_ratio_head or not bool(torch.isfinite(loss)):
                 skipped_nonfinite += 1
                 continue
             losses.append(float(loss.item()))
             metrics.append(_step_metrics(logits, labels))
             valid = labels != -100
             probs = torch.softmax(logits.float(), dim=-1)[..., 1]
+            chain_ratio_scores = (
+                torch.sigmoid(chain_ratio_logits.float().reshape(-1))
+                if chain_ratio_logits is not None
+                else None
+            )
             if bool(valid.any()):
                 score_chunks.append(probs[valid].detach().cpu())
                 target_chunks.append(labels[valid].detach().cpu().long())
             for item_idx, pdb_id in enumerate(batch["pdb_id"]):
                 item_valid = valid[item_idx]
                 if bool(item_valid.any()):
+                    if chain_ratio_scores is not None:
+                        observed_ratio = float(labels[item_idx][item_valid].float().mean().item())
+                        predicted_ratio = float(chain_ratio_scores[item_idx].item())
+                        chain_ratio_head_errors.append(predicted_ratio - observed_ratio)
                     per_protein.append(
                         (
                             str(pdb_id),
@@ -909,6 +954,7 @@ def _evaluate(
         )
     merged = _merge_metrics(metrics)
     merged.update(_score_metrics(score_chunks, target_chunks, per_protein, thresholds, topk_fracs))
+    merged.update(_chain_ratio_head_metrics(chain_ratio_head_errors))
     merged["loss"] = sum(losses) / max(1, len(losses))
     merged["skipped_nonfinite"] = skipped_nonfinite
     merged["eval_gradient_isolation_checked"] = bool(strict_gradient_isolation)
@@ -1173,7 +1219,14 @@ def main() -> int:
             flush=True,
         )
         if conditional_residual_mode:
-            invalid_missing = [key for key in init_report["missing_keys"] if not key.startswith("prottrans_")]
+            allowed_missing_prefixes = ["prottrans_"]
+            if bool(model_config.get("use_chain_ratio_head", False)):
+                allowed_missing_prefixes.append("chain_ratio_head.")
+            invalid_missing = [
+                key
+                for key in init_report["missing_keys"]
+                if not any(key.startswith(prefix) for prefix in allowed_missing_prefixes)
+            ]
             unexpected = list(init_report["unexpected_keys"])
             if invalid_missing or unexpected:
                 raise RuntimeError(
@@ -1378,9 +1431,12 @@ def main() -> int:
             train_residues += int((labels != -100).sum().item())
             optimizer.zero_grad(set_to_none=True)
             with torch.amp.autocast("cuda", enabled=args.amp and device.type == "cuda"):
-                logits = model(**inputs)["logits"]
-                loss = criterion(logits, labels)
-            if not bool(torch.isfinite(logits).all()) or not bool(torch.isfinite(loss)):
+                outputs = model(**inputs)
+                logits = outputs["logits"]
+                chain_ratio_logits = outputs.get("chain_ratio_logits")
+                loss = criterion(logits, labels, chain_ratio_logits)
+            finite_ratio_head = chain_ratio_logits is None or bool(torch.isfinite(chain_ratio_logits).all())
+            if not bool(torch.isfinite(logits).all()) or not finite_ratio_head or not bool(torch.isfinite(loss)):
                 skipped_nonfinite += 1
                 step_end = time.perf_counter()
                 compute_seconds += step_end - batch_ready

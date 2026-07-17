@@ -146,6 +146,16 @@ def _set_frozen_backbone_eval(model: nn.Module) -> None:
             module.eval()
 
 
+def _set_chain_ratio_head_only_train_mode(model: nn.Module) -> None:
+    """Keep the frozen residue model deterministic while calibrating its ratio head."""
+
+    ratio_head = getattr(model, "chain_ratio_head", None)
+    if not isinstance(ratio_head, nn.Module):
+        raise RuntimeError("train_chain_ratio_head_only requires an enabled chain_ratio_head module")
+    model.eval()
+    ratio_head.train()
+
+
 def _limit_ids(ids: list[str], limit: int | None) -> list[str]:
     if limit is None or limit <= 0:
         return ids
@@ -1013,6 +1023,7 @@ def main() -> int:
     parser.add_argument("--eval-only", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--freeze-non-prottrans", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--frozen-backbone-eval", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--train-chain-ratio-head-only", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--lr", type=float, default=5e-5)
     parser.add_argument("--warmup-steps", type=int, default=0)
     parser.add_argument("--warmup-ratio", type=float, default=0.05)
@@ -1233,6 +1244,46 @@ def main() -> int:
                     "Conditional residual warm-start is not backbone-compatible: "
                     f"non-prottrans missing keys={invalid_missing}, unexpected keys={unexpected}"
                 )
+    if args.freeze_non_prottrans and args.train_chain_ratio_head_only:
+        raise ValueError("freeze_non_prottrans and train_chain_ratio_head_only are mutually exclusive")
+    if args.train_chain_ratio_head_only:
+        if args.init_checkpoint is None:
+            raise ValueError(
+                "train_chain_ratio_head_only requires init_checkpoint; refusing to calibrate a random model"
+            )
+        if args.ratio_loss_weight <= 0.0:
+            raise ValueError("train_chain_ratio_head_only requires ratio_loss_weight > 0")
+        ratio_head = getattr(model, "chain_ratio_head", None)
+        if not isinstance(ratio_head, nn.Module):
+            raise ValueError("train_chain_ratio_head_only requires model.use_chain_ratio_head=true")
+        assert init_report is not None
+        if init_report["missing_keys"] or init_report["unexpected_keys"]:
+            raise RuntimeError(
+                "Ratio-head-only calibration requires an exact checkpoint match: "
+                f"missing={init_report['missing_keys']}, unexpected={init_report['unexpected_keys']}"
+            )
+        for param in model.parameters():
+            param.requires_grad_(False)
+        for param in ratio_head.parameters():
+            param.requires_grad_(True)
+        trainable_names = [name for name, param in model.named_parameters() if param.requires_grad]
+        if not trainable_names or any(not name.startswith("chain_ratio_head.") for name in trainable_names):
+            raise RuntimeError(f"Invalid chain-ratio-head-only trainable parameter set: {trainable_names}")
+        print(
+            json.dumps(
+                {
+                    "event": "train_chain_ratio_head_only",
+                    "trainable_parameters": sum(
+                        param.numel() for param in model.parameters() if param.requires_grad
+                    ),
+                    "frozen_parameters": sum(
+                        param.numel() for param in model.parameters() if not param.requires_grad
+                    ),
+                    "trainable_names": trainable_names,
+                }
+            ),
+            flush=True,
+        )
     if args.freeze_non_prottrans:
         if args.init_checkpoint is None:
             raise ValueError("freeze_non_prottrans requires init_checkpoint; refusing to freeze a random backbone")
@@ -1325,6 +1376,7 @@ def main() -> int:
             "eval_test_each_epoch": args.eval_test_each_epoch,
             "init_checkpoint_report": init_report,
             "freeze_non_prottrans": args.freeze_non_prottrans,
+            "train_chain_ratio_head_only": args.train_chain_ratio_head_only,
             "trainable_parameters": sum(param.numel() for param in model.parameters() if param.requires_grad),
             "frozen_parameters": sum(param.numel() for param in model.parameters() if not param.requires_grad),
         }
@@ -1406,7 +1458,9 @@ def main() -> int:
 
     for epoch in range(1, args.epochs + 1):
         model.train()
-        if args.freeze_non_prottrans and args.frozen_backbone_eval:
+        if args.train_chain_ratio_head_only:
+            _set_chain_ratio_head_only_train_mode(model)
+        elif args.freeze_non_prottrans and args.frozen_backbone_eval:
             _set_frozen_backbone_eval(model)
         losses: list[float] = []
         metrics: list[dict[str, int]] = []

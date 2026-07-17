@@ -629,12 +629,15 @@ def _chain_ratio_metrics(
         return {
             "chain_ratio_n_chains": 0,
             "chain_ratio_mae_raw": None,
+            "neg_chain_ratio_mae_raw": None,
             "chain_ratio_rmse_raw": None,
             "chain_ratio_bias_raw": None,
         }
+    mae = sum(abs(error) for error in errors) / len(errors)
     return {
         "chain_ratio_n_chains": len(errors),
-        "chain_ratio_mae_raw": sum(abs(error) for error in errors) / len(errors),
+        "chain_ratio_mae_raw": mae,
+        "neg_chain_ratio_mae_raw": -mae,
         "chain_ratio_rmse_raw": math.sqrt(sum(error * error for error in errors) / len(errors)),
         "chain_ratio_bias_raw": sum(errors) / len(errors),
     }

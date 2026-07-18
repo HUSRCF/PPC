@@ -887,6 +887,7 @@ def _evaluate(
     thresholds: list[float],
     topk_fracs: list[float],
     strict_gradient_isolation: bool,
+    prediction_output: Path | None = None,
 ) -> dict[str, Any]:
     model.eval()
     parameter_versions = {name: parameter._version for name, parameter in model.named_parameters()}
@@ -901,6 +902,7 @@ def _evaluate(
     score_chunks: list[torch.Tensor] = []
     target_chunks: list[torch.Tensor] = []
     per_protein: list[tuple[str, torch.Tensor, torch.Tensor]] = []
+    prediction_records: list[dict[str, Any]] = []
     chain_ratio_head_errors: list[float] = []
     skipped_nonfinite = 0
     logits_require_grad = False
@@ -936,17 +938,25 @@ def _evaluate(
             for item_idx, pdb_id in enumerate(batch["pdb_id"]):
                 item_valid = valid[item_idx]
                 if bool(item_valid.any()):
+                    item_scores = probs[item_idx][item_valid].detach().cpu()
+                    item_targets = labels[item_idx][item_valid].detach().cpu().long()
+                    prediction_record = None
+                    if prediction_output is not None:
+                        prediction_record = {
+                            "pdb_id": str(pdb_id),
+                            "scores": item_scores,
+                            "targets": item_targets,
+                        }
                     if chain_ratio_scores is not None:
-                        observed_ratio = float(labels[item_idx][item_valid].float().mean().item())
+                        observed_ratio = float(item_targets.float().mean().item())
                         predicted_ratio = float(chain_ratio_scores[item_idx].item())
                         chain_ratio_head_errors.append(predicted_ratio - observed_ratio)
-                    per_protein.append(
-                        (
-                            str(pdb_id),
-                            probs[item_idx][item_valid].detach().cpu(),
-                            labels[item_idx][item_valid].detach().cpu().long(),
-                        )
-                    )
+                        if prediction_record is not None:
+                            prediction_record["chain_ratio_head"] = predicted_ratio
+                            prediction_record["observed_ratio"] = observed_ratio
+                    if prediction_record is not None:
+                        prediction_records.append(prediction_record)
+                    per_protein.append((str(pdb_id), item_scores, item_targets))
             if hasattr(progress_iter, "set_postfix"):
                 progress_iter.set_postfix(loss=f"{losses[-1]:.4f}", skipped=skipped_nonfinite)
             if max_batches is not None and step >= max_batches:
@@ -972,6 +982,20 @@ def _evaluate(
     merged["eval_logits_require_grad"] = bool(logits_require_grad)
     merged["eval_parameter_grads_present"] = len(gradient_names)
     merged["eval_parameter_version_changes"] = len(version_changes)
+    if prediction_output is not None:
+        if prediction_output.exists():
+            raise FileExistsError(f"Refusing to overwrite evaluation predictions: {prediction_output}")
+        prediction_output.parent.mkdir(parents=True, exist_ok=True)
+        torch.save(
+            {
+                "schema_version": 1,
+                "description": "Per-chain residue probabilities and optional chain-ratio-head predictions",
+                "records": prediction_records,
+            },
+            prediction_output,
+        )
+        merged["prediction_output"] = str(prediction_output)
+        merged["prediction_records"] = len(prediction_records)
     return merged
 
 
@@ -1021,6 +1045,7 @@ def main() -> int:
     parser.add_argument("--eval-max-batches", type=int, default=None)
     parser.add_argument("--eval-test-each-epoch", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--eval-only", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--save-eval-predictions", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--freeze-non-prottrans", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--frozen-backbone-eval", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--train-chain-ratio-head-only", action=argparse.BooleanOptionalAction, default=False)
@@ -1057,6 +1082,8 @@ def main() -> int:
     model_config = _apply_config(args, config)
     if args.output_dir is None:
         raise ValueError("training.output_dir must be set in YAML config")
+    if args.save_eval_predictions and not args.eval_only:
+        raise ValueError("save_eval_predictions is restricted to eval_only runs")
 
     thresholds = _parse_float_grid(args.threshold_grid, [i / 100.0 for i in range(1, 100)])
     topk_fracs = _parse_float_grid(args.topk_fracs, [0.05, 0.10])
@@ -1392,6 +1419,7 @@ def main() -> int:
 
     if args.eval_only or args.epochs <= 0:
         model.zero_grad(set_to_none=True)
+        prediction_dir = args.output_dir / "predictions" if args.save_eval_predictions else None
         val_metrics = _evaluate(
             model,
             val_loader,
@@ -1403,6 +1431,7 @@ def main() -> int:
             thresholds=thresholds,
             topk_fracs=topk_fracs,
             strict_gradient_isolation=args.strict_eval_gradient_isolation,
+            prediction_output=prediction_dir / "val.pt" if prediction_dir is not None else None,
         )
         test_metrics = None
         test_at_val_threshold = None
@@ -1418,6 +1447,7 @@ def main() -> int:
                 thresholds=thresholds,
                 topk_fracs=topk_fracs,
                 strict_gradient_isolation=args.strict_eval_gradient_isolation,
+                prediction_output=prediction_dir / "test.pt" if prediction_dir is not None else None,
             )
             test_at_val_threshold = _metrics_at_threshold(test_metrics, val_metrics.get("best_threshold"))
         record = {

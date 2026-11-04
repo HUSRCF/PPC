@@ -1,0 +1,31 @@
+{
+  "source_commit": "25e7c6aba91cc7ad8931041dd340302e5c07fe16",
+  "archive_sha256": "84070a517d106861ff27b17ade7b133a9ea43ed00cb2efb6b257ff032260262c",
+  "remote_focused_tests": 10,
+  "K25_equivalence": {
+    "all_metrics_identical": true,
+    "all_source_and_blend_npz_byte_identical": true,
+    "files": {
+      "MSA_D_val.npz": {
+        "original": "63c800377ec0e98f65e0ecc83a4a3df7ad282b0bdacd5d1cb965c6c7c25d54ba",
+        "rebuilt": "63c800377ec0e98f65e0ecc83a4a3df7ad282b0bdacd5d1cb965c6c7c25d54ba"
+      },
+      "G2_plus_MSA_D_plus_K25_val.npz": {
+        "original": "c9c468f861b5fe713ab8c21f39e436cd6700b60d88d1796e544e6dfd52eb9340",
+        "rebuilt": "c9c468f861b5fe713ab8c21f39e436cd6700b60d88d1796e544e6dfd52eb9340"
+      },
+      "K25_val.npz": {
+        "original": "232569167da683ca610b9314bde296aad101128bdb83a80488df4ad0105481ef",
+        "rebuilt": "232569167da683ca610b9314bde296aad101128bdb83a80488df4ad0105481ef"
+      },
+      "G2_val.npz": {
+        "original": "61c1d7be0f05bcd70cac4e19b14dc650c4f08e6e05a13b3cf79b75cd3025b583",
+        "rebuilt": "61c1d7be0f05bcd70cac4e19b14dc650c4f08e6e05a13b3cf79b75cd3025b583"
+      }
+    },
+    "completion_audit": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/completed_validation_readouts_20261105/K25_equivalence/completion_audit.json"
+  },
+  "test_read": false,
+  "test_inference_permitted": false,
+  "new_weights_or_membership": false
+}

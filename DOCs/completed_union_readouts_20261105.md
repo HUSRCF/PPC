@@ -43,7 +43,7 @@ not modify old training snapshots. For example,after K26 finishes:
 
 ```bash
 /data/user/shuang886/.conda/envs/openfold/bin/python -u \
-  /path/to/frozen/readout_code/scripts/analysis/read_completed_union_arm.py \
+  /data/user/shuang886/PPC_M18/sequence_union_v2_20261030/completed_validation_readouts_20261105/code/scripts/analysis/read_completed_union_arm.py \
   --base /data/user/shuang886/PPC_M18/sequence_union_v2_20261030 \
   --experiment /data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105 \
   --policy /data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/code/DOCs/preTCN_interactions_20261105_fixed_blends.json \
@@ -70,3 +70,18 @@ binding for the helper's shared cohort table;the table is now watched before
 invocation and rechecked before audit publication. A dedicated mutation
 regression fails closed. The reviewer rechecked this fix and returned PASS.
 No model,training implementation,configuration or package was changed.
+
+## Actual HPC3 Acceptance
+
+Frozen analysis source is`25e7c6aba91cc7ad8931041dd340302e5c07fe16`;archive SHA-256
+is`84070a517d106861ff27b17ade7b133a9ea43ed00cb2efb6b257ff032260262c`.
+The independently frozen analysis directory is
+`/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/completed_validation_readouts_20261105`.
+
+HPC3 passed all10focused tests. The first real acceptance resolves the already
+completed K25 arm and repeats only its original declared fixed readout. All
+metrics are identical to the previous manual result,and all4source/blend NPZ
+files are byte-identical by SHA-256. This is an equivalence check,not another
+ensemble search. The acceptance and full input/completion hash audit are
+archived under this document's matching directory. Test permission remains
+false,and no old training snapshot is altered.

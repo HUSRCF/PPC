@@ -1,0 +1,25 @@
+{
+  "frozen_UTC": "2026-11-04T21:14:53.279354+00:00",
+  "system": "G2_plus_MSA_D_plus_K26",
+  "sources": {
+    "G2": 27,
+    "MSA_D": 13,
+    "K26": 36
+  },
+  "weights": {
+    "G2": 0.3333333333333333,
+    "MSA_D": 0.3333333333333333,
+    "K26": 0.3333333333333333
+  },
+  "validation_pooled_AP": 0.8005468730628196,
+  "validation_macro_AP": 0.7684925298590854,
+  "points": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/fixed_K26_blend",
+  "readout_audit_sha256": "03dfd0ba222b1f0800acf2f3b7da78f163203756d6be91a178ed8068a9f28c17",
+  "prospective_policy_sha256": "095fbeb025b90dc5a13ef64fd5686a1d3849a8891b006389b4f3597111ded7ec",
+  "analysis_source_commit": "25e7c6aba91cc7ad8931041dd340302e5c07fe16",
+  "test_seen": false,
+  "test_model_selection": false,
+  "test_threshold_search": false,
+  "rule": "Freeze first verified target-passing declared system;later trials cannot replace it based on test feedback",
+  "remaining_trials": "Allowed to finish as validation-only evidence"
+}

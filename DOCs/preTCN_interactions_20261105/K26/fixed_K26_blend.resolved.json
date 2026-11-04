@@ -1,0 +1,55 @@
+{
+  "policy_path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/code/DOCs/preTCN_interactions_20261105_fixed_blends.json",
+  "policy_sha256": "095fbeb025b90dc5a13ef64fd5686a1d3849a8891b006389b4f3597111ded7ec",
+  "completed_receipt": {
+    "job": "800442_1",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "01:16:13",
+    "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K26_G2_MSA_twohop_preTCN_pure_CE_seed49",
+    "epochs": 50,
+    "coverage_ok_all_epochs": true,
+    "validation_skips": 0,
+    "test_seen": false,
+    "metrics_sha256": "03ce622c2523911b69710e11083ee874d76b586b09608e8e0ae500d22e625ae0",
+    "selected": {
+      "epoch": 36,
+      "chain_ap_macro": 0.7550346663360384,
+      "pooled_ap": 0.7862070787197295,
+      "auroc": 0.8898136499805203
+    },
+    "macro_best": {
+      "epoch": 50,
+      "chain_ap_macro": 0.7576830753150499,
+      "pooled_ap": 0.7856414853922851
+    },
+    "checkpoint": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K26_G2_MSA_twohop_preTCN_pure_CE_seed49/epochs/epoch_036.pt",
+    "checkpoint_sha256": "90419cf7af8865b6d8d297892c269677542ee2d4f16c46766324d376f6545816",
+    "AMP_skips": 1,
+    "sanitized_gradient_elements": 1
+  },
+  "points": {
+    "G2": {
+      "epoch": 27,
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl",
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt"
+    },
+    "MSA_D": {
+      "epoch": 13,
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl",
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt"
+    },
+    "K26": {
+      "epoch": 36,
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K26_G2_MSA_twohop_preTCN_pure_CE_seed49/metrics.jsonl",
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K26_G2_MSA_twohop_preTCN_pure_CE_seed49/predictions/val_epoch_036.pt"
+    }
+  },
+  "blends": {
+    "G2_plus_MSA_D_plus_K26": [
+      "G2",
+      "MSA_D",
+      "K26"
+    ]
+  }
+}

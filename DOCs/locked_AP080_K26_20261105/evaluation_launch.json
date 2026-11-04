@@ -1,0 +1,55 @@
+{
+  "job": "800590",
+  "submitted_UTC": "2026-11-04T21:16:20.154267+00:00",
+  "partition": "acd_ue",
+  "GPU": 1,
+  "CPUs": 12,
+  "memory_GiB": 192,
+  "time_limit": "02:00:00",
+  "lock": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/locked_AP080_K26_20261105/lock.json",
+  "lock_sha256": "01839ba58a2b7a4f9d929f720bf44f75d177534b8f539728865387b3b9bd14d7",
+  "system": "G2_plus_MSA_D_plus_K26",
+  "epochs": {
+    "G2": 27,
+    "MSA_D": 13,
+    "K26": 36
+  },
+  "gates": {
+    "f1": 0.5,
+    "mcc": 0.61
+  },
+  "source_commit": "25e7c6aba91cc7ad8931041dd340302e5c07fe16",
+  "producer_sha256": "748bcf4adc6480a2e189bdbe67b9e9e06d5d94f0a9e33685e4a7351aeae7e625",
+  "scorer_sha256": "03ecbe9880b51bcff77978265e7dbd8e8e4fe46abc58c04fb4684295e52a2002",
+  "producer_command": [
+    "/data/user/shuang886/.conda/envs/openfold/bin/python",
+    "-u",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/completed_validation_readouts_20261105/code/scripts/analysis/run_locked_union_inference.py",
+    "--lock",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/locked_AP080_K26_20261105/lock.json",
+    "--lock-sha256",
+    "01839ba58a2b7a4f9d929f720bf44f75d177534b8f539728865387b3b9bd14d7",
+    "--output",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/locked_AP080_K26_20261105/inference",
+    "--device",
+    "cuda:0"
+  ],
+  "scorer_command": [
+    "/data/user/shuang886/.conda/envs/openfold/bin/python",
+    "-u",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/completed_validation_readouts_20261105/code/scripts/analysis/locked_union_evaluation.py",
+    "score-test",
+    "--lock",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/locked_AP080_K26_20261105/lock.json",
+    "--lock-sha256",
+    "01839ba58a2b7a4f9d929f720bf44f75d177534b8f539728865387b3b9bd14d7",
+    "--predictions",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/locked_AP080_K26_20261105/inference/predictions.json",
+    "--output",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/locked_AP080_K26_20261105/test_evaluation"
+  ],
+  "protocol": "All member and combined validation replays must pass before test loader opens;strict no-grad and unchanged model/input proofs;score once at fixed gates",
+  "test_model_selection": false,
+  "test_threshold_search": false,
+  "overwrite_existing_outputs": false
+}

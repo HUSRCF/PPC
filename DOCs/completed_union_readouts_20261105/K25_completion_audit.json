@@ -1,0 +1,51 @@
+{
+  "inputs": {
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/code/DOCs/preTCN_interactions_20261105_fixed_blends.json": "095fbeb025b90dc5a13ef64fd5686a1d3849a8891b006389b4f3597111ded7ec",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/selection_policy.json": "e2ca7019a3d14dd0a131e6b98762ddff94204fa9dd490d63e3965dd4e90308b0",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/jobs.json": "a34996a1db910d7cf737741faf501b63bab30d2706e161b060485ea11b93e755",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/launch.json": "b793371df8079d1438925ca8769adfeeb2d6f5ae5bc80ece945ab9b38d4214aa",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/configs/K25_G2_MSA_twohop_preTCN_ls002_seed49.json": "26980da92eda9c9f91068bc6a23b627f2fd70eacdca38abe245d7de0bee9e093",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49/config.json": "1dd97f2231ed38f699ca4dabb4f0c25cabc6736e6ecdd6d677a06d3dea92658f",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49/metrics.jsonl": "83a10a701327fcb9cb3ce03363bb54ed4c99b71488b2ea4ad42523e91fecae81",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt": "69ad57395d4acb629448dfeec1f3d9f853a74849e1a58b2888ac67710a358b94",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl": "ab04df44e05b73fe9d0077991e3ccd87af0f98f2f8f415c95c86c53a4765d44a",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt": "99d2ca338abefe69f8c02cd0ee16e920d4ed1c67dbfa2e00e69691e87a03d558",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl": "e93afc992d3e3a75c3f7441735917ad13cddf9971c4169f7fbb9546da1a9d56a",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49/predictions/val_epoch_013.pt": "a816bfa4385d5be48d020c487f9596c1585be6dbb504a9ec815b2de617bd09d0",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49/epochs/epoch_013.pt": "105428325d993bfa7c73ab9732da25ea6812a05cf26c58554a9e15bd4dc02fc9",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/data/sequence_groups.tsv": "44129de1f7f3b1eba3c6651070df3a9220506639e0721a8931b65686c3a1c57c",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/completed_validation_readouts_20261105/K25_equivalence.resolved.json": "6cb35fbf2408902778bb9966b0f17a8fa5c17a68307f468cb169c3d562d48f29"
+  },
+  "spec_sha256": "6cb35fbf2408902778bb9966b0f17a8fa5c17a68307f468cb169c3d562d48f29",
+  "source_code_sha256": "2e517d9664703af9ad4f5e0cd0957beb85695251fc3e88954ba35e70da4784d5",
+  "completed_receipt": {
+    "job": "800442_0",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:38:29",
+    "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49",
+    "epochs": 50,
+    "coverage_ok_all_epochs": true,
+    "validation_skips": 0,
+    "test_seen": false,
+    "metrics_sha256": "83a10a701327fcb9cb3ce03363bb54ed4c99b71488b2ea4ad42523e91fecae81",
+    "selected": {
+      "epoch": 13,
+      "chain_ap_macro": 0.7606199837049904,
+      "pooled_ap": 0.7873330252000305,
+      "auroc": 0.8937814754765543
+    },
+    "macro_best": {
+      "epoch": 13,
+      "chain_ap_macro": 0.7606199837049904,
+      "pooled_ap": 0.7873330252000305
+    },
+    "checkpoint": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49/epochs/epoch_013.pt",
+    "checkpoint_sha256": "105428325d993bfa7c73ab9732da25ea6812a05cf26c58554a9e15bd4dc02fc9",
+    "AMP_skips": 1,
+    "sanitized_gradient_elements": 2
+  },
+  "test_read": false,
+  "test_inference_permitted": false,
+  "limitation": "Validation readout only;strict checkpoint lock/replay still required"
+}

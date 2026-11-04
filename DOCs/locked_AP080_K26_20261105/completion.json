@@ -1,0 +1,23 @@
+{
+  "G2": {
+    "job": "799523_4",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:31:22",
+    "node": "ACD1-19"
+  },
+  "MSA_D": {
+    "job": "799171_12",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:30:49",
+    "node": "ACD1-14"
+  },
+  "K26": {
+    "job": "800442_1",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "01:16:13",
+    "node": "ACD1-23"
+  }
+}

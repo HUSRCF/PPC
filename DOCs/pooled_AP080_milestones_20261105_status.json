@@ -1,15 +1,16 @@
 {
-  "observed_UTC": "2026-11-04T20:57:00.420066+00:00",
-  "stage": "validation_search",
+  "observed_UTC": "2026-11-04T21:16:20.154267+00:00",
+  "stage": "locked_test_evaluation_submitted",
   "target_pooled_AP": 0.8,
-  "target_verified": false,
+  "target_verified": true,
   "leading_validation_point": {
-    "name": "G2_plus_MSA_D_plus_K18",
-    "macro_AP": 0.7689864022799697,
-    "pooled_AP": 0.7997048805648456,
-    "gap_to_target": 0.0002951194351544,
-    "evidence": "geometry_position_depth_20261105_results.json",
-    "interpretation": "Highest completed validation point estimate;not statistically confirmed superiority over prior ensemble"
+    "name": "G2_plus_MSA_D_plus_K26",
+    "macro_AP": 0.7684925298590854,
+    "pooled_AP": 0.8005468730628196,
+    "gap_to_target": 0,
+    "margin_above_target": 0.0005468730628196,
+    "evidence": "preTCN_interactions_20261105/K26/summary.json",
+    "interpretation": "First verified declared ensemble crossing operational validation target;adaptive validation,not independent-test evidence"
   },
   "test_evaluated": false,
   "test_model_selection": false,
@@ -60,10 +61,9 @@
   "CPU_diagnostic_is_not_test_acceptance": true,
   "RCSB_asset_preflight": "RCSB_single_union_asset_preflight_20261105.md",
   "next_steps": [
-    "Complete declared validation runs and fixed readouts",
-    "At full-precision eligible AP>=0.80,freeze validation-selected system and gates",
-    "Evaluate locked test without model or gate selection on test",
-    "Audit and attempt whole-RCSB single-chain union training"
+    "Verify locked-system validation replay and fixed test evaluation",
+    "Archive full fixed test metrics/coverage/no-gradient integrity regardless of outcome",
+    "Audit and attempt whole-RCSB single-chain union training without test-guided model changes"
   ],
   "contract": "pooled_AP080_milestones_20261105_policy.json",
   "tcn_context_job": "800559",
@@ -84,5 +84,38 @@
     "800559_0": "RUNNING",
     "800559_1": "RUNNING"
   },
-  "latest_observation_scope": "Startup/ongoing jobs only;completed readouts still require successful50epochs and provenance checks"
+  "latest_observation_scope": "Startup/ongoing jobs only;completed readouts still require successful50epochs and provenance checks",
+  "previous_validation_leader": {
+    "name": "G2_plus_MSA_D_plus_K18",
+    "macro_AP": 0.7689864022799697,
+    "pooled_AP": 0.7997048805648456
+  },
+  "locked_system": {
+    "lock": "locked_AP080_K26_20261105/lock.json",
+    "sha256": "01839ba58a2b7a4f9d929f720bf44f75d177534b8f539728865387b3b9bd14d7",
+    "members": [
+      "G2",
+      "MSA_D",
+      "K26"
+    ],
+    "epochs": {
+      "G2": 27,
+      "MSA_D": 13,
+      "K26": 36
+    },
+    "weights": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "gates": {
+      "f1": 0.5,
+      "mcc": 0.61
+    }
+  },
+  "test_evaluation_job": "800590",
+  "test_evaluation_status": "submitted;full validation replay and final test coverage/terminal state still required",
+  "locked_system_GPU_replay_pending": true,
+  "test_input_read_stage": "Inspect guarded producer receipts;do not infer current read stage from job submission",
+  "additional_trials_role": "May finish as validation-only evidence;cannot replace locked system based on test feedback"
 }

@@ -1,0 +1,20 @@
+{
+  "source": "User instruction2026-11-05:after PDBTM pooledAP0.80,evaluate test without test-based model selection,then try whole-RCSB training",
+  "validation_only_target": 0.8,
+  "macro_guardrail": 0.7417948466002535,
+  "require_completed_epochs": 50,
+  "validation_queries": 1075,
+  "validation_residues": 404267,
+  "eligibility": "Successful terminal run,full coverage,no validation skips,source and label alignment,full-precision pooledAP>=0.80",
+  "selection_data": "validation only",
+  "before_test": "Freeze exact system,checkpoints and hashes,ensemble weights,feature normalization and validation thresholds",
+  "test_scope": "Current union-v2 test cohort;expected724exactsequences;not the old2392context-chain benchmark and not a new sealed holdout",
+  "test_model_selection": false,
+  "test_threshold_search": false,
+  "test_feedback_to_locked_model_or_config": false,
+  "later_running_trials": "May finish;do not replace locked result based on test feedback",
+  "post_test_action": "Audit and attempt whole-RCSB training with same single-chain all-partner-union PPIS task",
+  "forbidden_task_mix": ["pairwise PPIS", "PDBbind-BioLiP ligand joint set", "COACH420", "Holo4k"],
+  "RCSB_requirements": ["observed sequence and insertion-code mapping", "5.5A heavy-atom biological-assembly union labels", "SI-controlled split and evaluation-overlap audit", "ESM-C and predicted-structure feature compatibility", "train-only normalization", "explicit MSA coverage or documented staged pretraining"],
+  "completion_requires": ["verified validation target", "locked test evaluation with no test-based selection", "whole-RCSB training attempt"]
+}

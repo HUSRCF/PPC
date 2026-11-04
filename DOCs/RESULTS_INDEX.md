@@ -35,6 +35,7 @@ included. This index closes that gap. M7c is not the latest completed model.
 | MSA bottleneck width versus matched capacity, K14-K17 | [Four-arm design](msa_bottleneck_width_20261105.md), [job800186 and startup receipts](msa_bottleneck_width_20261105_launch.json), [prospective fixed-blend policy](msa_bottleneck_width_20261105_fixed_blends.json) |
 | Fusion-position x geometry-depth missing cell, K18 | [Controlled design](geometry_position_depth_20261105.md), [job800231 and startup receipts](geometry_position_depth_20261105_launch.json), [fixed-blend policy](geometry_position_depth_20261105_fixed_blend.json) |
 | Fixed K3 ensembles: exact raw-score reproduction and 55-component uncertainty | [Interpretation](validation_ensemble_diagnostics_20261105/README.md), [effects and intervals](validation_ensemble_diagnostics_20261105/summary.json), [integrity receipts](validation_ensemble_diagnostics_20261105/reproduction_receipt.json) |
+| AP0.80 milestone: validation lock, test evaluation, then whole-RCSB | [User contract and leakage safeguards](pooled_AP080_milestones_20261105.md), [machine-readable policy](pooled_AP080_milestones_20261105_policy.json) |
 
 ## Original Frozen Test Results
 

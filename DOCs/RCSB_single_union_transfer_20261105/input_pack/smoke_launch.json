@@ -1,0 +1,33 @@
+{
+  "UTC": "2026-11-04T22:39:00.345456+00:00",
+  "command": [
+    "/data/user/shuang886/.conda/envs/openfold/bin/python",
+    "-u",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/input_pack/code/scripts/preparations/m18_union/pack_rcsb_sequence_inputs.py",
+    "--union",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/label_build/full_v1",
+    "--esmc-bank",
+    "/data/user/shuang886/Folding/Dataset/derived/tminter3_rcsb_ppis_ge50_v1/TMINTER3-ESMC/features/unique",
+    "--expected-sequences",
+    "251267",
+    "--output",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/training_inputs/smoke8",
+    "--workers",
+    "2",
+    "--smoke-count",
+    "8"
+  ],
+  "exit_code": 0,
+  "source_commit": "74e5ae13e0085fb1460098d385b0c961a0ce13a1",
+  "archive_sha256": "7c00c210fca32dc7915e09807d3a428ba61aa89e7668ce12a67253957d3cb63b",
+  "review": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "verdict": "PASS;immutable-bank contract required"
+  },
+  "known_ESMC_writers_terminal": true,
+  "local_tests": {
+    "passed": 136,
+    "optional_skipped": 2
+  }
+}

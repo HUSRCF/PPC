@@ -1,0 +1,28 @@
+{
+  "UTC": "2026-11-04T22:43:31.255635+00:00",
+  "job": "800714",
+  "accounting": "800714|COMPLETED|0:0|00:00:41\n",
+  "CUDA_probe": "{'GPU': 'NVIDIA H100 80GB HBM3', 'VRAM': 85009367040}",
+  "configuration_review": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "verdict": "PASS"
+  },
+  "train_queries": 16,
+  "val_queries": 16,
+  "test_queries": 0,
+  "optimizer_steps": 1,
+  "AMP_skips": 0,
+  "val_skips": 0,
+  "eval_gradient_isolation": true,
+  "model_parameters": 2379010,
+  "checkpoint_initialization": null,
+  "feature_inputs": "ESM-C-only;no structure/MSA/contact",
+  "full_input_audit_still_required": true,
+  "formal_whole_training_started": false,
+  "performance_used_for_selection": false,
+  "scope": "Functional GPU smoke only;do not report its AP as a whole-dataset experiment",
+  "metrics_sha256": "f12d0b082ec9b16a02dc5308313dd61974b0788d30f2988b755dedb306df81dc",
+  "runtime_config_sha256": "636d863809c0519bbabd2aed34c7969a3df26afd9b9aff7258c1accdbc882644",
+  "input_audit_sha256": "e512e7134bf89a6b3c183b7f4e7162d729a1b7c9ee9e99e9272653a13ff64ec0"
+}

@@ -182,3 +182,31 @@ A planned3epoch,seed49,whole-native-train/validation ESM-C-only pilot is in
 checkpoint selection. It is not a full-convergence result or an isolated
 data-size ablation. The planned job may launch only after complete packer
 acceptance,configuration review and a real GPU smoke. No test is enabled.
+
+## Current Execution Status
+
+Full packer PID1313931 on ACD-Login-3,8workers,nice10,started
+2026-11-04T22:39:42UTC. At268.6seconds it had independently audited and
+packed18000of251267queries,without a failure marker. At the observed rate,
+remaining content/metadata work is roughly one hour;this is a preliminary
+I/O estimate,not a training ETA. It stays in the background without a GPU.
+No full`ready.json`exists yet,and actual whole-data training has not started.
+
+The independent planned-config review passed:gpt-6-luna max confirmed the
+scratch/no-test path and no hidden structural or MSA requirement,plus CPU
+forward/backward/optimizer checks on the actual2379010parameter network.
+
+GPU smoke800714 on acd_ue completed exit0 in41seconds on an H10080GB.
+It used16native train and16native val queries,zero test queries,and one
+successful optimizer step with zero AMP skips/sanitized gradients. All16val
+records were evaluated with gradients disabled and no parameter changes.
+All32feature/metadata/label hashes were checked against the packing audit;
+the supplementary check was post-submission and is not described as a
+pre-submission seal. Smoke scores are not used for architecture selection
+or reported as full-RCSB results. Its checkpoint will not initialize the
+formal scratch run. Full input acceptance and the final split contract
+remain prerequisites for the actual whole-data pilot.
+
+Launch/config/input-hash/acceptance receipts are archived in the document's
+matching`input_pack/`and`gpu_smoke/`directories. No package or Torch change
+was made,and the original frozen PDBTM test system remains unchanged.

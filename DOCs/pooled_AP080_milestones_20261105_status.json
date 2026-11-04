@@ -1,5 +1,5 @@
 {
-  "observed_UTC": "2026-11-04T22:36:59+00:00",
+  "observed_UTC": "2026-11-04T22:44:30+00:00",
   "stage": "RCSB_preparation_after_locked_test",
   "target_pooled_AP": 0.8,
   "target_verified": true,
@@ -157,6 +157,17 @@
     "native_split_counts": {"train": 201013, "val": 25127, "test": 25127},
     "input_packer_review": "gpt-6-luna max PASS with immutable-bank lifetime contract",
     "planned_training_input": "ESM-C-only scratch;explicitly not full M18 geometry/MSA system",
-    "planned_training_config": "configs/experiments/20261105_rcsb_single_union/R0_esmc_only_pilot_seed49.json"
+    "planned_training_config": "configs/experiments/20261105_rcsb_single_union/R0_esmc_only_pilot_seed49.json",
+    "planned_config_review": "gpt-6-luna max PASS;actual CPU forward/backward/optimizer verified",
+    "input_pack_PID": 1313931,
+    "input_pack_workers": 8,
+    "input_pack_latest_completed": 18000,
+    "input_pack_latest_elapsed_seconds": 268.59823409700766,
+    "input_pack_formal_ready": false,
+    "GPU_smoke_job": "800714",
+    "GPU_smoke_passed": true,
+    "GPU_smoke_test_queries": 0,
+    "GPU_smoke_scope": "16native train/16native val functional smoke;not formal whole-RCSB training",
+    "formal_whole_training_started": false
   }
 }

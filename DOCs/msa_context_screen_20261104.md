@@ -1,5 +1,7 @@
 # Post-MSA sequence-context screen
 
+Completed: all three array799764 arms finished50 epochs with exit0, including read-only train/validation diagnostics. See [final results and interpretation](msa_context_screen_20261104_results.md). Initial launch/smoke observations below are retained as historical provenance, not current job state.
+
 ## Why this screen
 
 The completed D_encoder seed49 checkpoint at epoch13 was reevaluated with model.eval(), no optimizer and gradient isolation. This was not the training-mode running metric.

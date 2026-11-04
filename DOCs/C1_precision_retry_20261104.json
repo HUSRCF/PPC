@@ -1,0 +1,45 @@
+{
+  "job": 799805,
+  "partition": "acd_ue",
+  "source_commit": "4ea83d975d51ba68fc29564b8b27e197dfd337bc",
+  "source_archive_sha256": "5959639727a9111cc299c0fb3fa121a6c7c8f155fd111430c10ca99d8f9b8047",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/retries/C1_fp32_accum_20261104",
+  "config_sha256": "c909e847b7b012ba4ed86a3640bad8321832ca89e42d5cf40e350b8c903207d5",
+  "verified_config_changes": {
+    "data": [],
+    "model": [],
+    "training": [
+      "output_dir"
+    ],
+    "metadata": "precision-retry provenance only"
+  },
+  "from_scratch": true,
+  "seed": 49,
+  "epochs": 50,
+  "test_evaluated": false,
+  "old_run_preserved": true,
+  "tests": {
+    "total": 61,
+    "passed": 59,
+    "optional_skipped": 2
+  },
+  "reviewer": "gpt-6-luna max; no P0/P1/P2 blockers",
+  "CUDA_precision_acceptance": {
+    "torch": "2.7.1+cu128",
+    "GPU": "NVIDIA H100 80GB HBM3",
+    "length": 4096,
+    "legacy_dtype": "float16",
+    "legacy_infinite_denominators": 32768,
+    "fixed_output_finite": true,
+    "gradients_finite": true,
+    "max_abs_difference_from_FP32": 0.0003552436828613281
+  },
+  "real_input_smoke_passed": true,
+  "formal_epochs_at_verification": 13,
+  "formal_AMP_skips_at_verification": 1,
+  "formal_sanitized_gradient_elements_at_verification": 1,
+  "best_macro_epoch_at_verification": 13,
+  "validation_macro_AP_at_verification": 0.7241274728077729,
+  "validation_pooled_AP_at_verification": 0.7523965361374221,
+  "state_at_last_check": "RUNNING; numerical CUDA and real-input gates passed"
+}

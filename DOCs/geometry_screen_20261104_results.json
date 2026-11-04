@@ -1,0 +1,250 @@
+{
+  "date": "2026-11-04",
+  "scope": "same1075 union/OF3 validation sequences; seed49; D loss;50 epochs; no test",
+  "selection": "Maximum validation macro AP; every displayed co-metric at that epoch; pooled-selected points stored separately",
+  "runs": [
+    {
+      "task": 0,
+      "name": "B0_fixed90",
+      "epochs": 50,
+      "best_epoch": 27,
+      "val": {
+        "chain_ap_macro": 0.7260682831801231,
+        "pooled_ap": 0.7563427497805435,
+        "trapezoid_auprc": 0.7563411090085581,
+        "auroc": 0.8696112421183877,
+        "f1_best_threshold": 0.6826027794508019,
+        "best_threshold": 0.45,
+        "mcc_best_threshold": 0.5678410167052126,
+        "best_mcc_threshold": 0.6,
+        "chain_ratio_mae_raw": 0.059201338168146996,
+        "loss": 0.5179123968024587
+      },
+      "pooled_selected": {
+        "epoch": 27,
+        "macro_AP": 0.7260682831801231,
+        "pooled_AP": 0.7563427497805435
+      },
+      "amp_skips": 2,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "c7158f2e00c69731e837e5bacc74ecfc35f9608bc5017544fcac71f7e76d32d4",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/B0_fixed90_seed49"
+    },
+    {
+      "task": 1,
+      "name": "B1_fixed91q",
+      "epochs": 50,
+      "best_epoch": 18,
+      "val": {
+        "chain_ap_macro": 0.7270780205854963,
+        "pooled_ap": 0.7554166906107957,
+        "trapezoid_auprc": 0.7554153008392177,
+        "auroc": 0.8716582030942877,
+        "f1_best_threshold": 0.6816261856699443,
+        "best_threshold": 0.43,
+        "mcc_best_threshold": 0.559089320802392,
+        "best_mcc_threshold": 0.49,
+        "chain_ratio_mae_raw": 0.06445137933069883,
+        "loss": 0.45628547973411027
+      },
+      "pooled_selected": {
+        "epoch": 27,
+        "macro_AP": 0.7247456118861585,
+        "pooled_AP": 0.7560576012098751
+      },
+      "amp_skips": 2,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "1b06eb169f0469baacf653e13a584d00b27efb2b8ef33a39e130564fd1531f3a",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/B1_fixed91q_seed49"
+    },
+    {
+      "task": 2,
+      "name": "G0_of3_mean",
+      "epochs": 50,
+      "best_epoch": 20,
+      "val": {
+        "chain_ap_macro": 0.7398356668575512,
+        "pooled_ap": 0.7573065805096697,
+        "trapezoid_auprc": 0.7573051528777862,
+        "auroc": 0.8740112569891954,
+        "f1_best_threshold": 0.6794285461541864,
+        "best_threshold": 0.24,
+        "mcc_best_threshold": 0.5620101429529345,
+        "best_mcc_threshold": 0.38,
+        "chain_ratio_mae_raw": 0.08074605276938095,
+        "loss": 0.48982042029846545
+      },
+      "pooled_selected": {
+        "epoch": 21,
+        "macro_AP": 0.7392678210081718,
+        "pooled_AP": 0.769869756377614
+      },
+      "amp_skips": 2,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "051da9aa5fc8424e6512ae606944ab339c85f3ef57d1466edb49a0fc885cc825",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G0_of3_mean_seed49"
+    },
+    {
+      "task": 3,
+      "name": "G1_edge_mlp",
+      "epochs": 50,
+      "best_epoch": 20,
+      "val": {
+        "chain_ap_macro": 0.7391084674013826,
+        "pooled_ap": 0.7676640536528386,
+        "trapezoid_auprc": 0.7676627915300646,
+        "auroc": 0.8786886191581809,
+        "f1_best_threshold": 0.6898007571317136,
+        "best_threshold": 0.25,
+        "mcc_best_threshold": 0.5747379793629411,
+        "best_mcc_threshold": 0.35,
+        "chain_ratio_mae_raw": 0.06798280551509801,
+        "loss": 0.4793098402023315
+      },
+      "pooled_selected": {
+        "epoch": 27,
+        "macro_AP": 0.7383557106631278,
+        "pooled_AP": 0.7706072705302164
+      },
+      "amp_skips": 2,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "4dcff05b16fdb4197680bf054a908dc941c010c9bc48c5579cb6cc0f083739f7",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G1_edge_mlp_seed49"
+    },
+    {
+      "task": 4,
+      "name": "G2_edge_attention",
+      "epochs": 50,
+      "best_epoch": 27,
+      "val": {
+        "chain_ap_macro": 0.7467948466002535,
+        "pooled_ap": 0.7802500425571836,
+        "trapezoid_auprc": 0.7802488370745561,
+        "auroc": 0.8865160256976741,
+        "f1_best_threshold": 0.7034274722392236,
+        "best_threshold": 0.41,
+        "mcc_best_threshold": 0.5953527811915095,
+        "best_mcc_threshold": 0.62,
+        "chain_ratio_mae_raw": 0.0563019457650046,
+        "loss": 0.46844161047491917
+      },
+      "pooled_selected": {
+        "epoch": 27,
+        "macro_AP": 0.7467948466002535,
+        "pooled_AP": 0.7802500425571836
+      },
+      "amp_skips": 2,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "ab04df44e05b73fe9d0077991e3ccd87af0f98f2f8f415c95c86c53a4765d44a",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49"
+    },
+    {
+      "task": 5,
+      "name": "G3_gvp",
+      "epochs": 50,
+      "best_epoch": 44,
+      "val": {
+        "chain_ap_macro": 0.7413733288395253,
+        "pooled_ap": 0.7613903858753385,
+        "trapezoid_auprc": 0.7613887692000642,
+        "auroc": 0.8745029778946729,
+        "f1_best_threshold": 0.6818135245901639,
+        "best_threshold": 0.27,
+        "mcc_best_threshold": 0.5658084845880427,
+        "best_mcc_threshold": 0.56,
+        "chain_ratio_mae_raw": 0.05691055831347787,
+        "loss": 0.5218791122491969
+      },
+      "pooled_selected": {
+        "epoch": 24,
+        "macro_AP": 0.7400506717656153,
+        "pooled_AP": 0.7657050632012125
+      },
+      "amp_skips": 1,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "6116efe6df13cd228bfbb9109b2a528668de7e84e6a6c5831480054f18ab4256",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G3_gvp_seed49"
+    },
+    {
+      "task": 6,
+      "name": "C0_full_attention",
+      "epochs": 50,
+      "best_epoch": 19,
+      "val": {
+        "chain_ap_macro": 0.7263542078253022,
+        "pooled_ap": 0.7577870650962305,
+        "trapezoid_auprc": 0.7577855465822694,
+        "auroc": 0.8714353231882066,
+        "f1_best_threshold": 0.6804869965638137,
+        "best_threshold": 0.51,
+        "mcc_best_threshold": 0.5617726759669331,
+        "best_mcc_threshold": 0.75,
+        "chain_ratio_mae_raw": 0.07115433545133402,
+        "loss": 0.5214660264447678
+      },
+      "pooled_selected": {
+        "epoch": 19,
+        "macro_AP": 0.7263542078253022,
+        "pooled_AP": 0.7577870650962305
+      },
+      "amp_skips": 1,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "e09c44600f25f01e4a4a041eef78effe9f80b0b2962af90d9ef60badfa607ff7",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/C0_full_attention_seed49"
+    },
+    {
+      "task": 7,
+      "name": "C1_linear_full",
+      "epochs": 50,
+      "best_epoch": 50,
+      "val": {
+        "chain_ap_macro": 0.6522229393460178,
+        "pooled_ap": 0.6788250695644844,
+        "trapezoid_auprc": 0.6788227712323032,
+        "auroc": 0.8297138981125982,
+        "f1_best_threshold": 0.6267187893448475,
+        "best_threshold": 0.44,
+        "mcc_best_threshold": 0.47882429768531615,
+        "best_mcc_threshold": 0.47,
+        "chain_ratio_mae_raw": 0.1172601227895465,
+        "loss": 0.5601398420888324
+      },
+      "pooled_selected": {
+        "epoch": 50,
+        "macro_AP": 0.6522229393460178,
+        "pooled_AP": 0.6788250695644844
+      },
+      "amp_skips": 166,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "9f79b1f4bdaf44d7599087e07d8fe5f59e3d4a7083bdff3a8b83b8ad63cb12f6",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/C1_linear_full_seed49"
+    }
+  ],
+  "scientific_validity": {
+    "C1_linear_full": "NUMERICAL_FAILURE:166 AMP skipped updates and11388738978 cumulative sanitized gradient elements; exclude from architecture-efficacy inference until fixed retry",
+    "others": "Completed50 epochs; zero skipped validation batches; single-seed exploratory comparison"
+  },
+  "precision_issue": {
+    "module": "LinearAttentionContext",
+    "mechanism": "float32 inputs alone do not prevent autocast from lowering einsum contractions; FP16 denominator/numerator overflow for long chains",
+    "same_torch_environment_CPU_toy": {
+      "torch": "2.7.1+cu128",
+      "length": 4096,
+      "head_width": 32,
+      "correct_denominator": 131072,
+      "autocast_dtype": "float16",
+      "infinite_denominators": 4096
+    },
+    "regression": "4096-long FP16 module test failed before the fix, passes after explicit autocast-disabled FP32 accumulation",
+    "attribution_limit": "Definite unsafe numerical mechanism identified; full attribution of the old AP loss requires corrected retraining"
+  },
+  "retry": "Fresh C1 only, separate directory; no old run overwritten"
+}

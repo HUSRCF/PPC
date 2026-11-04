@@ -19,8 +19,9 @@ included. This index closes that gap. M7c is not the latest completed model.
 | November exact-sequence union + OpenFold3 A-E and R0-R2 | [Methods and results](m18_union_of3_20261104/README.md), [checkpoint/feature index](m18_union_of3_20261104/asset_index.json) |
 | D/E x direct-MSA: seed49 completed, seed50/51 still queued | [Completed seed49 results](msa_factorial_20261104_seed49_results.md), [protocol](MSA_FACTORIAL_20261104.md), [submitted jobs](msa_factorial_20261104_launch.json) |
 | Fixed validation MSA blends and per-sequence/component analysis | [Results and interpretation](msa_complementarity_20261104.md), [metrics/bootstrap](msa_complementarity_20261104/summary.json), [per-sequence table](msa_complementarity_20261104/per_chain_deltas.csv) |
-| OF3 geometry/global-context architecture screen | [Protocol and controls](geometry_screen_20261104.md), [submitted jobs](geometry_screen_20261104_launch.json); final B0/B1 results in the complementarity report |
-| Post-MSA BiGRU / fusion-position / capacity controls and train AP | [Protocol and train/val diagnostic](msa_context_screen_20261104.md), [submitted jobs and evidence](msa_context_screen_20261104_launch.json) |
+| Completed OF3 geometry/global-context screen | [Final matrix and C1 numerical caveat](geometry_screen_20261104_results.md), [full metrics and hashes](geometry_screen_20261104_results.json), [protocol](geometry_screen_20261104.md) |
+| Completed post-MSA BiGRU / fusion-position / capacity controls and train AP | [Final results](msa_context_screen_20261104_results.md), [metrics and hashes](msa_context_screen_20261104_results.json), [protocol](msa_context_screen_20261104.md) |
+| Gated DeltaNet feasibility; no installation or training yet | [Proposed bidirectional adaptation and dependency audit](deltanet_feasibility_20261104.md) |
 
 ## Original Frozen Test Results
 

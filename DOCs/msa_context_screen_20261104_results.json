@@ -1,0 +1,207 @@
+{
+  "date": "2026-11-04",
+  "scope": "Validation-only single-seed context screen; not a sealed-test result",
+  "job_array": 799764,
+  "partition": "acd_ue",
+  "source_execution_commit": "03014ab605e3a52f73deb9228086bdad7f405e06",
+  "common_contract": {
+    "seed": 49,
+    "epochs": 50,
+    "loss": "D",
+    "descriptors": "Original frozen 90D",
+    "inputs": [
+      "ESM-C MLC",
+      "MSA Transformer query-row 768D",
+      "ESM2 contact graph"
+    ],
+    "split": "sequence_union_v2_20261030",
+    "train_sequences": 4868,
+    "validation_sequences": 1075,
+    "test_evaluated": false,
+    "primary_checkpoint_selection": "Maximum validation chain-macro AP",
+    "co_primary_metric": "Validation pooled AP",
+    "diagnostic_only": "Ratio MAE",
+    "from_scratch": true
+  },
+  "baseline": {
+    "name": "A_D_encoder",
+    "best_epoch": 13,
+    "macro_AP": 0.7343365679087196,
+    "pooled_AP": 0.7607603624886583,
+    "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/epochs/epoch_013.pt",
+    "diagnostic_sha256": "3c0da2d853af34eed3d413e22dae84f384cd392c070b4632e391a11e9ed6ee49",
+    "diagnostic": {
+      "train": {
+        "chain_ap_macro": 0.8074700355379492,
+        "pooled_ap": 0.8630301585030431,
+        "auroc": 0.942460082804017,
+        "loss": 0.3308658907274144,
+        "valid_chains": 4868,
+        "valid_residues": 1754693,
+        "chain_ratio_mae_raw": 0.08610734103361165,
+        "eval_grad_mode_enabled": false,
+        "eval_parameter_version_changes": 0,
+        "eval_parameter_grads_present": 0
+      },
+      "val": {
+        "chain_ap_macro": 0.7343365538749322,
+        "pooled_ap": 0.7607603651615791,
+        "auroc": 0.8752004482818839,
+        "loss": 0.4608839517693187,
+        "valid_chains": 1075,
+        "valid_residues": 404267,
+        "chain_ratio_mae_raw": 0.0746252509795649,
+        "eval_grad_mode_enabled": false,
+        "eval_parameter_version_changes": 0,
+        "eval_parameter_grads_present": 0
+      }
+    }
+  },
+  "arms": [
+    {
+      "name": "C_bigru",
+      "epochs": 50,
+      "best_epoch": 14,
+      "macro_AP": 0.7344654220283638,
+      "pooled_AP": 0.7604311010380556,
+      "pooled_selected": {
+        "epoch": 27,
+        "macro_AP": 0.7320648058167161,
+        "pooled_AP": 0.7643633852792138
+      },
+      "diagnostic": {
+        "train": {
+          "chain_ap_macro": 0.8208577521664056,
+          "pooled_ap": 0.8701803207151304,
+          "loss": 0.31610816874179376,
+          "valid_chains": 4868,
+          "valid_residues": 1754693,
+          "eval_grad_mode_enabled": false,
+          "eval_parameter_version_changes": 0,
+          "eval_parameter_grads_present": 0
+        },
+        "val": {
+          "chain_ap_macro": 0.7344654220283638,
+          "pooled_ap": 0.7604310974645909,
+          "loss": 0.46383788045062574,
+          "valid_chains": 1075,
+          "valid_residues": 404267,
+          "eval_grad_mode_enabled": false,
+          "eval_parameter_version_changes": 0,
+          "eval_parameter_grads_present": 0
+        }
+      },
+      "amp_skips": 2,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "64258970adbaefbc772d5635b2bb32db61f3c1c32f54bee21b9568ed399df2ca",
+      "diagnostic_sha256": "6446639346fd4f79f6642a14e8342bf4894559a531330d789b66d0d1cf38dde8",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_context_screen_20261104/runs/C_bigru_seed49",
+      "job": "799764_0",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:38:58",
+      "delta_macro_vs_A": 0.00012885411964425053,
+      "delta_pooled_vs_A": -0.0003292614506027469
+    },
+    {
+      "name": "B_pre_tcn",
+      "epochs": 50,
+      "best_epoch": 14,
+      "macro_AP": 0.7360041684384863,
+      "pooled_AP": 0.7572293588952529,
+      "pooled_selected": {
+        "epoch": 18,
+        "macro_AP": 0.7341610729458836,
+        "pooled_AP": 0.7661658905072798
+      },
+      "diagnostic": {
+        "train": {
+          "chain_ap_macro": 0.8160617655888728,
+          "pooled_ap": 0.8694673293843492,
+          "loss": 0.341409756472195,
+          "valid_chains": 4868,
+          "valid_residues": 1754693,
+          "eval_grad_mode_enabled": false,
+          "eval_parameter_version_changes": 0,
+          "eval_parameter_grads_present": 0
+        },
+        "val": {
+          "chain_ap_macro": 0.7360041684384863,
+          "pooled_ap": 0.757229365222537,
+          "loss": 0.4719276499470999,
+          "valid_chains": 1075,
+          "valid_residues": 404267,
+          "eval_grad_mode_enabled": false,
+          "eval_parameter_version_changes": 0,
+          "eval_parameter_grads_present": 0
+        }
+      },
+      "amp_skips": 2,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "92fd80366c42806860aad0899c961bead1d8c3817d3c726e59051031a76f55de",
+      "diagnostic_sha256": "50df10241022738712b12900df1f7e0411f21617d99484ca332bf02afa3ab163",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_context_screen_20261104/runs/B_pre_tcn_seed49",
+      "job": "799764_1",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:38:58",
+      "delta_macro_vs_A": 0.0016676005297666663,
+      "delta_pooled_vs_A": -0.003531003593405413
+    },
+    {
+      "name": "D_capacity_mlp",
+      "epochs": 50,
+      "best_epoch": 13,
+      "macro_AP": 0.7334368582063646,
+      "pooled_AP": 0.7630603446839085,
+      "pooled_selected": {
+        "epoch": 13,
+        "macro_AP": 0.7334368582063646,
+        "pooled_AP": 0.7630603446839085
+      },
+      "diagnostic": {
+        "train": {
+          "chain_ap_macro": 0.8124825988816153,
+          "pooled_ap": 0.8664517264830179,
+          "loss": 0.3058882910534801,
+          "valid_chains": 4868,
+          "valid_residues": 1754693,
+          "eval_grad_mode_enabled": false,
+          "eval_parameter_version_changes": 0,
+          "eval_parameter_grads_present": 0
+        },
+        "val": {
+          "chain_ap_macro": 0.733436855861776,
+          "pooled_ap": 0.7630603475729599,
+          "loss": 0.4564144993937293,
+          "valid_chains": 1075,
+          "valid_residues": 404267,
+          "eval_grad_mode_enabled": false,
+          "eval_parameter_version_changes": 0,
+          "eval_parameter_grads_present": 0
+        }
+      },
+      "amp_skips": 2,
+      "validation_skips": 0,
+      "test_present": false,
+      "metrics_sha256": "361559d579f8d2a341df338827fbda9cec3a85fa2a6038605b5b7139bcb4830a",
+      "diagnostic_sha256": "5b7e80acf2f6c9d39565267b972d91b5602d5ad488e16d12c076fd25eb80d279",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_context_screen_20261104/runs/D_capacity_mlp_seed49",
+      "job": "799764_2",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:33:02",
+      "delta_macro_vs_A": -0.0008997097023549783,
+      "delta_pooled_vs_A": 0.002299982195250183
+    }
+  ],
+  "conclusions": [
+    "BiGRU improves training AP but makes essentially no joint validation-AP improvement at its macro-selected checkpoint.",
+    "Pre-TCN MSA improves macro-selected macro AP but reduces pooled AP. Its separately pooled-selected epoch18 is worth retaining.",
+    "The capacity MLP improves pooled AP modestly while reducing macro AP.",
+    "These are seed49 observations; no significance or multi-seed superiority is claimed.",
+    "G2 is a stronger current validation candidate, but uses a different feature/architecture contract and is not a controlled row in this context matrix."
+  ]
+}

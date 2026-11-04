@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-04",
+  "scope": "current union/OF3; no-MSA controls; validation-only",
+  "selection": "each run maximum validation macroAP; report pooledAP at same checkpoint; no final promotion",
+  "runs": [
+    {
+      "run": "D_none_seed49",
+      "seed": 49,
+      "epochs_completed": 50,
+      "best_macro_ap_epoch": 27,
+      "validation": {
+        "macro_AP": 0.7282263451447326,
+        "pooled_AP": 0.7605055905038222,
+        "trapezoid_AUPRC": 0.7605040587927783
+      },
+      "n_train": 4868,
+      "n_val": 1075,
+      "n_test": 0,
+      "test_evaluated": false,
+      "config_sha256": "676c3432b391966c230bb322b250ae74589a531be2c4b95152754dbf3393121c",
+      "metrics_sha256": "2266a54b7fc2555d6edb055639a0e384e79610962394623de68818fa2f2eb82a",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_none_seed49"
+    },
+    {
+      "run": "E_none_seed49",
+      "seed": 49,
+      "epochs_completed": 50,
+      "best_macro_ap_epoch": 19,
+      "validation": {
+        "macro_AP": 0.7285891503693357,
+        "pooled_AP": 0.754808827850218,
+        "trapezoid_AUPRC": 0.7548073237929228
+      },
+      "n_train": 4868,
+      "n_val": 1075,
+      "n_test": 0,
+      "test_evaluated": false,
+      "config_sha256": "bb5835945752650ec6b6b30519911dbab434b9201b4f6c756e5361844eaa47d1",
+      "metrics_sha256": "85dd977fd4b4bc65e56fb9c8b1ea1641ef050488389ed003cf53ef5897743ed2",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/E_none_seed49"
+    }
+  ]
+}

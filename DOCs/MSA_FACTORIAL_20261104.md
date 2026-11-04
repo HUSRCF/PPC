@@ -26,6 +26,12 @@ has a30-minute limit and must succeed before full encoder extraction.
 
 ## Inputs and Model
 
+The first completed seed49 no-MSA controls are in
+[their frozen summary](msa_factorial_20261104_none_seed49.json). Both completed50
+epochs: D macroAP0.728226/pooledAP0.760506; E0.728589/0.754809, evaluated at
+each run's macroAP-best epoch. This is a single-seed tradeoff, not an E win or
+statistical superiority claim. Other seeds and direct-MSA arms are still pending.
+
 ESM-C MLC12/24/36, OF3 90D descriptors and frozen ESM2 contacts are unchanged.
 Reuse accepted unpaired UniRef90 2026_03 A3Ms for all6667 exact sequences.
 No templates, partner sequence/pose, interface labels or CATH/BioLiP annotations

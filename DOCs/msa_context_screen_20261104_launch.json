@@ -43,7 +43,13 @@
     "model": "gpt-6-luna max",
     "outcome": "no P0/P1/P2 blockers; CUDA AMP acceptance remains per-arm gate"
   },
-  "gpu_smoke": "pending allocation; automatic two-update, two-validation acceptance before50ep",
+  "gpu_smoke": "All three passed real CUDA AMP two-update/two-validation acceptance; backbone and MSA/context branches updated; no test read",
+  "progress_at_verification": {
+    "C_bigru": {"epochs": 2, "last_epoch_seconds": 56.23867726325989, "amp_skips": 0},
+    "B_pre_tcn": {"epochs": 2, "last_epoch_seconds": 56.30911445617676, "amp_skips": 0},
+    "D_capacity_mlp": {"epochs": 2, "last_epoch_seconds": 44.50251388549805, "amp_skips": 0}
+  },
+  "current_state_at_verification": "All three RUNNING concurrently",
   "post_training_evaluation": "best.pt evaluated read-only on train,val; no optimizer or test loader",
   "launch_state": "PENDING Priority",
   "diagnostic_job": 799702,

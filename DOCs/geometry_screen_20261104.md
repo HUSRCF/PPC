@@ -2,7 +2,7 @@
 
 Concurrency amendment: the user subsequently removed the artificial two-task limit. Existing array799523 was raised to its full8-task extent without restarting tasks. New context runs have no array throttle; see msa_context_screen_20261104.md. Original launch JSON below records the initial submission, not the updated limit.
 
-Status: submitted to HPC3 acd_ue. Feature preparation799521 was pending for priority at launch verification; architecture array799523_[0-7%2] depends on its success. No new training result is available yet.
+Status: feature preparation799521 completed all6,667 sequences. B0/B1 completed50 epochs; their final validation results are in msa_complementarity_20261104.md. Later architecture arms continue on HPC3 acd_ue. Original array799523_[0-7%2] was subsequently unthrottled as described above; initial queue states in the launch JSON are historical.
 
 Frozen execution source: ae05f03e10bdd61acc94d7733a9d0d9a66303950. Launch details are in geometry_screen_20261104_launch.json. Local tests:47 run,45 passed,2 optional external-asset skips. Legacy D default parameters, RNG state and logits were bitwise equal to the preceding source. The independent reviewer approved the final increment after resolving prediction-provenance export and isolated-node batch-dependence issues. A four-sequence,180-residue real OF3 preparation smoke passed; CUDA/AMP and full-coverage acceptance remain automatic job gates, not claimed as already completed.
 

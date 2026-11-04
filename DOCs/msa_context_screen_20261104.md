@@ -37,7 +37,7 @@ New context modules initialize in a CPU RNG-preserving scope after the existing 
 - Formal runs start from scratch,50 epochs, unchanged batch64/token65536/worker8 contract. No resume or initialization checkpoint.
 - Primary selection remains validation macro AP; pooled AP is co-primary, MAE diagnostic. All epochs and metric-specific checkpoints remain available.
 - After training, best.pt is reevaluated read-only on train,val. A separate diagnostic config relaxes validation-only solely for this explicit standalone evaluator call; training configs remain validation-only and no test evaluation occurs.
-- Independent narrow review passed model, config and launcher checks, including CPU BF16. Local suite60 tests:58 passed,2 optional skips. Legacy no-MSA and trained nonzero-MSA paths preserve parameters/RNG/logits exactly. Real CUDA smoke is not claimed until job gates pass.
+- Independent narrow review passed model, config and launcher checks, including CPU BF16. Local suite60 tests:58 passed,2 optional skips. Legacy no-MSA and trained nonzero-MSA paths preserve parameters/RNG/logits exactly. All three real CUDA/AMP smokes subsequently passed; all three formal runs reached2 epochs concurrently with zero AMP skipped updates at verification.
 
 ## Concurrency amendment
 

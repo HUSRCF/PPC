@@ -25,6 +25,7 @@ included. This index closes that gap. M7c is not the latest completed model.
 | Geometry x MSA combinations toward pooled AP0.80, new seed49 screen | [Nine-arm plan](geometry_msa_screen_20261104_round2.md), [launch/provenance](geometry_msa_screen_20261104_round2_launch.json) |
 | Fixed G2 plus MSA validation ensembles | [Completed results](geometry_msa_screen_20261104_fixed_blends_results.md), [full metrics and hashes](geometry_msa_screen_20261104_fixed_blends_results.json) |
 | Evolution-conditioned geometry attention, K9/K10 | [Two-arm design](evolutionary_geometry_edges_20261105.md), [launch/provenance](evolutionary_geometry_edges_20261105_launch.json) |
+| Completed K1 versus K9 one-layer edge-bias control | [Result and checkpoint-selection caveat](evolutionary_geometry_edges_20261105_K1_K9_results.md), [frozen metrics and hashes](evolutionary_geometry_edges_20261105_K1_K9_results.json) |
 | Geometry depth x ratio loss, K11-K13 | [Design](geometry_depth_ratio_20261105.md), [initial failures and strict retry mapping](geometry_depth_ratio_20261105_launch.json) |
 | DeltaNet dependency dry run; installation approval pending | [Plan and constraints](deltanet_20261105/README.md), [exact19-package proposal](deltanet_20261105/dry_run_summary.json) |
 | Current pooled-AP0.80 campaign snapshot | [Observed statuses and same-checkpoint metrics](pooled_AP080_status_20261105.json), [K5 host-memory retry](geometry_msa_K5_host_memory_retry_20261105.json), [two planned fixed follow-up blends](geometry_msa_followup_blends_20261105.json) |

@@ -1,0 +1,12 @@
+{
+  "source_commit": "e923cf5",
+  "summary_sha256": "47c1a14803b28d4158d1e419cc4c050a617f24bdfd05b4f0f65c45029a5c7db8",
+  "remote_root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/analysis/complementarity_v1",
+  "local_root": "/home/husrcf/Code/ProtBind/pypropel_unibio/tmp/ppc_single_chain_integration_20261104/tmp/msa_complementarity_20261104",
+  "blend_predictions": {
+    "blend_baseline_msa_val_npz": "79e47cd56e2a474286047e5b9e26cec1e05b1182b6307cf3347904c88459476f",
+    "blend_pareto_val_npz": "7562ad7456812714194bbaec0f5ef158c6d7d0fa1797e2bf2a3977f258d23d61"
+  },
+  "test_evaluated": false,
+  "weight_search": false
+}

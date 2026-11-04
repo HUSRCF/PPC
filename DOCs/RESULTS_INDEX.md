@@ -17,7 +17,9 @@ included. This index closes that gap. M7c is not the latest completed model.
 | M21C three-seed ratio-head variant | [Frozen report](results_history_20261104/sources/m21c/M21C_LOCKED_ENSEMBLE_TEST_20260718.md), [metrics](results_history_20261104/sources/m21c/metrics.json), [paired uncertainty](results_history_20261104/sources/m21c/m21c_minus_m18_ratio_mae_component_bootstrap.json) |
 | August matched-seed feature ablation A-E | [Metrics](results_history_20261104/sources/controlled_ablation/controlled_ablation_metrics.csv), [supported conclusions](results_history_20261104/sources/controlled_ablation/findings.md) |
 | November exact-sequence union + OpenFold3 A-E and R0-R2 | [Methods and results](m18_union_of3_20261104/README.md), [checkpoint/feature index](m18_union_of3_20261104/asset_index.json) |
-| Active D/E x direct-MSA, three-seed follow-up (no final results yet) | [Protocol](MSA_FACTORIAL_20261104.md), [submitted jobs and acceptance](msa_factorial_20261104_launch.json) |
+| D/E x direct-MSA: seed49 completed, seed50/51 still queued | [Completed seed49 results](msa_factorial_20261104_seed49_results.md), [protocol](MSA_FACTORIAL_20261104.md), [submitted jobs](msa_factorial_20261104_launch.json) |
+| Fixed validation MSA blends and per-sequence/component analysis | [Results and interpretation](msa_complementarity_20261104.md), [metrics/bootstrap](msa_complementarity_20261104/summary.json), [per-sequence table](msa_complementarity_20261104/per_chain_deltas.csv) |
+| OF3 geometry/global-context architecture screen | [Protocol and controls](geometry_screen_20261104.md), [submitted jobs](geometry_screen_20261104_launch.json); final B0/B1 results in the complementarity report |
 
 ## Original Frozen Test Results
 
@@ -58,5 +60,11 @@ or training was performed to assemble this index.
 
 The August controlled ablation also calls its variants A-E, but those are
 feature-removal experiments. They are not the November loss-matrix A-E.
+
+The current fixed seed49 validation blend D_none e27 + D_encoder e13 reaches
+macro AP 0.741355 and pooled AP 0.772186 on the 1,075-sequence union validation
+set. It is an exploratory validation candidate, not a new frozen test result.
+Its component bootstrap is conditional on already-selected validation checkpoints
+and does not include checkpoint-selection correction or seed uncertainty.
 
 See [history scope and provenance](results_history_20261104/README.md).

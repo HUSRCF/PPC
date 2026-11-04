@@ -1,0 +1,107 @@
+{
+  "purpose": "Execute only already-declared fixed ensembles for completed K15 and K16;no test or weight search",
+  "policy": "msa_bottleneck_width_20261105_fixed_blends.json",
+  "policy_sha256": "5111e4cc82359c2a1ef2e10ee7b83bea77029fe103425a0e35c2bf73cd3df233",
+  "completed_receipts": {
+    "K15": {
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K15_G2_MSA_twohop_width256_seed49",
+      "epochs": 50,
+      "metrics_sha256": "aec1ca40dbf71ddc8ade4d613df67f60ddc2765c16b4652bbfeefe8881510d5c",
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "test_seen": false,
+      "AMP_skips": 1,
+      "sanitized_gradient_elements": 1,
+      "selected": {
+        "epoch": 32,
+        "chain_ap_macro": 0.7580651273053374,
+        "pooled_ap": 0.7857223881614065,
+        "auroc": 0.8926648633797117,
+        "f1_best_threshold": 0.7093965802153456,
+        "best_threshold": 0.49,
+        "mcc_best_threshold": 0.5990033161667823,
+        "best_mcc_threshold": 0.71,
+        "chain_ratio_mae_raw": 0.06329362252943738
+      },
+      "macro_selected": {
+        "epoch": 32,
+        "chain_ap_macro": 0.7580651273053374,
+        "pooled_ap": 0.7857223881614065,
+        "auroc": 0.8926648633797117,
+        "f1_best_threshold": 0.7093965802153456,
+        "best_threshold": 0.49,
+        "mcc_best_threshold": 0.5990033161667823,
+        "best_mcc_threshold": 0.71,
+        "chain_ratio_mae_raw": 0.06329362252943738
+      },
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K15_G2_MSA_twohop_width256_seed49/predictions/val_epoch_032.pt"
+    },
+    "K16": {
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K16_G2_MSA_twohop_capacity128_seed49",
+      "epochs": 50,
+      "metrics_sha256": "3b028f782d049afbb7f51a71ffefff73c2b4e2c4ff91ebc4bdd5eca7c31de464",
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "test_seen": false,
+      "AMP_skips": 2,
+      "sanitized_gradient_elements": 3,
+      "selected": {
+        "epoch": 31,
+        "chain_ap_macro": 0.7524905798390921,
+        "pooled_ap": 0.7810850108805542,
+        "auroc": 0.8890049265125908,
+        "f1_best_threshold": 0.7034013241251317,
+        "best_threshold": 0.35,
+        "mcc_best_threshold": 0.5944898404775129,
+        "best_mcc_threshold": 0.46,
+        "chain_ratio_mae_raw": 0.05410694383084774
+      },
+      "macro_selected": {
+        "epoch": 24,
+        "chain_ap_macro": 0.7540709143024028,
+        "pooled_ap": 0.7776782426376495,
+        "auroc": 0.885496638967334,
+        "f1_best_threshold": 0.6948078685563245,
+        "best_threshold": 0.35,
+        "mcc_best_threshold": 0.5859500197076741,
+        "best_mcc_threshold": 0.58,
+        "chain_ratio_mae_raw": 0.05624078556375448
+      },
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K16_G2_MSA_twohop_capacity128_seed49/predictions/val_epoch_031.pt"
+    }
+  },
+  "points": {
+    "G2": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl"
+    },
+    "MSA_D": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl"
+    },
+    "K15": {
+      "epoch": 32,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K15_G2_MSA_twohop_width256_seed49/predictions/val_epoch_032.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K15_G2_MSA_twohop_width256_seed49/metrics.jsonl"
+    },
+    "K16": {
+      "epoch": 31,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K16_G2_MSA_twohop_capacity128_seed49/predictions/val_epoch_031.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K16_G2_MSA_twohop_capacity128_seed49/metrics.jsonl"
+    }
+  },
+  "blends": {
+    "G2_plus_MSA_D_plus_K15": [
+      "G2",
+      "MSA_D",
+      "K15"
+    ],
+    "G2_plus_MSA_D_plus_K16": [
+      "G2",
+      "MSA_D",
+      "K16"
+    ]
+  }
+}

@@ -130,6 +130,39 @@
         "best_mcc_threshold": 0.59,
         "chain_ratio_mae_raw": 0.06393922368281109
       }
+    },
+    "K11": {
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105/runs/K11_G2_MSA_twohop_pure_CE_seed49",
+      "epochs": 50,
+      "metrics_sha256": "c47b8affe3719211549c69158342588bea853358d56640993009973f69af1945",
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "test_seen": false,
+      "AMP_skips": 1,
+      "sanitized_gradient_elements": 1,
+      "macro_selected": {
+        "epoch": 19,
+        "chain_ap_macro": 0.7582677736505871,
+        "pooled_ap": 0.7863640385954219,
+        "auroc": 0.8912945363685534,
+        "f1_best_threshold": 0.7039332559693356,
+        "best_threshold": 0.46,
+        "mcc_best_threshold": 0.5943891490049932,
+        "best_mcc_threshold": 0.59,
+        "chain_ratio_mae_raw": 0.054650748758468516
+      },
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105/runs/K11_G2_MSA_twohop_pure_CE_seed49/predictions/val_epoch_019.pt",
+      "pooled_selected": {
+        "epoch": 19,
+        "chain_ap_macro": 0.7582677736505871,
+        "pooled_ap": 0.7863640385954219,
+        "auroc": 0.8912945363685534,
+        "f1_best_threshold": 0.7039332559693356,
+        "best_threshold": 0.46,
+        "mcc_best_threshold": 0.5943891490049932,
+        "best_mcc_threshold": 0.59,
+        "chain_ratio_mae_raw": 0.054650748758468516
+      }
     }
   },
   "jobs": {
@@ -161,6 +194,14 @@
       "exit_code": "0:0",
       "elapsed": "01:58:45",
       "source_commit": "6a8bad521ceaf916b5689c32389cb0c0e3a7f84e"
+    },
+    "K11": {
+      "id": "800043_0",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "01:34:28",
+      "source_commit": "7499b4264215c41f3c14277c44c4fc5bf9db8164",
+      "retry": "Fresh output after terminal pin-memory failure;unchanged training config,excludeACD1-28"
     }
   }
 }

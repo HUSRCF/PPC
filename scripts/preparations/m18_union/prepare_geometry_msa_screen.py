@@ -35,6 +35,18 @@ VARIANTS = {
         "geometry_layers": 2, "prottrans_residual_dim": 64, "prottrans_residual_hidden": 428,
     },
     "K18_G2_MSA_twohop_preTCN": {"geometry_layers": 2, "msa_residual_position": "pre_tcn"},
+    "K19_G2_MSA_twohop_dropout_low": {
+        "geometry_layers": 2, "dropout": .15, "classifier_dropout": .30,
+    },
+    "K20_G2_MSA_twohop_dropout_high": {
+        "geometry_layers": 2, "dropout": .35, "classifier_dropout": .55,
+    },
+    "K21_G2_MSA_twohop_wd003": {"geometry_layers": 2},
+    "K22_G2_MSA_twohop_wd020": {"geometry_layers": 2},
+    "K23_G2_MSA_twohop_ls002": {"geometry_layers": 2},
+    "K24_G2_MSA_twohop_msa_drop010": {
+        "geometry_layers": 2, "prottrans_residual_dropout": .10,
+    },
 }
 MSA_KEYS = (
     "use_prottrans_embeddings", "d_prottrans", "prottrans_layer_count",
@@ -97,6 +109,10 @@ def build(b1, g2, msa, experiment, name):
         t["loss_reduction"] = "residue_mean"
     if name in {"K8_G2_MSA_pure_CE", "K11_G2_MSA_twohop_pure_CE", "K13_G2_MSA_threehop_pure_CE"}:
         t["ratio_loss_weight"] = 0.
+    if name in {"K21_G2_MSA_twohop_wd003", "K22_G2_MSA_twohop_wd020"}:
+        t["weight_decay"] = .03 if name == "K21_G2_MSA_twohop_wd003" else .20
+    if name == "K23_G2_MSA_twohop_ls002":
+        t["label_smoothing"] = .02
     cfg["metadata"].update(
         matrix_variant=name, matrix_seed=49, experiment_role="geometry x MSA pooled-AP screen",
         msa_feature="encoder", msa_source="Frozen unpaired UniRef90 2026_03; no templates/partner",
@@ -190,6 +206,7 @@ def main():
         labels="exact-sequence ever-observed union5.5A",
         feature_contract="Corrected91D OF3, ESM-C MLC3456D, frozen768D MSA Transformer",
         architecture_rows="D loss except K7 residue_mean CE aggregation and K8/K11/K13 ratio weight0",
+        regularization_rows="K19/K20 main+classifier dropout;K21/K22 weight_decay;K23 label_smoothing;K24 elementwise MSA projection+adapter dropout",
         selected_variants=variants,
         checkpoints="Retain every epoch and both AP-best checkpoints; never combine scores from different epochs",
         concurrency="No artificial array throttle; scheduler/account quotas apply",

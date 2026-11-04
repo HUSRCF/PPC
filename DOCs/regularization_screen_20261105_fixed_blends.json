@@ -1,0 +1,24 @@
+{
+  "scope": "Adaptive validation-only regularization screen;not independent confirmation",
+  "reference": "K3 two geometry blocks,postTCN MSA,projection64/hidden64,Dloss",
+  "arms": ["K19_G2_MSA_twohop_dropout_low", "K20_G2_MSA_twohop_dropout_high", "K21_G2_MSA_twohop_wd003", "K22_G2_MSA_twohop_wd020", "K23_G2_MSA_twohop_ls002", "K24_G2_MSA_twohop_msa_drop010"],
+  "execute_only_after": "Corresponding model COMPLETED exit0,50consecutiveepochs,full1075queries/404267residues,no validation skips or test evaluation",
+  "selection": "Highest validation pooled AP subject to macroAP>=0.7417948466002535;ties earliest;no eligible epoch means unavailable",
+  "fixed_sources": {
+    "G2": {"run": "architecture_screen_20261104/runs/G2_edge_attention_seed49", "epoch": 27},
+    "MSA_D": {"run": "msa_factorial_20261104/runs/D_encoder_seed49", "epoch": 13}
+  },
+  "fixed_blends": {
+    "G2_plus_MSA_D_plus_K19": ["G2", "MSA_D", "K19"],
+    "G2_plus_MSA_D_plus_K20": ["G2", "MSA_D", "K20"],
+    "G2_plus_MSA_D_plus_K21": ["G2", "MSA_D", "K21"],
+    "G2_plus_MSA_D_plus_K22": ["G2", "MSA_D", "K22"],
+    "G2_plus_MSA_D_plus_K23": ["G2", "MSA_D", "K23"],
+    "G2_plus_MSA_D_plus_K24": ["G2", "MSA_D", "K24"]
+  },
+  "averaging": "Equal clipped-probability logit mean;epsilon1e-7",
+  "alpha_search": false,
+  "test_evaluation": false,
+  "target_pooled_AP": 0.8,
+  "post_target_contract": "pooled_AP080_milestones_20261105_policy.json"
+}

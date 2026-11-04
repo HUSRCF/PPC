@@ -129,7 +129,7 @@ class GeometryMSATests(unittest.TestCase):
                             "K11_G2_MSA_twohop_pure_CE", "K13_G2_MSA_threehop_pure_CE"}:
                 self.assertEqual((t["loss_reduction"], t["ratio_loss_weight"]), ("chain_mean", .75))
         self.assertEqual(parents, before)
-        self.assertEqual(len(outputs), 19)
+        self.assertEqual(len(outputs), 25)
         base = screen.build(*parents, Path("/tmp/geo_msa_test"), "K1_G2_MSA")
         for name, axis in (("K7_G2_MSA_residue_mean", "loss_reduction"), ("K8_G2_MSA_pure_CE", "ratio_loss_weight")):
             variant = screen.build(*parents, Path("/tmp/geo_msa_test"), name)
@@ -215,6 +215,46 @@ class GeometryMSATests(unittest.TestCase):
     def test_preparation_paths_are_normalized(self):
         screen = module("prepare_geometry_msa_screen")
         self.assertTrue(screen.absolute_path(".").is_absolute())
+
+    def test_regularization_screen_changes_only_declared_knobs(self):
+        geometry = module("prepare_geometry_screen")
+        msa = module("prepare_msa_factorial")
+        screen = module("prepare_geometry_msa_screen")
+        parents = (
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "B1_fixed91q"),
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "G2_edge_attention"),
+            msa.build_config(ROOT, Path("/tmp/msa_parent"), "D", "encoder", 49),
+        )
+        base = screen.build(*parents, Path("/tmp/regularization"), "K3_G2_MSA_twohop")
+        axes = {
+            "K19_G2_MSA_twohop_dropout_low": ({"dropout": .15, "classifier_dropout": .30}, {}),
+            "K20_G2_MSA_twohop_dropout_high": ({"dropout": .35, "classifier_dropout": .55}, {}),
+            "K21_G2_MSA_twohop_wd003": ({}, {"weight_decay": .03}),
+            "K22_G2_MSA_twohop_wd020": ({}, {"weight_decay": .20}),
+            "K23_G2_MSA_twohop_ls002": ({}, {"label_smoothing": .02}),
+            "K24_G2_MSA_twohop_msa_drop010": ({"prottrans_residual_dropout": .10}, {}),
+        }
+        torch.manual_seed(49)
+        reference = ESMSiteClassifier(base["model"])
+        state, rng = reference.state_dict(), torch.get_rng_state()
+        for name, (model_axis, training_axis) in axes.items():
+            cfg = screen.build(*parents, Path("/tmp/regularization"), name)
+            self.assertEqual(cfg["data"], base["data"])
+            self.assertEqual({k for k in base["model"] if cfg["model"][k] != base["model"][k]}, set(model_axis))
+            self.assertEqual({k for k in base["training"] if cfg["training"][k] != base["training"][k]},
+                             {"output_dir", *training_axis})
+            for key, value in model_axis.items():
+                self.assertEqual(cfg["model"][key], value)
+            for key, value in training_axis.items():
+                self.assertEqual(cfg["training"][key], value)
+            torch.manual_seed(49)
+            model = ESMSiteClassifier(cfg["model"])
+            self.assertEqual(sum(p.numel() for p in model.parameters()), 3693034)
+            self.assertTrue(torch.equal(rng, torch.get_rng_state()))
+            self.assertTrue(all(torch.equal(value, model.state_dict()[key]) for key, value in state.items()))
+            if name == "K24_G2_MSA_twohop_msa_drop010":
+                self.assertEqual(model.prottrans_proj.proj[3].p, .10)
+                self.assertEqual(model.prottrans_residual_adapter[2].p, .10)
 
     def test_fusion_position_depth_factorial_changes_no_other_inputs(self):
         geometry = module("prepare_geometry_screen")

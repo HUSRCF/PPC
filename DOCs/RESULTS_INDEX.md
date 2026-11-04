@@ -30,12 +30,13 @@ included. This index closes that gap. M7c is not the latest completed model.
 | DeltaNet dependency dry run; installation approval pending | [Plan and constraints](deltanet_20261105/README.md), [exact19-package proposal](deltanet_20261105/dry_run_summary.json) |
 | Current pooled-AP0.80 campaign snapshot | [Observed statuses and same-checkpoint metrics](pooled_AP080_status_20261105.json), [K5 host-memory retry](geometry_msa_K5_host_memory_retry_20261105.json), [two planned fixed follow-up blends](geometry_msa_followup_blends_20261105.json) |
 | Completed-model ranking diagnostics: 11 points, 55 SI components | [Interpretation and subgroup results](validation_diagnostics_20261105/README.md), [conditional bootstrap](validation_diagnostics_20261105/summary.json), [per-chain table](validation_diagnostics_20261105/per_chain.csv) |
-| Completed K2/K10/K12/K13 follow-ups | [Same-checkpoint table and limits](geometry_completed_followups_20261105.md), [metrics, source commits and hashes](geometry_completed_followups_20261105.json) |
+| Completed K2/K10-K13 follow-ups and depth x loss matrix | [Same-checkpoint table and limits](geometry_completed_followups_20261105.md), [metrics, source commits and hashes](geometry_completed_followups_20261105.json) |
 | Completed fixed K3 ensembles: pooled AP0.798613, macro AP0.766068 | [Results and follow-up hypotheses](geometry_msa_followup_blends_20261105_results.md), [metrics/source hashes](geometry_msa_followup_blends_20261105_results.json), [resolved policy](geometry_msa_followup_blends_20261105_resolved.json) |
 | MSA bottleneck width versus matched capacity, K14-K17 | [Four-arm design](msa_bottleneck_width_20261105.md), [job800186 and startup receipts](msa_bottleneck_width_20261105_launch.json), [prospective fixed-blend policy](msa_bottleneck_width_20261105_fixed_blends.json) |
 | Fusion-position x geometry-depth missing cell, K18 | [Controlled design](geometry_position_depth_20261105.md), [job800231 and startup receipts](geometry_position_depth_20261105_launch.json), [fixed-blend policy](geometry_position_depth_20261105_fixed_blend.json) |
 | Fixed K3 ensembles: exact raw-score reproduction and 55-component uncertainty | [Interpretation](validation_ensemble_diagnostics_20261105/README.md), [effects and intervals](validation_ensemble_diagnostics_20261105/summary.json), [integrity receipts](validation_ensemble_diagnostics_20261105/reproduction_receipt.json) |
 | AP0.80 milestone: validation lock, test evaluation, then whole-RCSB | [User contract and leakage safeguards](pooled_AP080_milestones_20261105.md), [machine-readable policy](pooled_AP080_milestones_20261105_policy.json) |
+| Completed K15/K16 and first fixed width blends | [Readout and uncompleted matched-pair caveat](msa_bottleneck_width_20261105_K15_K16_results.md), [full metrics](msa_bottleneck_width_20261105_K15_K16_results.json) |
 
 ## Original Frozen Test Results
 

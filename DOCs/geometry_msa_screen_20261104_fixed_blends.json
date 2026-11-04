@@ -1,0 +1,24 @@
+{
+  "purpose": "Prespecified validation-only geometry/MSA complementarity; no alpha search",
+  "points": {
+    "G2": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl"
+    },
+    "MSA_D": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl"
+    },
+    "MSA_preTCN": {
+      "epoch": 18,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_context_screen_20261104/runs/B_pre_tcn_seed49/predictions/val_epoch_018.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_context_screen_20261104/runs/B_pre_tcn_seed49/metrics.jsonl"
+    }
+  },
+  "blends": {
+    "G2_plus_MSA_D": ["G2", "MSA_D"],
+    "G2_plus_MSA_preTCN": ["G2", "MSA_preTCN"]
+  }
+}

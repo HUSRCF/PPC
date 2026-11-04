@@ -22,6 +22,18 @@ VARIANTS = {
     "K11_G2_MSA_twohop_pure_CE": {"geometry_layers": 2},
     "K12_G2_MSA_threehop": {"geometry_layers": 3},
     "K13_G2_MSA_threehop_pure_CE": {"geometry_layers": 3},
+    "K14_G2_MSA_twohop_width128": {
+        "geometry_layers": 2, "prottrans_residual_dim": 128, "prottrans_residual_hidden": 128,
+    },
+    "K15_G2_MSA_twohop_width256": {
+        "geometry_layers": 2, "prottrans_residual_dim": 256, "prottrans_residual_hidden": 128,
+    },
+    "K16_G2_MSA_twohop_capacity128": {
+        "geometry_layers": 2, "prottrans_residual_dim": 64, "prottrans_residual_hidden": 228,
+    },
+    "K17_G2_MSA_twohop_capacity256": {
+        "geometry_layers": 2, "prottrans_residual_dim": 64, "prottrans_residual_hidden": 428,
+    },
 }
 MSA_KEYS = (
     "use_prottrans_embeddings", "d_prottrans", "prottrans_layer_count",

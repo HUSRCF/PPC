@@ -1,0 +1,21 @@
+{
+  "scope": "Prospective within this adaptive validation campaign;not an independent holdout or preregistered study",
+  "execute_only_after": "Each corresponding model is Slurm COMPLETED,exit0,50consecutiveepochs,full1075queries/404267residues,no validation skips or test reads",
+  "source_rule": "For each arm choose maximum validation pooled AP among epochs with macro AP>=0.7417948466002535;ties earliest;if none,report unavailable without relaxing guardrail",
+  "fixed_sources": {
+    "G2": {"run": "architecture_screen_20261104/runs/G2_edge_attention_seed49", "epoch": 27},
+    "MSA_D": {"run": "msa_factorial_20261104/runs/D_encoder_seed49", "epoch": 13}
+  },
+  "arms": ["K14_G2_MSA_twohop_width128", "K15_G2_MSA_twohop_width256", "K16_G2_MSA_twohop_capacity128", "K17_G2_MSA_twohop_capacity256"],
+  "fixed_blends": {
+    "G2_plus_MSA_D_plus_K14": ["G2", "MSA_D", "K14"],
+    "G2_plus_MSA_D_plus_K15": ["G2", "MSA_D", "K15"],
+    "G2_plus_MSA_D_plus_K16": ["G2", "MSA_D", "K16"],
+    "G2_plus_MSA_D_plus_K17": ["G2", "MSA_D", "K17"]
+  },
+  "averaging": "Equal clipped-probability logit mean;epsilon1e-7",
+  "alpha_search": false,
+  "baseline_ensemble": {"name": "G2_plus_MSA_D_plus_K3", "macro_AP": 0.7660679415925195, "pooled_AP": 0.798613220715041},
+  "target_pooled_AP": 0.8,
+  "test_evaluation": false
+}

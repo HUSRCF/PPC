@@ -129,7 +129,7 @@ class GeometryMSATests(unittest.TestCase):
                             "K11_G2_MSA_twohop_pure_CE", "K13_G2_MSA_threehop_pure_CE"}:
                 self.assertEqual((t["loss_reduction"], t["ratio_loss_weight"]), ("chain_mean", .75))
         self.assertEqual(parents, before)
-        self.assertEqual(len(outputs), 14)
+        self.assertEqual(len(outputs), 18)
         base = screen.build(*parents, Path("/tmp/geo_msa_test"), "K1_G2_MSA")
         for name, axis in (("K7_G2_MSA_residue_mean", "loss_reduction"), ("K8_G2_MSA_pure_CE", "ratio_loss_weight")):
             variant = screen.build(*parents, Path("/tmp/geo_msa_test"), name)
@@ -173,9 +173,70 @@ class GeometryMSATests(unittest.TestCase):
         with self.assertRaises(ValueError):
             screen.build(b1, g2, encoder, Path("/tmp/geo_msa_test"), "K1_G2_MSA")
 
+    def test_msa_width_screen_changes_only_bottleneck_and_capacity(self):
+        geometry = module("prepare_geometry_screen")
+        msa = module("prepare_msa_factorial")
+        screen = module("prepare_geometry_msa_screen")
+        parents = (
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "B1_fixed91q"),
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "G2_edge_attention"),
+            msa.build_config(ROOT, Path("/tmp/msa_parent"), "D", "encoder", 49),
+        )
+        base = screen.build(*parents, Path("/tmp/width_test"), "K3_G2_MSA_twohop")
+        counts = {}
+        widths = {
+            "K14_G2_MSA_twohop_width128": (128, 128),
+            "K15_G2_MSA_twohop_width256": (256, 128),
+            "K16_G2_MSA_twohop_capacity128": (64, 228),
+            "K17_G2_MSA_twohop_capacity256": (64, 428),
+        }
+        for name, (projection, hidden) in widths.items():
+            variant = screen.build(*parents, Path("/tmp/width_test"), name)
+            self.assertEqual(base["data"], variant["data"])
+            diff = {k for k in base["training"] if base["training"][k] != variant["training"][k]}
+            self.assertEqual(diff, {"output_dir"})
+            model_diff = {k for k in base["model"] if base["model"][k] != variant["model"][k]}
+            expected_diff = {"prottrans_residual_hidden"}
+            if projection != 64:
+                expected_diff.add("prottrans_residual_dim")
+            self.assertEqual(model_diff, expected_diff)
+            model = ESMSiteClassifier(variant["model"])
+            self.assertEqual(model.prottrans_proj.proj[0].out_features, projection)
+            self.assertEqual(model.prottrans_residual_adapter[0].out_features, hidden)
+            self.assertEqual(model.prottrans_residual_adapter[-1].out_features, 256)
+            self.assertEqual(torch.count_nonzero(model.prottrans_residual_adapter[-1].weight), 0)
+            self.assertEqual(len(model.geometry_blocks), 2)
+            counts[name] = sum(p.numel() for p in model.parameters())
+        self.assertEqual(abs(counts["K14_G2_MSA_twohop_width128"]
+                             - counts["K16_G2_MSA_twohop_capacity128"]), 36)
+        self.assertEqual(abs(counts["K15_G2_MSA_twohop_width256"]
+                             - counts["K17_G2_MSA_twohop_capacity256"]), 108)
+
     def test_preparation_paths_are_normalized(self):
         screen = module("prepare_geometry_msa_screen")
         self.assertTrue(screen.absolute_path(".").is_absolute())
+
+    def test_wide_msa_paths_receive_task_gradient_after_zero_init(self):
+        x = payload()
+        targets = torch.arange(int(x["protein_mask"].sum())) % 2
+        for projection, hidden in ((128, 128), (256, 128), (64, 228), (64, 428)):
+            cfg = {**small_config(geometry_layers=2), "prottrans_residual_dim": projection,
+                   "prottrans_residual_hidden": hidden}
+            model = ESMSiteClassifier(cfg)
+            weight = model.prottrans_proj.proj[0].weight
+            initial = weight.detach().clone()
+            optimizer = torch.optim.AdamW(model.parameters(), lr=.01, weight_decay=0.)
+            for _ in range(2):
+                optimizer.zero_grad()
+                logits = model(**x)["logits"]
+                self.assertTrue(torch.isfinite(logits).all())
+                self.assertTrue(torch.equal(logits[~x["protein_mask"]],
+                                            torch.zeros_like(logits[~x["protein_mask"]])))
+                torch.nn.functional.cross_entropy(logits[x["protein_mask"]], targets).backward()
+                self.assertTrue(all(torch.isfinite(p.grad).all() for p in model.parameters()
+                                    if p.grad is not None))
+                optimizer.step()
+            self.assertFalse(torch.equal(initial, weight), (projection, hidden))
 
 
 if __name__ == "__main__":

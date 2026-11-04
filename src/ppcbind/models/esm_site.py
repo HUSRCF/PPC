@@ -1185,11 +1185,13 @@ class ESMSiteClassifier(nn.Module):
                 nn.init.zeros_(ratio_output.weight)
                 nn.init.constant_(ratio_output.bias, math.log(init_ratio / (1.0 - init_ratio)))
 
-        if c.msa_residual_position not in {"pre_tcn", "post_tcn"}:
+        if c.msa_residual_position not in {"pre_tcn", "post_tcn", "post_geometry"}:
             raise ValueError(f"Unsupported msa_residual_position={c.msa_residual_position}")
-        if c.msa_residual_position == "pre_tcn" and (
+        if c.msa_residual_position != "post_tcn" and (
                 not c.use_prottrans_embeddings or c.prottrans_fusion_mode != "zero_init_pre_contact_residual"):
-            raise ValueError("Pre-TCN MSA placement requires the frozen-embedding residual adapter")
+            raise ValueError("Nondefault MSA placement requires the frozen-embedding residual adapter")
+        if c.msa_residual_position == "post_geometry" and not self.geometry_blocks:
+            raise ValueError("Post-geometry MSA placement requires geometry blocks")
         self.post_fusion_context = None
         if c.post_fusion_context_mode != "none":
             # Keep all pre-existing weights and the subsequent training RNG matched to the control.
@@ -1200,8 +1202,8 @@ class ESMSiteClassifier(nn.Module):
 
     def _apply_msa_residual(self, h, prottrans_branch, mask):
         if self.config.prottrans_fusion_mode != "zero_init_pre_contact_residual" or prottrans_branch is None:
-            if self.config.msa_residual_position == "pre_tcn":
-                raise ValueError("Required pre-TCN MSA branch is missing")
+            if self.config.msa_residual_position != "post_tcn":
+                raise ValueError("Required nondefault-position MSA branch is missing")
             return h
         assert self.prottrans_residual_main_norm is not None
         assert self.prottrans_residual_feature_norm is not None
@@ -1380,6 +1382,9 @@ class ESMSiteClassifier(nn.Module):
         for block in self.geometry_blocks:
             h, gv = block(h, gv, mask, geometry_edge_index, geometry_edge_features,
                           geometry_edge_vectors, geometry_edge_scores)
+
+        if c.msa_residual_position == "post_geometry":
+            h = self._apply_msa_residual(h, prottrans_branch, mask)
 
         if self.aux_sparse_graph_blocks:
             h_primary = h

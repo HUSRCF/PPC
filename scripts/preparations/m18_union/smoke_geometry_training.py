@@ -47,8 +47,13 @@ def main():
     assert not torch.equal(state["esm_proj.0.weight"], initial["esm_proj.0.weight"])
     checks = [k for k in state if (k.startswith("geometry_blocks.") and k.endswith("update.4.weight"))
               or (k.startswith("linear_attention_blocks.") and k.endswith("output.weight"))]
+    if cfg["model"].get("use_prottrans_embeddings"):
+        checks.append("prottrans_residual_adapter.3.weight")
     for k in checks:
         assert torch.count_nonzero(state[k]) > 0, k
+    assert record["val"]["eval_grad_mode_enabled"] is False
+    assert record["val"]["eval_parameter_grads_present"] == 0
+    assert record["val"]["eval_parameter_version_changes"] == 0
     (output / "verification.json").write_text(json.dumps(dict(two_updates=True, finite=True,
         backbone_updated=True, new_zero_init_parameters_updated=checks, test_read=False), indent=2) + "\n")
     print(json.dumps({"smoke": "passed", "output": str(output)}), flush=True)

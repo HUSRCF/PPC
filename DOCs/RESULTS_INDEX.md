@@ -1,6 +1,6 @@
 # Single-Chain Model Results
 
-Updated: 2026-11-04. The previous repository integration omitted the intermediate
+Updated: 2026-11-05. The previous repository integration omitted the intermediate
 result summaries, although the source code and latest union experiments were
 included. This index closes that gap. M7c is not the latest completed model.
 
@@ -31,6 +31,7 @@ included. This index closes that gap. M7c is not the latest completed model.
 | Current pooled-AP0.80 campaign snapshot | [Observed statuses and same-checkpoint metrics](pooled_AP080_status_20261105.json), [K5 host-memory retry](geometry_msa_K5_host_memory_retry_20261105.json), [two planned fixed follow-up blends](geometry_msa_followup_blends_20261105.json) |
 | Completed-model ranking diagnostics: 11 points, 55 SI components | [Interpretation and subgroup results](validation_diagnostics_20261105/README.md), [conditional bootstrap](validation_diagnostics_20261105/summary.json), [per-chain table](validation_diagnostics_20261105/per_chain.csv) |
 | Completed K10/K12/K13 follow-ups | [Same-checkpoint table and limits](geometry_completed_followups_20261105.md), [metrics, source commits and hashes](geometry_completed_followups_20261105.json) |
+| Completed fixed K3 ensembles: pooled AP0.798613, macro AP0.766068 | [Results and follow-up hypotheses](geometry_msa_followup_blends_20261105_results.md), [metrics/source hashes](geometry_msa_followup_blends_20261105_results.json), [resolved policy](geometry_msa_followup_blends_20261105_resolved.json) |
 
 ## Original Frozen Test Results
 

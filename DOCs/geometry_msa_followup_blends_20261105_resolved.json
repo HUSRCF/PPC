@@ -1,0 +1,66 @@
+{
+  "purpose": "Execute only the two fixed K3 follow-up blends after COMPLETED50epochs",
+  "policy": "DOCs/geometry_msa_followup_blends_20261105.json",
+  "policy_sha256": "1423d8a45548f78790572d840c6cc2e091a3ec13f059471da60eaf0537011045",
+  "K3_selection_receipt": {
+    "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K3_G2_MSA_twohop_seed49",
+    "epochs": 50,
+    "metrics_sha256": "b6812358ccbd0d4fde2883fb23820e25875ae677b32f91c2e9a1233c3c78eed6",
+    "test_seen": false,
+    "all_coverage1075_404267": true,
+    "validation_skips": 0,
+    "AMP_skips": 1,
+    "sanitized_gradient_elements": 1,
+    "pooled_selected": {
+      "epoch": 21,
+      "chain_ap_macro": 0.7570844882783643,
+      "pooled_ap": 0.7890537130746113,
+      "auroc": 0.8948202559512151,
+      "f1_best_threshold": 0.7082262553687186,
+      "best_threshold": 0.36,
+      "mcc_best_threshold": 0.5980622047424162,
+      "best_mcc_threshold": 0.44,
+      "chain_ratio_mae_raw": 0.05196205261661563
+    },
+    "macro_selected": {
+      "epoch": 13,
+      "chain_ap_macro": 0.7615244025931347,
+      "pooled_ap": 0.784883780396853,
+      "auroc": 0.89232533818939,
+      "f1_best_threshold": 0.7049440249478792,
+      "best_threshold": 0.28,
+      "mcc_best_threshold": 0.5930767970115092,
+      "best_mcc_threshold": 0.36,
+      "chain_ratio_mae_raw": 0.06351440370949202
+    },
+    "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K3_G2_MSA_twohop_seed49/predictions/val_epoch_021.pt"
+  },
+  "points": {
+    "G2": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl"
+    },
+    "MSA_D": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl"
+    },
+    "K3": {
+      "epoch": 21,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K3_G2_MSA_twohop_seed49/predictions/val_epoch_021.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K3_G2_MSA_twohop_seed49/metrics.jsonl"
+    }
+  },
+  "blends": {
+    "G2_plus_K3": [
+      "G2",
+      "K3"
+    ],
+    "G2_plus_MSA_D_plus_K3": [
+      "G2",
+      "MSA_D",
+      "K3"
+    ]
+  }
+}

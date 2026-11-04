@@ -1,11 +1,11 @@
 {
-  "observed_UTC": "2026-11-04T17:01:29.651208+00:00",
+  "observed_UTC": "2026-11-04T17:45:21.585605+00:00",
   "validation_only": true,
   "macro_guardrail": 0.7417948466002535,
   "target_pooled_AP": 0.8,
   "rows": [
     {
-      "name": "K0_B1_MSA",
+      "name": "K0_B1_MSA_seed49",
       "job": "799902_0",
       "state": [
         "COMPLETED",
@@ -17,6 +17,7 @@
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 1,
+      "sanitized_gradient_elements": 1,
       "validation_skips": 0,
       "pooled_best": {
         "epoch": 32,
@@ -41,10 +42,12 @@
         "ratio_MAE": 0.07059147368856641
       },
       "guarded_best": null,
-      "metrics_sha256": "b94d3c40bebbe0c4aaa8f3abd7372ab71e4b15e4db92f05e3047343cb8de2828"
+      "metrics_sha256": "b94d3c40bebbe0c4aaa8f3abd7372ab71e4b15e4db92f05e3047343cb8de2828",
+      "last_epoch_seconds": 33.10630536079407,
+      "last_data_wait_fraction": 0.8352124004599156
     },
     {
-      "name": "K1_G2_MSA",
+      "name": "K1_G2_MSA_seed49",
       "job": "799902_1",
       "state": [
         "COMPLETED",
@@ -56,6 +59,7 @@
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 1,
+      "sanitized_gradient_elements": 2,
       "validation_skips": 0,
       "pooled_best": {
         "epoch": 22,
@@ -90,21 +94,24 @@
         "MCC_gate": 0.59,
         "ratio_MAE": 0.05956305415304594
       },
-      "metrics_sha256": "77b013e252f35c9c392e49dbfd4b5451522ca1e9425c56eb4b7cc8fe27f5f19c"
+      "metrics_sha256": "77b013e252f35c9c392e49dbfd4b5451522ca1e9425c56eb4b7cc8fe27f5f19c",
+      "last_epoch_seconds": 71.10256123542786,
+      "last_data_wait_fraction": 0.8997405083006643
     },
     {
-      "name": "K2_G2_MSA_preTCN",
+      "name": "K2_G2_MSA_preTCN_seed49",
       "job": "799902_2",
       "state": [
         "RUNNING",
         "0:0",
-        "00:57:07"
+        "01:41:00"
       ],
       "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K2_G2_MSA_preTCN_seed49",
-      "epochs": 21,
+      "epochs": 40,
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 1,
+      "sanitized_gradient_elements": 1,
       "validation_skips": 0,
       "pooled_best": {
         "epoch": 19,
@@ -138,21 +145,25 @@
         "MCC": 0.6011600219809998,
         "MCC_gate": 0.26,
         "ratio_MAE": 0.07532035683563282
-      }
+      },
+      "metrics_sha256": "53bc402f720d05600457234f07b759a45816d91712f2a244d1e01e853d355cfd",
+      "last_epoch_seconds": 124.28994131088257,
+      "last_data_wait_fraction": 0.9387544255309903
     },
     {
-      "name": "K3_G2_MSA_twohop",
+      "name": "K3_G2_MSA_twohop_seed49",
       "job": "799902_3",
       "state": [
-        "RUNNING",
+        "COMPLETED",
         "0:0",
-        "00:56:36"
+        "01:35:38"
       ],
       "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K3_G2_MSA_twohop_seed49",
-      "epochs": 28,
+      "epochs": 50,
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 1,
+      "sanitized_gradient_elements": 1,
       "validation_skips": 0,
       "pooled_best": {
         "epoch": 21,
@@ -186,10 +197,13 @@
         "MCC": 0.5980622047424162,
         "MCC_gate": 0.44,
         "ratio_MAE": 0.05196205261661563
-      }
+      },
+      "metrics_sha256": "b6812358ccbd0d4fde2883fb23820e25875ae677b32f91c2e9a1233c3c78eed6",
+      "last_epoch_seconds": 115.20078086853027,
+      "last_data_wait_fraction": 0.9199258322438656
     },
     {
-      "name": "K4_G2_MSA_dualgraph",
+      "name": "K4_G2_MSA_dualgraph_seed49",
       "job": "799902_4",
       "state": [
         "COMPLETED",
@@ -201,6 +215,7 @@
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 1,
+      "sanitized_gradient_elements": 1,
       "validation_skips": 0,
       "pooled_best": {
         "epoch": 24,
@@ -235,58 +250,64 @@
         "MCC_gate": 0.79,
         "ratio_MAE": 0.09641445241521958
       },
-      "metrics_sha256": "1da0221faca536087227907f0e0cc194a586b8ba70a5629004ede6dda3dcba37"
+      "metrics_sha256": "1da0221faca536087227907f0e0cc194a586b8ba70a5629004ede6dda3dcba37",
+      "last_epoch_seconds": 109.18336892127991,
+      "last_data_wait_fraction": 0.8979612173144534
     },
     {
-      "name": "K5_G2_MSA_postgeo",
-      "job": "799902_5",
+      "name": "K5_G2_MSA_postgeo_seed49",
+      "job": "800063_0",
       "state": [
-        "FAILED",
-        "1:0",
-        "00:40:32"
+        "RUNNING",
+        "0:0",
+        "00:39:50"
       ],
-      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K5_G2_MSA_postgeo_seed49",
-      "epochs": 34,
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/retries/hostmem192_20261105/runs/K5_G2_MSA_postgeo_seed49",
+      "epochs": 47,
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 1,
+      "sanitized_gradient_elements": 2,
       "validation_skips": 0,
       "pooled_best": {
-        "epoch": 14,
-        "macro_AP": 0.7503848374709949,
-        "pooled_AP": 0.7797854607517238,
-        "AUROC": 0.8886025474846049,
-        "F1": 0.7017164575941698,
-        "F1_gate": 0.36,
-        "MCC": 0.5902244645264789,
-        "MCC_gate": 0.5,
-        "ratio_MAE": 0.051339301489466846
+        "epoch": 19,
+        "macro_AP": 0.7495956375786924,
+        "pooled_AP": 0.7831820096569341,
+        "AUROC": 0.8899550931546124,
+        "F1": 0.705101525764432,
+        "F1_gate": 0.31,
+        "MCC": 0.5966490455370093,
+        "MCC_gate": 0.51,
+        "ratio_MAE": 0.053612996941042504
       },
       "macro_best": {
         "epoch": 9,
-        "macro_AP": 0.7547401240703685,
-        "pooled_AP": 0.7791110611904867,
-        "AUROC": 0.8894727865891545,
-        "F1": 0.7069844904756948,
-        "F1_gate": 0.35,
-        "MCC": 0.5942336919918848,
-        "MCC_gate": 0.42,
-        "ratio_MAE": 0.05225164627439754
+        "macro_AP": 0.7534566094598029,
+        "pooled_AP": 0.7751342371649383,
+        "AUROC": 0.8867509604270238,
+        "F1": 0.7013953244391601,
+        "F1_gate": 0.21,
+        "MCC": 0.5903594004081563,
+        "MCC_gate": 0.28,
+        "ratio_MAE": 0.08014657887608506
       },
       "guarded_best": {
-        "epoch": 14,
-        "macro_AP": 0.7503848374709949,
-        "pooled_AP": 0.7797854607517238,
-        "AUROC": 0.8886025474846049,
-        "F1": 0.7017164575941698,
-        "F1_gate": 0.36,
-        "MCC": 0.5902244645264789,
-        "MCC_gate": 0.5,
-        "ratio_MAE": 0.051339301489466846
-      }
+        "epoch": 19,
+        "macro_AP": 0.7495956375786924,
+        "pooled_AP": 0.7831820096569341,
+        "AUROC": 0.8899550931546124,
+        "F1": 0.705101525764432,
+        "F1_gate": 0.31,
+        "MCC": 0.5966490455370093,
+        "MCC_gate": 0.51,
+        "ratio_MAE": 0.053612996941042504
+      },
+      "metrics_sha256": "3ed17051a42c5f449bdc05aa225b10e96fcd551828cefd5da17f75a721c77a2a",
+      "last_epoch_seconds": 95.38637852668762,
+      "last_data_wait_fraction": 0.9301518697663387
     },
     {
-      "name": "K6_G2_MSA_fullcontext",
+      "name": "K6_G2_MSA_fullcontext_seed49",
       "job": "799902_6",
       "state": [
         "COMPLETED",
@@ -298,6 +319,7 @@
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 1,
+      "sanitized_gradient_elements": 1,
       "validation_skips": 0,
       "pooled_best": {
         "epoch": 23,
@@ -332,21 +354,24 @@
         "MCC_gate": 0.53,
         "ratio_MAE": 0.0531472365922013
       },
-      "metrics_sha256": "29f2cbd855098380538b03e0aa2c89ce5eedfa4c8a101c28dd61a8649de8e208"
+      "metrics_sha256": "29f2cbd855098380538b03e0aa2c89ce5eedfa4c8a101c28dd61a8649de8e208",
+      "last_epoch_seconds": 38.40046167373657,
+      "last_data_wait_fraction": 0.7852794327713987
     },
     {
-      "name": "K7_G2_MSA_residue_mean",
+      "name": "K7_G2_MSA_residue_mean_seed49",
       "job": "799902_7",
       "state": [
-        "RUNNING",
+        "COMPLETED",
         "0:0",
-        "00:44:44"
+        "00:47:21"
       ],
       "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K7_G2_MSA_residue_mean_seed49",
-      "epochs": 46,
+      "epochs": 50,
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 1,
+      "sanitized_gradient_elements": 1,
       "validation_skips": 0,
       "pooled_best": {
         "epoch": 41,
@@ -380,21 +405,25 @@
         "MCC": 0.6001290385768964,
         "MCC_gate": 0.61,
         "ratio_MAE": 0.05044392587660357
-      }
+      },
+      "metrics_sha256": "751360b0f5ccc40ed0aac91b83871c8b42f006c9beb9aca9f9bb1bd4031c3820",
+      "last_epoch_seconds": 37.94405221939087,
+      "last_data_wait_fraction": 0.8084909893703921
     },
     {
-      "name": "K8_G2_MSA_pure_CE",
+      "name": "K8_G2_MSA_pure_CE_seed49",
       "job": "799902_8",
       "state": [
-        "RUNNING",
+        "COMPLETED",
         "0:0",
-        "00:44:13"
+        "00:51:43"
       ],
       "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K8_G2_MSA_pure_CE_seed49",
-      "epochs": 41,
+      "epochs": 50,
       "test_seen": false,
       "coverage_ok_all_epochs": true,
-      "AMP_skips": 1,
+      "AMP_skips": 2,
+      "sanitized_gradient_elements": 13,
       "validation_skips": 0,
       "pooled_best": {
         "epoch": 22,
@@ -428,21 +457,25 @@
         "MCC": 0.5995434064116177,
         "MCC_gate": 0.45,
         "ratio_MAE": 0.050928554583427516
-      }
+      },
+      "metrics_sha256": "0636ccdbaee084383d1e47016085f5f535e4587fd44392a53d9a28d58598eff0",
+      "last_epoch_seconds": 39.68277025222778,
+      "last_data_wait_fraction": 0.8291599638876755
     },
     {
-      "name": "K9_G2_MSA_evo_edges",
+      "name": "K9_G2_MSA_evo_edges_seed49",
       "job": "799988_0",
       "state": [
-        "RUNNING",
+        "COMPLETED",
         "0:0",
-        "00:27:54"
+        "00:37:16"
       ],
       "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/runs/K9_G2_MSA_evo_edges_seed49",
-      "epochs": 34,
+      "epochs": 50,
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 1,
+      "sanitized_gradient_elements": 2,
       "validation_skips": 0,
       "pooled_best": {
         "epoch": 19,
@@ -476,32 +509,36 @@
         "MCC": 0.6008479876056914,
         "MCC_gate": 0.47,
         "ratio_MAE": 0.05138605457925519
-      }
+      },
+      "metrics_sha256": "d102e69b320b2ebd306539392b45cc0f56da2e4c8a2b84bae5044d84cc0d7b41",
+      "last_epoch_seconds": 36.333104848861694,
+      "last_data_wait_fraction": 0.7957601988845482
     },
     {
-      "name": "K10_G2_MSA_evo_edges_twohop",
+      "name": "K10_G2_MSA_evo_edges_twohop_seed49",
       "job": "799988_1",
       "state": [
-        "RUNNING",
+        "COMPLETED",
         "0:0",
-        "00:27:54"
+        "00:55:26"
       ],
       "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/runs/K10_G2_MSA_evo_edges_twohop_seed49",
-      "epochs": 26,
+      "epochs": 50,
       "test_seen": false,
       "coverage_ok_all_epochs": true,
-      "AMP_skips": 1,
+      "AMP_skips": 2,
+      "sanitized_gradient_elements": 3,
       "validation_skips": 0,
       "pooled_best": {
-        "epoch": 25,
-        "macro_AP": 0.7531136264363102,
-        "pooled_AP": 0.7821079957091043,
-        "AUROC": 0.8884178905597652,
-        "F1": 0.703045799940367,
-        "F1_gate": 0.55,
-        "MCC": 0.5939032334251126,
-        "MCC_gate": 0.64,
-        "ratio_MAE": 0.057282516961527426
+        "epoch": 32,
+        "macro_AP": 0.7561240325089976,
+        "pooled_AP": 0.788384790823048,
+        "AUROC": 0.8930809062773801,
+        "F1": 0.7095731284884557,
+        "F1_gate": 0.32,
+        "MCC": 0.600791946827032,
+        "MCC_gate": 0.52,
+        "ratio_MAE": 0.05170581452895043
       },
       "macro_best": {
         "epoch": 13,
@@ -515,176 +552,200 @@
         "ratio_MAE": 0.062193932282023655
       },
       "guarded_best": {
-        "epoch": 25,
-        "macro_AP": 0.7531136264363102,
-        "pooled_AP": 0.7821079957091043,
-        "AUROC": 0.8884178905597652,
-        "F1": 0.703045799940367,
-        "F1_gate": 0.55,
-        "MCC": 0.5939032334251126,
-        "MCC_gate": 0.64,
-        "ratio_MAE": 0.057282516961527426
-      }
+        "epoch": 32,
+        "macro_AP": 0.7561240325089976,
+        "pooled_AP": 0.788384790823048,
+        "AUROC": 0.8930809062773801,
+        "F1": 0.7095731284884557,
+        "F1_gate": 0.32,
+        "MCC": 0.600791946827032,
+        "MCC_gate": 0.52,
+        "ratio_MAE": 0.05170581452895043
+      },
+      "metrics_sha256": "64847b26cda458ece4b42388adfd65acc2f45f9f507c31aaa48211351e0da3ed",
+      "last_epoch_seconds": 49.73426389694214,
+      "last_data_wait_fraction": 0.8050081176568966
     },
     {
-      "name": "K11_G2_MSA_twohop_pure_CE",
+      "name": "K11_G2_MSA_twohop_pure_CE_seed49",
       "job": "800043_0",
       "state": [
         "RUNNING",
         "0:0",
-        "00:06:04"
+        "00:49:57"
       ],
       "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105/runs/K11_G2_MSA_twohop_pure_CE_seed49",
-      "epochs": 1,
+      "epochs": 26,
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 0,
+      "sanitized_gradient_elements": 0,
       "validation_skips": 0,
       "pooled_best": {
-        "epoch": 1,
-        "macro_AP": 0.4108413212487019,
-        "pooled_AP": 0.3841031557581377,
-        "AUROC": 0.672819053244446,
-        "F1": 0.4928378310299081,
-        "F1_gate": 0.22,
-        "MCC": 0.23793295215441682,
-        "MCC_gate": 0.22,
-        "ratio_MAE": 0.11243677658223829
+        "epoch": 19,
+        "macro_AP": 0.7582677736505871,
+        "pooled_AP": 0.7863640385954219,
+        "AUROC": 0.8912945363685534,
+        "F1": 0.7039332559693356,
+        "F1_gate": 0.46,
+        "MCC": 0.5943891490049932,
+        "MCC_gate": 0.59,
+        "ratio_MAE": 0.054650748758468516
       },
       "macro_best": {
-        "epoch": 1,
-        "macro_AP": 0.4108413212487019,
-        "pooled_AP": 0.3841031557581377,
-        "AUROC": 0.672819053244446,
-        "F1": 0.4928378310299081,
-        "F1_gate": 0.22,
-        "MCC": 0.23793295215441682,
-        "MCC_gate": 0.22,
-        "ratio_MAE": 0.11243677658223829
+        "epoch": 19,
+        "macro_AP": 0.7582677736505871,
+        "pooled_AP": 0.7863640385954219,
+        "AUROC": 0.8912945363685534,
+        "F1": 0.7039332559693356,
+        "F1_gate": 0.46,
+        "MCC": 0.5943891490049932,
+        "MCC_gate": 0.59,
+        "ratio_MAE": 0.054650748758468516
       },
-      "guarded_best": null
+      "guarded_best": {
+        "epoch": 19,
+        "macro_AP": 0.7582677736505871,
+        "pooled_AP": 0.7863640385954219,
+        "AUROC": 0.8912945363685534,
+        "F1": 0.7039332559693356,
+        "F1_gate": 0.46,
+        "MCC": 0.5943891490049932,
+        "MCC_gate": 0.59,
+        "ratio_MAE": 0.054650748758468516
+      },
+      "metrics_sha256": "f8b3cf2f3270875a25b3b406f7b30945554ce7725acdfcab3a842455b7924f16",
+      "last_epoch_seconds": 113.0214741230011,
+      "last_data_wait_fraction": 0.9200174319578689
     },
     {
-      "name": "K12_G2_MSA_threehop",
+      "name": "K12_G2_MSA_threehop_seed49",
       "job": "800019_1",
       "state": [
-        "RUNNING",
+        "COMPLETED",
         "0:0",
-        "00:13:41"
+        "00:49:49"
       ],
       "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/runs/K12_G2_MSA_threehop_seed49",
-      "epochs": 15,
+      "epochs": 50,
       "test_seen": false,
       "coverage_ok_all_epochs": true,
       "AMP_skips": 1,
+      "sanitized_gradient_elements": 1,
       "validation_skips": 0,
       "pooled_best": {
-        "epoch": 14,
-        "macro_AP": 0.7565368732544028,
-        "pooled_AP": 0.7797922669085229,
-        "AUROC": 0.8891223548646424,
-        "F1": 0.7034470797381087,
-        "F1_gate": 0.45,
-        "MCC": 0.5915075449717418,
-        "MCC_gate": 0.55,
-        "ratio_MAE": 0.05978143817290317
+        "epoch": 40,
+        "macro_AP": 0.7617930696971927,
+        "pooled_AP": 0.7861036421550286,
+        "AUROC": 0.8910579293713025,
+        "F1": 0.7049802406061002,
+        "F1_gate": 0.22,
+        "MCC": 0.5922240079339249,
+        "MCC_gate": 0.3,
+        "ratio_MAE": 0.06584289364516735
       },
       "macro_best": {
-        "epoch": 14,
-        "macro_AP": 0.7565368732544028,
-        "pooled_AP": 0.7797922669085229,
-        "AUROC": 0.8891223548646424,
-        "F1": 0.7034470797381087,
-        "F1_gate": 0.45,
-        "MCC": 0.5915075449717418,
-        "MCC_gate": 0.55,
-        "ratio_MAE": 0.05978143817290317
+        "epoch": 40,
+        "macro_AP": 0.7617930696971927,
+        "pooled_AP": 0.7861036421550286,
+        "AUROC": 0.8910579293713025,
+        "F1": 0.7049802406061002,
+        "F1_gate": 0.22,
+        "MCC": 0.5922240079339249,
+        "MCC_gate": 0.3,
+        "ratio_MAE": 0.06584289364516735
       },
       "guarded_best": {
-        "epoch": 14,
-        "macro_AP": 0.7565368732544028,
-        "pooled_AP": 0.7797922669085229,
-        "AUROC": 0.8891223548646424,
-        "F1": 0.7034470797381087,
-        "F1_gate": 0.45,
-        "MCC": 0.5915075449717418,
-        "MCC_gate": 0.55,
-        "ratio_MAE": 0.05978143817290317
-      }
+        "epoch": 40,
+        "macro_AP": 0.7617930696971927,
+        "pooled_AP": 0.7861036421550286,
+        "AUROC": 0.8910579293713025,
+        "F1": 0.7049802406061002,
+        "F1_gate": 0.22,
+        "MCC": 0.5922240079339249,
+        "MCC_gate": 0.3,
+        "ratio_MAE": 0.06584289364516735
+      },
+      "metrics_sha256": "29d0eceeb2e2b8c6f8aa5d963956726a781e005952651bd18148dcdbd4cb1569",
+      "last_epoch_seconds": 99.51993179321289,
+      "last_data_wait_fraction": 0.8814098509572883
     },
     {
-      "name": "K13_G2_MSA_threehop_pure_CE",
+      "name": "K13_G2_MSA_threehop_pure_CE_seed49",
       "job": "800043_1",
       "state": [
-        "RUNNING",
+        "COMPLETED",
         "0:0",
-        "00:06:04"
+        "00:35:15"
       ],
       "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105/runs/K13_G2_MSA_threehop_pure_CE_seed49",
-      "epochs": 8,
+      "epochs": 50,
       "test_seen": false,
       "coverage_ok_all_epochs": true,
-      "AMP_skips": 0,
+      "AMP_skips": 1,
+      "sanitized_gradient_elements": 1,
       "validation_skips": 0,
       "pooled_best": {
-        "epoch": 8,
-        "macro_AP": 0.7488168315560912,
-        "pooled_AP": 0.7641595183694606,
-        "AUROC": 0.884268523518071,
-        "F1": 0.694977856055813,
-        "F1_gate": 0.27,
-        "MCC": 0.5784498021995432,
-        "MCC_gate": 0.33,
-        "ratio_MAE": 0.07381205725288668
+        "epoch": 16,
+        "macro_AP": 0.7562580688760684,
+        "pooled_AP": 0.7827286843571566,
+        "AUROC": 0.8900160490482605,
+        "F1": 0.7027031821709724,
+        "F1_gate": 0.3,
+        "MCC": 0.5939406893042484,
+        "MCC_gate": 0.47,
+        "ratio_MAE": 0.058902340106839354
       },
       "macro_best": {
-        "epoch": 8,
-        "macro_AP": 0.7488168315560912,
-        "pooled_AP": 0.7641595183694606,
-        "AUROC": 0.884268523518071,
-        "F1": 0.694977856055813,
-        "F1_gate": 0.27,
-        "MCC": 0.5784498021995432,
-        "MCC_gate": 0.33,
-        "ratio_MAE": 0.07381205725288668
+        "epoch": 9,
+        "macro_AP": 0.757457665999948,
+        "pooled_AP": 0.7791731140202116,
+        "AUROC": 0.8910450199364548,
+        "F1": 0.7091114588767171,
+        "F1_gate": 0.33,
+        "MCC": 0.5978875378442228,
+        "MCC_gate": 0.37,
+        "ratio_MAE": 0.05798947286987027
       },
       "guarded_best": {
-        "epoch": 8,
-        "macro_AP": 0.7488168315560912,
-        "pooled_AP": 0.7641595183694606,
-        "AUROC": 0.884268523518071,
-        "F1": 0.694977856055813,
-        "F1_gate": 0.27,
-        "MCC": 0.5784498021995432,
-        "MCC_gate": 0.33,
-        "ratio_MAE": 0.07381205725288668
-      }
+        "epoch": 16,
+        "macro_AP": 0.7562580688760684,
+        "pooled_AP": 0.7827286843571566,
+        "AUROC": 0.8900160490482605,
+        "F1": 0.7027031821709724,
+        "F1_gate": 0.3,
+        "MCC": 0.5939406893042484,
+        "MCC_gate": 0.47,
+        "ratio_MAE": 0.058902340106839354
+      },
+      "metrics_sha256": "4383adb53132820c588725a65ba1638a50fb06d15bdadbe33f1ad791f3904637",
+      "last_epoch_seconds": 38.49742031097412,
+      "last_data_wait_fraction": 0.6764700719809861
     }
   ],
-  "allocations": "799902_0|COMPLETED|0:0|00:34:42\n799902_1|COMPLETED|0:0|00:51:54\n799902_2|RUNNING|0:0|00:57:07\n799902_3|RUNNING|0:0|00:56:36\n799902_4|COMPLETED|0:0|00:43:04\n799902_5|FAILED|1:0|00:40:32\n799902_6|COMPLETED|0:0|00:39:41\n799902_7|RUNNING|0:0|00:44:44\n799902_8|RUNNING|0:0|00:44:13\n799988_0|RUNNING|0:0|00:27:54\n799988_1|RUNNING|0:0|00:27:54\n800019_0|FAILED|1:0|00:03:04\n800019_1|RUNNING|0:0|00:13:41\n800019_2|FAILED|1:0|00:02:05\n800043_0|RUNNING|0:0|00:06:04\n800043_1|RUNNING|0:0|00:06:04",
-  "note": "Snapshot only;running rows are provisional. Failed K5 is superseded by fresh host-RAM retry800063;K11/K13 use800043 retries. No0.80 achievement verified.",
-  "retries": {
-    "K5": {
-      "job": 800063,
-      "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/retries/hostmem192_20261105",
-      "resources": "192G host RAM",
-      "data_model_unchanged": true,
-      "training_diff": [
-        "output_dir"
-      ],
-      "init_checkpoint": null
-    },
-    "K11_K13": {
-      "job": 800043,
-      "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105",
-      "excluded_nodes": [
-        "ACD1-28"
-      ],
-      "data_model_unchanged": true,
-      "training_diff": [
-        "output_dir"
-      ],
-      "init_checkpoint": null
-    }
-  }
+  "fixed_K3_blends": "geometry_msa_followup_blends_20261105_results.json",
+  "best_fixed_blend": {
+    "name": "G2_plus_MSA_D_plus_K3",
+    "macro_AP": 0.7660679415925195,
+    "pooled_AP": 0.798613220715041,
+    "target_reached": false
+  },
+  "preserved_original_failures": {
+    "799902_5": [
+      "FAILED",
+      "1:0",
+      "00:40:32"
+    ],
+    "800019_0": [
+      "FAILED",
+      "1:0",
+      "00:03:04"
+    ],
+    "800019_2": [
+      "FAILED",
+      "1:0",
+      "00:02:05"
+    ]
+  },
+  "scope": "Exploratory selected-validation campaign;no test read or new seeds;not independent confirmation"
 }

@@ -152,13 +152,15 @@ class LinearAttentionContext(nn.Module):
     def forward(self, h, mask):
         b, length, dim = h.shape
         q, k, v = self.qkv(self.norm(h)).reshape(b, length, 3, self.heads, dim // self.heads).unbind(2)
-        q, k, v = (x.transpose(1, 2).float() for x in (q, k, v))
-        q, k = F.elu(q) + 1., F.elu(k) + 1.
-        keep = mask[:, None, :, None]
-        k, v = k * keep, v * keep
-        kv = torch.einsum("bhld,bhle->bhde", k, v)
-        denom = torch.einsum("bhld,bhd->bhl", q, k.sum(2)).clamp_min(1.e-6)
-        values = torch.einsum("bhld,bhde->bhle", q, kv) / denom[..., None]
+        # Casting inputs is insufficient: autocast can lower einsum's contractions again.
+        with torch.autocast(device_type=h.device.type, enabled=False):
+            q, k, v = (x.transpose(1, 2).float() for x in (q, k, v))
+            q, k = F.elu(q) + 1., F.elu(k) + 1.
+            keep = mask[:, None, :, None]
+            k, v = k * keep, v * keep
+            kv = torch.einsum("bhld,bhle->bhde", k, v)
+            denom = torch.einsum("bhld,bhd->bhl", q, k.sum(2)).clamp_min(1.e-6)
+            values = torch.einsum("bhld,bhde->bhle", q, kv) / denom[..., None]
         values = values.transpose(1, 2).reshape(b, length, dim).to(h.dtype)
         out = h + self.drop(self.output(values))
         out = out + self.drop(self.ff(out))

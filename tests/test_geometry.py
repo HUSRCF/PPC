@@ -90,6 +90,22 @@ class GeometryTests(unittest.TestCase):
         first.square().mean().backward()
         self.assertTrue(all(torch.isfinite(p.grad).all() for p in block.parameters() if p.grad is not None))
 
+    def test_linear_attention_long_accumulation_float16(self):
+        block = LinearAttentionContext(32, heads=1, dropout=0.).eval()
+        with torch.no_grad():
+            block.qkv.weight.zero_()
+            block.qkv.bias.fill_(1.)
+            block.output.weight.normal_(std=.02)
+        h = torch.randn(1, 4096, 32, requires_grad=True)
+        mask = torch.ones(1, 4096, dtype=torch.bool)
+        reference = block(h, mask).detach()
+        with torch.autocast("cpu", dtype=torch.float16):
+            out = block(h, mask)
+        self.assertTrue(torch.isfinite(out).all())
+        torch.testing.assert_close(out, reference, rtol=.005, atol=.005)
+        out.square().mean().backward()
+        self.assertTrue(all(torch.isfinite(p.grad).all() for p in block.parameters() if p.grad is not None))
+
     def test_crop_keeps_edge_attributes_and_offsets(self):
         data = dict(geometry_vectors=self.v[0], geometry_edge_index=self.e[:, :4],
                     geometry_edge_features=self.a[:4], geometry_edge_vectors=self.ev[:4],

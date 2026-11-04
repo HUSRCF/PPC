@@ -1,0 +1,420 @@
+{
+  "objective": "Controlled regularization around K3 toward validation pooled AP0.80",
+  "job_array": "800313",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105",
+  "partition": "acd_ue",
+  "array": "0-5",
+  "artificial_concurrency_throttle": null,
+  "source_commit": "d32ae4238153fb1df58dd348a79528af95b95840",
+  "archive_sha256": "0c643e4f574ae869b3381970eaeee3cf2e7d1117c9fd94805717b67c5f72d483",
+  "from_scratch": true,
+  "seed": 49,
+  "epochs": 50,
+  "parameters": 3693034,
+  "preflight": {
+    "archive_sha256": "0c643e4f574ae869b3381970eaeee3cf2e7d1117c9fd94805717b67c5f72d483",
+    "data_identical": true,
+    "rows": [
+      {
+        "task": 0,
+        "job": {
+          "name": "K19_G2_MSA_twohop_dropout_low",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/configs/K19_G2_MSA_twohop_dropout_low_seed49.json",
+          "sha256": "9d441b27baa37e8a2ff74e56ddc15336370f7ed8804356a93a3361750b3b6c3a",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K19_G2_MSA_twohop_dropout_low_seed49",
+          "partition": "acd_ue"
+        },
+        "model_differences": [
+          "classifier_dropout",
+          "dropout"
+        ],
+        "training_differences": [
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3693034
+      },
+      {
+        "task": 1,
+        "job": {
+          "name": "K20_G2_MSA_twohop_dropout_high",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/configs/K20_G2_MSA_twohop_dropout_high_seed49.json",
+          "sha256": "e45c93733d0d31b814d7e7d99f80505762e44e6c90e87d471850d93f64540f2f",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K20_G2_MSA_twohop_dropout_high_seed49",
+          "partition": "acd_ue"
+        },
+        "model_differences": [
+          "classifier_dropout",
+          "dropout"
+        ],
+        "training_differences": [
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3693034
+      },
+      {
+        "task": 2,
+        "job": {
+          "name": "K21_G2_MSA_twohop_wd003",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/configs/K21_G2_MSA_twohop_wd003_seed49.json",
+          "sha256": "0ceaa61fbd8bad361b76755d3a931c3c9315da3343bca862a71a89dfac20727f",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K21_G2_MSA_twohop_wd003_seed49",
+          "partition": "acd_ue"
+        },
+        "model_differences": [],
+        "training_differences": [
+          "output_dir",
+          "prediction_provenance",
+          "weight_decay"
+        ],
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3693034
+      },
+      {
+        "task": 3,
+        "job": {
+          "name": "K22_G2_MSA_twohop_wd020",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/configs/K22_G2_MSA_twohop_wd020_seed49.json",
+          "sha256": "b67f5eafbbdc779d6c6aff0ae9d71ea4bad79fcb91131aec8d9932a8474ee781",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K22_G2_MSA_twohop_wd020_seed49",
+          "partition": "acd_ue"
+        },
+        "model_differences": [],
+        "training_differences": [
+          "output_dir",
+          "prediction_provenance",
+          "weight_decay"
+        ],
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3693034
+      },
+      {
+        "task": 4,
+        "job": {
+          "name": "K23_G2_MSA_twohop_ls002",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/configs/K23_G2_MSA_twohop_ls002_seed49.json",
+          "sha256": "c71397f707aa3505f2e973f30bd33cd48a1cf93c5ad35e7f257ca208e756ca72",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K23_G2_MSA_twohop_ls002_seed49",
+          "partition": "acd_ue"
+        },
+        "model_differences": [],
+        "training_differences": [
+          "label_smoothing",
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3693034
+      },
+      {
+        "task": 5,
+        "job": {
+          "name": "K24_G2_MSA_twohop_msa_drop010",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/configs/K24_G2_MSA_twohop_msa_drop010_seed49.json",
+          "sha256": "d7161bfef93fceef67f3ee9bd4199c4bab39fbbe124e770de6bbe93a53dff83d",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K24_G2_MSA_twohop_msa_drop010_seed49",
+          "partition": "acd_ue"
+        },
+        "model_differences": [
+          "prottrans_residual_dropout"
+        ],
+        "training_differences": [
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3693034
+      }
+    ]
+  },
+  "resources_per_task": {
+    "GPUs": 1,
+    "CPUs": 12,
+    "memory_GiB": 192,
+    "time_limit": "12:00:00",
+    "exclude": "ACD1-28"
+  },
+  "selection": {
+    "primary": "validation pooled AP",
+    "macro_guardrail": 0.7417948466002535,
+    "ties": "earliest",
+    "fixed_blend_policy": "regularization_screen_20261105_fixed_blends.json",
+    "alpha_search": false
+  },
+  "tests": {
+    "local": {
+      "total": 87,
+      "passed": 85,
+      "optional_skipped": 2
+    },
+    "HPC3_focused": {
+      "total": 12,
+      "passed": 12
+    }
+  },
+  "reviewer": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "agent": "01a1a7ae-499f-7c41-8b32-befcfd873a00",
+    "result": "No blockers;12focusedtests plus direct checks;oldK0-K18 unchanged;WD/LS passthrough verified"
+  },
+  "acceptance": {
+    "observed_UTC": "2026-11-04T18:53:50.764737+00:00",
+    "rows": [
+      {
+        "task": 0,
+        "name": "K19_G2_MSA_twohop_dropout_low",
+        "queue": [
+          "RUNNING",
+          "1:15",
+          "ACD1-33"
+        ],
+        "smoke": [
+          {
+            "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/smoke/K19_G2_MSA_twohop_dropout_low_seed49_800314/verification.json",
+            "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+            "receipt": {
+              "optimizer_updates": 2,
+              "two_updates": true,
+              "finite": true,
+              "backbone_updated": true,
+              "new_zero_init_parameters_updated": [
+                "geometry_blocks.0.update.4.weight",
+                "geometry_blocks.1.update.4.weight",
+                "prottrans_residual_adapter.3.weight"
+              ],
+              "learned_edge_parameters_updated": [],
+              "test_read": false
+            }
+          }
+        ],
+        "formal_start": {
+          "n_train": 4868,
+          "n_val": 1075,
+          "n_test": 0,
+          "trainable_parameters": 3693034,
+          "device_resolved": "cuda:0"
+        },
+        "epochs": 0,
+        "coverage_verified": false,
+        "validation_skips": 0,
+        "AMP_skips": 0,
+        "test_seen": false
+      },
+      {
+        "task": 1,
+        "name": "K20_G2_MSA_twohop_dropout_high",
+        "queue": [
+          "RUNNING",
+          "1:14",
+          "ACD1-33"
+        ],
+        "smoke": [
+          {
+            "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/smoke/K20_G2_MSA_twohop_dropout_high_seed49_800315/verification.json",
+            "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+            "receipt": {
+              "optimizer_updates": 2,
+              "two_updates": true,
+              "finite": true,
+              "backbone_updated": true,
+              "new_zero_init_parameters_updated": [
+                "geometry_blocks.0.update.4.weight",
+                "geometry_blocks.1.update.4.weight",
+                "prottrans_residual_adapter.3.weight"
+              ],
+              "learned_edge_parameters_updated": [],
+              "test_read": false
+            }
+          }
+        ],
+        "formal_start": {
+          "n_train": 4868,
+          "n_val": 1075,
+          "n_test": 0,
+          "trainable_parameters": 3693034,
+          "device_resolved": "cuda:0"
+        },
+        "epochs": 0,
+        "coverage_verified": false,
+        "validation_skips": 0,
+        "AMP_skips": 0,
+        "test_seen": false
+      },
+      {
+        "task": 2,
+        "name": "K21_G2_MSA_twohop_wd003",
+        "queue": [
+          "RUNNING",
+          "1:14",
+          "ACD1-51"
+        ],
+        "smoke": [
+          {
+            "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/smoke/K21_G2_MSA_twohop_wd003_seed49_800316/verification.json",
+            "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+            "receipt": {
+              "optimizer_updates": 2,
+              "two_updates": true,
+              "finite": true,
+              "backbone_updated": true,
+              "new_zero_init_parameters_updated": [
+                "geometry_blocks.0.update.4.weight",
+                "geometry_blocks.1.update.4.weight",
+                "prottrans_residual_adapter.3.weight"
+              ],
+              "learned_edge_parameters_updated": [],
+              "test_read": false
+            }
+          }
+        ],
+        "formal_start": {
+          "n_train": 4868,
+          "n_val": 1075,
+          "n_test": 0,
+          "trainable_parameters": 3693034,
+          "device_resolved": "cuda:0"
+        },
+        "epochs": 0,
+        "coverage_verified": false,
+        "validation_skips": 0,
+        "AMP_skips": 0,
+        "test_seen": false
+      },
+      {
+        "task": 3,
+        "name": "K22_G2_MSA_twohop_wd020",
+        "queue": [
+          "RUNNING",
+          "1:14",
+          "ACD1-51"
+        ],
+        "smoke": [
+          {
+            "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/smoke/K22_G2_MSA_twohop_wd020_seed49_800317/verification.json",
+            "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+            "receipt": {
+              "optimizer_updates": 2,
+              "two_updates": true,
+              "finite": true,
+              "backbone_updated": true,
+              "new_zero_init_parameters_updated": [
+                "geometry_blocks.0.update.4.weight",
+                "geometry_blocks.1.update.4.weight",
+                "prottrans_residual_adapter.3.weight"
+              ],
+              "learned_edge_parameters_updated": [],
+              "test_read": false
+            }
+          }
+        ],
+        "formal_start": {
+          "n_train": 4868,
+          "n_val": 1075,
+          "n_test": 0,
+          "trainable_parameters": 3693034,
+          "device_resolved": "cuda:0"
+        },
+        "epochs": 0,
+        "coverage_verified": false,
+        "validation_skips": 0,
+        "AMP_skips": 0,
+        "test_seen": false
+      },
+      {
+        "task": 4,
+        "name": "K23_G2_MSA_twohop_ls002",
+        "queue": [
+          "RUNNING",
+          "1:14",
+          "ACD1-51"
+        ],
+        "smoke": [
+          {
+            "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/smoke/K23_G2_MSA_twohop_ls002_seed49_800318/verification.json",
+            "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+            "receipt": {
+              "optimizer_updates": 2,
+              "two_updates": true,
+              "finite": true,
+              "backbone_updated": true,
+              "new_zero_init_parameters_updated": [
+                "geometry_blocks.0.update.4.weight",
+                "geometry_blocks.1.update.4.weight",
+                "prottrans_residual_adapter.3.weight"
+              ],
+              "learned_edge_parameters_updated": [],
+              "test_read": false
+            }
+          }
+        ],
+        "formal_start": {
+          "n_train": 4868,
+          "n_val": 1075,
+          "n_test": 0,
+          "trainable_parameters": 3693034,
+          "device_resolved": "cuda:0"
+        },
+        "epochs": 0,
+        "coverage_verified": false,
+        "validation_skips": 0,
+        "AMP_skips": 0,
+        "test_seen": false
+      },
+      {
+        "task": 5,
+        "name": "K24_G2_MSA_twohop_msa_drop010",
+        "queue": [
+          "RUNNING",
+          "1:14",
+          "ACD1-20"
+        ],
+        "smoke": [
+          {
+            "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/smoke/K24_G2_MSA_twohop_msa_drop010_seed49_800313/verification.json",
+            "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+            "receipt": {
+              "optimizer_updates": 2,
+              "two_updates": true,
+              "finite": true,
+              "backbone_updated": true,
+              "new_zero_init_parameters_updated": [
+                "geometry_blocks.0.update.4.weight",
+                "geometry_blocks.1.update.4.weight",
+                "prottrans_residual_adapter.3.weight"
+              ],
+              "learned_edge_parameters_updated": [],
+              "test_read": false
+            }
+          }
+        ],
+        "formal_start": {
+          "n_train": 4868,
+          "n_val": 1075,
+          "n_test": 0,
+          "trainable_parameters": 3693034,
+          "device_resolved": "cuda:0"
+        },
+        "epochs": 0,
+        "coverage_verified": false,
+        "validation_skips": 0,
+        "AMP_skips": 0,
+        "test_seen": false
+      }
+    ]
+  },
+  "test_evaluated": false,
+  "packages_installed_or_changed": false,
+  "model_or_trainer_implementation_changed": false,
+  "milestone_policy": "pooled_AP080_milestones_20261105_policy.json",
+  "limitations": "Adaptive single-seed validation screen;no independent confirmation;main+classifier dropout is a grouped strength axis"
+}

@@ -1,0 +1,27 @@
+{
+  "observed_UTC": "2026-11-04T18:53:50.764737+00:00",
+  "stage": "validation_search",
+  "target_pooled_AP": 0.8,
+  "target_verified": false,
+  "leading_validation_point": {
+    "name": "G2_plus_MSA_D_plus_K15",
+    "macro_AP": 0.7680185674025352,
+    "pooled_AP": 0.7987617942906267,
+    "gap_to_target": 0.0012382057093733856,
+    "evidence": "msa_bottleneck_width_20261105_K15_K16_results.json",
+    "interpretation": "Highest completed validation point estimate;not statistically confirmed superiority over prior ensemble"
+  },
+  "test_evaluated": false,
+  "test_model_selection": false,
+  "test_threshold_search": false,
+  "RCSB_whole_training_started_in_this_stage": false,
+  "active_regularization_job": "800313",
+  "regularization_tasks": 6,
+  "next_steps": [
+    "Complete declared validation runs and fixed readouts",
+    "At full-precision eligible AP>=0.80,freeze validation-selected system and gates",
+    "Evaluate locked test without model or gate selection on test",
+    "Audit and attempt whole-RCSB single-chain union training"
+  ],
+  "contract": "pooled_AP080_milestones_20261105_policy.json"
+}

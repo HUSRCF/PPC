@@ -37,6 +37,8 @@ included. This index closes that gap. M7c is not the latest completed model.
 | Fixed K3 ensembles: exact raw-score reproduction and 55-component uncertainty | [Interpretation](validation_ensemble_diagnostics_20261105/README.md), [effects and intervals](validation_ensemble_diagnostics_20261105/summary.json), [integrity receipts](validation_ensemble_diagnostics_20261105/reproduction_receipt.json) |
 | AP0.80 milestone: validation lock, test evaluation, then whole-RCSB | [User contract and leakage safeguards](pooled_AP080_milestones_20261105.md), [machine-readable policy](pooled_AP080_milestones_20261105_policy.json) |
 | Completed K15/K16 and first fixed width blends | [Readout and uncompleted matched-pair caveat](msa_bottleneck_width_20261105_K15_K16_results.md), [full metrics](msa_bottleneck_width_20261105_K15_K16_results.json) |
+| Controlled dropout/weight-decay/smoothing/MSA-dropout K19-K24 | [Six-arm plan](regularization_screen_20261105.md), [job800313 and actual configs](regularization_screen_20261105_launch.json), [prospective blends](regularization_screen_20261105_fixed_blends.json) |
+| Milestone stage status | [Validation0.798762;test and whole-RCSB not started](pooled_AP080_milestones_20261105_status.json) |
 
 ## Original Frozen Test Results
 

@@ -65,3 +65,22 @@ masked, FP32 consistency objective; EMA would require checkpoint/averaging-state
 audits. Neither justifies upgrading the user's PyTorch environment or guarantees
 a PPIS gain. Primary references: [R-Drop, NeurIPS2021](https://proceedings.neurips.cc/paper_files/paper/2021/hash/5a66b9200f29ac3fa0ae244cc2a51b39-Abstract.html)
 and [PyTorch averaging documentation](https://docs.pytorch.org/docs/stable/generated/torch.optim.swa_utils.AveragedModel.html).
+
+## Launch
+
+Submitted as **800313_[0-5]**, `acd_ue`, without a percent concurrency cap.
+Execution source is commit `d32ae4238153fb1df58dd348a79528af95b95840`, archive
+SHA-256 `0c643e4f574ae869b3381970eaeee3cf2e7d1117c9fd94805717b67c5f72d483`.
+All six tasks were RUNNING at the2026-11-04 18:53 UTC acceptance snapshot.
+They passed the real CUDA two-update gate and entered formal training with
+4,868 train /1,075 validation /zero test samples and the intended3,693,034
+parameters. This snapshot precedes their first complete formal validation epoch;
+it is startup acceptance, not a predictive result.
+
+The gpt-6-luna max review found no blockers. The full local suite passed85tests
+with2optional skips; HPC3 focused tests passed12. Actual generated configs
+were compared against K3, including data identity, only intended knob changes,
+identical initial tensors and constructor RNG. No package was changed.
+
+See [launch/preflight/real-GPU receipts](regularization_screen_20261105_launch.json)
+and [actual configs and parent hashes](regularization_screen_20261105/).

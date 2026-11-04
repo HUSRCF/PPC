@@ -131,7 +131,7 @@ class GeometryMSATests(unittest.TestCase):
                             "K29_G2_MSA_twohop_preTCN_residue_mean"}:
                 self.assertEqual((t["loss_reduction"], t["ratio_loss_weight"]), ("chain_mean", .75))
         self.assertEqual(parents, before)
-        self.assertEqual(len(outputs), 30)
+        self.assertEqual(len(outputs), 32)
         base = screen.build(*parents, Path("/tmp/geo_msa_test"), "K1_G2_MSA")
         for name, axis in (("K7_G2_MSA_residue_mean", "loss_reduction"), ("K8_G2_MSA_pure_CE", "ratio_loss_weight")):
             variant = screen.build(*parents, Path("/tmp/geo_msa_test"), name)
@@ -358,6 +358,64 @@ class GeometryMSATests(unittest.TestCase):
                                     if p.grad is not None))
                 optimizer.step()
             self.assertFalse(torch.equal(initial, weight), (projection, hidden))
+
+    def test_tcn_depth_cells_change_only_declared_context_axes(self):
+        geometry = module("prepare_geometry_screen")
+        msa = module("prepare_msa_factorial")
+        screen = module("prepare_geometry_msa_screen")
+        parents = (
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "B1_fixed91q"),
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "G2_edge_attention"),
+            msa.build_config(ROOT, Path("/tmp/msa_parent"), "D", "encoder", 49),
+        )
+        models = []
+        for control, variant in (("K3_G2_MSA_twohop", "K30_G2_MSA_twohop_tcn4"),
+                                 ("K18_G2_MSA_twohop_preTCN", "K31_G2_MSA_twohop_preTCN_tcn4")):
+            first = screen.build(*parents, Path("/tmp/tcn_depth"), control)
+            second = screen.build(*parents, Path("/tmp/tcn_depth"), variant)
+            self.assertEqual(first["data"], second["data"])
+            self.assertEqual({k for k in first["training"] if first["training"][k] != second["training"][k]},
+                             {"output_dir"})
+            self.assertEqual({k for k in first["model"] if first["model"][k] != second["model"][k]},
+                             {"tcn_layers", "tcn_dilations"})
+            self.assertEqual(second["model"]["tcn_layers"], 4)
+            self.assertEqual(second["model"]["tcn_dilations"], [1, 2, 4, 8])
+            self.assertEqual(second["model"]["tcn_kernel_size"], 7)
+            self.assertEqual(1 + 6 * sum(second["model"]["tcn_dilations"]), 91)
+            torch.manual_seed(49)
+            model = ESMSiteClassifier(second["model"])
+            self.assertEqual(len(model.tcn_blocks), 4)
+            self.assertEqual([block.conv[0].dilation[0] for block in model.tcn_blocks], [1, 2, 4, 8])
+            models.append((model.state_dict(), torch.get_rng_state()))
+        self.assertTrue(torch.equal(models[0][1], models[1][1]))
+        self.assertEqual(models[0][0].keys(), models[1][0].keys())
+        self.assertTrue(all(torch.equal(v, models[1][0][k]) for k, v in models[0][0].items()))
+
+    def test_four_layer_tcn_keeps_padding_and_all_paths_learn(self):
+        x = payload()
+        targets = torch.arange(int(x["protein_mask"].sum())) % 2
+        for position in ("post_tcn", "pre_tcn"):
+            model = ESMSiteClassifier(small_config(
+                geometry_layers=2, msa_residual_position=position, use_tcn_context=True,
+                tcn_layers=4, tcn_kernel_size=7, tcn_dilations=[1, 2, 4, 8],
+                tcn_block_type="gated_depthwise"))
+            before = [block.conv[0].weight.detach().clone() for block in model.tcn_blocks]
+            optimizer = torch.optim.AdamW(model.parameters(), lr=.01, weight_decay=0.)
+            for _ in range(2):
+                optimizer.zero_grad()
+                logits = model(**x)["logits"]
+                self.assertTrue(torch.isfinite(logits).all())
+                self.assertTrue(torch.equal(logits[~x["protein_mask"]],
+                                            torch.zeros_like(logits[~x["protein_mask"]])))
+                torch.nn.functional.cross_entropy(logits[x["protein_mask"]], targets).backward()
+                self.assertTrue(all(torch.isfinite(p.grad).all() for p in model.parameters()
+                                    if p.grad is not None))
+                optimizer.step()
+            self.assertTrue(all(not torch.equal(old, block.conv[0].weight)
+                                for old, block in zip(before, model.tcn_blocks)))
+            self.assertGreater(model.prottrans_residual_adapter[-1].weight.abs().sum().item(), 0.)
+            self.assertTrue(all(block.update[-1].weight.abs().sum().item() > 0.
+                                for block in model.geometry_blocks))
 
 
 if __name__ == "__main__":

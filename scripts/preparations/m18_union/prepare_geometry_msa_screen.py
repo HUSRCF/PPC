@@ -55,6 +55,13 @@ VARIANTS = {
     },
     "K28_G2_MSA_twohop_residue_mean": {"geometry_layers": 2},
     "K29_G2_MSA_twohop_preTCN_residue_mean": {"geometry_layers": 2, "msa_residual_position": "pre_tcn"},
+    "K30_G2_MSA_twohop_tcn4": {
+        "geometry_layers": 2, "tcn_layers": 4, "tcn_dilations": [1, 2, 4, 8],
+    },
+    "K31_G2_MSA_twohop_preTCN_tcn4": {
+        "geometry_layers": 2, "msa_residual_position": "pre_tcn",
+        "tcn_layers": 4, "tcn_dilations": [1, 2, 4, 8],
+    },
 }
 MSA_KEYS = (
     "use_prottrans_embeddings", "d_prottrans", "prottrans_layer_count",
@@ -219,6 +226,7 @@ def main():
         regularization_rows="K19/K20 main+classifier dropout;K21/K22 weight_decay;K23 label_smoothing;K24 elementwise MSA projection+adapter dropout",
         interaction_rows="K25/K26/K27 complete preTCN x label_smoothing/pure_CE/MSA_width factorial cells",
         aggregation_rows="K28/K29 complete twohop CE aggregation x MSA fusion-position cells",
+        sequence_context_rows="K30/K31 extend TCN depth and receptive span at matched post/pre-MSA fusion positions;not parameter-matched",
         selected_variants=variants,
         checkpoints="Retain every epoch and both AP-best checkpoints; never combine scores from different epochs",
         concurrency="No artificial array throttle; scheduler/account quotas apply",

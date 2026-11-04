@@ -17,6 +17,7 @@ included. This index closes that gap. M7c is not the latest completed model.
 | M21C three-seed ratio-head variant | [Frozen report](results_history_20261104/sources/m21c/M21C_LOCKED_ENSEMBLE_TEST_20260718.md), [metrics](results_history_20261104/sources/m21c/metrics.json), [paired uncertainty](results_history_20261104/sources/m21c/m21c_minus_m18_ratio_mae_component_bootstrap.json) |
 | August matched-seed feature ablation A-E | [Metrics](results_history_20261104/sources/controlled_ablation/controlled_ablation_metrics.csv), [supported conclusions](results_history_20261104/sources/controlled_ablation/findings.md) |
 | November exact-sequence union + OpenFold3 A-E and R0-R2 | [Methods and results](m18_union_of3_20261104/README.md), [checkpoint/feature index](m18_union_of3_20261104/asset_index.json) |
+| Active D/E x direct-MSA, three-seed follow-up (no final results yet) | [Protocol](MSA_FACTORIAL_20261104.md), [submitted jobs and acceptance](msa_factorial_20261104_launch.json) |
 
 ## Original Frozen Test Results
 

@@ -1103,6 +1103,8 @@ def main() -> int:
     parser.add_argument("--require-aux-contact-graph", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--output-dir", default=None, type=Path)
     parser.add_argument("--init-checkpoint", default=None, type=Path)
+    parser.add_argument("--allow-random-init-residual", action=argparse.BooleanOptionalAction, default=False,
+                        help="Explicitly train a zero-init residual branch and its backbone from scratch")
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--epochs", type=int, default=10)
@@ -1341,7 +1343,9 @@ def main() -> int:
         "zero_init_logit_residual",
         "zero_init_pre_contact_residual",
     }
-    if conditional_residual_mode and args.init_checkpoint is None:
+    if args.allow_random_init_residual and args.init_checkpoint is not None:
+        raise ValueError("Random-init residual mode must not load an initialization checkpoint")
+    if conditional_residual_mode and args.init_checkpoint is None and not args.allow_random_init_residual:
         raise ValueError("zero-init conditional residual modes require init_checkpoint")
     init_report: dict[str, Any] | None = None
     if args.init_checkpoint is not None:

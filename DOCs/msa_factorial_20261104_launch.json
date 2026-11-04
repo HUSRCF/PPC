@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-04",
+  "status": "submitted_with_dependencies",
+  "scope": "PPC single-chain exact-sequence union/OpenFold3; no test evaluation",
+  "remote_root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104",
+  "matrix": [
+    "D_none",
+    "E_none",
+    "D_profile",
+    "E_profile",
+    "D_encoder",
+    "E_encoder"
+  ],
+  "seeds": [
+    49,
+    50,
+    51
+  ],
+  "epochs": 50,
+  "partition_by_seed": {
+    "49": "acd_ue",
+    "50": "acd_u",
+    "51": "acd_u"
+  },
+  "max_concurrent_matrix_gpus": 4,
+  "metrics": {
+    "primary": [
+      "chain_macro_AP",
+      "pooled_AP"
+    ],
+    "diagnostic": [
+      "residue_mean_ratio_MAE",
+      "bias",
+      "F1",
+      "MCC",
+      "Brier"
+    ]
+  },
+  "jobs": {
+    "none_ue_initial": "799087",
+    "none_D49_retry": "799114",
+    "none_u": "799088",
+    "failed_task": "799087_0",
+    "profile_features": "799164",
+    "profile_ue": "799165",
+    "profile_u": "799166",
+    "encoder_features": "799169",
+    "encoder_audit": "799170",
+    "encoder_ue": "799171",
+    "encoder_u": "799172",
+    "encoder_feature_smoke": "799177"
+  },
+  "dependencies": {
+    "profile_features": "afterany:799087:799114",
+    "profile_ue": "afterok:799164",
+    "profile_u": "afterok:799164,afterany:799088",
+    "encoder_feature_smoke": "afterany:799165",
+    "encoder_features": "afterok:799177",
+    "encoder_audit": "afterok:799169",
+    "encoder_ue": "afterok:799170",
+    "encoder_u": "afterok:799170,afterany:799166"
+  },
+  "resource_policy": "ACD requires GPU GRES even for CPU preprocessing; profile16shards/8workers and audit use one allocation. They follow the priority lane and do not exceed total4GPUs.",
+  "failure": {
+    "task": "799087_0",
+    "kind": "OOM with external GPU memory occupancy",
+    "node": "ACD1-56",
+    "external_gpu_memory_GiB": 72.48,
+    "own_gpu_memory_GiB": 6.61,
+    "retry": "799114_0",
+    "retry_policy": "fresh output from scratch, same hyperparameters, exclude conflicting node",
+    "preserved_directory": "runs/D_none_seed49_failed_799087_0"
+  },
+  "weights": {
+    "name": "esm_msa1b_t12_100M_UR50S.pt",
+    "bytes": 1387625262,
+    "sha256": "b8f276f513fd8bdfcb0c8ae38371075e35f4af559449e5212374a08880a20429",
+    "local_remote_hash_equal": true
+  },
+  "verification": {
+    "local_full_tests": 36,
+    "passed": 34,
+    "optional_external_skips": 2,
+    "real_profile_sequences": 2,
+    "real_profile_status": "passed, no labels read",
+    "encoder_gpu_smoke": "queued as799177 before full extraction",
+    "formal_msa_training_smoke": "two-update scratch + val2 coverage built into each MSA training job",
+    "reviewer_requested": "gpt-6-luna max",
+    "review_agent_id": "01a1a225-76c3-70b2-a7e1-e257100e435d",
+    "remaining_review_blockers": 0
+  },
+  "no_installations": true,
+  "original_assets_modified": false
+}

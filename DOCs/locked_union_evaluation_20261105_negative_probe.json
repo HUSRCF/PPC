@@ -1,0 +1,13 @@
+{
+  "observed_UTC": "2026-11-04T19:22:22.677339+00:00",
+  "system": "G2_plus_MSA_D_plus_K18",
+  "validation_pooled_AP": 0.7997048805648456,
+  "rejected_before_target": true,
+  "error": "Validation target/guardrail not reached; test remains closed",
+  "shared_cohort_metadata_reads": 0,
+  "checkpoint_or_test_tensor_reads": 0,
+  "test_evaluated": false,
+  "source_code_sha256": "03ecbe9880b51bcff77978265e7dbd8e8e4fe46abc58c04fb4684295e52a2002",
+  "validation_npz_sha256": "e252fc1900ed4badcb1bc11219b2af43a4e94ca01f9f58c54b91f24b6c1f5002",
+  "scope": "Real validation-only artifact; both shared cohort parsing and torch.load patched to raise before any read"
+}

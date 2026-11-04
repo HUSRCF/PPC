@@ -1,0 +1,62 @@
+{
+  "purpose": "Only prespecified K18 fixed thirds after successful50epochs",
+  "completed_receipt": {
+    "root": "geometry_position_depth_20261105",
+    "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/runs/K18_G2_MSA_twohop_preTCN_seed49",
+    "epochs": 50,
+    "consecutive": true,
+    "coverage": true,
+    "test_seen": false,
+    "metrics_sha256": "1ba2ee0dbcd8871c5fa718b61b28bab08f5f21c3b1ac1f023197f9675b1bc969",
+    "selected": {
+      "epoch": 31,
+      "chain_ap_macro": 0.7596451296509698,
+      "pooled_ap": 0.7889161410527482,
+      "auroc": 0.8918439981222297,
+      "f1_best_threshold": 0.707673289183223,
+      "best_threshold": 0.51,
+      "mcc_best_threshold": 0.600191716007916,
+      "best_mcc_threshold": 0.67,
+      "chain_ratio_mae_raw": 0.059359830605775814
+    },
+    "macro_selected": {
+      "epoch": 17,
+      "chain_ap_macro": 0.7614941827196108,
+      "pooled_ap": 0.7795566521414405,
+      "auroc": 0.8896532009453468,
+      "f1_best_threshold": 0.6976830896762222,
+      "best_threshold": 0.43,
+      "mcc_best_threshold": 0.5822591394051575,
+      "best_mcc_threshold": 0.55,
+      "chain_ratio_mae_raw": 0.06400486599740594
+    },
+    "last_epoch": 50,
+    "slurm_job": "800231_0",
+    "state": "COMPLETED",
+    "exit_code": "0:0"
+  },
+  "points": {
+    "G2": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl"
+    },
+    "MSA_D": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl"
+    },
+    "K18": {
+      "epoch": 31,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/runs/K18_G2_MSA_twohop_preTCN_seed49/predictions/val_epoch_031.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/runs/K18_G2_MSA_twohop_preTCN_seed49/metrics.jsonl"
+    }
+  },
+  "blends": {
+    "G2_plus_MSA_D_plus_K18": [
+      "G2",
+      "MSA_D",
+      "K18"
+    ]
+  }
+}

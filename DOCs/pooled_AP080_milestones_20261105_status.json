@@ -1,14 +1,14 @@
 {
-  "observed_UTC": "2026-11-04T18:53:50.764737+00:00",
+  "observed_UTC": "2026-11-04T19:20:02.869760+00:00",
   "stage": "validation_search",
   "target_pooled_AP": 0.8,
   "target_verified": false,
   "leading_validation_point": {
-    "name": "G2_plus_MSA_D_plus_K15",
-    "macro_AP": 0.7680185674025352,
-    "pooled_AP": 0.7987617942906267,
-    "gap_to_target": 0.0012382057093733856,
-    "evidence": "msa_bottleneck_width_20261105_K15_K16_results.json",
+    "name": "G2_plus_MSA_D_plus_K18",
+    "macro_AP": 0.7689864022799697,
+    "pooled_AP": 0.7997048805648456,
+    "gap_to_target": 0.0002951194351544,
+    "evidence": "geometry_position_depth_20261105_results.json",
     "interpretation": "Highest completed validation point estimate;not statistically confirmed superiority over prior ensemble"
   },
   "test_evaluated": false,
@@ -17,6 +17,10 @@
   "RCSB_whole_training_started_in_this_stage": false,
   "active_regularization_job": "800313",
   "regularization_tasks": 6,
+  "regularization_completed_epochs": {"K19": 32, "K20": 32, "K21": 29, "K22": 29, "K23": 29, "K24": 14},
+  "remaining_width_epochs": {"K14": 35},
+  "fixed_evaluation_core": "locked_union_evaluation_20261105.md",
+  "strict_GPU_inference_producer_ready": false,
   "next_steps": [
     "Complete declared validation runs and fixed readouts",
     "At full-precision eligible AP>=0.80,freeze validation-selected system and gates",

@@ -1,0 +1,14 @@
+{
+  "b1": {
+    "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/configs/B1_fixed91q_seed49.json",
+    "sha256": "be14808e25d4e97019e4cf916e4625283a391f051d6c3d75112b12fa074aa5d5"
+  },
+  "g2": {
+    "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/configs/G2_edge_attention_seed49.json",
+    "sha256": "d687599db482bf4c7a073eaf2ca14d9d72960254be99edffcbbb12009ca74bcd"
+  },
+  "msa": {
+    "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/configs/D_encoder_seed49.json",
+    "sha256": "9f83bf7a71e772ba726ded538451850a00a3f149b4ba8e1c745345531f68f192"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "target_pooled_AP": 0.8,
+  "primary": "validation pooled AP",
+  "macro_guardrail": 0.7417948466002535,
+  "macro_guardrail_meaning": "No more than0.005 below prior G2 at the same selected checkpoint",
+  "co_report": "macro AP, AUROC, F1/MCC with validation gates, ratio MAE, loss",
+  "reference_G2": {
+    "macro_AP": 0.7467948466002535,
+    "pooled_AP": 0.7802500425571836
+  },
+  "epochs": 50,
+  "seed": 49,
+  "from_scratch": true,
+  "test_evaluated": false,
+  "labels": "exact-sequence ever-observed union5.5A",
+  "feature_contract": "Corrected91D OF3, ESM-C MLC3456D, frozen768D MSA Transformer",
+  "architecture_rows": "D loss except K7 residue_mean CE aggregation and K8/K11/K13 ratio weight0",
+  "selected_variants": [
+    "K18_G2_MSA_twohop_preTCN"
+  ],
+  "checkpoints": "Retain every epoch and both AP-best checkpoints; never combine scores from different epochs",
+  "concurrency": "No artificial array throttle; scheduler/account quotas apply",
+  "promotion": "Exploratory validation screen only; later seed/holdout confirmation required"
+}

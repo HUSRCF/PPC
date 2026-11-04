@@ -44,3 +44,20 @@ campaign, not independent confirmation or a new sealed holdout.
 
 This trial is separate from K14-K17's projection-width/capacity screen. Their
 frozen execution snapshot and active tasks are not modified.
+
+## Launch
+
+Submitted as **800231_0**, `acd_ue`, from frozen commit
+`5af793878689343573a21bdb456e9aeeebd2434d`. Archive SHA-256:
+`efc9cf642b4aed7167cb777721324a2cbda9eee607a36f3647aab28049b7d869`.
+Actual K3/K18 config comparison confirmed identical data, only the intended
+fusion-position model difference, and only fresh output/provenance training
+paths. The full models have identical initial state and constructor RNG.
+
+The task passed the real CUDA two-update gate and entered formal training with
+4,868 train / 1,075 val / zero test samples and 3,693,034 parameters. The
+2026-11-04 18:26 UTC health snapshot records its first full-coverage validation
+epoch, no skipped validation batches and no AMP-skipped updates.
+
+See [launch and preflight receipts](geometry_position_depth_20261105_launch.json)
+and [actual configs/parent hashes](geometry_position_depth_20261105/).

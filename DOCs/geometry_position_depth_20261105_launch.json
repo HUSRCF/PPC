@@ -1,0 +1,114 @@
+{
+  "objective": "Complete geometry depth x MSA fusion-position control toward validation pooled AP0.80",
+  "job_array": "800231",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105",
+  "partition": "acd_ue",
+  "array": "0",
+  "artificial_concurrency_throttle": null,
+  "source_commit": "5af793878689343573a21bdb456e9aeeebd2434d",
+  "archive_sha256": "efc9cf642b4aed7167cb777721324a2cbda9eee607a36f3647aab28049b7d869",
+  "from_scratch": true,
+  "seed": 49,
+  "epochs": 50,
+  "test_evaluated": false,
+  "parameters": 3693034,
+  "preflight": {
+    "job": {
+      "name": "K18_G2_MSA_twohop_preTCN",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/configs/K18_G2_MSA_twohop_preTCN_seed49.json",
+      "sha256": "6408311851b2d0028d1408eb2bf1149746bdfdf6a4fe171a91a706217ac62272",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/runs/K18_G2_MSA_twohop_preTCN_seed49",
+      "partition": "acd_ue"
+    },
+    "parameters": 3693034,
+    "model_differences": [
+      "msa_residual_position"
+    ],
+    "training_differences": [
+      "prediction_provenance",
+      "output_dir"
+    ],
+    "data_identical": true,
+    "initial_state_identical": true,
+    "constructor_rng_identical": true,
+    "archive_sha256": "efc9cf642b4aed7167cb777721324a2cbda9eee607a36f3647aab28049b7d869"
+  },
+  "resources_per_task": {
+    "GPUs": 1,
+    "CPUs": 12,
+    "memory_GiB": 192,
+    "time_limit": "12:00:00",
+    "exclude": "ACD1-28"
+  },
+  "selection": {
+    "primary": "validation pooled AP",
+    "same_checkpoint_macro_guardrail": 0.7417948466002535,
+    "ties": "earliest",
+    "fixed_blend_policy": "geometry_position_depth_20261105_fixed_blend.json",
+    "alpha_search": false
+  },
+  "tests": {
+    "local": {
+      "total": 86,
+      "passed": 84,
+      "optional_skipped": 2
+    },
+    "HPC3_focused": {
+      "total": 11,
+      "passed": 11
+    }
+  },
+  "reviewer": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "agent": "01a1a7ae-499f-7c41-8b32-befcfd873a00",
+    "result": "No blockers;11focusedtests plus direct state/config checks passed;oldK0-K17 unchanged"
+  },
+  "acceptance": {
+    "observed_UTC": "2026-11-04T18:23:34.988187+00:00",
+    "queue": "800231_0|RUNNING|3:37|ACD1-55",
+    "smoke": [
+      {
+        "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/smoke/K18_G2_MSA_twohop_preTCN_seed49_800231/verification.json",
+        "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+        "receipt": {
+          "optimizer_updates": 2,
+          "two_updates": true,
+          "finite": true,
+          "backbone_updated": true,
+          "new_zero_init_parameters_updated": [
+            "geometry_blocks.0.update.4.weight",
+            "geometry_blocks.1.update.4.weight",
+            "prottrans_residual_adapter.3.weight"
+          ],
+          "learned_edge_parameters_updated": [],
+          "test_read": false
+        }
+      }
+    ],
+    "formal_start": {
+      "n_train": 4868,
+      "n_val": 1075,
+      "n_test": 0,
+      "trainable_parameters": 3693034,
+      "device_resolved": "cuda:0"
+    },
+    "epochs": 0,
+    "coverage_verified": false,
+    "validation_skips": 0,
+    "AMP_skips": 0,
+    "test_seen": false
+  },
+  "latest_health": {
+    "observed_UTC": "2026-11-04T18:26:05.920784+00:00",
+    "epochs": 1,
+    "test_seen": false,
+    "coverage_verified": true,
+    "validation_skips": 0,
+    "AMP_skips": 0,
+    "last_data_wait_fraction": 0.9265799655625347,
+    "last_epoch_seconds": 188.5953118801117
+  },
+  "packages_installed_or_changed": false,
+  "limitations": "Adaptive validation-only single-seed screen;not independent holdout confirmation"
+}

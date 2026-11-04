@@ -1,0 +1,26 @@
+{
+  "scope": "Validation-only integrity reproduction and paired fixed-system diagnostics;no new blend/weight/model search",
+  "source_commit": "5af793878689343573a21bdb456e9aeeebd2434d",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_ensemble_diagnostics_20261105",
+  "source_plan": "validation_ensemble_diagnostics_20261105_plan.json",
+  "arguments": {
+    "reference": "K3",
+    "include_fixed_blends": true,
+    "bootstrap": 2000,
+    "workers": 8
+  },
+  "reviewer": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "agent": "01a1a7bc-bea9-75f2-af03-b450b49f91f4",
+    "result": "No blockers;14focusedtests passed"
+  },
+  "tests": {
+    "full_local_total": 86,
+    "full_local_passed": 84,
+    "optional_skipped": 2
+  },
+  "reproduction_receipt": "reproduction_receipt.json",
+  "test_evaluated": false,
+  "packages_installed_or_changed": false
+}

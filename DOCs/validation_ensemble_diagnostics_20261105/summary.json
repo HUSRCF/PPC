@@ -1,0 +1,197 @@
+{
+  "reference": "K3",
+  "validation_sequences": 1075,
+  "validation_residues": 404267,
+  "test_read": false,
+  "sources": {
+    "G2": {
+      "npz_sha256": "61c1d7be0f05bcd70cac4e19b14dc650c4f08e6e05a13b3cf79b75cd3025b583",
+      "original": {
+        "epoch": 27,
+        "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt",
+        "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl",
+        "prediction_sha256": "69ad57395d4acb629448dfeec1f3d9f853a74849e1a58b2888ac67710a358b94",
+        "metrics_sha256": "ab04df44e05b73fe9d0077991e3ccd87af0f98f2f8f415c95c86c53a4765d44a",
+        "macro_AP": 0.7467948466002535,
+        "pooled_AP": 0.7802500425571836
+      }
+    },
+    "MSA_D": {
+      "npz_sha256": "63c800377ec0e98f65e0ecc83a4a3df7ad282b0bdacd5d1cb965c6c7c25d54ba",
+      "original": {
+        "epoch": 13,
+        "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt",
+        "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl",
+        "prediction_sha256": "99d2ca338abefe69f8c02cd0ee16e920d4ed1c67dbfa2e00e69691e87a03d558",
+        "metrics_sha256": "e93afc992d3e3a75c3f7441735917ad13cddf9971c4169f7fbb9546da1a9d56a",
+        "macro_AP": 0.7343365679087196,
+        "pooled_AP": 0.7607603624886583
+      }
+    },
+    "K3": {
+      "npz_sha256": "ef9d44940a21fd3d67330a630a1379cdc6285f54bd18b7d976ec3481c9300720",
+      "original": {
+        "epoch": 21,
+        "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K3_G2_MSA_twohop_seed49/predictions/val_epoch_021.pt",
+        "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K3_G2_MSA_twohop_seed49/metrics.jsonl",
+        "prediction_sha256": "5d111c908e3e7f8df46efaa806f8451095a5e94164014e264ae6e964f576d8e3",
+        "metrics_sha256": "b6812358ccbd0d4fde2883fb23820e25875ae677b32f91c2e9a1233c3c78eed6",
+        "macro_AP": 0.7570844882783644,
+        "pooled_AP": 0.7890537130746113
+      }
+    },
+    "G2_plus_K3": {
+      "npz_sha256": "5af626f6777f43d7f7b37e69c2ada01a20f141e019e2228bb881175dad305d45",
+      "existing_fixed_blend_members": [
+        "G2",
+        "K3"
+      ],
+      "fixed_blend_reconstruction": "exact equal clipped-probability logit mean"
+    },
+    "G2_plus_MSA_D_plus_K3": {
+      "npz_sha256": "67a2f08e486bc136a36ba7305f20677e057e7b65694ad18b1e0ed2a349079bae",
+      "existing_fixed_blend_members": [
+        "G2",
+        "MSA_D",
+        "K3"
+      ],
+      "fixed_blend_reconstruction": "exact equal clipped-probability logit mean"
+    }
+  },
+  "effects": {
+    "G2": {
+      "macro_AP": 0.7467948466002535,
+      "pooled_AP": 0.7802500425571836,
+      "delta_AP_macro": -0.01028964167811078,
+      "delta_AP_median": -0.0022103837923527214,
+      "improved_chains": 505,
+      "worsened_chains": 570,
+      "chain_macro_mean_score_shift": 0.03779888503882444
+    },
+    "MSA_D": {
+      "macro_AP": 0.7343365679087196,
+      "pooled_AP": 0.7607603624886583,
+      "delta_AP_macro": -0.022747920369644715,
+      "delta_AP_median": -0.02051076917385075,
+      "improved_chains": 349,
+      "worsened_chains": 726,
+      "chain_macro_mean_score_shift": 0.08254445333894583
+    },
+    "K3": {
+      "macro_AP": 0.7570844882783644,
+      "pooled_AP": 0.7890537130746113,
+      "delta_AP_macro": 0.0,
+      "delta_AP_median": 0.0,
+      "improved_chains": 0,
+      "worsened_chains": 0,
+      "chain_macro_mean_score_shift": 0.0
+    },
+    "G2_plus_K3": {
+      "macro_AP": 0.7607646015039656,
+      "pooled_AP": 0.7947112282410028,
+      "delta_AP_macro": 0.0036801132256012625,
+      "delta_AP_median": 0.0059791235482795635,
+      "improved_chains": 685,
+      "worsened_chains": 390,
+      "chain_macro_mean_score_shift": 0.0168122274671926
+    },
+    "G2_plus_MSA_D_plus_K3": {
+      "macro_AP": 0.7660679415925195,
+      "pooled_AP": 0.798613220715041,
+      "delta_AP_macro": 0.008983453314155065,
+      "delta_AP_median": 0.00762886842127819,
+      "improved_chains": 739,
+      "worsened_chains": 336,
+      "chain_macro_mean_score_shift": 0.030714872012294597
+    }
+  },
+  "bootstrap": {
+    "unit": "original SI30 component; resample whole components, retain all chains/residues",
+    "components": 55,
+    "repeats": 2000,
+    "seed": 20261104,
+    "contrasts": {
+      "G2_minus_K3": {
+        "macro_AP": {
+          "difference": -0.010289641678110861,
+          "ci95": [
+            -0.025308150028872843,
+            0.0007307247428007568
+          ],
+          "excludes_zero": false
+        },
+        "pooled_AP": {
+          "difference": -0.008803670517427697,
+          "ci95": [
+            -0.020628099808928758,
+            0.0004924545561170028
+          ],
+          "excludes_zero": false
+        }
+      },
+      "MSA_D_minus_K3": {
+        "macro_AP": {
+          "difference": -0.022747920369644792,
+          "ci95": [
+            -0.03847717049962143,
+            -0.006752099639068556
+          ],
+          "excludes_zero": true
+        },
+        "pooled_AP": {
+          "difference": -0.028293350585952726,
+          "ci95": [
+            -0.039123925568595015,
+            -0.012715969837012958
+          ],
+          "excludes_zero": true
+        }
+      },
+      "G2_plus_K3_minus_K3": {
+        "macro_AP": {
+          "difference": 0.0036801132256012448,
+          "ci95": [
+            -0.002537343378399151,
+            0.008306173363386593
+          ],
+          "excludes_zero": false
+        },
+        "pooled_AP": {
+          "difference": 0.005657515166391902,
+          "ci95": [
+            0.0007728217351894384,
+            0.010407040496433994
+          ],
+          "excludes_zero": true
+        }
+      },
+      "G2_plus_MSA_D_plus_K3_minus_K3": {
+        "macro_AP": {
+          "difference": 0.008983453314155065,
+          "ci95": [
+            0.003168364511751315,
+            0.015401167036251438
+          ],
+          "excludes_zero": true
+        },
+        "pooled_AP": {
+          "difference": 0.00955950764043001,
+          "ci95": [
+            0.0052016080415090956,
+            0.01638618569902281
+          ],
+          "excludes_zero": true
+        }
+      }
+    },
+    "limitation": "Exploratory fixed-checkpoint conditional intervals on selected validation; not corrected for checkpoint/architecture selection and not independent confirmation"
+  },
+  "new_blends_computed": false,
+  "included_fixed_blends": true,
+  "covariates_sha256": "0d2f21b5f8044b66ea33a0b5c9471c698f7a9182d7633587ff5ef77c61a6d0d6",
+  "points_summary_sha256": "333f7bc84a729a17247ce64ca79d5816ec5e29d133035c58828b83ceebb17bea",
+  "source_code_sha256": "591c0324cbd1803ad8dab256a88c55aefca8541ec3336577a17f00cdb92dc8ce",
+  "bootstrap_helper_sha256": "1705ffaf4114a670dc67addbd9adfac2959ac48b62fe530748fe711c5ec1ee49",
+  "blend_helper_sha256": "960087ddedd937ca0ed774ebbfe7ffb6e9504afc8dbcccce65ee3fb7a034f058",
+  "interpretation": "Descriptive selected-validation diagnostics;MSA depth is Kish,not HHsuite Neff;no seed uncertainty or multiple-selection correction"
+}

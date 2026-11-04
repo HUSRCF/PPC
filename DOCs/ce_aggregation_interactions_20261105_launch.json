@@ -1,0 +1,63 @@
+{
+  "job_array": "800533",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/ce_aggregation_interactions_20261105",
+  "source_commit": "e1c35f3bb683a842f7dbf313997dd959b1df5ce2",
+  "archive_sha256": "2f84054a22673e54cbcfe21f90dda5069bac1469041a7fe4072093ab7b171282",
+  "array": "0-1",
+  "artificial_concurrency_throttle": null,
+  "partition": "acd_ue",
+  "test_evaluated": false,
+  "preflight": {
+    "source_commit": "e1c35f3bb683a842f7dbf313997dd959b1df5ce2",
+    "archive_sha256": "2f84054a22673e54cbcfe21f90dda5069bac1469041a7fe4072093ab7b171282",
+    "rows": [
+      {
+        "job": {
+          "name": "K28_G2_MSA_twohop_residue_mean",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/ce_aggregation_interactions_20261105/configs/K28_G2_MSA_twohop_residue_mean_seed49.json",
+          "sha256": "39ca1e695d6e29165f95cc50b42300ae1a6307e4f72ad5af0c5e061995c59d1c",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/ce_aggregation_interactions_20261105/runs/K28_G2_MSA_twohop_residue_mean_seed49",
+          "partition": "acd_ue"
+        },
+        "matched_control": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K3_G2_MSA_twohop_seed49.json",
+        "model_identical": true,
+        "data_identical": true,
+        "training_differences": [
+          "loss_reduction",
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3693034
+      },
+      {
+        "job": {
+          "name": "K29_G2_MSA_twohop_preTCN_residue_mean",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/ce_aggregation_interactions_20261105/configs/K29_G2_MSA_twohop_preTCN_residue_mean_seed49.json",
+          "sha256": "6483baf5fc7721e0982cc7631e7feafc1be249264e2053574c425139fcb76cba",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/ce_aggregation_interactions_20261105/runs/K29_G2_MSA_twohop_preTCN_residue_mean_seed49",
+          "partition": "acd_ue"
+        },
+        "matched_control": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/configs/K18_G2_MSA_twohop_preTCN_seed49.json",
+        "model_identical": true,
+        "data_identical": true,
+        "training_differences": [
+          "loss_reduction",
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3693034
+      }
+    ],
+    "old_K0_K27_configs_unchanged": true,
+    "local_tests": {
+      "passed": 108,
+      "optional_skipped": 2
+    },
+    "HPC3_focused_tests": 14,
+    "packages_changed": false
+  }
+}

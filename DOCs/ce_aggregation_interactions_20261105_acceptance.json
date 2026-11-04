@@ -1,0 +1,94 @@
+{
+  "observed_UTC": "2026-11-04T20:44:31.052000+00:00",
+  "rows": [
+    {
+      "task": 0,
+      "name": "K28_G2_MSA_twohop_residue_mean",
+      "scheduler": {
+        "job": "800533_0",
+        "state": "RUNNING",
+        "exit_code": "0:0",
+        "elapsed": "00:05:48",
+        "node": "ACD1-17"
+      },
+      "smoke": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/ce_aggregation_interactions_20261105/smoke/K28_G2_MSA_twohop_residue_mean_seed49_800534/verification.json",
+          "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+          "receipt": {
+            "optimizer_updates": 2,
+            "two_updates": true,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [],
+            "test_read": false
+          }
+        }
+      ],
+      "formal_start": {
+        "n_train": 4868,
+        "n_val": 1075,
+        "n_test": 0,
+        "trainable_parameters": 3693034,
+        "device_resolved": "cuda:0",
+        "runtime_config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/ce_aggregation_interactions_20261105/runs/K28_G2_MSA_twohop_residue_mean_seed49/config.json",
+        "runtime_config_sha256": "0ceefb22b43496a749e06602c7c95006e43ddbbce911a8d8c5d2fdacb416e9f0"
+      },
+      "epochs": 1,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "AMP_skips": 0,
+      "test_seen": false
+    },
+    {
+      "task": 1,
+      "name": "K29_G2_MSA_twohop_preTCN_residue_mean",
+      "scheduler": {
+        "job": "800533_1",
+        "state": "RUNNING",
+        "exit_code": "0:0",
+        "elapsed": "00:05:18",
+        "node": "ACD1-17"
+      },
+      "smoke": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/ce_aggregation_interactions_20261105/smoke/K29_G2_MSA_twohop_preTCN_residue_mean_seed49_800533/verification.json",
+          "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+          "receipt": {
+            "optimizer_updates": 2,
+            "two_updates": true,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [],
+            "test_read": false
+          }
+        }
+      ],
+      "formal_start": {
+        "n_train": 4868,
+        "n_val": 1075,
+        "n_test": 0,
+        "trainable_parameters": 3693034,
+        "device_resolved": "cuda:0",
+        "runtime_config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/ce_aggregation_interactions_20261105/runs/K29_G2_MSA_twohop_preTCN_residue_mean_seed49/config.json",
+        "runtime_config_sha256": "ddb5ddaa30f00ff8cb0ded5a7f7a001493ba6b241aff28d160f595386eadd902"
+      },
+      "epochs": 1,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "AMP_skips": 0,
+      "test_seen": false
+    }
+  ],
+  "test_evaluated": false
+}

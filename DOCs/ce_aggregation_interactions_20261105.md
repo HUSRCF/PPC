@@ -40,3 +40,22 @@ new model's eligible selected epoch,epsilon1e-7. No new mixture search or
 test-oracle gate. All analyses remain adaptive validation evidence. The0.80
 milestone contract still requires freezing before test,then an RCSB single-
 chain union training attempt;no RCSB training is started by this matrix.
+
+## Launch and Acceptance
+
+Array800533_[0-1] was submitted to acd_ue without a percent concurrency cap.
+Frozen source is`e1c35f3bb683a842f7dbf313997dd959b1df5ce2`;archive SHA-256 is
+`2f84054a22673e54cbcfe21f90dda5069bac1469041a7fe4072093ab7b171282`.
+Both arms passed the two-update CUDA gate:finite outputs,backbone updates,
+both zero-init geometry updates and the MSA residual output layer learned.
+Both formal runs record4868train/1075val/0test and3693034trainable parameters.
+The first completed epoch retained full validation coverage and no skips.
+The runtime acceptance snapshot is not a final result;both runs must finish
+all50epochs before their final declared readouts are eligible.
+
+The launch/preflight and acceptance receipts are stored in
+`ce_aggregation_interactions_20261105_launch.json` and
+`ce_aggregation_interactions_20261105_acceptance.json`;the exact submitted
+configs are under the document's matching directory. OldK0-K27 configs were
+byte-identical in preflight. Local tests:108passed/2optional skips;HPC3
+focused tests:14passed. Narrow matrix-generator review used gpt-6-luna max.

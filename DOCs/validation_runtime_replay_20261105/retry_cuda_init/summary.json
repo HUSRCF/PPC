@@ -1,0 +1,111 @@
+{
+  "points": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/fixed_K18_blend",
+  "summary_sha256": "087f18ab13f60511401ef83721edff8123d9b499647672ecd371b8cb29aef536",
+  "validation_sequences": 1075,
+  "validation_residues": 404267,
+  "reports": {
+    "G2": {
+      "max_score_error": 3.5762786865234375e-07,
+      "score_RMSE": 2.652595441729066e-08,
+      "actual": {
+        "pooled_AP": 0.7802500395671386,
+        "macro_AP": 0.7467948466002535
+      },
+      "expected": {
+        "pooled_AP": 0.7802500425571836,
+        "macro_AP": 0.7467948466002535
+      },
+      "elapsed_seconds": 190.1444934355095,
+      "peak_cuda_memory_bytes": 8447753216
+    },
+    "MSA_D": {
+      "max_score_error": 1.7881393432617188e-07,
+      "score_RMSE": 2.6109781856014094e-08,
+      "actual": {
+        "pooled_AP": 0.760760360652645,
+        "macro_AP": 0.7343365679087196
+      },
+      "expected": {
+        "pooled_AP": 0.7607603624886583,
+        "macro_AP": 0.7343365679087196
+      },
+      "elapsed_seconds": 102.87406926508993,
+      "peak_cuda_memory_bytes": 3511547904
+    },
+    "K18": {
+      "max_score_error": 5.066394805908203e-07,
+      "score_RMSE": 3.4609147231471135e-08,
+      "actual": {
+        "pooled_AP": 0.7889161400504543,
+        "macro_AP": 0.7596451288941651
+      },
+      "expected": {
+        "pooled_AP": 0.7889161410527482,
+        "macro_AP": 0.7596451296509698
+      },
+      "elapsed_seconds": 42.99791721068323,
+      "peak_cuda_memory_bytes": 8670518784
+    },
+    "G2_plus_MSA_D_plus_K18": {
+      "max_score_error": 1.0804902146333006e-06,
+      "score_RMSE": 2.20544711895521e-08,
+      "actual": {
+        "pooled_AP": 0.7997048797953193,
+        "macro_AP": 0.7689864022799697
+      },
+      "expected": {
+        "pooled_AP": 0.7997048805648456,
+        "macro_AP": 0.7689864022799697
+      }
+    }
+  },
+  "sources": {
+    "G2": {
+      "checkpoint_sha256": "0dcd106977f0d73f170bfe120685ef891332f0c95c39060cc59e96824a58fd77",
+      "validation_ids_sha256": "4656922799591bad4b2ba80c831dea7d6d71b36db79b3f4cb2096e5814c61019",
+      "original_prediction_sha256": "69ad57395d4acb629448dfeec1f3d9f853a74849e1a58b2888ac67710a358b94"
+    },
+    "MSA_D": {
+      "checkpoint_sha256": "7fafe4cbea7db4dcf1a13372d9a5ce2308f6c7c143269782732cf31af4a3d612",
+      "validation_ids_sha256": "4656922799591bad4b2ba80c831dea7d6d71b36db79b3f4cb2096e5814c61019",
+      "original_prediction_sha256": "99d2ca338abefe69f8c02cd0ee16e920d4ed1c67dbfa2e00e69691e87a03d558"
+    },
+    "K18": {
+      "checkpoint_sha256": "ed86205c5fada01d4b71ec6dd4dbb534380ebdf93539b9ee6eda1de9b2896a6e",
+      "validation_ids_sha256": "4656922799591bad4b2ba80c831dea7d6d71b36db79b3f4cb2096e5814c61019",
+      "original_prediction_sha256": "53abe3ca91322018fb8b7fe94548bab95782a6479869fb2b57c69362ef254a99"
+    }
+  },
+  "test_read": false,
+  "test_inference_permitted": false,
+  "model_selection": false,
+  "new_combinations": false,
+  "tolerance_changed": false,
+  "source_code_sha256": "4f6177fc6ac85b139666dd8769712a2d38b5b4ce0ae64d5ebe636d74018f12b0",
+  "inference_code_sha256": "748bcf4adc6480a2e189bdbe67b9e9e06d5d94f0a9e33685e4a7351aeae7e625",
+  "frozen_input_sha256": {
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/fixed_K18_blend/summary.json": "087f18ab13f60511401ef83721edff8123d9b499647672ecd371b8cb29aef536",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt": "69ad57395d4acb629448dfeec1f3d9f853a74849e1a58b2888ac67710a358b94",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl": "ab04df44e05b73fe9d0077991e3ccd87af0f98f2f8f415c95c86c53a4765d44a",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/epochs/epoch_027.pt": "0dcd106977f0d73f170bfe120685ef891332f0c95c39060cc59e96824a58fd77",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/training_of3_union_20261102/inputs/split/val_ids.txt": "4656922799591bad4b2ba80c831dea7d6d71b36db79b3f4cb2096e5814c61019",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/fixed_K18_blend/G2_val.npz": "61c1d7be0f05bcd70cac4e19b14dc650c4f08e6e05a13b3cf79b75cd3025b583",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt": "99d2ca338abefe69f8c02cd0ee16e920d4ed1c67dbfa2e00e69691e87a03d558",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl": "e93afc992d3e3a75c3f7441735917ad13cddf9971c4169f7fbb9546da1a9d56a",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/epochs/epoch_013.pt": "7fafe4cbea7db4dcf1a13372d9a5ce2308f6c7c143269782732cf31af4a3d612",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/fixed_K18_blend/MSA_D_val.npz": "63c800377ec0e98f65e0ecc83a4a3df7ad282b0bdacd5d1cb965c6c7c25d54ba",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/runs/K18_G2_MSA_twohop_preTCN_seed49/predictions/val_epoch_031.pt": "53abe3ca91322018fb8b7fe94548bab95782a6479869fb2b57c69362ef254a99",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/runs/K18_G2_MSA_twohop_preTCN_seed49/metrics.jsonl": "1ba2ee0dbcd8871c5fa718b61b28bab08f5f21c3b1ac1f023197f9675b1bc969",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/runs/K18_G2_MSA_twohop_preTCN_seed49/epochs/epoch_031.pt": "ed86205c5fada01d4b71ec6dd4dbb534380ebdf93539b9ee6eda1de9b2896a6e",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/fixed_K18_blend/K18_val.npz": "7f9e694e64333820df8938685c90d4f2756bed9a23519e53b5aea173a8d22dba",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/fixed_K18_blend/G2_plus_MSA_D_plus_K18_val.npz": "e252fc1900ed4badcb1bc11219b2af43a4e94ca01f9f58c54b91f24b6c1f5002"
+  },
+  "runtime": {
+    "torch": "2.7.1+cu128",
+    "device": "cuda:0",
+    "device_name": "NVIDIA H100 80GB HBM3",
+    "float32_matmul_precision": "highest",
+    "matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true
+  }
+}

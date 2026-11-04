@@ -66,3 +66,26 @@ The initial source snapshot,logs and failure directory are preserved. Launch
 and failure receipts are archived under this document's matching directory.
 The retry uses a fresh `retries/cuda_init_20261105` directory;it does not resume
 or overwrite the failed output. Test remained closed throughout.
+
+## Successful Full GPU Replay
+
+Retry job800514 completed exit0 in6m07s on an H10080GB. All1075 validation
+queries /404267 residues were replayed through the dedicated inference
+producer, with strict input/checkpoint hash checks and unchanged model state.
+The original tolerance contract was retained.
+
+| Frozen source | Maximum score error | Score RMSE | Replayed pooled AP |
+|---|---:|---:|---:|
+| G2epoch27 | 3.5763e-7 | 2.6526e-8 | 0.7802500395671386 |
+| MSA_Depoch13 | 1.7881e-7 | 2.6110e-8 | 0.7607603606526450 |
+| K18epoch31 | 5.0664e-7 | 3.4609e-8 | 0.7889161400504543 |
+| Prespecified equal-logit thirds | 1.0805e-6 | 2.2054e-8 | 0.7997048797953193 |
+
+The original ensemble pooled AP is0.7997048805648456;the difference is below
+1e-9. All score and AP replay checks passed. Launch and full summary,including
+source hashes,input hashes,runtime and peak memory,are archived under
+`validation_runtime_replay_20261105/retry_cuda_init/`.
+
+This accepts the GPU replay path,not the0.80 milestone. No test cohort was
+opened,no test predictions were generated,and no gates or ensemble weights
+were changed. The explicit test-permission flag remains false.

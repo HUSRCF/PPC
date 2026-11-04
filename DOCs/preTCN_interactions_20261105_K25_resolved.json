@@ -1,0 +1,49 @@
+{
+  "purpose": "Only predeclared K25 fixed thirds after successful50epochs",
+  "policy_path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/code/DOCs/preTCN_interactions_20261105_fixed_blends.json",
+  "policy_sha256": "095fbeb025b90dc5a13ef64fd5686a1d3849a8891b006389b4f3597111ded7ec",
+  "completed_receipt": {
+    "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49",
+    "job": "800442_0",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:38:29",
+    "epochs": 50,
+    "coverage_ok_all_epochs": true,
+    "validation_skips": 0,
+    "test_seen": false,
+    "metrics_sha256": "83a10a701327fcb9cb3ce03363bb54ed4c99b71488b2ea4ad42523e91fecae81",
+    "AMP_skips": 1,
+    "sanitized_gradient_elements": 2,
+    "selected": {
+      "epoch": 13,
+      "chain_ap_macro": 0.7606199837049904,
+      "pooled_ap": 0.7873330252000305,
+      "auroc": 0.8937814754765543
+    }
+  },
+  "points": {
+    "G2": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl"
+    },
+    "MSA_D": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl"
+    },
+    "K25": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49/metrics.jsonl"
+    }
+  },
+  "blends": {
+    "G2_plus_MSA_D_plus_K25": [
+      "G2",
+      "MSA_D",
+      "K25"
+    ]
+  }
+}

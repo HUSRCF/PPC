@@ -1,0 +1,138 @@
+{
+  "observed_UTC": "2026-11-04T20:44:31.052000+00:00",
+  "rows": [
+    {
+      "task": 0,
+      "name": "K25_G2_MSA_twohop_preTCN_ls002",
+      "scheduler": {
+        "job": "800442_0",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:38:29",
+        "node": "ACD1-19"
+      },
+      "smoke": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/smoke/K25_G2_MSA_twohop_preTCN_ls002_seed49_800443/verification.json",
+          "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+          "receipt": {
+            "optimizer_updates": 2,
+            "two_updates": true,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [],
+            "test_read": false
+          }
+        }
+      ],
+      "formal_start": {
+        "n_train": 4868,
+        "n_val": 1075,
+        "n_test": 0,
+        "trainable_parameters": 3693034,
+        "device_resolved": "cuda:0",
+        "runtime_config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49/config.json",
+        "runtime_config_sha256": "1dd97f2231ed38f699ca4dabb4f0c25cabc6736e6ecdd6d677a06d3dea92658f"
+      },
+      "epochs": 50,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "AMP_skips": 1,
+      "test_seen": false
+    },
+    {
+      "task": 1,
+      "name": "K26_G2_MSA_twohop_preTCN_pure_CE",
+      "scheduler": {
+        "job": "800442_1",
+        "state": "RUNNING",
+        "exit_code": "0:0",
+        "elapsed": "00:51:38",
+        "node": "ACD1-23"
+      },
+      "smoke": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/smoke/K26_G2_MSA_twohop_preTCN_pure_CE_seed49_800444/verification.json",
+          "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+          "receipt": {
+            "optimizer_updates": 2,
+            "two_updates": true,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [],
+            "test_read": false
+          }
+        }
+      ],
+      "formal_start": {
+        "n_train": 4868,
+        "n_val": 1075,
+        "n_test": 0,
+        "trainable_parameters": 3693034,
+        "device_resolved": "cuda:0",
+        "runtime_config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K26_G2_MSA_twohop_preTCN_pure_CE_seed49/config.json",
+        "runtime_config_sha256": "3d3f25afd1b6444ad42f4bea4067ad952e2e0d75b39bc1e3ac5e0491fe809d31"
+      },
+      "epochs": 33,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "AMP_skips": 1,
+      "test_seen": false
+    },
+    {
+      "task": 2,
+      "name": "K27_G2_MSA_twohop_preTCN_width256",
+      "scheduler": {
+        "job": "800442_2",
+        "state": "RUNNING",
+        "exit_code": "0:0",
+        "elapsed": "00:48:36",
+        "node": "ACD1-23"
+      },
+      "smoke": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/smoke/K27_G2_MSA_twohop_preTCN_width256_seed49_800442/verification.json",
+          "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+          "receipt": {
+            "optimizer_updates": 2,
+            "two_updates": true,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [],
+            "test_read": false
+          }
+        }
+      ],
+      "formal_start": {
+        "n_train": 4868,
+        "n_val": 1075,
+        "n_test": 0,
+        "trainable_parameters": 3902954,
+        "device_resolved": "cuda:0",
+        "runtime_config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K27_G2_MSA_twohop_preTCN_width256_seed49/config.json",
+        "runtime_config_sha256": "d06917f2149003fe26a5a58ff54f62708bf5579ad8d00b14a4bd83517d86a804"
+      },
+      "epochs": 31,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "AMP_skips": 1,
+      "test_seen": false
+    }
+  ],
+  "test_evaluated": false
+}

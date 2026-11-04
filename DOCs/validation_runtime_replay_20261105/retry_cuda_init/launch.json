@@ -1,0 +1,25 @@
+{
+  "job": "800514",
+  "retry_of": "800488",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_runtime_replay_20261105/retries/cuda_init_20261105",
+  "source_commit": "44ae440dfee7f671e929d4ce15692298d1c4c7b1",
+  "archive_sha256": "a8cfdc1d2a632e4b47577bb98526a969eabbf19e2f7348eaf9986c70a6b70fdd",
+  "points": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/fixed_K18_blend",
+  "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_runtime_replay_20261105/retries/cuda_init_20261105/replayed_points",
+  "command": "srun --unbuffered /data/user/shuang886/.conda/envs/openfold/bin/python -u /data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_runtime_replay_20261105/retries/cuda_init_20261105/code/scripts/analysis/replay_union_validation_sources.py --points /data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/fixed_K18_blend --output /data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_runtime_replay_20261105/retries/cuda_init_20261105/replayed_points --device cuda:0",
+  "partition": "acd_ue",
+  "GPUs": 1,
+  "CPUs": 12,
+  "memory_GiB": 192,
+  "time_limit": "12:00:00",
+  "HPC3_focused_tests": 21,
+  "local_tests": {
+    "passed": 107,
+    "optional_skipped": 2
+  },
+  "test_read": false,
+  "test_inference_permitted": false,
+  "new_combinations": false,
+  "tolerance_changed": false,
+  "model_or_input_changed": false
+}

@@ -1,0 +1,26 @@
+{
+  "UTC": "2026-11-04T23:08:21.946775+00:00",
+  "pid": 1878916,
+  "host": "ACD-Login-3",
+  "command": [
+    "/data/user/shuang886/.conda/envs/openfold/bin/python",
+    "-u",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/code/scripts/preparations/m18_union/submit_rcsb_union_pilot.py",
+    "--plan",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/plan.json",
+    "--plan-sha256",
+    "24081be8a3b0164ad5fa5a822105a303559e58d1d3eec772c28f4907f247261b",
+    "--wait-seconds",
+    "7200"
+  ],
+  "plan_sha256": "24081be8a3b0164ad5fa5a822105a303559e58d1d3eec772c28f4907f247261b",
+  "archive_sha256": "2ad739421ca55f1a9ddc6073e137ed470c26b12b2547c18e12fec6352029cf67",
+  "source_files": 153,
+  "waiting_for_existing_producer_PID": 1313931,
+  "GPU_requested_while_waiting": false,
+  "one_formal_job_after_full_acceptance": true,
+  "formal_job_partition": "acd_u",
+  "formal_job_time_limit": "12:00:00",
+  "test_enabled": false,
+  "whole_training_submitted": false
+}

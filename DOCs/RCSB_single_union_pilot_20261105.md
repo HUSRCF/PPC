@@ -107,6 +107,31 @@ checks,changed payloads/plans,and cross-node device-number handling. The
 reviewer also exercised a mocked GPU lifecycle with one trainer invocation.
 Full local suite:142passed,2optional snapshot tests skipped.
 
+## Actual Controller Launch
+
+The reviewed source is frozen at commit
+`800768daefc5142544a6dd3ced57a2f1e634bd75`,archive SHA-256
+`2ad739421ca55f1a9ddc6073e137ed470c26b12b2547c18e12fec6352029cf67`.
+
+Controller PID1878916 was launched at2026-11-04T23:08:21UTC on ACD-Login-3.
+Its immutable plan is
+`/data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/plan.json`,
+SHA-256`24081be8a3b0164ad5fa5a822105a303559e58d1d3eec772c28f4907f247261b`.
+The plan pins153Python source files and verifies that package/trainer sources
+match the already successful GPU smoke's source snapshot.
+
+The controller is a real live CPU process waiting on the already live
+packer PID1313931,not an assumed state inferred only from a lock file.
+At its latest poll,the packer had completed122000of251267queries in1766.2s,
+with no failure marker and no full-ready receipt. No submission attempt or
+GPU job had yet been made. The controller will perform the remaining payload
+audit and submit one acd_u job after successful full acceptance. Its2hour
+observation bound does not terminate the producer if exceeded.
+
+Controller log/state:
+`/data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/`.
+The plan and launch receipt are archived in this document's matching directory.
+
 ## Remaining Full-Model Inputs
 
 Existing assets include224276raw Protenix feature records retaining C-alpha

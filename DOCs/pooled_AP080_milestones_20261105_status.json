@@ -1,6 +1,6 @@
 {
-  "observed_UTC": "2026-11-04T22:44:30+00:00",
-  "stage": "RCSB_preparation_after_locked_test",
+  "observed_UTC": "2026-11-04T23:11:22+00:00",
+  "stage": "RCSB_full_input_audit_with_conditional_pilot_submission",
   "target_pooled_AP": 0.8,
   "target_verified": true,
   "leading_validation_point": {
@@ -62,8 +62,7 @@
   "RCSB_asset_preflight": "RCSB_single_union_asset_preflight_20261105.md",
   "next_steps": [
     "Complete independent full-bank ESM-C content/label/loader audit without copying or modifying existing embeddings",
-    "Resolve RCSB native-vs-protected evaluation contract without using locked test performance",
-    "Freeze and smoke the planned scratch ESM-C-only whole-data pilot;then attempt native RCSB single-chain training without test",
+    "Allow the live one-shot controller to submit the frozen scratch native-RCSB pilot only after full input acceptance",
     "Repair remaining Protenix structures and add geometry/MSA as explicitly separate later input conditions"
   ],
   "contract": "pooled_AP080_milestones_20261105_policy.json",
@@ -139,6 +138,8 @@
     "ESMC_smoke_job": "800636",
     "environment_changed": false,
     "split_preference_question_pending": true,
+    "split_preference_reply_received": false,
+    "planned_run_split_choice": "native_RCSB default per explicit whole-data scope;old PDBTM test not independent after RCSB training",
     "union_labels_complete": true,
     "full_tensor_audit_complete": false,
     "ESMC_smoke_passed": true,
@@ -161,13 +162,19 @@
     "planned_config_review": "gpt-6-luna max PASS;actual CPU forward/backward/optimizer verified",
     "input_pack_PID": 1313931,
     "input_pack_workers": 8,
-    "input_pack_latest_completed": 18000,
-    "input_pack_latest_elapsed_seconds": 268.59823409700766,
+    "input_pack_latest_completed": 122000,
+    "input_pack_latest_elapsed_seconds": 1766.1987591619836,
     "input_pack_formal_ready": false,
     "GPU_smoke_job": "800714",
     "GPU_smoke_passed": true,
     "GPU_smoke_test_queries": 0,
     "GPU_smoke_scope": "16native train/16native val functional smoke;not formal whole-RCSB training",
-    "formal_whole_training_started": false
+    "formal_whole_training_started": false,
+    "conditional_submission_controller_PID": 1878916,
+    "conditional_submission_controller_live": true,
+    "conditional_submission_plan_SHA256": "24081be8a3b0164ad5fa5a822105a303559e58d1d3eec772c28f4907f247261b",
+    "GPU_requested_while_waiting": false,
+    "one_shot_submission_attempted": false,
+    "controller_source_commit": "800768daefc5142544a6dd3ced57a2f1e634bd75"
   }
 }

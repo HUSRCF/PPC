@@ -1,0 +1,125 @@
+{
+  "observed_UTC": "2026-11-04T20:01:09.203056+00:00",
+  "rows": [
+    {
+      "task": 0,
+      "name": "K25_G2_MSA_twohop_preTCN_ls002",
+      "queue": [
+        "RUNNING",
+        "8:16",
+        "ACD1-19"
+      ],
+      "smoke": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/smoke/K25_G2_MSA_twohop_preTCN_ls002_seed49_800443/verification.json",
+          "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+          "receipt": {
+            "optimizer_updates": 2,
+            "two_updates": true,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [],
+            "test_read": false
+          }
+        }
+      ],
+      "formal_start": {
+        "n_train": 4868,
+        "n_val": 1075,
+        "n_test": 0,
+        "trainable_parameters": 3693034,
+        "device_resolved": "cuda:0"
+      },
+      "epochs": 7,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "AMP_skips": 0,
+      "test_seen": false
+    },
+    {
+      "task": 1,
+      "name": "K26_G2_MSA_twohop_preTCN_pure_CE",
+      "queue": [
+        "RUNNING",
+        "8:16",
+        "ACD1-23"
+      ],
+      "smoke": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/smoke/K26_G2_MSA_twohop_preTCN_pure_CE_seed49_800444/verification.json",
+          "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+          "receipt": {
+            "optimizer_updates": 2,
+            "two_updates": true,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [],
+            "test_read": false
+          }
+        }
+      ],
+      "formal_start": {
+        "n_train": 4868,
+        "n_val": 1075,
+        "n_test": 0,
+        "trainable_parameters": 3693034,
+        "device_resolved": "cuda:0"
+      },
+      "epochs": 4,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "AMP_skips": 0,
+      "test_seen": false
+    },
+    {
+      "task": 2,
+      "name": "K27_G2_MSA_twohop_preTCN_width256",
+      "queue": [
+        "RUNNING",
+        "5:14",
+        "ACD1-23"
+      ],
+      "smoke": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/smoke/K27_G2_MSA_twohop_preTCN_width256_seed49_800442/verification.json",
+          "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+          "receipt": {
+            "optimizer_updates": 2,
+            "two_updates": true,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [],
+            "test_read": false
+          }
+        }
+      ],
+      "formal_start": {
+        "n_train": 4868,
+        "n_val": 1075,
+        "n_test": 0,
+        "trainable_parameters": 3902954,
+        "device_resolved": "cuda:0"
+      },
+      "epochs": 2,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "AMP_skips": 0,
+      "test_seen": false
+    }
+  ]
+}

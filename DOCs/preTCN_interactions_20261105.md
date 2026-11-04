@@ -41,3 +41,21 @@ The attached JSON is the prospective policy. This remains an adaptive
 validation campaign, not a fresh holdout. If any completed candidate reaches
 full-precision0.80, freeze before test and follow the existing post-milestone
 contract;remaining jobs may finish as validation analyses only.
+
+## Actual Launch
+
+Array800442_[0-2] was submitted to acd_ue without a concurrency cap using
+source4eddaf24f5ec9b00b403603f551c20f7bfc3fe07. All three tasks are running
+and passed the two-update CUDA/finite/backbone/residual-learning gate.
+Actual configurations confirm4868train/1075val/0test. K25/K26 have3,693,034
+parameters and K27 has3,902,954, matching their respective post-TCN controls.
+The early snapshot has complete validation coverage for K26's first epoch;
+later observation found K25/K26 each at two full epochs, with no skips/test.
+K27 had just started. These are health checks, not final efficacy results.
+
+Initial pre-submission checking referenced a nonexistent K11 directory and
+failed before any GPU submission. The reference was corrected to the actual
+`geometry_depth_ratio_20261105/configs` control;no experiment settings changed.
+See launch/config/acceptance artifacts with this document's filename stem.
+Review used gpt-6-luna max,13focused tests and independent initial-state/RNG
+and old-configuration equivalence checks. Local suite:100passed,2optional skips.

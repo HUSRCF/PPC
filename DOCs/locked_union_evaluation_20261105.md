@@ -73,6 +73,16 @@ hashes, metadata-free inputs, relative roots and resolver-priority changes.
 The complete local suite passed99tests with2optional skips before the later
 configuration-only interaction test was added. Actual GPU replay is pending.
 
+A real CPU diagnostic subsequently ran one unique validation sequence
+(127residues) through G2,MSA_D and K18. All actual-input metadata/file hashes
+and model-state/gradient checks passed. Compared with original GPU batches,
+maximum probability differences were4.518e-5/2.611e-5/3.596e-5, with unchanged
+AP on that sequence. Those differences exceed the predeclared score/RMSE
+tolerances, so the diagnostic is explicitly **not accepted** as a locked GPU
+replay and does not unlock test. No tolerances were relaxed. The JSON receipt
+is `locked_union_inference_20261105_CPU_diagnostics.json`;full same-device,
+same-contract GPU validation reproduction is still required.
+
 The negative probe on the actual best **validation-only** NPZ must fail before
 shared cohort metadata or any checkpoint/test tensor is opened. Its receipt
 is stored alongside this document; no real test data is needed for that probe.

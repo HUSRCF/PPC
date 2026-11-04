@@ -1,0 +1,87 @@
+{
+  "job_array": "800442",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105",
+  "source_commit": "4eddaf24f5ec9b00b403603f551c20f7bfc3fe07",
+  "archive_sha256": "d0fa7fed881e84f55363482d79710513ae66de6503fa4235b46bd157d2313490",
+  "array": "0-2",
+  "artificial_concurrency_throttle": null,
+  "partition": "acd_ue",
+  "test_evaluated": false,
+  "preflight": {
+    "source_commit": "4eddaf24f5ec9b00b403603f551c20f7bfc3fe07",
+    "archive_sha256": "d0fa7fed881e84f55363482d79710513ae66de6503fa4235b46bd157d2313490",
+    "rows": [
+      {
+        "job": {
+          "name": "K25_G2_MSA_twohop_preTCN_ls002",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/configs/K25_G2_MSA_twohop_preTCN_ls002_seed49.json",
+          "sha256": "26980da92eda9c9f91068bc6a23b627f2fd70eacdca38abe245d7de0bee9e093",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K25_G2_MSA_twohop_preTCN_ls002_seed49",
+          "partition": "acd_ue"
+        },
+        "matched_control": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/configs/K23_G2_MSA_twohop_ls002_seed49.json",
+        "model_differences": [
+          "msa_residual_position"
+        ],
+        "training_differences": [
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "data_identical": true,
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3693034
+      },
+      {
+        "job": {
+          "name": "K26_G2_MSA_twohop_preTCN_pure_CE",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/configs/K26_G2_MSA_twohop_preTCN_pure_CE_seed49.json",
+          "sha256": "cab5bf4fa00e893cdc32b2cbba90fce3f09027f6be0df4d28ed0df5cf0aee95a",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K26_G2_MSA_twohop_preTCN_pure_CE_seed49",
+          "partition": "acd_ue"
+        },
+        "matched_control": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/configs/K11_G2_MSA_twohop_pure_CE_seed49.json",
+        "model_differences": [
+          "msa_residual_position"
+        ],
+        "training_differences": [
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "data_identical": true,
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3693034
+      },
+      {
+        "job": {
+          "name": "K27_G2_MSA_twohop_preTCN_width256",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/configs/K27_G2_MSA_twohop_preTCN_width256_seed49.json",
+          "sha256": "cb7b3d103bc32c3a6ec87fd9d7eddd2d13537bbcf9bb1731e79622d0b2f876e2",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/preTCN_interactions_20261105/runs/K27_G2_MSA_twohop_preTCN_width256_seed49",
+          "partition": "acd_ue"
+        },
+        "matched_control": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/configs/K15_G2_MSA_twohop_width256_seed49.json",
+        "model_differences": [
+          "msa_residual_position"
+        ],
+        "training_differences": [
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "data_identical": true,
+        "initial_state_identical": true,
+        "constructor_rng_identical": true,
+        "parameters": 3902954
+      }
+    ],
+    "old_K0_K24_configs_unchanged": true,
+    "local_tests": {
+      "passed": 100,
+      "optional_skipped": 2
+    },
+    "HPC3_focused_tests": 13,
+    "packages_changed": false,
+    "pre_submission_recovery": "Initial preflight used wrong K11 directory;corrected reference path only,no GPU job had been submitted"
+  }
+}

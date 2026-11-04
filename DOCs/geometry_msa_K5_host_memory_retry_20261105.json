@@ -1,0 +1,29 @@
+{
+  "original_job": "799902_5",
+  "original_state": "FAILED",
+  "failed_step_state": "OUT_OF_MEMORY",
+  "failed_step_exit": "0:125",
+  "node": "ACD1-21",
+  "complete_epochs_before_failure": 34,
+  "original_host_memory_request_GiB": 96,
+  "new_host_memory_request_GiB": 192,
+  "max_RSS_available": false,
+  "retry_job": 800063,
+  "retry_root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/retries/hostmem192_20261105",
+  "source_execution_commit": "6a8bad521ceaf916b5689c32389cb0c0e3a7f84e",
+  "source_unchanged": true,
+  "config": {
+    "name": "K5_G2_MSA_postgeo",
+    "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/retries/hostmem192_20261105/configs/K5_G2_MSA_postgeo_seed49.json",
+    "sha256": "09421cb0507f23249434b5a3cca8e010dc8edd7e2c18bced3e2c3ab3ae5e30ac",
+    "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/retries/hostmem192_20261105/runs/K5_G2_MSA_postgeo_seed49",
+    "partition": "acd_ue"
+  },
+  "training_differences": [
+    "output_dir"
+  ],
+  "data_and_model_identical": true,
+  "from_scratch": true,
+  "original_run_preserved": true,
+  "reason": "Slurm oom_kill event,not a CUDA out-of-memory exception;resource-only retry"
+}

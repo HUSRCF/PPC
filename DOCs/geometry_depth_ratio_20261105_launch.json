@@ -1,0 +1,91 @@
+{
+  "date": "2026-11-05",
+  "job_array": 800019,
+  "array": "0-2",
+  "partition": "acd_ue",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105",
+  "source_commit": "7499b4264215c41f3c14277c44c4fc5bf9db8164",
+  "source_archive_sha256": "3a7d660cce6a6057dfedfabd53a64b664e6dfb938af4118e6fa01e3f03b4ce92",
+  "seed": 49,
+  "epochs": 50,
+  "from_scratch": true,
+  "test_evaluated": false,
+  "artificial_concurrency_throttle": null,
+  "local_tests": {
+    "total": 77,
+    "passed": 75,
+    "optional_skipped": 2
+  },
+  "HPC3_config_tests": {
+    "passed": 8
+  },
+  "reviewer": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "decision": "No blockers",
+    "independent_tests_rerun": false
+  },
+  "jobs": [
+    {
+      "name": "K11_G2_MSA_twohop_pure_CE",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/configs/K11_G2_MSA_twohop_pure_CE_seed49.json",
+      "sha256": "ca390e505dbc320e3dce13306bc5d98157f758ed0c4ebaeff76e117e980365b3",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/runs/K11_G2_MSA_twohop_pure_CE_seed49",
+      "partition": "acd_ue"
+    },
+    {
+      "name": "K12_G2_MSA_threehop",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/configs/K12_G2_MSA_threehop_seed49.json",
+      "sha256": "3ad058422f08550bb62c723421ef648572c6af79504d4ff5e99aaa0d7ff1def5",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/runs/K12_G2_MSA_threehop_seed49",
+      "partition": "acd_ue"
+    },
+    {
+      "name": "K13_G2_MSA_threehop_pure_CE",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/configs/K13_G2_MSA_threehop_pure_CE_seed49.json",
+      "sha256": "09b40bd8d418bfaafa540f8beb0b837c5044f08530e28f3ffd4a355b56f9ccac",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/runs/K13_G2_MSA_threehop_pure_CE_seed49",
+      "partition": "acd_ue"
+    }
+  ],
+  "initial_outcomes": {
+    "800019_0": "FAILED pin-memory thread CUDA invalid argument;ACD1-28;smoke passed",
+    "800019_1": "RUNNING;smoke passed",
+    "800019_2": "FAILED pin-memory thread CUDA invalid argument;ACD1-28;smoke passed"
+  },
+  "retry": {
+    "job_array": 800043,
+    "array": "0-1",
+    "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105",
+    "exclude_nodes": [
+      "ACD1-28"
+    ],
+    "source_code_unchanged": true,
+    "data_and_model_unchanged": true,
+    "training_config_differences": [
+      "output_dir"
+    ],
+    "from_scratch": true,
+    "do_not_resume_failed_runs": true,
+    "jobs": [
+      {
+        "name": "K11_G2_MSA_twohop_pure_CE",
+        "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105/configs/K11_G2_MSA_twohop_pure_CE_seed49.json",
+        "sha256": "8c99739413921cd49567451e10cfc5dc68484de74a2c79e7683c5e6c1e0a9ba3",
+        "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105/runs/K11_G2_MSA_twohop_pure_CE_seed49",
+        "partition": "acd_ue",
+        "original_array_task": 0
+      },
+      {
+        "name": "K13_G2_MSA_threehop_pure_CE",
+        "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105/configs/K13_G2_MSA_threehop_pure_CE_seed49.json",
+        "sha256": "e936e8428f4e33d62e0ffe762a8b4d26726eae1b74028f63cd742fdd801be82b",
+        "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105/runs/K13_G2_MSA_threehop_pure_CE_seed49",
+        "partition": "acd_ue",
+        "original_array_task": 2
+      }
+    ],
+    "hypothesis": "Possible node-related pinned-memory/driver issue;not proven until retry;do not classify as architecture failure",
+    "failed_logs": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/logs/800019_{0,2}.err"
+  }
+}

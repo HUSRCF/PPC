@@ -1,0 +1,136 @@
+{
+  "dry_run_succeeded": true,
+  "installed_nothing": true,
+  "source_environment": "/data/user/shuang886/.conda/envs/openfold",
+  "proposed_environment": "/data/user/shuang886/.conda/envs/ppc_deltanet",
+  "report": "/data/user/shuang886/PPC_M18/dependency_plans/deltanet_20261105/dry_run.json",
+  "report_sha256": "d1311dfcfc24c2e10740398fd7304685b99a9c392c7b114e70aff92c40edbb5c",
+  "core_versions_unchanged": {
+    "torch": "2.7.1+cu128",
+    "torchvision": "0.22.1+cu128",
+    "torchaudio": "2.7.1+cu128",
+    "triton": "3.3.1",
+    "numpy": "2.1.2",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "pandas": "2.3.1"
+  },
+  "planned_changes": [
+    {
+      "name": "flash-linear-attention",
+      "planned_version": "0.6.0",
+      "installed_version": null,
+      "sha256": "6dec9735f8454523c13553622e98aff30152dde6586b4ac7d88010fbb7a06b5f"
+    },
+    {
+      "name": "transformers",
+      "planned_version": "5.6.2",
+      "installed_version": null,
+      "sha256": "f8d3a1bb96778fed9b8aabfd0dd6e19843e4b0f2bb6b59f32b8a92051b0f348f"
+    },
+    {
+      "name": "fla-core",
+      "planned_version": "0.6.0",
+      "installed_version": null,
+      "sha256": "b0708b70e0b119cd58a0a5146ea56cb175cef6ed969d8ac60267e3e077ce3ebd"
+    },
+    {
+      "name": "huggingface_hub",
+      "planned_version": "1.33.0",
+      "installed_version": null,
+      "sha256": "04e434b06e100eddbce9a6e817d72693a7884b10a79bd67ab48080d5c07eb899"
+    },
+    {
+      "name": "click",
+      "planned_version": "8.5.0",
+      "installed_version": "8.1.7",
+      "sha256": "255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360"
+    },
+    {
+      "name": "hf-xet",
+      "planned_version": "1.8.0",
+      "installed_version": null,
+      "sha256": "29dab7c904cd1914a0439c6e1306c12c7497c8bd32290fbe563ebf51ca4b6d6d"
+    },
+    {
+      "name": "httpx",
+      "planned_version": "0.28.1",
+      "installed_version": null,
+      "sha256": "d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad"
+    },
+    {
+      "name": "httpcore",
+      "planned_version": "1.0.9",
+      "installed_version": null,
+      "sha256": "2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55"
+    },
+    {
+      "name": "tokenizers",
+      "planned_version": "0.22.2",
+      "installed_version": null,
+      "sha256": "369cc9fc8cc10cb24143873a0d95438bb8ee257bb80c71989e3ee290e8d72c67"
+    },
+    {
+      "name": "h11",
+      "planned_version": "0.16.0",
+      "installed_version": null,
+      "sha256": "63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86"
+    },
+    {
+      "name": "regex",
+      "planned_version": "2026.9.29",
+      "installed_version": null,
+      "sha256": "39ab5894d971f9ac68baa6eca5c50387db579cfcacf36ae8df3feceb1815e6d0"
+    },
+    {
+      "name": "anyio",
+      "planned_version": "4.16.0",
+      "installed_version": null,
+      "sha256": "c66ae634e0b8228396b801741beb3294326d4b6102f7bba4041c0dfb58c29026"
+    },
+    {
+      "name": "einops",
+      "planned_version": "0.8.2",
+      "installed_version": null,
+      "sha256": "54058201ac7087911181bfec4af6091bb59380360f069276601256a76af08193"
+    },
+    {
+      "name": "typer",
+      "planned_version": "0.27.3",
+      "installed_version": null,
+      "sha256": "e50022f28b82a86313e54501317a1db64bf8f8d036ff8cfe5ca7e47675454aff"
+    },
+    {
+      "name": "annotated-doc",
+      "planned_version": "0.0.5",
+      "installed_version": null,
+      "sha256": "117bac03a25ede5df5440e855b32d556049ca169ead221505badf432fed4b101"
+    },
+    {
+      "name": "rich",
+      "planned_version": "15.0.0",
+      "installed_version": null,
+      "sha256": "33bd4ef74232fb73fe9279a257718407f169c09b78a87ad3d296f548e27de0bb"
+    },
+    {
+      "name": "markdown-it-py",
+      "planned_version": "4.2.0",
+      "installed_version": null,
+      "sha256": "9f7ebbcd14fe59494226453aed97c1070d83f8d24b6fc3a3bcf9a38092641c4a"
+    },
+    {
+      "name": "mdurl",
+      "planned_version": "0.1.2",
+      "installed_version": null,
+      "sha256": "84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"
+    },
+    {
+      "name": "shellingham",
+      "planned_version": "1.5.4",
+      "installed_version": null,
+      "sha256": "7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686"
+    }
+  ],
+  "wheelhouse_files": 30,
+  "wheelhouse_bytes": 41603854
+}

@@ -2,7 +2,7 @@
 
 ## Contract and selection
 
-This is a new validation-only screen, not a test result. Reuse the original pairwise-SI30 union-v2 split:4868 train,1075 validation,724 sealed test sequences. The fixed input is ESM-C MLC3456D, corrected91D OF3 descriptors and frozen768D MSA Transformer query-row features. OF3 inputs are predicted single-monomer structures, not experimental complexes. No partners, assembly coordinates or test labels enter the model.
+This is a new validation-only screen, not a test result. Reuse the original pairwise-SI30 union-v2 split:4868 train,1075 validation,724 test sequences. No test loader is built here; this does not retroactively make historically inspected protein universes a new independent holdout. The fixed input is ESM-C MLC3456D, corrected91D OF3 descriptors and frozen768D MSA Transformer query-row features. OF3 inputs are predicted single-monomer structures, not experimental complexes. No partners, assembly coordinates or test labels enter the model.
 
 All arms start from scratch at seed49 for50 epochs. Batch64, token budget65536, workers8 and existing optimized loaders remain unchanged. Do not resume earlier weights or add seed controls yet. Use acd_ue, one GPU per task and no artificial percent concurrency cap; scheduler/account quotas still apply. No dependencies or Torch components are installed or changed.
 

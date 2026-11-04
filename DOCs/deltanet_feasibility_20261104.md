@@ -2,6 +2,8 @@
 
 Status: literature/dependency assessment only. No DeltaNet package was installed and no DeltaNet training was submitted.
 
+Update2026-11-05: [Offline0.6.0 dependency dry run passed](deltanet_20261105/README.md);19 proposed dependency changes, eight core packages preserved, installation still awaits explicit approval. This does not yet establish import/kernel compatibility.
+
 ## Sources and applicability
 
 - Yang et al., [Parallelizing Linear Transformers with the Delta Rule over Sequence Length](https://arxiv.org/abs/2406.06484), NeurIPS2024: delta-rule associative memory plus hardware-efficient sequence-parallel training.

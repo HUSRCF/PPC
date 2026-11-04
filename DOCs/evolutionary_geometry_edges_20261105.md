@@ -31,4 +31,4 @@ The running799902 K0-K8 snapshot is immutable. These two variants must run from 
 
 ## DeltaNet status
 
-HPC3's direct PyPI metadata request failed with a network address error. No package installation or environment modification occurred. Gated DeltaNet remains a later isolated-environment candidate; this edge-bias trial uses only the already-installed PyTorch stack.
+HPC3's direct PyPI metadata request failed with a network address error. Wheels were subsequently prepared locally and an offline dependency dry run passed; see [the separate installation plan](deltanet_20261105/README.md). No package installation or environment modification occurred. Gated DeltaNet remains an approval-dependent isolated-environment candidate; this edge-bias trial uses only the already-installed PyTorch stack.

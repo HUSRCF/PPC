@@ -1,0 +1,32 @@
+{
+  "status": "Planned only;do not compute until K3 is COMPLETED50epochs",
+  "scope": "Validation-only;data-adaptive policy chosen after midrun observation,not an independent test",
+  "sources": {
+    "G2": {
+      "run": "architecture_screen_20261104/runs/G2_edge_attention_seed49",
+      "epoch": 27
+    },
+    "MSA_D": {
+      "run": "msa_factorial_20261104/runs/D_encoder_seed49",
+      "epoch": 13
+    },
+    "K3": {
+      "run": "geometry_msa_screen_20261104_round2/runs/K3_G2_MSA_twohop_seed49",
+      "selection": "Maximum validation pooled AP among epochs with macro AP>=0.7417948466002535;ties earliest;full1075queries;no skipped validation batches;no test"
+    }
+  },
+  "fixed_blends": {
+    "G2_plus_K3": [
+      "G2",
+      "K3"
+    ],
+    "G2_plus_MSA_D_plus_K3": [
+      "G2",
+      "MSA_D",
+      "K3"
+    ]
+  },
+  "weights": "Equal clipped-probability logit mean;epsilon1e-7",
+  "alpha_search": false,
+  "rejection": "If no K3 checkpoint satisfies guardrail,report unavailable;do not relax guardrail"
+}

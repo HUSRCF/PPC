@@ -1,0 +1,114 @@
+{
+  "date": "2026-11-05",
+  "job_array": 799988,
+  "array": "0-1",
+  "partition": "acd_ue",
+  "source_commit": "5b224522cf7bb1f151713afa9b25c7e68919d5ef",
+  "source_archive_sha256": "cbc6f753723d1eb2b14b0b603909df38b2c7516b33e8431e35052708ee1e6d1a",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105",
+  "from_scratch": true,
+  "seed": 49,
+  "epochs": 50,
+  "test_evaluated": false,
+  "existing_nine_jobs_unchanged": 799902,
+  "controls": {
+    "K9": "799902_1 K1_G2_MSA",
+    "K10": "799902_3 K3_G2_MSA_twohop"
+  },
+  "parameters_added_per_geometry_block": 8328,
+  "official_training_weight_decay": 0.1,
+  "smoke_weight_decay": 0,
+  "smoke_optimizer_updates": 3,
+  "tests": {
+    "local": {
+      "total": 76,
+      "passed": 74,
+      "optional_skipped": 2
+    },
+    "HPC3_CPU": {
+      "total": 76,
+      "passed": 74,
+      "optional_skipped": 2
+    }
+  },
+  "review": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "decision": "No P0/P1/P2 findings",
+    "note": "Explicit --variants K9... K10... was used;exactly2configs generated"
+  },
+  "state": "RUNNING;both real CUDA/AMP gates passed",
+  "CUDA_acceptance": "Three real optimizer updates;finite losses;zero-init geometry/MSA and every edge scale/query/key updated with smoke-only weight_decay0",
+  "jobs": [
+    {
+      "name": "K9_G2_MSA_evo_edges",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/configs/K9_G2_MSA_evo_edges_seed49.json",
+      "sha256": "3ac090779861083c7c15211522379d3de29ee9757b325050b57879dbb62dc6b7",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/runs/K9_G2_MSA_evo_edges_seed49",
+      "partition": "acd_ue"
+    },
+    {
+      "name": "K10_G2_MSA_evo_edges_twohop",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/configs/K10_G2_MSA_evo_edges_twohop_seed49.json",
+      "sha256": "4d42bacdb539bd3d71e22f77306bba990ac39a2d0dbd4c825c8e265c3db4224f",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/runs/K10_G2_MSA_evo_edges_twohop_seed49",
+      "partition": "acd_ue"
+    }
+  ],
+  "CUDA_receipts": [
+    {
+      "name": "K9_G2_MSA_evo_edges",
+      "receipts": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/smoke/K9_G2_MSA_evo_edges_seed49_800001/verification.json",
+          "sha256": "5b81cd53bdaac9d94e8fb25dd5811fb500296ea7b1ff0d990e66a9f9d7daf91d",
+          "data": {
+            "optimizer_updates": 3,
+            "two_updates": false,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [
+              "geometry_blocks.0.evolution_bias.scale",
+              "geometry_blocks.0.evolution_bias.query.weight",
+              "geometry_blocks.0.evolution_bias.key.weight"
+            ],
+            "test_read": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "K10_G2_MSA_evo_edges_twohop",
+      "receipts": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/smoke/K10_G2_MSA_evo_edges_twohop_seed49_799988/verification.json",
+          "sha256": "f991d9b39d27d93d9ac1cd5fa56598e3c6cd6a12cb61a9cc0361b76c7240a291",
+          "data": {
+            "optimizer_updates": 3,
+            "two_updates": false,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [
+              "geometry_blocks.0.evolution_bias.scale",
+              "geometry_blocks.0.evolution_bias.query.weight",
+              "geometry_blocks.0.evolution_bias.key.weight",
+              "geometry_blocks.1.evolution_bias.scale",
+              "geometry_blocks.1.evolution_bias.query.weight",
+              "geometry_blocks.1.evolution_bias.key.weight"
+            ],
+            "test_read": false
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,690 @@
+{
+  "observed_UTC": "2026-11-04T17:01:29.651208+00:00",
+  "validation_only": true,
+  "macro_guardrail": 0.7417948466002535,
+  "target_pooled_AP": 0.8,
+  "rows": [
+    {
+      "name": "K0_B1_MSA",
+      "job": "799902_0",
+      "state": [
+        "COMPLETED",
+        "0:0",
+        "00:34:42"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K0_B1_MSA_seed49",
+      "epochs": 50,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 32,
+        "macro_AP": 0.7331362361335694,
+        "pooled_AP": 0.7599383844190211,
+        "AUROC": 0.8737205210598789,
+        "F1": 0.6858673636066644,
+        "F1_gate": 0.46,
+        "MCC": 0.5679857121266065,
+        "MCC_gate": 0.6,
+        "ratio_MAE": 0.06303539048620435
+      },
+      "macro_best": {
+        "epoch": 34,
+        "macro_AP": 0.7348651515295492,
+        "pooled_AP": 0.7586632181734559,
+        "AUROC": 0.8735067813380984,
+        "F1": 0.6879011664020982,
+        "F1_gate": 0.49,
+        "MCC": 0.5697972729996487,
+        "MCC_gate": 0.68,
+        "ratio_MAE": 0.07059147368856641
+      },
+      "guarded_best": null,
+      "metrics_sha256": "b94d3c40bebbe0c4aaa8f3abd7372ab71e4b15e4db92f05e3047343cb8de2828"
+    },
+    {
+      "name": "K1_G2_MSA",
+      "job": "799902_1",
+      "state": [
+        "COMPLETED",
+        "0:0",
+        "00:51:54"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K1_G2_MSA_seed49",
+      "epochs": 50,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 22,
+        "macro_AP": 0.7499782548820884,
+        "pooled_AP": 0.783073542349158,
+        "AUROC": 0.8891567291624181,
+        "F1": 0.7047250274710899,
+        "F1_gate": 0.48,
+        "MCC": 0.5922307384749133,
+        "MCC_gate": 0.59,
+        "ratio_MAE": 0.05956305415304594
+      },
+      "macro_best": {
+        "epoch": 20,
+        "macro_AP": 0.7545606744917716,
+        "pooled_AP": 0.7824514407359711,
+        "AUROC": 0.8885051543112277,
+        "F1": 0.7028395294033314,
+        "F1_gate": 0.22,
+        "MCC": 0.5937417839458669,
+        "MCC_gate": 0.3,
+        "ratio_MAE": 0.07071643000945102
+      },
+      "guarded_best": {
+        "epoch": 22,
+        "macro_AP": 0.7499782548820884,
+        "pooled_AP": 0.783073542349158,
+        "AUROC": 0.8891567291624181,
+        "F1": 0.7047250274710899,
+        "F1_gate": 0.48,
+        "MCC": 0.5922307384749133,
+        "MCC_gate": 0.59,
+        "ratio_MAE": 0.05956305415304594
+      },
+      "metrics_sha256": "77b013e252f35c9c392e49dbfd4b5451522ca1e9425c56eb4b7cc8fe27f5f19c"
+    },
+    {
+      "name": "K2_G2_MSA_preTCN",
+      "job": "799902_2",
+      "state": [
+        "RUNNING",
+        "0:0",
+        "00:57:07"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K2_G2_MSA_preTCN_seed49",
+      "epochs": 21,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 19,
+        "macro_AP": 0.7540817002938798,
+        "pooled_AP": 0.7878384560605473,
+        "AUROC": 0.8919813041793214,
+        "F1": 0.7092287012964043,
+        "F1_gate": 0.16,
+        "MCC": 0.6011600219809998,
+        "MCC_gate": 0.26,
+        "ratio_MAE": 0.07532035683563282
+      },
+      "macro_best": {
+        "epoch": 15,
+        "macro_AP": 0.7545417981023314,
+        "pooled_AP": 0.7766234778473006,
+        "AUROC": 0.8876320312735217,
+        "F1": 0.6975764605335449,
+        "F1_gate": 0.46,
+        "MCC": 0.5828927621168717,
+        "MCC_gate": 0.59,
+        "ratio_MAE": 0.06393922368281109
+      },
+      "guarded_best": {
+        "epoch": 19,
+        "macro_AP": 0.7540817002938798,
+        "pooled_AP": 0.7878384560605473,
+        "AUROC": 0.8919813041793214,
+        "F1": 0.7092287012964043,
+        "F1_gate": 0.16,
+        "MCC": 0.6011600219809998,
+        "MCC_gate": 0.26,
+        "ratio_MAE": 0.07532035683563282
+      }
+    },
+    {
+      "name": "K3_G2_MSA_twohop",
+      "job": "799902_3",
+      "state": [
+        "RUNNING",
+        "0:0",
+        "00:56:36"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K3_G2_MSA_twohop_seed49",
+      "epochs": 28,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 21,
+        "macro_AP": 0.7570844882783643,
+        "pooled_AP": 0.7890537130746113,
+        "AUROC": 0.8948202559512151,
+        "F1": 0.7082262553687186,
+        "F1_gate": 0.36,
+        "MCC": 0.5980622047424162,
+        "MCC_gate": 0.44,
+        "ratio_MAE": 0.05196205261661563
+      },
+      "macro_best": {
+        "epoch": 13,
+        "macro_AP": 0.7615244025931347,
+        "pooled_AP": 0.784883780396853,
+        "AUROC": 0.89232533818939,
+        "F1": 0.7049440249478792,
+        "F1_gate": 0.28,
+        "MCC": 0.5930767970115092,
+        "MCC_gate": 0.36,
+        "ratio_MAE": 0.06351440370949202
+      },
+      "guarded_best": {
+        "epoch": 21,
+        "macro_AP": 0.7570844882783643,
+        "pooled_AP": 0.7890537130746113,
+        "AUROC": 0.8948202559512151,
+        "F1": 0.7082262553687186,
+        "F1_gate": 0.36,
+        "MCC": 0.5980622047424162,
+        "MCC_gate": 0.44,
+        "ratio_MAE": 0.05196205261661563
+      }
+    },
+    {
+      "name": "K4_G2_MSA_dualgraph",
+      "job": "799902_4",
+      "state": [
+        "COMPLETED",
+        "0:0",
+        "00:43:04"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K4_G2_MSA_dualgraph_seed49",
+      "epochs": 50,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 24,
+        "macro_AP": 0.7499472785918511,
+        "pooled_AP": 0.7801760032087971,
+        "AUROC": 0.8849835115167677,
+        "F1": 0.7028033452640157,
+        "F1_gate": 0.64,
+        "MCC": 0.5919155170103044,
+        "MCC_gate": 0.79,
+        "ratio_MAE": 0.09641445241521958
+      },
+      "macro_best": {
+        "epoch": 48,
+        "macro_AP": 0.7566375442861383,
+        "pooled_AP": 0.7789097744146645,
+        "AUROC": 0.88535135954679,
+        "F1": 0.7017848982434969,
+        "F1_gate": 0.45,
+        "MCC": 0.5911602505585567,
+        "MCC_gate": 0.63,
+        "ratio_MAE": 0.05422414057996384
+      },
+      "guarded_best": {
+        "epoch": 24,
+        "macro_AP": 0.7499472785918511,
+        "pooled_AP": 0.7801760032087971,
+        "AUROC": 0.8849835115167677,
+        "F1": 0.7028033452640157,
+        "F1_gate": 0.64,
+        "MCC": 0.5919155170103044,
+        "MCC_gate": 0.79,
+        "ratio_MAE": 0.09641445241521958
+      },
+      "metrics_sha256": "1da0221faca536087227907f0e0cc194a586b8ba70a5629004ede6dda3dcba37"
+    },
+    {
+      "name": "K5_G2_MSA_postgeo",
+      "job": "799902_5",
+      "state": [
+        "FAILED",
+        "1:0",
+        "00:40:32"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K5_G2_MSA_postgeo_seed49",
+      "epochs": 34,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 14,
+        "macro_AP": 0.7503848374709949,
+        "pooled_AP": 0.7797854607517238,
+        "AUROC": 0.8886025474846049,
+        "F1": 0.7017164575941698,
+        "F1_gate": 0.36,
+        "MCC": 0.5902244645264789,
+        "MCC_gate": 0.5,
+        "ratio_MAE": 0.051339301489466846
+      },
+      "macro_best": {
+        "epoch": 9,
+        "macro_AP": 0.7547401240703685,
+        "pooled_AP": 0.7791110611904867,
+        "AUROC": 0.8894727865891545,
+        "F1": 0.7069844904756948,
+        "F1_gate": 0.35,
+        "MCC": 0.5942336919918848,
+        "MCC_gate": 0.42,
+        "ratio_MAE": 0.05225164627439754
+      },
+      "guarded_best": {
+        "epoch": 14,
+        "macro_AP": 0.7503848374709949,
+        "pooled_AP": 0.7797854607517238,
+        "AUROC": 0.8886025474846049,
+        "F1": 0.7017164575941698,
+        "F1_gate": 0.36,
+        "MCC": 0.5902244645264789,
+        "MCC_gate": 0.5,
+        "ratio_MAE": 0.051339301489466846
+      }
+    },
+    {
+      "name": "K6_G2_MSA_fullcontext",
+      "job": "799902_6",
+      "state": [
+        "COMPLETED",
+        "0:0",
+        "00:39:41"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K6_G2_MSA_fullcontext_seed49",
+      "epochs": 50,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 23,
+        "macro_AP": 0.7466506867366525,
+        "pooled_AP": 0.7802221218277442,
+        "AUROC": 0.8854106902908758,
+        "F1": 0.7004043925705034,
+        "F1_gate": 0.33,
+        "MCC": 0.5912072143810158,
+        "MCC_gate": 0.53,
+        "ratio_MAE": 0.0531472365922013
+      },
+      "macro_best": {
+        "epoch": 9,
+        "macro_AP": 0.7548591771136977,
+        "pooled_AP": 0.7717054266508337,
+        "AUROC": 0.8871780584997617,
+        "F1": 0.7029605896668242,
+        "F1_gate": 0.45,
+        "MCC": 0.5882739224316509,
+        "MCC_gate": 0.56,
+        "ratio_MAE": 0.06168730825012506
+      },
+      "guarded_best": {
+        "epoch": 23,
+        "macro_AP": 0.7466506867366525,
+        "pooled_AP": 0.7802221218277442,
+        "AUROC": 0.8854106902908758,
+        "F1": 0.7004043925705034,
+        "F1_gate": 0.33,
+        "MCC": 0.5912072143810158,
+        "MCC_gate": 0.53,
+        "ratio_MAE": 0.0531472365922013
+      },
+      "metrics_sha256": "29f2cbd855098380538b03e0aa2c89ce5eedfa4c8a101c28dd61a8649de8e208"
+    },
+    {
+      "name": "K7_G2_MSA_residue_mean",
+      "job": "799902_7",
+      "state": [
+        "RUNNING",
+        "0:0",
+        "00:44:44"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K7_G2_MSA_residue_mean_seed49",
+      "epochs": 46,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 41,
+        "macro_AP": 0.7579300472491337,
+        "pooled_AP": 0.7849030934897115,
+        "AUROC": 0.8888674056230992,
+        "F1": 0.7069792890650929,
+        "F1_gate": 0.45,
+        "MCC": 0.6001290385768964,
+        "MCC_gate": 0.61,
+        "ratio_MAE": 0.05044392587660357
+      },
+      "macro_best": {
+        "epoch": 41,
+        "macro_AP": 0.7579300472491337,
+        "pooled_AP": 0.7849030934897115,
+        "AUROC": 0.8888674056230992,
+        "F1": 0.7069792890650929,
+        "F1_gate": 0.45,
+        "MCC": 0.6001290385768964,
+        "MCC_gate": 0.61,
+        "ratio_MAE": 0.05044392587660357
+      },
+      "guarded_best": {
+        "epoch": 41,
+        "macro_AP": 0.7579300472491337,
+        "pooled_AP": 0.7849030934897115,
+        "AUROC": 0.8888674056230992,
+        "F1": 0.7069792890650929,
+        "F1_gate": 0.45,
+        "MCC": 0.6001290385768964,
+        "MCC_gate": 0.61,
+        "ratio_MAE": 0.05044392587660357
+      }
+    },
+    {
+      "name": "K8_G2_MSA_pure_CE",
+      "job": "799902_8",
+      "state": [
+        "RUNNING",
+        "0:0",
+        "00:44:13"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K8_G2_MSA_pure_CE_seed49",
+      "epochs": 41,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 22,
+        "macro_AP": 0.7508906123581085,
+        "pooled_AP": 0.7863412820974054,
+        "AUROC": 0.8914720269900507,
+        "F1": 0.7098223848430404,
+        "F1_gate": 0.31,
+        "MCC": 0.5995434064116177,
+        "MCC_gate": 0.45,
+        "ratio_MAE": 0.050928554583427516
+      },
+      "macro_best": {
+        "epoch": 9,
+        "macro_AP": 0.7553781120093379,
+        "pooled_AP": 0.7793834979710708,
+        "AUROC": 0.8915680315182267,
+        "F1": 0.7078079973168697,
+        "F1_gate": 0.39,
+        "MCC": 0.595992153689753,
+        "MCC_gate": 0.42,
+        "ratio_MAE": 0.05337715000433977
+      },
+      "guarded_best": {
+        "epoch": 22,
+        "macro_AP": 0.7508906123581085,
+        "pooled_AP": 0.7863412820974054,
+        "AUROC": 0.8914720269900507,
+        "F1": 0.7098223848430404,
+        "F1_gate": 0.31,
+        "MCC": 0.5995434064116177,
+        "MCC_gate": 0.45,
+        "ratio_MAE": 0.050928554583427516
+      }
+    },
+    {
+      "name": "K9_G2_MSA_evo_edges",
+      "job": "799988_0",
+      "state": [
+        "RUNNING",
+        "0:0",
+        "00:27:54"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/runs/K9_G2_MSA_evo_edges_seed49",
+      "epochs": 34,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 19,
+        "macro_AP": 0.7561667825290426,
+        "pooled_AP": 0.7873618492286752,
+        "AUROC": 0.8932590273657648,
+        "F1": 0.7092394149883068,
+        "F1_gate": 0.29,
+        "MCC": 0.6008479876056914,
+        "MCC_gate": 0.47,
+        "ratio_MAE": 0.05138605457925519
+      },
+      "macro_best": {
+        "epoch": 19,
+        "macro_AP": 0.7561667825290426,
+        "pooled_AP": 0.7873618492286752,
+        "AUROC": 0.8932590273657648,
+        "F1": 0.7092394149883068,
+        "F1_gate": 0.29,
+        "MCC": 0.6008479876056914,
+        "MCC_gate": 0.47,
+        "ratio_MAE": 0.05138605457925519
+      },
+      "guarded_best": {
+        "epoch": 19,
+        "macro_AP": 0.7561667825290426,
+        "pooled_AP": 0.7873618492286752,
+        "AUROC": 0.8932590273657648,
+        "F1": 0.7092394149883068,
+        "F1_gate": 0.29,
+        "MCC": 0.6008479876056914,
+        "MCC_gate": 0.47,
+        "ratio_MAE": 0.05138605457925519
+      }
+    },
+    {
+      "name": "K10_G2_MSA_evo_edges_twohop",
+      "job": "799988_1",
+      "state": [
+        "RUNNING",
+        "0:0",
+        "00:27:54"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/runs/K10_G2_MSA_evo_edges_twohop_seed49",
+      "epochs": 26,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 25,
+        "macro_AP": 0.7531136264363102,
+        "pooled_AP": 0.7821079957091043,
+        "AUROC": 0.8884178905597652,
+        "F1": 0.703045799940367,
+        "F1_gate": 0.55,
+        "MCC": 0.5939032334251126,
+        "MCC_gate": 0.64,
+        "ratio_MAE": 0.057282516961527426
+      },
+      "macro_best": {
+        "epoch": 13,
+        "macro_AP": 0.7577167526156998,
+        "pooled_AP": 0.7796668591735441,
+        "AUROC": 0.8883585576500301,
+        "F1": 0.7005188510031412,
+        "F1_gate": 0.29,
+        "MCC": 0.5859209333137498,
+        "MCC_gate": 0.36,
+        "ratio_MAE": 0.062193932282023655
+      },
+      "guarded_best": {
+        "epoch": 25,
+        "macro_AP": 0.7531136264363102,
+        "pooled_AP": 0.7821079957091043,
+        "AUROC": 0.8884178905597652,
+        "F1": 0.703045799940367,
+        "F1_gate": 0.55,
+        "MCC": 0.5939032334251126,
+        "MCC_gate": 0.64,
+        "ratio_MAE": 0.057282516961527426
+      }
+    },
+    {
+      "name": "K11_G2_MSA_twohop_pure_CE",
+      "job": "800043_0",
+      "state": [
+        "RUNNING",
+        "0:0",
+        "00:06:04"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105/runs/K11_G2_MSA_twohop_pure_CE_seed49",
+      "epochs": 1,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 1,
+        "macro_AP": 0.4108413212487019,
+        "pooled_AP": 0.3841031557581377,
+        "AUROC": 0.672819053244446,
+        "F1": 0.4928378310299081,
+        "F1_gate": 0.22,
+        "MCC": 0.23793295215441682,
+        "MCC_gate": 0.22,
+        "ratio_MAE": 0.11243677658223829
+      },
+      "macro_best": {
+        "epoch": 1,
+        "macro_AP": 0.4108413212487019,
+        "pooled_AP": 0.3841031557581377,
+        "AUROC": 0.672819053244446,
+        "F1": 0.4928378310299081,
+        "F1_gate": 0.22,
+        "MCC": 0.23793295215441682,
+        "MCC_gate": 0.22,
+        "ratio_MAE": 0.11243677658223829
+      },
+      "guarded_best": null
+    },
+    {
+      "name": "K12_G2_MSA_threehop",
+      "job": "800019_1",
+      "state": [
+        "RUNNING",
+        "0:0",
+        "00:13:41"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/runs/K12_G2_MSA_threehop_seed49",
+      "epochs": 15,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 1,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 14,
+        "macro_AP": 0.7565368732544028,
+        "pooled_AP": 0.7797922669085229,
+        "AUROC": 0.8891223548646424,
+        "F1": 0.7034470797381087,
+        "F1_gate": 0.45,
+        "MCC": 0.5915075449717418,
+        "MCC_gate": 0.55,
+        "ratio_MAE": 0.05978143817290317
+      },
+      "macro_best": {
+        "epoch": 14,
+        "macro_AP": 0.7565368732544028,
+        "pooled_AP": 0.7797922669085229,
+        "AUROC": 0.8891223548646424,
+        "F1": 0.7034470797381087,
+        "F1_gate": 0.45,
+        "MCC": 0.5915075449717418,
+        "MCC_gate": 0.55,
+        "ratio_MAE": 0.05978143817290317
+      },
+      "guarded_best": {
+        "epoch": 14,
+        "macro_AP": 0.7565368732544028,
+        "pooled_AP": 0.7797922669085229,
+        "AUROC": 0.8891223548646424,
+        "F1": 0.7034470797381087,
+        "F1_gate": 0.45,
+        "MCC": 0.5915075449717418,
+        "MCC_gate": 0.55,
+        "ratio_MAE": 0.05978143817290317
+      }
+    },
+    {
+      "name": "K13_G2_MSA_threehop_pure_CE",
+      "job": "800043_1",
+      "state": [
+        "RUNNING",
+        "0:0",
+        "00:06:04"
+      ],
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105/runs/K13_G2_MSA_threehop_pure_CE_seed49",
+      "epochs": 8,
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "pooled_best": {
+        "epoch": 8,
+        "macro_AP": 0.7488168315560912,
+        "pooled_AP": 0.7641595183694606,
+        "AUROC": 0.884268523518071,
+        "F1": 0.694977856055813,
+        "F1_gate": 0.27,
+        "MCC": 0.5784498021995432,
+        "MCC_gate": 0.33,
+        "ratio_MAE": 0.07381205725288668
+      },
+      "macro_best": {
+        "epoch": 8,
+        "macro_AP": 0.7488168315560912,
+        "pooled_AP": 0.7641595183694606,
+        "AUROC": 0.884268523518071,
+        "F1": 0.694977856055813,
+        "F1_gate": 0.27,
+        "MCC": 0.5784498021995432,
+        "MCC_gate": 0.33,
+        "ratio_MAE": 0.07381205725288668
+      },
+      "guarded_best": {
+        "epoch": 8,
+        "macro_AP": 0.7488168315560912,
+        "pooled_AP": 0.7641595183694606,
+        "AUROC": 0.884268523518071,
+        "F1": 0.694977856055813,
+        "F1_gate": 0.27,
+        "MCC": 0.5784498021995432,
+        "MCC_gate": 0.33,
+        "ratio_MAE": 0.07381205725288668
+      }
+    }
+  ],
+  "allocations": "799902_0|COMPLETED|0:0|00:34:42\n799902_1|COMPLETED|0:0|00:51:54\n799902_2|RUNNING|0:0|00:57:07\n799902_3|RUNNING|0:0|00:56:36\n799902_4|COMPLETED|0:0|00:43:04\n799902_5|FAILED|1:0|00:40:32\n799902_6|COMPLETED|0:0|00:39:41\n799902_7|RUNNING|0:0|00:44:44\n799902_8|RUNNING|0:0|00:44:13\n799988_0|RUNNING|0:0|00:27:54\n799988_1|RUNNING|0:0|00:27:54\n800019_0|FAILED|1:0|00:03:04\n800019_1|RUNNING|0:0|00:13:41\n800019_2|FAILED|1:0|00:02:05\n800043_0|RUNNING|0:0|00:06:04\n800043_1|RUNNING|0:0|00:06:04",
+  "note": "Snapshot only;running rows are provisional. Failed K5 is superseded by fresh host-RAM retry800063;K11/K13 use800043 retries. No0.80 achievement verified.",
+  "retries": {
+    "K5": {
+      "job": 800063,
+      "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/retries/hostmem192_20261105",
+      "resources": "192G host RAM",
+      "data_model_unchanged": true,
+      "training_diff": [
+        "output_dir"
+      ],
+      "init_checkpoint": null
+    },
+    "K11_K13": {
+      "job": 800043,
+      "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_depth_ratio_20261105/retries/pinmem_node28_20261105",
+      "excluded_nodes": [
+        "ACD1-28"
+      ],
+      "data_model_unchanged": true,
+      "training_diff": [
+        "output_dir"
+      ],
+      "init_checkpoint": null
+    }
+  }
+}

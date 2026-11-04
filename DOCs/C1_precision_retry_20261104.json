@@ -35,11 +35,43 @@
     "max_abs_difference_from_FP32": 0.0003552436828613281
   },
   "real_input_smoke_passed": true,
-  "formal_epochs_at_verification": 13,
-  "formal_AMP_skips_at_verification": 1,
-  "formal_sanitized_gradient_elements_at_verification": 1,
+  "formal_epochs_at_verification": 50,
+  "formal_AMP_skips_at_verification": 2,
+  "formal_sanitized_gradient_elements_at_verification": 2,
   "best_macro_epoch_at_verification": 13,
   "validation_macro_AP_at_verification": 0.7241274728077729,
   "validation_pooled_AP_at_verification": 0.7523965361374221,
-  "state_at_last_check": "RUNNING; numerical CUDA and real-input gates passed"
+  "state_at_last_check": "COMPLETED/0;50epochs;no validation skips or test evaluation",
+  "final_result": {
+    "epochs": 50,
+    "metrics_sha256": "29d8081b07ba2a1ae293085a1a13a322c89c3f4b006e9371bf1eef21f5bbd451",
+    "AMP_skips": 2,
+    "sanitized_gradient_elements": 2,
+    "validation_skips": 0,
+    "test_present": false,
+    "macro_selected": {
+      "epoch": 16,
+      "chain_ap_macro": 0.7288374371526736,
+      "pooled_ap": 0.7575860060466336,
+      "auroc": 0.8698737024810319,
+      "f1_best_threshold": 0.6770019433979805,
+      "best_threshold": 0.37,
+      "mcc_best_threshold": 0.5577942436319552,
+      "best_mcc_threshold": 0.58,
+      "chain_ratio_mae_raw": 0.056133272410478705,
+      "loss": 0.4661269058737644
+    },
+    "pooled_selected": {
+      "epoch": 16,
+      "chain_ap_macro": 0.7288374371526736,
+      "pooled_ap": 0.7575860060466336,
+      "auroc": 0.8698737024810319,
+      "f1_best_threshold": 0.6770019433979805,
+      "best_threshold": 0.37,
+      "mcc_best_threshold": 0.5577942436319552,
+      "best_mcc_threshold": 0.58,
+      "chain_ratio_mae_raw": 0.056133272410478705,
+      "loss": 0.4661269058737644
+    }
+  }
 }

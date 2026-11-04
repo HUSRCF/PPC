@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-04",
+  "experiment_root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_context_screen_20261104",
+  "source_commit": "03014ab605e3a52f73deb9228086bdad7f405e06",
+  "source_archive_sha256": "da7f12ffa19309c50ce87dac628173caa1ec517216f8d5637722800d70f8e68e",
+  "partition": "acd_ue",
+  "array_job": 799764,
+  "array": "0-2",
+  "array_throttle": null,
+  "time_limit": "12:00:00",
+  "gpu_per_arm": 1,
+  "cpus_per_arm": 12,
+  "memory_GiB": 96,
+  "seed": 49,
+  "epochs": 50,
+  "init_checkpoint": null,
+  "test_evaluated": false,
+  "variants": [
+    "C_bigru",
+    "B_pre_tcn",
+    "D_capacity_mlp"
+  ],
+  "control": "reuse completed D_encoder_seed49 50ep; no A replay",
+  "parameters": {
+    "control": 2821250,
+    "C_bigru": 3118210,
+    "B_pre_tcn": 2821250,
+    "D_capacity_mlp": 3117506
+  },
+  "real_parent_check": {
+    "identical_data": true,
+    "training_difference_only": "output_dir",
+    "identical_initial_backbone": true,
+    "identical_CPU_RNG": true
+  },
+  "tests": {
+    "total": 60,
+    "passed": 58,
+    "optional_skips": 2
+  },
+  "review": {
+    "agent": "Mendel",
+    "model": "gpt-6-luna max",
+    "outcome": "no P0/P1/P2 blockers; CUDA AMP acceptance remains per-arm gate"
+  },
+  "gpu_smoke": "pending allocation; automatic two-update, two-validation acceptance before50ep",
+  "post_training_evaluation": "best.pt evaluated read-only on train,val; no optimizer or test loader",
+  "launch_state": "PENDING Priority",
+  "diagnostic_job": 799702,
+  "diagnostic_state": "COMPLETED 0:0,00:02:31",
+  "diagnostic": {
+    "checkpoint": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/epochs/epoch_013.pt",
+    "raw_sha256": "3c0da2d853af34eed3d413e22dae84f384cd392c070b4632e391a11e9ed6ee49",
+    "splits": {
+      "train": {
+        "chain_ap_macro": 0.8074700355379492,
+        "pooled_ap": 0.8630301585030431,
+        "auroc": 0.942460082804017,
+        "loss": 0.3308658907274144,
+        "valid_chains": 4868,
+        "valid_residues": 1754693,
+        "chain_ratio_mae_raw": 0.08610734103361165,
+        "eval_grad_mode_enabled": false,
+        "eval_parameter_version_changes": 0,
+        "eval_parameter_grads_present": 0
+      },
+      "val": {
+        "chain_ap_macro": 0.7343365538749322,
+        "pooled_ap": 0.7607603651615791,
+        "auroc": 0.8752004482818839,
+        "loss": 0.4608839517693187,
+        "valid_chains": 1075,
+        "valid_residues": 404267,
+        "chain_ratio_mae_raw": 0.0746252509795649,
+        "eval_grad_mode_enabled": false,
+        "eval_parameter_version_changes": 0,
+        "eval_parameter_grads_present": 0
+      }
+    },
+    "test_read": false
+  },
+  "concurrency_amendment": {
+    "geometry_array_799523": "effective8 tasks, not2; all remaining tasks eligible",
+    "normal_arrays_799088_799166_799172": "throttle0; feature readiness independently verified; old training-stage serialization removed"
+  },
+  "environment_changes": false
+}

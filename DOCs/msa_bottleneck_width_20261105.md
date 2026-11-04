@@ -77,4 +77,30 @@ commit `5e4d8e4`. The full local test suite passes 81 tests, with two optional
 asset-dependent skips. New tests check actual constructed widths, parameter
 matching, zero initialization, ragged masking, finite gradients, and task-driven
 projection updates with weight decay zero. Independent review and launch
-receipts are recorded in the companion launch JSON once accepted/submitted.
+receipts are recorded in the companion launch JSON.
+
+## Launch
+
+Submitted as array **800186_[0-3]** on `acd_ue`, without a percent throttle.
+The immutable execution snapshot is commit
+`6343431fbf7d8f0db21ba4dd428bf22edc38d91a`, archive SHA-256
+`3c73f99920f1e9570ee2cc78fd3ec112510b768e7cd5b9300d9377c84e03f3d8`.
+
+At the 2026-11-04 17:58 UTC acceptance snapshot, K14/K15/K16 had passed the real
+CUDA gate and completed one full-coverage validation epoch; K17 was waiting for
+priority. Formal config records confirm 4,868 train / 1,075 val / zero test
+samples and the intended parameter counts. K16 recorded one AMP-skipped update
+in its first formal epoch; no validation batches were skipped. Monitor rather
+than treating one skipped scaled update as a terminal failure.
+
+See [the launch receipt](msa_bottleneck_width_20261105_launch.json) for job,
+config and smoke hashes, review results and the timestamped queue snapshot.
+The scheduler's accounting view briefly lagged the live queue for K16; live
+`squeue`/`scontrol` confirmed it was running with zero restarts. No duplicate
+task was submitted. The actual four configs and parent hashes are archived
+[alongside the receipt](msa_bottleneck_width_20261105/).
+
+Comparison against the actual completed K3 config, not only the local builder,
+confirmed identical data and the intended model-width changes only. Training
+differences are the fresh output and prediction-provenance paths. No package
+or PyTorch dependency was installed or modified.

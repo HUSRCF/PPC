@@ -25,5 +25,36 @@
   "data_and_model_identical": true,
   "from_scratch": true,
   "original_run_preserved": true,
-  "reason": "Slurm oom_kill event,not a CUDA out-of-memory exception;resource-only retry"
+  "reason": "Slurm oom_kill event,not a CUDA out-of-memory exception;resource-only retry",
+  "completed_result": {
+    "job": "800063_0",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:44:35",
+    "epochs": 50,
+    "metrics_sha256": "9551dfa3907d93a8ae4f0c2312c24ae1229d529d4e4696e82477dab2eab857a0",
+    "test_seen": false,
+    "coverage_ok_all_epochs": true,
+    "validation_sequences": 1075,
+    "validation_residues": 404267,
+    "validation_skips": 0,
+    "AMP_skips": 1,
+    "pooled_selected": {
+      "epoch": 19,
+      "macro_AP": 0.7495956375786924,
+      "pooled_AP": 0.7831820096569341,
+      "AUROC": 0.8899550931546124,
+      "F1": 0.705101525764432,
+      "F1_gate": 0.31,
+      "MCC": 0.5966490455370093,
+      "MCC_gate": 0.51,
+      "ratio_MAE": 0.053612996941042504
+    },
+    "macro_selected": {
+      "epoch": 9,
+      "macro_AP": 0.7534566094598029,
+      "pooled_AP": 0.7751342371649383
+    },
+    "interpretation": "Post-geometry MSA is below the completed K3 two-layer model;not promoted. Validation-only single-seed comparison."
+  }
 }

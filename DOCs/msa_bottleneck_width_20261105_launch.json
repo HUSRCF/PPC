@@ -1,0 +1,295 @@
+{
+  "objective": "Test MSA compression versus matched adapter capacity toward validation pooled AP0.80",
+  "job_array": "800186",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105",
+  "partition": "acd_ue",
+  "array": "0-3",
+  "artificial_concurrency_throttle": null,
+  "source_commit": "6343431fbf7d8f0db21ba4dd428bf22edc38d91a",
+  "archive_sha256": "3c73f99920f1e9570ee2cc78fd3ec112510b768e7cd5b9300d9377c84e03f3d8",
+  "feature_or_label_changes": false,
+  "model_implementation_changed": false,
+  "from_scratch": true,
+  "seed": 49,
+  "epochs": 50,
+  "test_evaluated": false,
+  "selection": {
+    "primary": "validation pooled AP",
+    "same_checkpoint_macro_guardrail": 0.7417948466002535,
+    "retain_macro_best_separately": true,
+    "blend_policy": "msa_bottleneck_width_20261105_fixed_blends.json",
+    "alpha_search": false
+  },
+  "resources_per_task": {
+    "GPUs": 1,
+    "CPUs": 12,
+    "memory_GiB": 192,
+    "time_limit": "12:00:00",
+    "exclude": "ACD1-28"
+  },
+  "environment": {
+    "python": "/data/user/shuang886/.conda/envs/openfold/bin/python",
+    "packages_installed_or_changed": false,
+    "torch_changed": false
+  },
+  "tests": {
+    "local": {
+      "total": 83,
+      "passed": 81,
+      "optional_skipped": 2
+    },
+    "HPC3_focused": {
+      "total": 10,
+      "passed": 10
+    },
+    "old_K0_K13_config_comparison": {
+      "reference_commit": "5e4d8e4",
+      "identical_generated_configs": 14
+    },
+    "real_CUDA": "Each task gates itself; see per-task receipts, do not infer queued tasks passed"
+  },
+  "reviewer": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "agent": "01a1a7ae-499f-7c41-8b32-befcfd873a00",
+    "result": "No blockers;focused10tests passed;no source edits"
+  },
+  "jobs": [
+    {
+      "name": "K14_G2_MSA_twohop_width128",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/configs/K14_G2_MSA_twohop_width128_seed49.json",
+      "sha256": "c802d1eb68697794b5e1e6b32b63551b4346d1c64b98aae43a1a743c34726979",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K14_G2_MSA_twohop_width128_seed49",
+      "partition": "acd_ue",
+      "task": 0,
+      "parameters": 3787626,
+      "projection": 128,
+      "hidden": 128
+    },
+    {
+      "name": "K15_G2_MSA_twohop_width256",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/configs/K15_G2_MSA_twohop_width256_seed49.json",
+      "sha256": "0a4117f939182af02a54cbaf646a3673370819875b74324b1938989b4e8b0f3a",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K15_G2_MSA_twohop_width256_seed49",
+      "partition": "acd_ue",
+      "task": 1,
+      "parameters": 3902954,
+      "projection": 256,
+      "hidden": 128
+    },
+    {
+      "name": "K16_G2_MSA_twohop_capacity128",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/configs/K16_G2_MSA_twohop_capacity128_seed49.json",
+      "sha256": "5695fea70e29e80c478be78389fee3fe74e1e04e195d1c4128aab7410f6dbf25",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K16_G2_MSA_twohop_capacity128_seed49",
+      "partition": "acd_ue",
+      "task": 2,
+      "parameters": 3787662,
+      "projection": 64,
+      "hidden": 228
+    },
+    {
+      "name": "K17_G2_MSA_twohop_capacity256",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/configs/K17_G2_MSA_twohop_capacity256_seed49.json",
+      "sha256": "95265329b809e6debfa4b4a883292e7b7b39fcb6c4fa1234729c9606e5069a59",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/runs/K17_G2_MSA_twohop_capacity256_seed49",
+      "partition": "acd_ue",
+      "task": 3,
+      "parameters": 3903062,
+      "projection": 64,
+      "hidden": 428
+    }
+  ],
+  "acceptance": {
+    "observed_UTC": "2026-11-04T17:58:08.328307+00:00",
+    "rows": [
+      {
+        "task": 0,
+        "name": "K14_G2_MSA_twohop_width128",
+        "live_squeue_state": [
+          "RUNNING",
+          "3:32",
+          "ACD1-23"
+        ],
+        "smoke": [
+          {
+            "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/smoke/K14_G2_MSA_twohop_width128_seed49_800187/verification.json",
+            "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+            "receipt": {
+              "optimizer_updates": 2,
+              "two_updates": true,
+              "finite": true,
+              "backbone_updated": true,
+              "new_zero_init_parameters_updated": [
+                "geometry_blocks.0.update.4.weight",
+                "geometry_blocks.1.update.4.weight",
+                "prottrans_residual_adapter.3.weight"
+              ],
+              "learned_edge_parameters_updated": [],
+              "test_read": false
+            }
+          }
+        ],
+        "formal_start": {
+          "n_train": 4868,
+          "n_val": 1075,
+          "n_test": 0,
+          "trainable_parameters": 3787626,
+          "device_resolved": "cuda:0"
+        },
+        "epochs": 1,
+        "validation_skips": 0,
+        "AMP_skips": 0,
+        "test_seen": false,
+        "coverage_verified": true
+      },
+      {
+        "task": 1,
+        "name": "K15_G2_MSA_twohop_width256",
+        "live_squeue_state": [
+          "RUNNING",
+          "3:32",
+          "ACD1-51"
+        ],
+        "smoke": [
+          {
+            "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/smoke/K15_G2_MSA_twohop_width256_seed49_800188/verification.json",
+            "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+            "receipt": {
+              "optimizer_updates": 2,
+              "two_updates": true,
+              "finite": true,
+              "backbone_updated": true,
+              "new_zero_init_parameters_updated": [
+                "geometry_blocks.0.update.4.weight",
+                "geometry_blocks.1.update.4.weight",
+                "prottrans_residual_adapter.3.weight"
+              ],
+              "learned_edge_parameters_updated": [],
+              "test_read": false
+            }
+          }
+        ],
+        "formal_start": {
+          "n_train": 4868,
+          "n_val": 1075,
+          "n_test": 0,
+          "trainable_parameters": 3902954,
+          "device_resolved": "cuda:0"
+        },
+        "epochs": 1,
+        "validation_skips": 0,
+        "AMP_skips": 0,
+        "test_seen": false,
+        "coverage_verified": true
+      },
+      {
+        "task": 2,
+        "name": "K16_G2_MSA_twohop_capacity128",
+        "live_squeue_state": [
+          "RUNNING",
+          "3:01",
+          "ACD1-24"
+        ],
+        "smoke": [
+          {
+            "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_bottleneck_width_20261105/smoke/K16_G2_MSA_twohop_capacity128_seed49_800189/verification.json",
+            "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+            "receipt": {
+              "optimizer_updates": 2,
+              "two_updates": true,
+              "finite": true,
+              "backbone_updated": true,
+              "new_zero_init_parameters_updated": [
+                "geometry_blocks.0.update.4.weight",
+                "geometry_blocks.1.update.4.weight",
+                "prottrans_residual_adapter.3.weight"
+              ],
+              "learned_edge_parameters_updated": [],
+              "test_read": false
+            }
+          }
+        ],
+        "formal_start": {
+          "n_train": 4868,
+          "n_val": 1075,
+          "n_test": 0,
+          "trainable_parameters": 3787662,
+          "device_resolved": "cuda:0"
+        },
+        "epochs": 1,
+        "validation_skips": 0,
+        "AMP_skips": 1,
+        "test_seen": false,
+        "coverage_verified": true
+      },
+      {
+        "task": 3,
+        "name": "K17_G2_MSA_twohop_capacity256",
+        "live_squeue_state": [
+          "PENDING",
+          "0:00",
+          ""
+        ],
+        "smoke": [],
+        "formal_start": null,
+        "epochs": 0,
+        "validation_skips": 0,
+        "AMP_skips": 0,
+        "test_seen": false,
+        "coverage_verified": false
+      }
+    ]
+  },
+  "limitations": "Single-seed adaptive validation exploration;constructor/dropout RNG differs across width arms;no independent-test or statistical-significance claim",
+  "actual_config_comparison_to_completed_K3": [
+    {
+      "name": "K14_G2_MSA_twohop_width128",
+      "data_identical": true,
+      "model_changes": [
+        "prottrans_residual_dim",
+        "prottrans_residual_hidden"
+      ],
+      "training_changes": [
+        "output_dir",
+        "prediction_provenance"
+      ]
+    },
+    {
+      "name": "K15_G2_MSA_twohop_width256",
+      "data_identical": true,
+      "model_changes": [
+        "prottrans_residual_dim",
+        "prottrans_residual_hidden"
+      ],
+      "training_changes": [
+        "output_dir",
+        "prediction_provenance"
+      ]
+    },
+    {
+      "name": "K16_G2_MSA_twohop_capacity128",
+      "data_identical": true,
+      "model_changes": [
+        "prottrans_residual_hidden"
+      ],
+      "training_changes": [
+        "output_dir",
+        "prediction_provenance"
+      ]
+    },
+    {
+      "name": "K17_G2_MSA_twohop_capacity256",
+      "data_identical": true,
+      "model_changes": [
+        "prottrans_residual_hidden"
+      ],
+      "training_changes": [
+        "output_dir",
+        "prediction_provenance"
+      ]
+    }
+  ],
+  "archived_configs": "msa_bottleneck_width_20261105/configs",
+  "archived_parents": "msa_bottleneck_width_20261105/parents.json"
+}

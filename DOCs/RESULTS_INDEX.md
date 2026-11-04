@@ -32,6 +32,7 @@ included. This index closes that gap. M7c is not the latest completed model.
 | Completed-model ranking diagnostics: 11 points, 55 SI components | [Interpretation and subgroup results](validation_diagnostics_20261105/README.md), [conditional bootstrap](validation_diagnostics_20261105/summary.json), [per-chain table](validation_diagnostics_20261105/per_chain.csv) |
 | Completed K10/K12/K13 follow-ups | [Same-checkpoint table and limits](geometry_completed_followups_20261105.md), [metrics, source commits and hashes](geometry_completed_followups_20261105.json) |
 | Completed fixed K3 ensembles: pooled AP0.798613, macro AP0.766068 | [Results and follow-up hypotheses](geometry_msa_followup_blends_20261105_results.md), [metrics/source hashes](geometry_msa_followup_blends_20261105_results.json), [resolved policy](geometry_msa_followup_blends_20261105_resolved.json) |
+| MSA bottleneck width versus matched capacity, K14-K17 | [Four-arm design](msa_bottleneck_width_20261105.md), [job800186 and startup receipts](msa_bottleneck_width_20261105_launch.json), [prospective fixed-blend policy](msa_bottleneck_width_20261105_fixed_blends.json) |
 
 ## Original Frozen Test Results
 

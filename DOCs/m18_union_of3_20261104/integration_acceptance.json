@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-04",
+  "scope": "PPC single-chain integration; no training launched",
+  "github": "https://github.com/HUSRCF/PPC",
+  "github_base_commit": "fd5e6c9002880729a335e64faec4c8082279384f",
+  "committed_star_base": "6ad6f95",
+  "existing_star_commits_preserved": 22,
+  "existing_local_and_star_dirty_files_untouched": true,
+  "local_tests": {"total": 28, "passed": 26, "external_HPC3_acceptance_skipped": 2},
+  "hpc3_tests": {"total": 28, "passed": 28, "skipped": 0},
+  "hpc3_environment": "existing openfold Python; torch2.7.1+cu128; no installation or Torch changes",
+  "actual_checkpoint_acceptance": {
+    "runs": ["R0_seed49", "R2_seed49"],
+    "strict_state_loading": true,
+    "two_validation_sequences": true,
+    "integrated_vs_frozen_CPU_residue_outputs_bitwise_equal": true,
+    "integrated_vs_frozen_CPU_head_outputs_bitwise_equal": true,
+    "eval_only_sequence_provenance_preserved": true,
+    "eval_only_source_checkpoint_epoch_preserved": true,
+    "shared_and_standalone_eval_metrics_match": true
+  },
+  "review": {
+    "agent": "01a1a225-76c3-70b2-a7e1-e257100e435d",
+    "requested_model": "gpt-6-luna",
+    "requested_effort": "max",
+    "scope": "changed training/model/metric functions, focused tests, replay configuration/launcher and evaluator direct caller",
+    "fixed_findings": [
+      "Fully unknown head stays disconnected, preventing unintended AdamW head updates",
+      "Eval-only exports forward sequence provenance and source checkpoint epoch",
+      "Generic input telemetry does not claim M18-specific sources for legacy configurations",
+      "Standalone evaluator uses current loader and loss interfaces"
+    ],
+    "core_verdict": "No remaining findings in final guard/call changes",
+    "evaluator_verdict": "No blockers found"
+  },
+  "compatibility": {
+    "legacy_ratio_loss_source_auto_preserved": true,
+    "legacy_head_RNG_behavior_default_preserved": true,
+    "legacy_global_optimizer_clipping_default_preserved": true,
+    "legacy_residue_mean_batch_loss_logging_preserved": true,
+    "modern_features_opt_in": true
+  },
+  "test_set_prediction_or_scoring_performed": false,
+  "weights_or_raw_feature_tensors_committed": false,
+  "historical_frozen_runtime_directories_modified": false
+}

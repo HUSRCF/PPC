@@ -1,0 +1,40 @@
+{
+  "array_job_id": "797200",
+  "partition": "acd_ue",
+  "state": "COMPLETED",
+  "all_exit_codes": "0:0",
+  "epochs_per_variant": 50,
+  "checkpoints_per_variant": 50,
+  "validation_predictions_per_variant": 50,
+  "all_training_and_validation_nonfinite_skips": 0,
+  "test_metrics_present": false,
+  "variants": {
+    "A": {
+      "elapsed": "00:29:21",
+      "best_macro_ap_epoch": 21,
+      "val_macro_ap": 0.7290282470756968
+    },
+    "B": {
+      "elapsed": "00:30:54",
+      "best_macro_ap_epoch": 27,
+      "val_macro_ap": 0.7261677150615656
+    },
+    "C": {
+      "elapsed": "00:28:19",
+      "best_macro_ap_epoch": 19,
+      "val_macro_ap": 0.7288324037182539
+    },
+    "D": {
+      "elapsed": "00:29:20",
+      "best_macro_ap_epoch": 20,
+      "val_macro_ap": 0.730250239079837
+    },
+    "E": {
+      "elapsed": "00:26:34",
+      "best_macro_ap_epoch": 26,
+      "val_macro_ap": 0.730004057959256
+    }
+  },
+  "interpretation": "Validation-only pilot; AP-best point estimates, no test comparison or statistical superiority claim.",
+  "squeue_absence_reason": "Finished jobs leave squeue; sacct confirms all five COMPLETED, not a bug."
+}

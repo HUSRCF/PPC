@@ -1,8 +1,9 @@
-"""Sequence-only residue contact-site model using ESM embeddings."""
+"""Residue contact-site model using frozen embeddings and optional descriptors."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from contextlib import nullcontext
 from typing import Any
 import math
 
@@ -90,6 +91,7 @@ class ESMSiteConfig:
     chain_ratio_head_dropout: float = 0.10
     chain_ratio_head_detach: bool = True
     chain_ratio_head_init_ratio: float = 0.30
+    chain_ratio_head_preserve_rng: bool = False
     extra: dict[str, Any] = field(default_factory=dict)
 
 
@@ -1138,19 +1140,22 @@ class ESMSiteClassifier(nn.Module):
         )
         self.chain_ratio_head = None
         if c.use_chain_ratio_head:
-            ratio_hidden = max(1, int(c.chain_ratio_head_hidden))
-            self.chain_ratio_head = nn.Sequential(
-                nn.LayerNorm(c.d_model * 2),
-                nn.Linear(c.d_model * 2, ratio_hidden),
-                nn.SiLU(),
-                nn.Dropout(max(0.0, float(c.chain_ratio_head_dropout))),
-                nn.Linear(ratio_hidden, 1),
-            )
-            ratio_output = self.chain_ratio_head[-1]
-            assert isinstance(ratio_output, nn.Linear)
-            init_ratio = min(1.0 - 1.0e-6, max(1.0e-6, float(c.chain_ratio_head_init_ratio)))
-            nn.init.zeros_(ratio_output.weight)
-            nn.init.constant_(ratio_output.bias, math.log(init_ratio / (1.0 - init_ratio)))
+            # Opt in for controlled detached-head experiments; preserve legacy RNG by default.
+            context = torch.random.fork_rng(devices=[]) if c.chain_ratio_head_preserve_rng else nullcontext()
+            with context:
+                ratio_hidden = max(1, int(c.chain_ratio_head_hidden))
+                self.chain_ratio_head = nn.Sequential(
+                    nn.LayerNorm(c.d_model * 2),
+                    nn.Linear(c.d_model * 2, ratio_hidden),
+                    nn.SiLU(),
+                    nn.Dropout(max(0.0, float(c.chain_ratio_head_dropout))),
+                    nn.Linear(ratio_hidden, 1),
+                )
+                ratio_output = self.chain_ratio_head[-1]
+                assert isinstance(ratio_output, nn.Linear)
+                init_ratio = min(1.0 - 1.0e-6, max(1.0e-6, float(c.chain_ratio_head_init_ratio)))
+                nn.init.zeros_(ratio_output.weight)
+                nn.init.constant_(ratio_output.bias, math.log(init_ratio / (1.0 - init_ratio)))
 
     def forward(
         self,

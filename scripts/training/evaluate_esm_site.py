@@ -11,7 +11,6 @@ from pathlib import Path
 from typing import Any
 
 import torch
-from torch import nn
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
@@ -26,6 +25,9 @@ from train_esm_site import (  # noqa: E402
     _load_yaml,
     _parse_float_grid,
     _read_ids,
+    _split_ids_path,
+    _lengths_from_manifest,
+    ResidueSiteLoss,
 )
 from ppcbind.models import ESMSiteClassifier  # noqa: E402
 
@@ -58,12 +60,19 @@ def main() -> int:
     parser.add_argument("--manifest", default="features/contact_labels/manifest.csv", type=Path)
     parser.add_argument("--split-dir", default="features/contact_labels/splits_mmseq30_tmk_no_len_limit", type=Path)
     parser.add_argument("--sequence-feature-root", default=None, type=Path)
+    parser.add_argument("--primary-embedding-root", default=None, type=Path)
+    parser.add_argument("--prottrans-embedding-root", default=None, type=Path)
+    parser.add_argument("--chain-filter-manifest", default=None, type=Path)
+    parser.add_argument("--require-primary-embeddings", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--require-prottrans-embeddings", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--contact-graph-root", default=None, type=Path)
     parser.add_argument("--aux-contact-graph-root", default=None, type=Path)
     parser.add_argument("--require-sequence-features", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--strict-ids", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--require-labels", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--strict-label-metadata", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--strict-sequence-feature-metadata", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--validation-only", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--require-contact-graph", action=argparse.BooleanOptionalAction, default=None)
     parser.add_argument("--require-aux-contact-graph", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--output-dir", default=None, type=Path)
@@ -77,6 +86,11 @@ def main() -> int:
 
     config = _load_yaml(args.config)
     model_config = _apply_config(args, config)
+    splits = [x.strip() for x in str(args.splits).split(",") if x.strip()]
+    if not splits or any(split not in {"train", "val", "test"} for split in splits):
+        raise ValueError("splits must contain train, val or test")
+    if args.validation_only and any(split != "val" for split in splits):
+        raise ValueError("This configuration is validation-only; use --splits val")
     thresholds = _parse_float_grid(args.threshold_grid, [i / 100.0 for i in range(1, 100)])
     topk_fracs = _parse_float_grid(args.topk_fracs, [0.05, 0.10])
 
@@ -89,18 +103,26 @@ def main() -> int:
     torch.manual_seed(args.seed)
     device = torch.device(args.device if torch.cuda.is_available() or not args.device.startswith("cuda") else "cpu")
 
-    train_ids = _read_ids(args.split_dir / "train_ids.txt")
+    chain_filtered = args.chain_filter_manifest is not None
+    train_ids = _read_ids(_split_ids_path(args.split_dir, "train", chain_filtered), lowercase=not chain_filtered)
     pos_weight, train_pos, train_neg = _class_weight_from_manifest(args.manifest, train_ids, args.max_pos_weight)
+    if getattr(args, "class_weight_mode", "auto") == "none":
+        pos_weight = 1.0
     require_contact_graph = bool(model_config.get("use_contact_graph")) if args.require_contact_graph is None else bool(args.require_contact_graph)
 
     model = ESMSiteClassifier(model_config).to(device)
     ckpt = _load_checkpoint(checkpoint, device)
     state = ckpt.get("model", ckpt) if isinstance(ckpt, dict) else ckpt
     model.load_state_dict(state)
-    criterion = nn.CrossEntropyLoss(
-        weight=torch.tensor([1.0, pos_weight], dtype=torch.float32, device=device),
-        ignore_index=-100,
-        label_smoothing=max(0.0, min(1.0, float(args.label_smoothing))),
+    criterion = ResidueSiteLoss(
+        pos_weight=pos_weight, label_smoothing=args.label_smoothing,
+        loss_type=getattr(args, "loss_type", "ce"), dice_weight=getattr(args, "dice_weight", 0.0),
+        focal_gamma=getattr(args, "focal_gamma", 2.0), focal_alpha=getattr(args, "focal_alpha", None),
+        reduction=getattr(args, "loss_reduction", "residue_mean"),
+        ratio_loss_weight=getattr(args, "ratio_loss_weight", 0.0), device=device,
+        mass_loss_type=getattr(args, "mass_loss_type", "ratio_mse"),
+        aux_ratio_loss_weight=getattr(args, "aux_ratio_loss_weight", 0.0),
+        ratio_loss_source=getattr(args, "ratio_loss_source", "auto"),
     )
 
     results: dict[str, Any] = {
@@ -119,30 +141,34 @@ def main() -> int:
         "require_aux_contact_graph": args.require_aux_contact_graph,
         "splits": {},
     }
-    for split in [x.strip() for x in str(args.splits).split(",") if x.strip()]:
-        ids = _read_ids(args.split_dir / f"{split}_ids.txt")
+    for split in splits:
+        ids = _read_ids(_split_ids_path(args.split_dir, split, chain_filtered), lowercase=not chain_filtered)
         ids = _limit_ids(ids, args.max_samples)
         loader = _build_loader(
-            args.esm_root,
-            args.label_root,
-            ids,
-            args.sequence_feature_root,
-            args.contact_graph_root,
-            args.aux_contact_graph_root,
-            args.require_sequence_features,
-            args.batch_size,
-            args.num_workers,
-            args.pin_memory,
-            args.prefetch_factor,
-            args.max_residues,
-            args.eval_crop_mode,
-            args.seed + 100,
-            False,
+            esm_root=args.esm_root, label_root=args.label_root, ids=ids,
+            sequence_feature_root=args.sequence_feature_root,
+            primary_embedding_root=args.primary_embedding_root,
+            contact_graph_root=args.contact_graph_root, aux_contact_graph_root=args.aux_contact_graph_root,
+            prottrans_embedding_root=args.prottrans_embedding_root,
+            require_sequence_features=args.require_sequence_features,
+            require_primary_embeddings=args.require_primary_embeddings,
+            require_prottrans_embeddings=args.require_prottrans_embeddings,
+            batch_size=getattr(args, "eval_batch_size", 0) or args.batch_size,
+            num_workers=args.num_workers, pin_memory=args.pin_memory, prefetch_factor=args.prefetch_factor,
+            persistent_workers=getattr(args, "persistent_workers", False),
+            payload_cache_size=getattr(args, "payload_cache_size", 0),
+            max_residues=args.max_residues, crop_mode=args.eval_crop_mode, seed=args.seed + 100,
+            shuffle=False, batching=getattr(args, "batching", "random"),
+            max_batch_tokens=getattr(args, "max_batch_tokens", 0),
+            length_bucket_size=getattr(args, "length_bucket_size", 0),
+            lengths_by_id=_lengths_from_manifest(args.manifest), preload=getattr(args, "preload", False),
             strict_ids=args.strict_ids,
             require_labels=args.require_labels,
             strict_label_metadata=args.strict_label_metadata,
+            strict_sequence_feature_metadata=args.strict_sequence_feature_metadata,
             require_contact_graph=require_contact_graph,
             require_aux_contact_graph=args.require_aux_contact_graph,
+            chain_filter_manifest=args.chain_filter_manifest,
         )
         results["splits"][split] = _evaluate(
             model,
@@ -154,6 +180,7 @@ def main() -> int:
             desc=f"eval {split}",
             thresholds=thresholds,
             topk_fracs=topk_fracs,
+            strict_gradient_isolation=getattr(args, "strict_eval_gradient_isolation", True),
         )
 
     output_json.parent.mkdir(parents=True, exist_ok=True)

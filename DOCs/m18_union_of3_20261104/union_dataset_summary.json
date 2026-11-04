@@ -1,0 +1,77 @@
+{
+  "status": "complete",
+  "contract": "M18_exact_sequence_ever_observed_union_5p5_v2",
+  "group_key": "SHA1 of exact frozen label-aligned sequence; full strings verified",
+  "split_policy": "original SI30 assignment unchanged; zero exact-sequence cross-split groups",
+  "split_audit": {
+    "cross_split_exact_sequences": 0,
+    "cross_split_si30_components": 0,
+    "cross_split_pdbs": 0,
+    "si30_components": 338
+  },
+  "label_rule": "1 if any valid source context is positive; 0 if observed but never positive; -100 if never assessed",
+  "observation_mask_policy": "inherit original frozen labels; no new unresolved-residue mask invented",
+  "assembly_geometry_recomputed": false,
+  "limitations": [
+    "Assembly/atom coordinates not independently reconstructed in this run.",
+    "A zero means not observed positive in this curated source set, not proven never binding.",
+    "Union coverage depends on the number and quality of observed contexts."
+  ],
+  "old_labels_modified": false,
+  "model_retrained": false,
+  "msa_database_requested": "UniRef90 only",
+  "sources": {
+    "/home/husrcf/Code/ProtBind/paper/results/dataset/current_split_20260825/dataset_chain_statistics.csv.gz": "129278f07fcefc8dde16b55b9cb3da9526879d91f13a58cc1613b5053ae81061",
+    "/home/husrcf/Code/ProtBind/paper/results/dataset/current_split_20260825/dataset_summary.json": "189121b20befb2a0ff0d924e298a15fbbc39fc1532c1c5392ed088604f5abda8",
+    "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/independent_global_si30_audit_20260712_rerun/unique_sequences.fasta": "7ac12044a82f89c977381f377a762fef1e7daa6503c7d9a0c72a93a29344ecc9"
+  },
+  "source_label_file_set_sha256": "1961c3590daf25df82a527051d3d02cce59cb7618ed38a69916fb30e5e048b03",
+  "n_source_pdb_files": 5850,
+  "residue_identity_includes_insertion_code": true,
+  "statistics": {
+    "train": {
+      "source_chain_contexts": 14052,
+      "unique_sequences": 4868,
+      "unique_residues": 1754693,
+      "union_positive": 436933,
+      "source_instance_positive": 1423146,
+      "union_instance_positive": 1526665,
+      "chains_changed": 9067,
+      "groups_with_different_masks": 1634
+    },
+    "val": {
+      "source_chain_contexts": 3796,
+      "unique_sequences": 1075,
+      "unique_residues": 404267,
+      "union_positive": 109748,
+      "source_instance_positive": 402848,
+      "union_instance_positive": 432530,
+      "chains_changed": 2615,
+      "groups_with_different_masks": 502
+    },
+    "test": {
+      "source_chain_contexts": 2392,
+      "unique_sequences": 724,
+      "unique_residues": 352746,
+      "union_positive": 84241,
+      "source_instance_positive": 293051,
+      "union_instance_positive": 309843,
+      "chains_changed": 1702,
+      "groups_with_different_masks": 364
+    }
+  },
+  "artifacts_sha256": {
+    "chain_to_union.tsv": "3d888af837db4d5295ca10f6b889fa7e9e56c67d70cfa2397fee6cd224e56be7",
+    "sequence_groups.tsv": "44129de1f7f3b1eba3c6651070df3a9220506639e0721a8931b65686c3a1c57c",
+    "source_context_labels.npz": "033ab0a7f8e022d5a8cb84926a80cd3cb6df85b758f8f322fc346a361d69540e",
+    "source_label_hashes.json": "c1f1e95a0d176fec1a6805f2f848a58680ccfbd141aab39b42535819f9118252",
+    "test.fasta": "9e3865fc576ea7e422ce9b30dced9c815ed5bf3651ef3daae0ab40726e9b318b",
+    "test.npz": "a55ddc078e1a2c4f7642249777321e3b20b75ea7edf83c98af9bff0d0f626fe8",
+    "train.fasta": "d58131690d2361ef8f5c850aff2e32705215a211e422f7a726fb5a61510c8556",
+    "train.npz": "0a60e7c736b7d5fe27325b2c274c06c228b6efe573e217cbc4d0c3eed55f7991",
+    "unique_sequences.fasta": "7f42554c934366734837fc1c55f8bb6930b71b53e8067cac9f5756cd64ba0d5a",
+    "val.fasta": "c8eb75714323a4d6243afaed797681c59de63ba412ed8ce2a34d7a31ebea629f",
+    "val.npz": "1344a614813601c19c2a293ed420f47b2baf7e9030192bbec5f906cafbd14778"
+  },
+  "seconds": 22.760751485824585
+}

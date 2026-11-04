@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-04",
+  "pilot": true,
+  "base_variant": "D",
+  "parent_array": "797200",
+  "rationale": "unweighted unsmoothed CE; highest observed validation macroAP among A--E, not a claim of final balanced superiority",
+  "variants": {
+    "R0": "no head",
+    "R1": "detached h -> head",
+    "R2": "shared h -> auxiliary head"
+  },
+  "loss": "CE + 0.75*MSE(mean valid residue probabilities,r) + lambda_aux*MSE(sigmoid(head),r)",
+  "lambda_aux": {
+    "R0": 0,
+    "R1": 0.75,
+    "R2": 0.75
+  },
+  "head": "masked mean/max h -> LayerNorm512 -> Linear128 -> SiLU -> Linear1 -> sigmoid",
+  "head_dropout": 0,
+  "head_rng": "CPU constructor RNG preserved; no forward head dropout",
+  "clipping": "backbone/head separately; otherwise detached control could rescale backbone gradients",
+  "optimizer": "AdamW; head in separate group with same LR, weight decay and warmup",
+  "budget": {
+    "epochs": 50,
+    "seed": 49,
+    "initialization": "from scratch",
+    "early_stop": false
+  },
+  "validation": "metric-specific best and Pareto; no final balanced winner claimed; AP best.pt compatibility alias",
+  "primary_diagnostics": [
+    "residue macroAP",
+    "residue macroMCC@0.5",
+    "residue-mean ratioMAE",
+    "head ratioMAE",
+    "Brier"
+  ],
+  "interpretation": "head MAE alone cannot demonstrate improvement of residue prediction",
+  "test_during_training": false,
+  "head_to_residue_consistency_loss": false,
+  "head_topK_feedback": false,
+  "calibration_fit": false,
+  "features_and_split": "identical frozen union inputs and SI30 assignment to completed D run",
+  "partition": "acd_ue",
+  "walltime": "08:00:00",
+  "max_concurrent_gpus": 3
+}

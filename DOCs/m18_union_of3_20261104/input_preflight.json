@@ -1,0 +1,30 @@
+{
+  "verified_all": true,
+  "loader_counts": {
+    "train": 4868,
+    "val": 1075,
+    "test": 724
+  },
+  "config_sha256": "ae5ffa040c77d3dfadaefc6dd5577c46b2d0f454aa5291ff73ed2debf217771d",
+  "parent_config_sha256": "6a8a294139a1a5885dd3eb3a02d21298f997ea50c82111f4480185b649979468",
+  "ready_sha256": "45497d52f24532f54996601984ca93fea071809bdec0712c6cfd74517e8251eb",
+  "prepare_job_id": "cpu_20261102_m18of3_v1",
+  "split_hashes": {
+    "train": "adff2145a5436eba2e6cff98e6747979a1a28ef9f066be971d9c64be59ff2e30",
+    "val": "4656922799591bad4b2ba80c831dea7d6d71b36db79b3f4cb2096e5814c61019",
+    "test": "2cf8288fdb8e2fd0f6f845f41fa8b5c8887e72702e09262a487b4c6e30a9c655"
+  },
+  "code_hashes": {
+    "train_esm_site.py": "34768512014ad2280dcf165407164dac40d910aeefd6c1f6afd0208daab00ce4",
+    "src/ppcbind/__init__.py": "4aa4c8f437e76854b4779f78d99358d718c94dd4a793445769559abd254327e1",
+    "src/ppcbind/data/feature_dataset.py": "632a9a807514d70ec7fddcf2e84fdbf017bac475caac2e6591a57b07d0965573",
+    "src/ppcbind/data/__init__.py": "0b664b568aea208cb9f672e1fe21fb4693ae97ff5ed0a201b4bd9ef0a92d7cbd",
+    "src/ppcbind/data/esm_site_dataset.py": "728ec7bf3c92ce9a34bd5e9368ddaf3f2dc88a0e9078d97bbfb0f229183e3834",
+    "src/ppcbind/models/protein_site_gvp.py": "3cb3e8bc76e6d3d2c4d63a7dd828c7de34d2a9e7bce8b5312d1b01251e541f2a",
+    "src/ppcbind/models/__init__.py": "e37de81ccc7e7ca1e94da0dc6c8e48028f24708344af81f0d393992ce671613c",
+    "src/ppcbind/models/esm_site.py": "3ee42f56c57629f4e31b1ef26768f7b025592339a2e53c4004621ca46919dd37",
+    "src/ppcbind/models/gvp_layers.py": "911f9c26235713a9a8c0068e98844e85efe6cee9442dd3990df79ca6417a3a2d"
+  },
+  "old_checkpoint_used": false,
+  "test_used_for_selection": false
+}

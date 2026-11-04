@@ -4,6 +4,10 @@
 /runs/
 /logs/
 /wandb/
+/tmp/
+/artifacts/
+/ppc_union_replay_*.out
+/ppc_union_replay_*.err
 /__sync_incoming__/
 
 # Runtime-only benchmark/model/result artifacts

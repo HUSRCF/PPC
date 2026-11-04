@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Train sequence-only ESM residue contact-site model."""
+"""Train residue-level PPIS models from frozen embeddings and optional descriptors."""
 
 from __future__ import annotations
 
@@ -18,6 +18,7 @@ from torch.utils.data import BatchSampler, DataLoader
 
 from ppcbind.data import ESMProteinSiteDataset, collate_esm_site_features
 from ppcbind.models import ESMSiteClassifier
+from ppcbind.site_metrics import LossAccumulator, extended_metrics, update_pareto
 
 # Limit OpenMP threads to reduce futex contention when running multiple training
 # jobs with DataLoader workers. Empirically optimal value from sweep testing.
@@ -34,7 +35,7 @@ except Exception:  # pragma: no cover
     tqdm = None
 
 try:
-    from sklearn.metrics import average_precision_score, roc_auc_score
+    from sklearn.metrics import average_precision_score, roc_auc_score, precision_recall_curve, auc
 except Exception:  # pragma: no cover
     average_precision_score = None
     roc_auc_score = None
@@ -53,6 +54,7 @@ PATH_KEYS = {
     "aux_contact_graph_root",
     "output_dir",
     "init_checkpoint",
+    "prediction_provenance",
 }
 
 
@@ -505,9 +507,13 @@ def _auc_metrics(scores: torch.Tensor, targets: torch.Tensor) -> dict[str, float
         return {"auroc": None, "pr_auc": None}
     y_true = targets.cpu().numpy()
     y_score = scores.cpu().numpy()
+    precision, recall, _ = precision_recall_curve(y_true, y_score)
+    ap = float(average_precision_score(y_true, y_score))
     return {
         "auroc": float(roc_auc_score(y_true, y_score)),
-        "pr_auc": float(average_precision_score(y_true, y_score)),
+        "pr_auc": ap,
+        "pooled_ap": ap,
+        "trapezoid_auprc": float(auc(recall, precision)),
     }
 
 
@@ -525,7 +531,7 @@ def _threshold_metrics(scores: torch.Tensor, targets: torch.Tensor, thresholds: 
         if best_mcc is None or row["mcc"] > best_mcc["mcc"]:
             best_mcc = row
     assert best_f1 is not None and best_mcc is not None
-    at_05 = min(sweep, key=lambda row: abs(row["threshold"] - 0.5))
+    at_05 = {"threshold": 0.5, **_metrics_from_counts(_counts_at_threshold(scores, targets, 0.5))}
     return {
         "threshold_sweep": sweep,
         "threshold_0_5": at_05["threshold"],
@@ -689,6 +695,7 @@ def _score_metrics(
         **_topk_metrics(per_protein, topk_fracs),
         **_chain_macro_metrics(per_protein),
         **_chain_ratio_metrics(per_protein),
+        **extended_metrics(per_protein, thresholds),
     }
 
 
@@ -764,6 +771,9 @@ class ResidueSiteLoss(nn.Module):
         reduction: str,
         ratio_loss_weight: float,
         device: torch.device,
+        mass_loss_type: str = "ratio_mse",
+        aux_ratio_loss_weight: float = 0.0,
+        ratio_loss_source: str = "auto",
     ) -> None:
         super().__init__()
         self.loss_type = str(loss_type or "ce").lower()
@@ -778,6 +788,18 @@ class ResidueSiteLoss(nn.Module):
         if self.reduction == "chain_mean" and self.loss_type != "ce":
             raise ValueError("chain_mean currently supports loss_type=ce only")
         self.ratio_loss_weight = max(0.0, float(ratio_loss_weight))
+        if mass_loss_type not in {"ratio_mse", "bernoulli_rate_kl"}:
+            raise ValueError(f"Unsupported mass_loss_type={mass_loss_type!r}")
+        self.mass_loss_type = mass_loss_type
+        self.aux_ratio_loss_weight = float(aux_ratio_loss_weight)
+        if not math.isfinite(self.aux_ratio_loss_weight) or self.aux_ratio_loss_weight < 0:
+            raise ValueError("aux_ratio_loss_weight must be finite and nonnegative")
+        self.ratio_loss_source = str(ratio_loss_source)
+        if self.ratio_loss_source not in {"auto", "residue_mean", "head"}:
+            raise ValueError("ratio_loss_source must be auto, residue_mean or head")
+        if self.aux_ratio_loss_weight > 0 and self.ratio_loss_source != "residue_mean":
+            raise ValueError("Auxiliary supervision requires ratio_loss_source=residue_mean")
+        self.last_components: dict[str, torch.Tensor] = {}
         self.ce = nn.CrossEntropyLoss(
             weight=torch.tensor([1.0, pos_weight], dtype=torch.float32, device=device),
             ignore_index=-100,
@@ -849,31 +871,67 @@ class ResidueSiteLoss(nn.Module):
                         dice = 1.0 - (2.0 * intersection + 1.0) / (denom + 1.0)
                         base = base + self.dice_weight * dice.to(dtype=base.dtype)
 
-        if self.ratio_loss_weight <= 0.0:
-            return base
+        mass = base * 0.0
+        aux = base * 0.0
+        if self.aux_ratio_loss_weight > 0 and chain_ratio_logits is None:
+            raise ValueError("Auxiliary ratio loss requires a ratio head")
+        if self.ratio_loss_weight <= 0.0 and self.aux_ratio_loss_weight <= 0.0:
+            return self._with_components(base, mass, aux)
         if batched_logits.ndim != 3 or batched_labels.ndim != 2 or batched_logits.shape[:2] != batched_labels.shape:
             raise ValueError("ratio loss requires logits [batch, residues, classes] and labels [batch, residues]")
         valid = batched_labels != self.ce.ignore_index
         counts = valid.sum(dim=1)
         valid_chains = counts > 0
         if not bool(valid_chains.any()):
-            return base
-        if chain_ratio_logits is None:
-            positive_scores = torch.softmax(batched_logits.float(), dim=-1)[..., 1]
-            predicted_ratio = (positive_scores * valid).sum(dim=1) / counts.clamp_min(1)
-        else:
+            return self._with_components(base, mass, aux)
+        use_head = (self.ratio_loss_source == "head" or
+                    (self.ratio_loss_source == "auto" and chain_ratio_logits is not None))
+        if use_head and chain_ratio_logits is None:
+            raise ValueError("ratio_loss_source=head requires chain_ratio_logits")
+        if chain_ratio_logits is not None and chain_ratio_logits.numel() != batched_logits.shape[0]:
+            raise ValueError("chain_ratio_logits must contain one scalar per batch item")
+        positive_scores = torch.softmax(batched_logits.float(), dim=-1)[..., 1]
+        predicted_ratio = (positive_scores * valid).sum(dim=1) / counts.clamp_min(1)
+        if use_head:
+            predicted_ratio = torch.sigmoid(chain_ratio_logits.float().reshape(-1))
+        observed_ratio = ((batched_labels == 1) & valid).sum(dim=1).float() / counts.clamp_min(1)
+        if self.ratio_loss_weight > 0:
+            if self.mass_loss_type == "ratio_mse":
+                mass = torch.nn.functional.mse_loss(predicted_ratio[valid_chains], observed_ratio[valid_chains])
+            else:
+                r = observed_ratio[valid_chains]
+                if use_head:
+                    raw = chain_ratio_logits.float().reshape(-1)[valid_chains]
+                    log_positive = torch.nn.functional.logsigmoid(raw)
+                    log_negative = torch.nn.functional.logsigmoid(-raw)
+                else:
+                    log_probs = torch.log_softmax(batched_logits[valid_chains].float(), dim=-1)
+                    log_probs = log_probs.masked_fill(~valid[valid_chains, :, None], float("-inf"))
+                    log_rates = torch.logsumexp(log_probs, dim=1) - counts[valid_chains].float().log()[:, None]
+                    log_negative, log_positive = log_rates[:, 0], log_rates[:, 1]
+                entropy_term = torch.xlogy(r, r) + torch.xlogy(1 - r, 1 - r)
+                mass = (entropy_term - r * log_positive - (1 - r) * log_negative).clamp_min(0).mean()
+        if self.aux_ratio_loss_weight > 0:
+            assert chain_ratio_logits is not None
             if chain_ratio_logits.numel() != batched_logits.shape[0]:
                 raise ValueError(
                     "chain_ratio_logits must contain one scalar per batch item; "
                     f"got shape={tuple(chain_ratio_logits.shape)} batch={batched_logits.shape[0]}"
                 )
-            predicted_ratio = torch.sigmoid(chain_ratio_logits.float().reshape(-1))
-        observed_ratio = ((batched_labels == 1) & valid).sum(dim=1).float() / counts.clamp_min(1)
-        ratio_mse = torch.nn.functional.mse_loss(
-            predicted_ratio[valid_chains],
-            observed_ratio[valid_chains],
-        )
-        return base + self.ratio_loss_weight * ratio_mse.to(dtype=base.dtype)
+            head_ratio = torch.sigmoid(chain_ratio_logits.float().reshape(-1))
+            aux = torch.nn.functional.mse_loss(head_ratio[valid_chains], observed_ratio[valid_chains])
+        return self._with_components(base, mass, aux)
+
+    def _with_components(self, base: torch.Tensor, mass: torch.Tensor, aux: torch.Tensor) -> torch.Tensor:
+        weighted = self.ratio_loss_weight * mass.to(dtype=base.dtype)
+        aux_weighted = self.aux_ratio_loss_weight * aux.to(dtype=base.dtype)
+        total = base + weighted + aux_weighted
+        self.last_components = {"classification_loss": base.detach(),
+                                "mass_loss_unweighted": mass.detach(),
+                                "mass_loss_weighted": weighted.detach(),
+                                "aux_ratio_loss_unweighted": aux.detach(),
+                                "aux_ratio_loss_weighted": aux_weighted.detach(), "total_loss": total.detach()}
+        return total
 
 
 def _evaluate(
@@ -888,6 +946,8 @@ def _evaluate(
     topk_fracs: list[float],
     strict_gradient_isolation: bool,
     prediction_output: Path | None = None,
+    prediction_metadata: dict[str, Any] | None = None,
+    prediction_epoch: int | None = None,
 ) -> dict[str, Any]:
     model.eval()
     parameter_versions = {name: parameter._version for name, parameter in model.named_parameters()}
@@ -898,12 +958,15 @@ def _evaluate(
                 f"{desc}: evaluation started with {len(stale_grads)} parameter gradients; first={stale_grads[:5]}"
             )
     losses: list[float] = []
+    loss_accumulator = LossAccumulator()
     metrics: list[dict[str, int]] = []
     score_chunks: list[torch.Tensor] = []
     target_chunks: list[torch.Tensor] = []
     per_protein: list[tuple[str, torch.Tensor, torch.Tensor]] = []
     prediction_records: list[dict[str, Any]] = []
     chain_ratio_head_errors: list[float] = []
+    head_predicted_rates: list[float] = []
+    head_observed_rates: list[float] = []
     skipped_nonfinite = 0
     logits_require_grad = False
     with torch.no_grad():
@@ -924,6 +987,7 @@ def _evaluate(
                 skipped_nonfinite += 1
                 continue
             losses.append(float(loss.item()))
+            loss_accumulator.update(criterion, labels)
             metrics.append(_step_metrics(logits, labels))
             valid = labels != -100
             probs = torch.softmax(logits.float(), dim=-1)[..., 1]
@@ -946,11 +1010,16 @@ def _evaluate(
                             "pdb_id": str(pdb_id),
                             "scores": item_scores,
                             "targets": item_targets,
+                            "model_residue_index_0based": torch.nonzero(item_valid, as_tuple=True)[0].cpu(),
                         }
+                        if prediction_metadata is not None:
+                            prediction_record.update(prediction_metadata["records"][str(pdb_id)])
                     if chain_ratio_scores is not None:
                         observed_ratio = float(item_targets.float().mean().item())
                         predicted_ratio = float(chain_ratio_scores[item_idx].item())
                         chain_ratio_head_errors.append(predicted_ratio - observed_ratio)
+                        head_predicted_rates.append(predicted_ratio)
+                        head_observed_rates.append(observed_ratio)
                         if prediction_record is not None:
                             prediction_record["chain_ratio_head"] = predicted_ratio
                             prediction_record["observed_ratio"] = observed_ratio
@@ -975,7 +1044,16 @@ def _evaluate(
     merged = _merge_metrics(metrics)
     merged.update(_score_metrics(score_chunks, target_chunks, per_protein, thresholds, topk_fracs))
     merged.update(_chain_ratio_head_metrics(chain_ratio_head_errors))
-    merged["loss"] = sum(losses) / max(1, len(losses))
+    if head_predicted_rates:
+        from scipy.stats import pearsonr, spearmanr
+        varying = (len(head_predicted_rates) > 1 and
+                   len(set(head_predicted_rates)) > 1 and len(set(head_observed_rates)) > 1)
+        merged["chain_ratio_head_mean_predicted"] = sum(head_predicted_rates) / len(head_predicted_rates)
+        merged["chain_ratio_head_mean_observed"] = sum(head_observed_rates) / len(head_observed_rates)
+        merged["chain_ratio_head_pearson"] = float(pearsonr(head_predicted_rates, head_observed_rates).statistic) if varying else None
+        merged["chain_ratio_head_spearman"] = float(spearmanr(head_predicted_rates, head_observed_rates).statistic) if varying else None
+    merged["legacy_batch_mean_loss"] = sum(losses) / max(1, len(losses))
+    merged.update(loss_accumulator.metrics())
     merged["skipped_nonfinite"] = skipped_nonfinite
     merged["eval_gradient_isolation_checked"] = bool(strict_gradient_isolation)
     merged["eval_grad_mode_enabled"] = False
@@ -991,6 +1069,8 @@ def _evaluate(
                 "schema_version": 1,
                 "description": "Per-chain residue probabilities and optional chain-ratio-head predictions",
                 "records": prediction_records,
+                "epoch": prediction_epoch,
+                "provenance": {key: value for key, value in (prediction_metadata or {}).items() if key != "records"},
             },
             prediction_output,
         )
@@ -1046,6 +1126,9 @@ def main() -> int:
     parser.add_argument("--eval-test-each-epoch", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--eval-only", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--save-eval-predictions", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--save-epoch-predictions", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--checkpoint-every-epoch", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--prediction-provenance", default=None, type=Path)
     parser.add_argument("--freeze-non-prottrans", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--frozen-backbone-eval", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--train-chain-ratio-head-only", action=argparse.BooleanOptionalAction, default=False)
@@ -1055,10 +1138,18 @@ def main() -> int:
     parser.add_argument("--min-lr-scale", type=float, default=0.02)
     parser.add_argument("--weight-decay", type=float, default=1e-2)
     parser.add_argument("--max-pos-weight", type=float, default=20.0)
+    parser.add_argument("--class-weight-mode", choices=["auto", "none"], default="auto")
     parser.add_argument("--label-smoothing", type=float, default=0.0)
     parser.add_argument("--loss-type", choices=["ce", "ce_dice", "focal", "focal_dice"], default="ce")
     parser.add_argument("--loss-reduction", choices=["residue_mean", "chain_mean"], default="residue_mean")
     parser.add_argument("--ratio-loss-weight", type=float, default=0.0)
+    parser.add_argument("--mass-loss-type", choices=["ratio_mse", "bernoulli_rate_kl"], default="ratio_mse")
+    parser.add_argument("--aux-ratio-loss-weight", type=float, default=0.0)
+    parser.add_argument("--ratio-loss-source", choices=["auto", "residue_mean", "head"], default="auto")
+    parser.add_argument("--separate-ratio-head-optimizer", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--strict-aux-control", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--validation-only", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--refuse-existing-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dice-weight", type=float, default=0.0)
     parser.add_argument("--focal-gamma", type=float, default=2.0)
     parser.add_argument("--focal-alpha", type=float, default=-1.0)
@@ -1084,6 +1175,11 @@ def main() -> int:
         raise ValueError("training.output_dir must be set in YAML config")
     if args.save_eval_predictions and not args.eval_only:
         raise ValueError("save_eval_predictions is restricted to eval_only runs")
+    if args.refuse_existing_run and args.output_dir.exists() and any(args.output_dir.iterdir()):
+        raise FileExistsError(f"Refusing to reuse existing run: {args.output_dir}")
+    prediction_metadata = (
+        json.loads(args.prediction_provenance.read_text()) if args.prediction_provenance else None
+    )
 
     thresholds = _parse_float_grid(args.threshold_grid, [i / 100.0 for i in range(1, 100)])
     topk_fracs = _parse_float_grid(args.topk_fracs, [0.05, 0.10])
@@ -1110,6 +1206,12 @@ def main() -> int:
     )
     lengths_by_id = _lengths_from_manifest(args.manifest)
     pos_weight, train_pos, train_neg = _class_weight_from_manifest(args.manifest, train_ids, args.max_pos_weight)
+    if args.class_weight_mode == "none":
+        pos_weight = 1.0
+    elif args.class_weight_mode != "auto":
+        raise ValueError("class_weight_mode must be auto or none")
+    if args.validation_only and args.eval_test_each_epoch:
+        raise ValueError("validation_only prohibits test evaluation")
     require_contact_graph = bool(model_config.get("use_contact_graph")) if args.require_contact_graph is None else bool(args.require_contact_graph)
 
     train_loader = _build_loader(
@@ -1224,6 +1326,17 @@ def main() -> int:
     )
 
     model = ESMSiteClassifier(model_config).to(device)
+    has_ratio_head = getattr(model, "chain_ratio_head", None) is not None
+    if args.aux_ratio_loss_weight > 0 and not has_ratio_head:
+        raise ValueError("Auxiliary ratio loss requires an enabled ratio head")
+    if args.strict_aux_control:
+        if has_ratio_head != (args.aux_ratio_loss_weight > 0):
+            raise ValueError("Strict auxiliary control requires head and loss to be enabled together")
+        if args.ratio_loss_source != "residue_mean" or not args.separate_ratio_head_optimizer:
+            raise ValueError("Strict auxiliary control requires residue_mean and separate gradient/optimizer groups")
+        if has_ratio_head and (float(model_config.get("chain_ratio_head_dropout", .1)) != 0
+                              or not model_config.get("chain_ratio_head_preserve_rng", False)):
+            raise ValueError("Strict auxiliary control requires zero head dropout and preserved constructor RNG")
     conditional_residual_mode = str(model_config.get("prottrans_fusion_mode", "")).lower() in {
         "zero_init_logit_residual",
         "zero_init_pre_contact_residual",
@@ -1247,6 +1360,7 @@ def main() -> int:
         load_result = model.load_state_dict(state, strict=False)
         init_report = {
             "path": str(args.init_checkpoint),
+            "epoch": checkpoint.get("epoch") if isinstance(checkpoint, dict) else None,
             "missing_keys": list(load_result.missing_keys),
             "unexpected_keys": list(load_result.unexpected_keys),
         }
@@ -1343,9 +1457,21 @@ def main() -> int:
         reduction=args.loss_reduction,
         ratio_loss_weight=args.ratio_loss_weight,
         device=device,
+        mass_loss_type=args.mass_loss_type,
+        aux_ratio_loss_weight=args.aux_ratio_loss_weight,
+        ratio_loss_source=args.ratio_loss_source,
     )
+    main_parameters = [p for name, p in model.named_parameters()
+                       if p.requires_grad and not name.startswith("chain_ratio_head.")]
+    head_parameters = [p for name, p in model.named_parameters()
+                       if p.requires_grad and name.startswith("chain_ratio_head.")]
+    trainable_parameters = [p for p in model.parameters() if p.requires_grad]
+    if args.separate_ratio_head_optimizer:
+        optimizer_groups = [{"params": group} for group in (main_parameters, head_parameters) if group]
+    else:
+        optimizer_groups = trainable_parameters
     optimizer = torch.optim.AdamW(
-        [param for param in model.parameters() if param.requires_grad],
+        optimizer_groups,
         lr=args.lr,
         weight_decay=args.weight_decay,
         eps=args.adam_eps,
@@ -1373,6 +1499,7 @@ def main() -> int:
             "train_positive_residues": train_pos,
             "train_negative_residues": train_neg,
             "pos_weight": pos_weight,
+            "gradient_clip_groups": "backbone/head separately" if args.separate_ratio_head_optimizer else "all trainable parameters (legacy)",
             "total_train_steps": total_steps,
             "n_train_batches": len(train_loader),
             "n_val_batches": len(val_loader),
@@ -1385,7 +1512,7 @@ def main() -> int:
             "thresholds_resolved": thresholds,
             "topk_fracs_resolved": topk_fracs,
             "save_metric_checkpoints_resolved": save_metric_checkpoints,
-            "input_policy": "ESM embeddings plus sequence-derived residue/global features only; optional ESM-predicted contact graph; no PDB coordinates or complete structure features",
+            "input_policy": "Frozen embeddings, optional external residue features and configured contact graphs; data roots and model_config define the actual sources",
             "chain_filtered": chain_filtered,
             "chain_filter_manifest": str(args.chain_filter_manifest) if args.chain_filter_manifest else None,
             "strict_ids": args.strict_ids,
@@ -1432,6 +1559,8 @@ def main() -> int:
             topk_fracs=topk_fracs,
             strict_gradient_isolation=args.strict_eval_gradient_isolation,
             prediction_output=prediction_dir / "val.pt" if prediction_dir is not None else None,
+            prediction_metadata=prediction_metadata,
+            prediction_epoch=init_report.get("epoch") if init_report else None,
         )
         test_metrics = None
         test_at_val_threshold = None
@@ -1448,6 +1577,8 @@ def main() -> int:
                 topk_fracs=topk_fracs,
                 strict_gradient_isolation=args.strict_eval_gradient_isolation,
                 prediction_output=prediction_dir / "test.pt" if prediction_dir is not None else None,
+                prediction_metadata=prediction_metadata,
+                prediction_epoch=init_report.get("epoch") if init_report else None,
             )
             test_at_val_threshold = _metrics_at_threshold(test_metrics, val_metrics.get("best_threshold"))
         record = {
@@ -1493,8 +1624,12 @@ def main() -> int:
         elif args.freeze_non_prottrans and args.frozen_backbone_eval:
             _set_frozen_backbone_eval(model)
         losses: list[float] = []
+        loss_accumulator = LossAccumulator()
         metrics: list[dict[str, int]] = []
         skipped_nonfinite = 0
+        optimizer_steps = 0
+        amp_skipped_steps = 0
+        sanitized_gradient_elements = 0
         t0 = time.time()
         train_loop_start = time.perf_counter()
         last_step_end = train_loop_start
@@ -1528,19 +1663,32 @@ def main() -> int:
                 continue
             scaler.scale(loss).backward()
             scaler.unscale_(optimizer)
-            grad_norm, n_bad_grad = _safe_clip(list(model.parameters()), args.grad_clip_norm, args.grad_value_clip)
+            clip_parameters = main_parameters if args.separate_ratio_head_optimizer else trainable_parameters
+            grad_norm, n_bad_grad = _safe_clip(clip_parameters, args.grad_clip_norm, args.grad_value_clip)
+            head_grad_norm, head_bad = (
+                _safe_clip(head_parameters, args.grad_clip_norm, args.grad_value_clip)
+                if args.separate_ratio_head_optimizer else (torch.zeros(()), 0)
+            )
+            n_bad_grad += head_bad
             if n_bad_grad > 0:
+                sanitized_gradient_elements += n_bad_grad
                 print(json.dumps({"event": "sanitized_grad", "epoch": epoch, "step": step, "n_bad_grad": n_bad_grad}), flush=True)
-            if not bool(torch.isfinite(grad_norm)):
+            if not bool(torch.isfinite(grad_norm)) or not bool(torch.isfinite(head_grad_norm)):
                 skipped_nonfinite += 1
                 optimizer.zero_grad(set_to_none=True)
                 step_end = time.perf_counter()
                 compute_seconds += step_end - batch_ready
                 last_step_end = step_end
                 continue
+            previous_scale = scaler.get_scale()
             scaler.step(optimizer)
             scaler.update()
+            if scaler.get_scale() < previous_scale:
+                amp_skipped_steps += 1
+            else:
+                optimizer_steps += 1
             losses.append(float(loss.item()))
+            loss_accumulator.update(criterion, labels)
             metrics.append(_step_metrics(logits.detach(), labels))
             step_end = time.perf_counter()
             compute_seconds += step_end - batch_ready
@@ -1566,7 +1714,14 @@ def main() -> int:
                 )
 
         train_metrics = _merge_metrics(metrics)
-        train_metrics["loss"] = sum(losses) / max(1, len(losses))
+        train_metrics["legacy_batch_mean_loss"] = sum(losses) / max(1, len(losses))
+        train_metrics.update(loss_accumulator.metrics())
+        train_metrics["effective_class_weights"] = [1.0, pos_weight]
+        train_metrics["learning_rate"] = float(optimizer.param_groups[0]["lr"])
+        train_metrics["optimizer_steps"] = optimizer_steps
+        train_metrics["amp_skipped_steps"] = amp_skipped_steps
+        train_metrics["sanitized_gradient_elements"] = sanitized_gradient_elements
+        train_metrics["global_step"] = global_step
         train_metrics["skipped_nonfinite"] = skipped_nonfinite
         train_loop_seconds = time.perf_counter() - train_loop_start
         train_metrics["train_loop_seconds"] = train_loop_seconds
@@ -1586,6 +1741,10 @@ def main() -> int:
             thresholds=thresholds,
             topk_fracs=topk_fracs,
             strict_gradient_isolation=args.strict_eval_gradient_isolation,
+            prediction_output=(args.output_dir / "predictions" / f"val_epoch_{epoch:03d}.pt")
+            if args.save_epoch_predictions else None,
+            prediction_metadata=prediction_metadata,
+            prediction_epoch=epoch,
         )
         test_metrics = None
         test_at_val_threshold = None
@@ -1620,12 +1779,25 @@ def main() -> int:
         ckpt = {
             "model": model.state_dict(),
             "optimizer": optimizer.state_dict(),
+            "scaler": scaler.state_dict(),
+            "global_step": global_step,
+            "rng_state": torch.get_rng_state(),
+            "python_rng_state": random.getstate(),
+            "cuda_rng_states": torch.cuda.get_rng_state_all() if device.type == "cuda" else [],
             "epoch": epoch,
             "config": run_config,
             "train": train_metrics,
             "val": val_metrics,
         }
         torch.save(ckpt, args.output_dir / "last.pt")
+        if args.checkpoint_every_epoch:
+            epoch_dir = args.output_dir / "epochs"
+            epoch_dir.mkdir(exist_ok=True)
+            epoch_path = epoch_dir / f"epoch_{epoch:03d}.pt"
+            if epoch_path.exists():
+                raise FileExistsError(epoch_path)
+            torch.save(ckpt, epoch_path)
+            update_pareto(args.output_dir, epoch, val_metrics)
         current_metric = val_metrics.get(best_metric_name)
         if not isinstance(current_metric, (int, float)) or not math.isfinite(float(current_metric)):
             current_metric = val_metrics["f1"]

@@ -1,0 +1,213 @@
+{
+  "date": "2026-11-04",
+  "scope": "union v2 / OF3; same 1075 validation exact sequences, 404267 residues; seed49 only",
+  "selection": "Primary table selects maximum validation chain_ap_macro; all other metrics at that same epoch. Separate pooled-selected checkpoints explicitly reported.",
+  "test_evaluated": false,
+  "runs": [
+    {
+      "run": "D_none_seed49",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_none_seed49",
+      "epochs": 50,
+      "best_macro_ap_epoch": 27,
+      "validation": {
+        "chain_ap_macro": 0.7282263451447326,
+        "pooled_ap": 0.7605055905038222,
+        "trapezoid_auprc": 0.7605040587927783,
+        "auroc": 0.8717026708332634,
+        "f1_at_0_5": 0.6635184807024709,
+        "mcc_at_0_5": 0.5651239188045089,
+        "f1_best_threshold": 0.6843690587475557,
+        "best_threshold": 0.34,
+        "mcc_best_threshold": 0.5686934676100083,
+        "best_mcc_threshold": 0.41,
+        "chain_ratio_mae_raw": 0.05516498852088008,
+        "chain_ratio_bias_raw": -0.02606046965475692,
+        "chain_brier_macro": 0.13221291571020796,
+        "loss": 0.4481856265178947,
+        "valid_chains": 1075,
+        "valid_residues": 404267
+      },
+      "pooled_selected": {
+        "epoch": 27,
+        "pooled_AP": 0.7605055905038222,
+        "macro_AP": 0.7282263451447326
+      },
+      "test_present": false,
+      "skipped_val_batches": 0,
+      "amp_skips": 1,
+      "metrics_sha256": "2266a54b7fc2555d6edb055639a0e384e79610962394623de68818fa2f2eb82a",
+      "config_sha256": "b5f0eb5816865672e2781a09a967f602779cc303b53c9254ee494be4509bc2be"
+    },
+    {
+      "run": "E_none_seed49",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/E_none_seed49",
+      "epochs": 50,
+      "best_macro_ap_epoch": 19,
+      "validation": {
+        "chain_ap_macro": 0.7285891503693357,
+        "pooled_ap": 0.754808827850218,
+        "trapezoid_auprc": 0.7548073237929228,
+        "auroc": 0.8694934531084008,
+        "f1_at_0_5": 0.6816384277094059,
+        "mcc_at_0_5": 0.5545169692909475,
+        "f1_best_threshold": 0.6819402447648011,
+        "best_threshold": 0.53,
+        "mcc_best_threshold": 0.5612790960048506,
+        "best_mcc_threshold": 0.66,
+        "chain_ratio_mae_raw": 0.09149237281188022,
+        "chain_ratio_bias_raw": 0.06916496360544548,
+        "chain_brier_macro": 0.1506906808027538,
+        "loss": 0.526073896191841,
+        "valid_chains": 1075,
+        "valid_residues": 404267
+      },
+      "pooled_selected": {
+        "epoch": 31,
+        "pooled_AP": 0.7564457622032291,
+        "macro_AP": 0.728399097394543
+      },
+      "test_present": false,
+      "skipped_val_batches": 0,
+      "amp_skips": 3,
+      "metrics_sha256": "85dd977fd4b4bc65e56fb9c8b1ea1641ef050488389ed003cf53ef5897743ed2",
+      "config_sha256": "21a0ab585a4dce07be35fcf184515572bffae1ceeeecd016b825924c5be4eaaa"
+    },
+    {
+      "run": "D_profile_seed49",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_profile_seed49",
+      "epochs": 50,
+      "best_macro_ap_epoch": 38,
+      "validation": {
+        "chain_ap_macro": 0.7295272204667285,
+        "pooled_ap": 0.7519605873164744,
+        "trapezoid_auprc": 0.7519589457743162,
+        "auroc": 0.8666696456903855,
+        "f1_at_0_5": 0.6683121246606859,
+        "mcc_at_0_5": 0.5614164178607967,
+        "f1_best_threshold": 0.6778001982441236,
+        "best_threshold": 0.31,
+        "mcc_best_threshold": 0.5620918451400072,
+        "best_mcc_threshold": 0.52,
+        "chain_ratio_mae_raw": 0.05958371904527032,
+        "chain_ratio_bias_raw": -0.022400730371821758,
+        "chain_brier_macro": 0.14014731153289164,
+        "loss": 0.5151960428093755,
+        "valid_chains": 1075,
+        "valid_residues": 404267
+      },
+      "pooled_selected": {
+        "epoch": 17,
+        "pooled_AP": 0.7552227380923262,
+        "macro_AP": 0.7235005071225687
+      },
+      "test_present": false,
+      "skipped_val_batches": 0,
+      "amp_skips": 1,
+      "metrics_sha256": "0ac949f47aad80e913d924c3e98518a4c44d34f0c11c2ed24a169765d75fa8c5",
+      "config_sha256": "879d44f72226ae40427c91aef4dd2f0d065f9e34b0723095415ebd680a77fa07"
+    },
+    {
+      "run": "E_profile_seed49",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/E_profile_seed49",
+      "epochs": 50,
+      "best_macro_ap_epoch": 19,
+      "validation": {
+        "chain_ap_macro": 0.7274422056826076,
+        "pooled_ap": 0.7562031573141647,
+        "trapezoid_auprc": 0.7562016486397518,
+        "auroc": 0.8707745409557152,
+        "f1_at_0_5": 0.6707428023595934,
+        "mcc_at_0_5": 0.5628500269676169,
+        "f1_best_threshold": 0.6808419544247168,
+        "best_threshold": 0.28,
+        "mcc_best_threshold": 0.562886311764584,
+        "best_mcc_threshold": 0.53,
+        "chain_ratio_mae_raw": 0.058497722663505135,
+        "chain_ratio_bias_raw": -0.019182154437483744,
+        "chain_brier_macro": 0.1399770629973557,
+        "loss": 0.5106554697835168,
+        "valid_chains": 1075,
+        "valid_residues": 404267
+      },
+      "pooled_selected": {
+        "epoch": 19,
+        "pooled_AP": 0.7562031573141647,
+        "macro_AP": 0.7274422056826076
+      },
+      "test_present": false,
+      "skipped_val_batches": 0,
+      "amp_skips": 2,
+      "metrics_sha256": "78ce993e9e4f0dfef6451d384e8712a02ff60309f70502258db2eb0f3572705d",
+      "config_sha256": "9465d429a6d6a25169d8035b4a26a3ff4e4e655fcacbe28028f6e6ad4bf4dc60"
+    },
+    {
+      "run": "D_encoder_seed49",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49",
+      "epochs": 50,
+      "best_macro_ap_epoch": 13,
+      "validation": {
+        "chain_ap_macro": 0.7343365679087196,
+        "pooled_ap": 0.7607603624886583,
+        "trapezoid_auprc": 0.7607590106974981,
+        "auroc": 0.8752004485603245,
+        "f1_at_0_5": 0.6837732952364707,
+        "mcc_at_0_5": 0.5575996709161699,
+        "f1_best_threshold": 0.6837732952364707,
+        "best_threshold": 0.5,
+        "mcc_best_threshold": 0.5624897179065909,
+        "best_mcc_threshold": 0.68,
+        "chain_ratio_mae_raw": 0.07462525133996509,
+        "chain_ratio_bias_raw": 0.06611937422218711,
+        "chain_brier_macro": 0.14230491181062938,
+        "loss": 0.4608839464464853,
+        "valid_chains": 1075,
+        "valid_residues": 404267
+      },
+      "pooled_selected": {
+        "epoch": 25,
+        "pooled_AP": 0.7613738179303352,
+        "macro_AP": 0.7286443787055286
+      },
+      "test_present": false,
+      "skipped_val_batches": 0,
+      "amp_skips": 1,
+      "metrics_sha256": "e93afc992d3e3a75c3f7441735917ad13cddf9971c4169f7fbb9546da1a9d56a",
+      "config_sha256": "9f83bf7a71e772ba726ded538451850a00a3f149b4ba8e1c745345531f68f192"
+    },
+    {
+      "run": "E_encoder_seed49",
+      "source": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/E_encoder_seed49",
+      "epochs": 50,
+      "best_macro_ap_epoch": 18,
+      "validation": {
+        "chain_ap_macro": 0.7331229845040328,
+        "pooled_ap": 0.7585017912032948,
+        "trapezoid_auprc": 0.7585004374021538,
+        "auroc": 0.8732855671101574,
+        "f1_at_0_5": 0.683740743620983,
+        "mcc_at_0_5": 0.558829268583358,
+        "f1_best_threshold": 0.6841792981572465,
+        "best_threshold": 0.48,
+        "mcc_best_threshold": 0.5641501398011327,
+        "best_mcc_threshold": 0.69,
+        "chain_ratio_mae_raw": 0.07572990297404833,
+        "chain_ratio_bias_raw": 0.05842867234938366,
+        "chain_brier_macro": 0.14566691514841476,
+        "loss": 0.5049308390395586,
+        "valid_chains": 1075,
+        "valid_residues": 404267
+      },
+      "pooled_selected": {
+        "epoch": 28,
+        "pooled_AP": 0.7635955211782404,
+        "macro_AP": 0.7301977890569082
+      },
+      "test_present": false,
+      "skipped_val_batches": 0,
+      "amp_skips": 2,
+      "metrics_sha256": "3b3aa0e793aa32da89332b563de3b449d5dd16e099bd11ce6ca30fb7174ea627",
+      "config_sha256": "cb410139a62b5cdf6829b1a2a514d6b9259c2065b6936829df51c2ed2490b91a"
+    }
+  ]
+}
+

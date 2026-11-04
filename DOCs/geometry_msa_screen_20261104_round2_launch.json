@@ -1,0 +1,252 @@
+{
+  "objective": "Explore validation pooled AP >=0.80 while retaining macro AP",
+  "job_array": 799902,
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2",
+  "partition": "acd_ue",
+  "array": "0-8",
+  "artificial_concurrency_throttle": null,
+  "source_commit": "6a8bad521ceaf916b5689c32389cb0c0e3a7f84e",
+  "archive_sha256": "156a5405230adaaa826739c77679dcc8d0a40b8c1d06abf0720b4fe8076194aa",
+  "model_code_changed": "Add opt-in post_geometry MSA position; legacy default unchanged",
+  "from_scratch": true,
+  "seed": 49,
+  "epochs": 50,
+  "test_evaluated": false,
+  "selection": {
+    "primary": "pooled_ap",
+    "macro_guardrail": 0.7417948466002535,
+    "checkpoints": "all epochs, pooled-best and macro-best retained separately"
+  },
+  "resources_per_task": {
+    "GPUs": 1,
+    "CPUs": 12,
+    "memory_GiB": 96,
+    "time_limit": "12:00:00"
+  },
+  "tests": {
+    "local": {
+      "total": 67,
+      "passed": 65,
+      "optional_skipped": 2
+    },
+    "HPC3_CPU": {
+      "total": 67,
+      "passed": 65,
+      "optional_skipped": 2
+    },
+    "CUDA_smoke": "K0-K4 passed; remaining tasks gate themselves before formal training"
+  },
+  "reviewer": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "agent": "01a1a745-0bd1-7051-86ad-a4f8c6e7f56d",
+    "status": "No blocker under explicitly verified absolute-path deployment; one conditional relative-path P2 does not apply to this launch"
+  },
+  "state": "Released; latest snapshot K0-K4 running and K5-K8 pending Priority",
+  "jobs": [
+    {
+      "name": "K0_B1_MSA",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K0_B1_MSA_seed49.json",
+      "sha256": "221fab0dd189ea42976772b33533a842b8865f6c438b18ee00ed21dd88930db3",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K0_B1_MSA_seed49",
+      "partition": "acd_ue",
+      "array_task": 0,
+      "parameters": 2821506
+    },
+    {
+      "name": "K1_G2_MSA",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K1_G2_MSA_seed49.json",
+      "sha256": "96dc599cf33901eecd0455b2d7e9ce868e46a766d9e507721ff8303d7fef26fb",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K1_G2_MSA_seed49",
+      "partition": "acd_ue",
+      "array_task": 1,
+      "parameters": 3092406
+    },
+    {
+      "name": "K2_G2_MSA_preTCN",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K2_G2_MSA_preTCN_seed49.json",
+      "sha256": "34431e3f7fc76bb576acfd540873ed389348d6af7a7a7772dbd32b42673603b2",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K2_G2_MSA_preTCN_seed49",
+      "partition": "acd_ue",
+      "array_task": 2,
+      "parameters": 3092406
+    },
+    {
+      "name": "K3_G2_MSA_twohop",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K3_G2_MSA_twohop_seed49.json",
+      "sha256": "7c5f7386f8c44ac14f4585d7bd4cef40422360628de684604aaa5303f4c87f14",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K3_G2_MSA_twohop_seed49",
+      "partition": "acd_ue",
+      "array_task": 3,
+      "parameters": 3693034
+    },
+    {
+      "name": "K4_G2_MSA_dualgraph",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K4_G2_MSA_dualgraph_seed49.json",
+      "sha256": "a20f3b7ab8b26a4c7ae4e8ae794aa43e91ed97559c809d22fd1234c15deb2ce9",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K4_G2_MSA_dualgraph_seed49",
+      "partition": "acd_ue",
+      "array_task": 4,
+      "parameters": 3422134
+    },
+    {
+      "name": "K5_G2_MSA_postgeo",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K5_G2_MSA_postgeo_seed49.json",
+      "sha256": "199a133fd9cf4030a259d307987f2db4d70365408bd1031e8849d344ace7da00",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K5_G2_MSA_postgeo_seed49",
+      "partition": "acd_ue",
+      "array_task": 5,
+      "parameters": 3092406
+    },
+    {
+      "name": "K6_G2_MSA_fullcontext",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K6_G2_MSA_fullcontext_seed49.json",
+      "sha256": "042aa960452aa439d1df8e417e3335db6766afdb39667dff8cd8878b6df76d5b",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K6_G2_MSA_fullcontext_seed49",
+      "partition": "acd_ue",
+      "array_task": 6,
+      "parameters": 3750326
+    },
+    {
+      "name": "K7_G2_MSA_residue_mean",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K7_G2_MSA_residue_mean_seed49.json",
+      "sha256": "a995a81d615139fed1822141754f54d81c27975f23ffd51fbc93dcd4845a1ab8",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K7_G2_MSA_residue_mean_seed49",
+      "partition": "acd_ue",
+      "array_task": 7,
+      "parameters": 3092406
+    },
+    {
+      "name": "K8_G2_MSA_pure_CE",
+      "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K8_G2_MSA_pure_CE_seed49.json",
+      "sha256": "fbaec9c103895168a86a87ddb0aed32cd6f2e3972dc3a027af7d4fa7533129a2",
+      "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K8_G2_MSA_pure_CE_seed49",
+      "partition": "acd_ue",
+      "array_task": 8,
+      "parameters": 3092406
+    }
+  ],
+  "absolute_paths_verified": true,
+  "progress_snapshot": [
+    {
+      "task": 0,
+      "name": "K0_B1_MSA",
+      "smoke_passed": true,
+      "epochs": 2,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "test_present": false,
+      "best_macro_AP": 0.5642397313148497,
+      "best_pooled_AP": 0.5918111130885219,
+      "epoch_seconds": 82.9818069934845
+    },
+    {
+      "task": 1,
+      "name": "K1_G2_MSA",
+      "smoke_passed": true,
+      "epochs": 0,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "test_present": false,
+      "best_macro_AP": null,
+      "best_pooled_AP": null,
+      "epoch_seconds": null
+    },
+    {
+      "task": 2,
+      "name": "K2_G2_MSA_preTCN",
+      "smoke_passed": true,
+      "epochs": 0,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "test_present": false,
+      "best_macro_AP": null,
+      "best_pooled_AP": null,
+      "epoch_seconds": null
+    },
+    {
+      "task": 3,
+      "name": "K3_G2_MSA_twohop",
+      "smoke_passed": true,
+      "epochs": 0,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "test_present": false,
+      "best_macro_AP": null,
+      "best_pooled_AP": null,
+      "epoch_seconds": null
+    },
+    {
+      "task": 4,
+      "name": "K4_G2_MSA_dualgraph",
+      "smoke_passed": true,
+      "epochs": 0,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "test_present": false,
+      "best_macro_AP": null,
+      "best_pooled_AP": null,
+      "epoch_seconds": null
+    },
+    {
+      "task": 5,
+      "name": "K5_G2_MSA_postgeo",
+      "smoke_passed": false,
+      "epochs": 0,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "test_present": false,
+      "best_macro_AP": null,
+      "best_pooled_AP": null,
+      "epoch_seconds": null
+    },
+    {
+      "task": 6,
+      "name": "K6_G2_MSA_fullcontext",
+      "smoke_passed": false,
+      "epochs": 0,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "test_present": false,
+      "best_macro_AP": null,
+      "best_pooled_AP": null,
+      "epoch_seconds": null
+    },
+    {
+      "task": 7,
+      "name": "K7_G2_MSA_residue_mean",
+      "smoke_passed": false,
+      "epochs": 0,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "test_present": false,
+      "best_macro_AP": null,
+      "best_pooled_AP": null,
+      "epoch_seconds": null
+    },
+    {
+      "task": 8,
+      "name": "K8_G2_MSA_pure_CE",
+      "smoke_passed": false,
+      "epochs": 0,
+      "AMP_skips": 0,
+      "validation_skips": 0,
+      "test_present": false,
+      "best_macro_AP": null,
+      "best_pooled_AP": null,
+      "epoch_seconds": null
+    }
+  ],
+  "fixed_blend_analysis": {
+    "source_commit": "95d37d9",
+    "reviewer": "gpt-6-luna max: no findings",
+    "local_tests": {
+      "total": 69,
+      "passed": 67,
+      "optional_skipped": 2
+    },
+    "remote_real_payload": "passed; full source AP reconstruction and1075-query mapping",
+    "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/fixed_blends",
+    "results": "geometry_msa_screen_20261104_fixed_blends_results.json"
+  }
+}

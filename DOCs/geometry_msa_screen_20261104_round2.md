@@ -37,3 +37,9 @@ K0-K6 all keep D loss (unweighted chain-mean CE +0.75 ratio MSE); K7 and K8 are 
 If G2+MSA improves both AP axes, retain it as the next common backbone. If deeper/hybrid/global-context models mainly raise train fitting, do not infer a useful validation gain. Evaluate a small set of prespecified equal-logit blends only after the single-model results are frozen.
 
 A future bidirectional Gated DeltaNet remains a separate candidate, requiring a cloned environment, audited dependency dry run and approval before installation. It is not included in these nine jobs.
+
+## Launch
+
+Array799902_[0-8] was submitted to acd_ue with no artificial throttle. The independent gpt-6-luna max review found one conditional relative-path concern; every actual deployment/parent/config/output path was explicitly verified absolute before release. Local and HPC3 CPU suites each passed65 of67 tests with2 optional reference-asset skips. Each allocated GPU must still pass its own real-payload CUDA/AMP gate. Source/config hashes and task mapping are retained in geometry_msa_screen_20261104_round2_launch.json.
+
+Two additional fixed validation-only ensembles are prespecified separately: G2 epoch27 + D_encoder epoch13, and G2 epoch27 + B_pre_tcn epoch18. Use equal clipped-probability logit means, not tuned weights or probability averaging. These are augmented-system diagnostics, not evidence isolating MSA's causal effect.

@@ -22,6 +22,8 @@ included. This index closes that gap. M7c is not the latest completed model.
 | Completed OF3 geometry/global-context screen | [Final matrix and C1 numerical caveat](geometry_screen_20261104_results.md), [full metrics and hashes](geometry_screen_20261104_results.json), [protocol](geometry_screen_20261104.md) |
 | Completed post-MSA BiGRU / fusion-position / capacity controls and train AP | [Final results](msa_context_screen_20261104_results.md), [metrics and hashes](msa_context_screen_20261104_results.json), [protocol](msa_context_screen_20261104.md) |
 | Gated DeltaNet feasibility; no installation or training yet | [Proposed bidirectional adaptation and dependency audit](deltanet_feasibility_20261104.md) |
+| Geometry x MSA combinations toward pooled AP0.80, new seed49 screen | [Nine-arm plan](geometry_msa_screen_20261104_round2.md), [launch/provenance](geometry_msa_screen_20261104_round2_launch.json) |
+| Fixed G2 plus MSA validation ensembles | [Completed results](geometry_msa_screen_20261104_fixed_blends_results.md), [full metrics and hashes](geometry_msa_screen_20261104_fixed_blends_results.json) |
 
 ## Original Frozen Test Results
 

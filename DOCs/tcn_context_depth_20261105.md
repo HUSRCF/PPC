@@ -59,3 +59,21 @@ with frozen encoders;no improvement is presumed. Any0.80 result still requires
 the existing validation lock,strict GPU replay and fixed test evaluation,
 followed by a whole-RCSB single-chain union training attempt. Test remains
 closed and no RCSB training is started by these two experiments.
+
+## Actual Submission
+
+Array800559_[0-1] was submitted to acd_ue without a percent cap. Source commit
+is`98d88a134e223305cd56fa0716ef537f99fa6eef`;archive SHA-256 is
+`09aee13e66e85e620f44907b9c98191faabc120a624ec79ac144f472ec21c208`.
+HPC3 repeated all16focused tests successfully. Runtime preflight confirmed
+unchanged parent inputs/loss/batching,only the declared TCN model differences,
+and identical initial K30/K31 state/RNG. Launch/preflight are retained in
+`tcn_context_depth_20261105_launch.json`,with exact submitted configs in the
+matching directory. The acceptance snapshot is an early startup observation,
+not a final validation readout;first-epoch/full-run acceptance remains pending.
+
+Both tasks are now running on separate H100 nodes. Each passed the real-input
+two-update CUDA learning gate and entered formal training with4868train /
+1075val /0test and4360682trainable parameters. The early acceptance receipt
+retains the source paths/hashes and zero-init branch updates;it does not infer
+complete validation coverage before the first epoch has finished.

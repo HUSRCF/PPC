@@ -1,5 +1,5 @@
 {
-  "observed_UTC": "2026-11-04T20:44:31.052000+00:00",
+  "observed_UTC": "2026-11-04T20:57:00.420066+00:00",
   "stage": "validation_search",
   "target_pooled_AP": 0.8,
   "target_verified": false,
@@ -28,8 +28,8 @@
   "interaction_tasks": 3,
   "interaction_latest_observed_epochs": {
     "K25": 50,
-    "K26": 33,
-    "K27": 31
+    "K26": 42,
+    "K27": 40
   },
   "interaction_policy": "preTCN_interactions_20261105_fixed_blends.json",
   "interaction_latest_acceptance": "preTCN_interactions_20261105_progress_2044UTC.json",
@@ -37,8 +37,8 @@
   "aggregation_job": "800533",
   "aggregation_tasks": 2,
   "aggregation_latest_observed_epochs": {
-    "K28": 1,
-    "K29": 1
+    "K28": 7,
+    "K29": 7
   },
   "aggregation_policy": "ce_aggregation_interactions_20261105_fixed_blends.json",
   "aggregation_acceptance": "ce_aggregation_interactions_20261105_acceptance.json",
@@ -65,5 +65,24 @@
     "Evaluate locked test without model or gate selection on test",
     "Audit and attempt whole-RCSB single-chain union training"
   ],
-  "contract": "pooled_AP080_milestones_20261105_policy.json"
+  "contract": "pooled_AP080_milestones_20261105_policy.json",
+  "tcn_context_job": "800559",
+  "tcn_context_tasks": 2,
+  "tcn_context_policy": "tcn_context_depth_20261105_fixed_blends.json",
+  "tcn_context_acceptance": "tcn_context_depth_20261105_acceptance.json",
+  "tcn_context_latest_observed_epochs": {
+    "K30": 0,
+    "K31": 0
+  },
+  "tcn_context_full_validation_acceptance_pending": true,
+  "latest_job_states": {
+    "800442_0": "COMPLETED",
+    "800442_1": "RUNNING",
+    "800442_2": "RUNNING",
+    "800533_0": "RUNNING",
+    "800533_1": "RUNNING",
+    "800559_0": "RUNNING",
+    "800559_1": "RUNNING"
+  },
+  "latest_observation_scope": "Startup/ongoing jobs only;completed readouts still require successful50epochs and provenance checks"
 }

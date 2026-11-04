@@ -1,0 +1,77 @@
+{
+  "observed_UTC": "2026-11-04T20:57:58.952263+00:00",
+  "scheduler": [
+    "800559_0|RUNNING|0:0|00:02:06|ACD1-24",
+    "800559_1|RUNNING|0:0|00:01:35|ACD1-21"
+  ],
+  "rows": [
+    {
+      "name": "K30_G2_MSA_twohop_tcn4",
+      "formal_start": {
+        "n_train": 4868,
+        "n_val": 1075,
+        "n_test": 0,
+        "trainable_parameters": 4360682,
+        "device_resolved": "cuda:0"
+      },
+      "epochs": 0,
+      "full_validation": false,
+      "val_skips": 0,
+      "test_seen": false,
+      "smoke": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/tcn_context_depth_20261105/smoke/K30_G2_MSA_twohop_tcn4_seed49_800560/verification.json",
+          "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+          "receipt": {
+            "optimizer_updates": 2,
+            "two_updates": true,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [],
+            "test_read": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "K31_G2_MSA_twohop_preTCN_tcn4",
+      "formal_start": {
+        "n_train": 4868,
+        "n_val": 1075,
+        "n_test": 0,
+        "trainable_parameters": 4360682,
+        "device_resolved": "cuda:0"
+      },
+      "epochs": 0,
+      "full_validation": false,
+      "val_skips": 0,
+      "test_seen": false,
+      "smoke": [
+        {
+          "path": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/tcn_context_depth_20261105/smoke/K31_G2_MSA_twohop_preTCN_tcn4_seed49_800559/verification.json",
+          "sha256": "ba2bdba9157ad112bd34e29e4b6519b96a85950a707ab20c8db7cfa639ab01a8",
+          "receipt": {
+            "optimizer_updates": 2,
+            "two_updates": true,
+            "finite": true,
+            "backbone_updated": true,
+            "new_zero_init_parameters_updated": [
+              "geometry_blocks.0.update.4.weight",
+              "geometry_blocks.1.update.4.weight",
+              "prottrans_residual_adapter.3.weight"
+            ],
+            "learned_edge_parameters_updated": [],
+            "test_read": false
+          }
+        }
+      ]
+    }
+  ],
+  "test_evaluated": false,
+  "final_validation_acceptance_pending": true
+}

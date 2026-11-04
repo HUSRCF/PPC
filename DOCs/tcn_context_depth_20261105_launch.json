@@ -1,0 +1,73 @@
+{
+  "job_array": "800559",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/tcn_context_depth_20261105",
+  "source_commit": "98d88a134e223305cd56fa0716ef537f99fa6eef",
+  "archive_sha256": "09aee13e66e85e620f44907b9c98191faabc120a624ec79ac144f472ec21c208",
+  "array": "0-1",
+  "artificial_concurrency_throttle": null,
+  "partition": "acd_ue",
+  "test_evaluated": false,
+  "preflight": {
+    "source_commit": "98d88a134e223305cd56fa0716ef537f99fa6eef",
+    "archive_sha256": "09aee13e66e85e620f44907b9c98191faabc120a624ec79ac144f472ec21c208",
+    "rows": [
+      {
+        "job": {
+          "name": "K30_G2_MSA_twohop_tcn4",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/tcn_context_depth_20261105/configs/K30_G2_MSA_twohop_tcn4_seed49.json",
+          "sha256": "4d8b2d2daf31f51660ad56fb2913a0eb6a5c4037e7ca17eeaa2143eaba373eef",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/tcn_context_depth_20261105/runs/K30_G2_MSA_twohop_tcn4_seed49",
+          "partition": "acd_ue"
+        },
+        "matched_control": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/configs/K3_G2_MSA_twohop_seed49.json",
+        "data_identical": true,
+        "model_differences": [
+          "tcn_dilations",
+          "tcn_layers"
+        ],
+        "training_differences": [
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "parameters": 4360682,
+        "TCN_added_span": 91
+      },
+      {
+        "job": {
+          "name": "K31_G2_MSA_twohop_preTCN_tcn4",
+          "config": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/tcn_context_depth_20261105/configs/K31_G2_MSA_twohop_preTCN_tcn4_seed49.json",
+          "sha256": "fedbb4b5543e5c400528d39057f8ed20500933261c142f60e86dab7884066be0",
+          "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/tcn_context_depth_20261105/runs/K31_G2_MSA_twohop_preTCN_tcn4_seed49",
+          "partition": "acd_ue"
+        },
+        "matched_control": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/configs/K18_G2_MSA_twohop_preTCN_seed49.json",
+        "data_identical": true,
+        "model_differences": [
+          "tcn_dilations",
+          "tcn_layers"
+        ],
+        "training_differences": [
+          "output_dir",
+          "prediction_provenance"
+        ],
+        "parameters": 4360682,
+        "TCN_added_span": 91
+      }
+    ],
+    "K30_K31_initial_states_identical": true,
+    "K30_K31_constructor_rng_identical": true,
+    "old_K0_K29_configs_unchanged": true,
+    "local_tests": {
+      "passed": 110,
+      "optional_skipped": 2
+    },
+    "HPC3_focused_tests": 16,
+    "packages_changed": false,
+    "review": {
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "verdict": "PASS",
+      "scope": "matrix generator,test additions,and first-order TCN constructor/forward only"
+    }
+  }
+}

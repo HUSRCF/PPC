@@ -62,6 +62,9 @@ def _replay(points, output, device, state):
     device = torch.device(device)
     if device.type == "cuda" and not torch.cuda.is_available():
         raise RuntimeError("Requested GPU unavailable")
+    if device.type == "cuda":
+        torch.cuda.init()
+        torch.cuda.set_device(device)
     sources, scores, original_scores, reports, common, y = {}, {}, {}, {}, None, None
     for name, item in summary["sources"].items():
         state.update(stage="validation_source_integrity", member=name)

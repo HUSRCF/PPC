@@ -1,0 +1,10 @@
+{
+  "stage": "validation_source_integrity",
+  "member": "G2",
+  "summary_sha256": "087f18ab13f60511401ef83721edff8123d9b499647672ecd371b8cb29aef536",
+  "error_type": "RuntimeError",
+  "reason": "Invalid device argument ",
+  "test_read": false,
+  "test_inference_permitted": false,
+  "tolerance_changed": false
+}

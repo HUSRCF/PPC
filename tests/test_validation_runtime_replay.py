@@ -134,6 +134,25 @@ class RuntimeReplayTests(unittest.TestCase):
         self.assertEqual(failure["member"], "second")
         self.assertFalse((self.root / "shared_mutation/summary.json").exists())
 
+    def test_cuda_initialized_before_memory_statistics(self):
+        calls = []
+
+        def reset(device):
+            self.assertIn("init", calls)
+            self.assertIn("set_device", calls)
+            calls.append("reset")
+
+        with patch.object(torch.cuda, "is_available", return_value=True), \
+             patch.object(torch.cuda, "init", side_effect=lambda: calls.append("init")), \
+             patch.object(torch.cuda, "set_device", side_effect=lambda _: calls.append("set_device")), \
+             patch.object(torch.cuda, "reset_peak_memory_stats", side_effect=reset), \
+             patch.object(torch.cuda, "max_memory_allocated", return_value=123), \
+             patch.object(torch.cuda, "get_device_name", return_value="mock GPU"), \
+             patch.object(M.inference, "infer_member", return_value=(self.prediction, {})):
+            result = M.replay(self.points, self.root / "cuda_order", "cuda:0")
+        self.assertEqual(calls, ["init", "set_device", "reset"])
+        self.assertEqual(result["reports"]["model"]["peak_cuda_memory_bytes"], 123)
+
 
 if __name__ == "__main__":
     unittest.main()

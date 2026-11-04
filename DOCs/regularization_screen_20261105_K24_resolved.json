@@ -1,0 +1,48 @@
+{
+  "purpose": "Only predeclared K24 fixed thirds after successful50epochs",
+  "policy_sha256": "7ef214fe6b6b5215733a13bd0cc8aa9d318052a7d05cf388ad3551c4f75ef7be",
+  "completed_receipt": {
+    "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K24_G2_MSA_twohop_msa_drop010_seed49",
+    "job": "800313_5",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "01:28:05",
+    "epochs": 50,
+    "coverage_ok_all_epochs": true,
+    "validation_skips": 0,
+    "test_seen": false,
+    "metrics_sha256": "05a8f384b744b596401304399a67b4d283f1d62db1c1c94379abf7b2f9675442",
+    "AMP_skips": 1,
+    "sanitized_gradient_elements": 3,
+    "selected": {
+      "epoch": 21,
+      "chain_ap_macro": 0.7579491948842205,
+      "pooled_ap": 0.7894735820148974,
+      "auroc": 0.8949746882869831
+    }
+  },
+  "points": {
+    "G2": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl"
+    },
+    "MSA_D": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl"
+    },
+    "K24": {
+      "epoch": 21,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K24_G2_MSA_twohop_msa_drop010_seed49/predictions/val_epoch_021.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K24_G2_MSA_twohop_msa_drop010_seed49/metrics.jsonl"
+    }
+  },
+  "blends": {
+    "G2_plus_MSA_D_plus_K24": [
+      "G2",
+      "MSA_D",
+      "K24"
+    ]
+  }
+}

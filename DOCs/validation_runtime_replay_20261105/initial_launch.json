@@ -1,0 +1,23 @@
+{
+  "job": "800488",
+  "root": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_runtime_replay_20261105",
+  "source_commit": "cda3478cfb21def22da8183e3f0a94666e1f8f35",
+  "archive_sha256": "c5e9465693c4d5cba188af23c723e760c6ea8c1837058b9f2be736d68db3a9ea",
+  "points": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/fixed_K18_blend",
+  "output": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_runtime_replay_20261105/replayed_points",
+  "command": "srun --unbuffered /data/user/shuang886/.conda/envs/openfold/bin/python -u /data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_runtime_replay_20261105/code/scripts/analysis/replay_union_validation_sources.py --points /data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_position_depth_20261105/fixed_K18_blend --output /data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_runtime_replay_20261105/replayed_points --device cuda:0",
+  "partition": "acd_ue",
+  "GPUs": 1,
+  "CPUs": 12,
+  "memory_GiB": 192,
+  "time_limit": "12:00:00",
+  "HPC3_focused_tests": 20,
+  "local_tests": {
+    "passed": 106,
+    "optional_skipped": 2
+  },
+  "test_read": false,
+  "test_inference_permitted": false,
+  "new_combinations": false,
+  "tolerance_changed": false
+}

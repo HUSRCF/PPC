@@ -40,13 +40,29 @@ The final receipt always sets `test_inference_permitted=false`, even when
 reproduction passes. The independent0.80 eligibility gate and validation
 model lock remain mandatory before any test operation.
 
-Six focused tests check full validation metadata/IDs, the exclusively
+Seven focused tests check full validation metadata/IDs, the exclusively
 validation execution path, failure receipts without tolerance relaxation,
 inference exceptions, manifest mutation and preservation of the first hash
-for paths shared by multiple sources. The first manifest bytes are hashed
+for paths shared by multiple sources, and CUDA initialization before memory
+statistics. The first manifest bytes are hashed
 before parsing;all referenced files are checked unchanged after replay.
 They complement the eight producer and six lock/scorer tests. The current
-complete local suite has106passes/2optional skips. Narrow read-only review
+complete local suite has107passes/2optional skips. Narrow read-only review
 used gpt-6-luna max and verified the audit-integrity fixes. Submission is a separate
 single-GPU acd_ue job, with absolute Python and unbuffered output;no packages
 or running training tasks are modified.
+
+## Initial Runtime Failure and Isolated Retry
+
+Job800488 failed after24s, before any model forward, at
+`torch.cuda.reset_peak_memory_stats`:the CUDA caching allocator had not been
+initialized. The installed PyTorch2.7.1 implementation of this telemetry call
+does not invoke lazy initialization. The fix explicitly calls CUDA init and
+sets the logical device before any memory-stat reset;no model,input,batch,
+precision setting or tolerance changes. The invocation-order regression test
+passed and gpt-6-luna max reviewed the narrow diff.
+
+The initial source snapshot,logs and failure directory are preserved. Launch
+and failure receipts are archived under this document's matching directory.
+The retry uses a fresh `retries/cuda_init_20261105` directory;it does not resume
+or overwrite the failed output. Test remained closed throughout.

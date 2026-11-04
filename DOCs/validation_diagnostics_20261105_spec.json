@@ -1,0 +1,61 @@
+{
+  "purpose": "Completed-model validation error diagnostics only;no new blends or alpha search",
+  "points": {
+    "G2": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl"
+    },
+    "MSA_D": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl"
+    },
+    "D_none49": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_none_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_none_seed49/metrics.jsonl"
+    },
+    "D_none50": {
+      "epoch": 39,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_none_seed50/predictions/val_epoch_039.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_none_seed50/metrics.jsonl"
+    },
+    "K0": {
+      "epoch": 32,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K0_B1_MSA_seed49/predictions/val_epoch_032.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K0_B1_MSA_seed49/metrics.jsonl"
+    },
+    "K1": {
+      "epoch": 22,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K1_G2_MSA_seed49/predictions/val_epoch_022.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K1_G2_MSA_seed49/metrics.jsonl"
+    },
+    "K4": {
+      "epoch": 24,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K4_G2_MSA_dualgraph_seed49/predictions/val_epoch_024.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K4_G2_MSA_dualgraph_seed49/metrics.jsonl"
+    },
+    "K6": {
+      "epoch": 23,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K6_G2_MSA_fullcontext_seed49/predictions/val_epoch_023.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K6_G2_MSA_fullcontext_seed49/metrics.jsonl"
+    },
+    "K7": {
+      "epoch": 41,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K7_G2_MSA_residue_mean_seed49/predictions/val_epoch_041.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K7_G2_MSA_residue_mean_seed49/metrics.jsonl"
+    },
+    "K8": {
+      "epoch": 22,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K8_G2_MSA_pure_CE_seed49/predictions/val_epoch_022.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K8_G2_MSA_pure_CE_seed49/metrics.jsonl"
+    },
+    "K9": {
+      "epoch": 19,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/runs/K9_G2_MSA_evo_edges_seed49/predictions/val_epoch_019.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/evolutionary_edge_screen_20261105/runs/K9_G2_MSA_evo_edges_seed49/metrics.jsonl"
+    }
+  },
+  "blends": {}
+}

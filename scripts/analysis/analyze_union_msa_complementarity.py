@@ -121,7 +121,8 @@ def bootstrap_one(counts):
     return np.asarray([macro, pooled])
 
 
-def grouped_bootstrap(y, predictions, ap_per_chain, chain_components, lengths, repeats, workers):
+def grouped_bootstrap(y, predictions, ap_per_chain, chain_components, lengths, repeats, workers,
+                      contrasts=None):
     names = list(predictions)
     components, chain_group = np.unique(chain_components, return_inverse=True)
     n = len(components)
@@ -139,7 +140,7 @@ def grouped_bootstrap(y, predictions, ap_per_chain, chain_components, lengths, r
             values = list(pool.map(bootstrap_one, counts, chunksize=16))
     values = np.stack(values)
     out = {}
-    for contrast, (left, right) in CONTRASTS.items():
+    for contrast, (left, right) in (CONTRASTS if contrasts is None else contrasts).items():
         a, b = names.index(left), names.index(right)
         out[contrast] = {}
         for metric, axis in (("macro_AP", 0), ("pooled_AP", 1)):

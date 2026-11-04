@@ -1,0 +1,19 @@
+{
+  "scope": "Prospective within adaptive validation campaign;not independent confirmation",
+  "arms": ["K28_G2_MSA_twohop_residue_mean", "K29_G2_MSA_twohop_preTCN_residue_mean"],
+  "execute_only_after": "Corresponding model COMPLETED exit0,50consecutiveepochs,full1075queries/404267residues,no validation skips or test evaluation",
+  "selection": "Maximum validation pooled AP subject to same-epoch macro AP>=0.7417948466002535;ties earliest;no guardrail relaxation",
+  "fixed_sources": {
+    "G2": {"run": "architecture_screen_20261104/runs/G2_edge_attention_seed49", "epoch": 27},
+    "MSA_D": {"run": "msa_factorial_20261104/runs/D_encoder_seed49", "epoch": 13}
+  },
+  "fixed_blends": {
+    "G2_plus_MSA_D_plus_K28": ["G2", "MSA_D", "K28"],
+    "G2_plus_MSA_D_plus_K29": ["G2", "MSA_D", "K29"]
+  },
+  "averaging": "Equal clipped-probability logit mean;epsilon1e-7",
+  "alpha_search": false,
+  "test_evaluation": false,
+  "target_pooled_AP": 0.8,
+  "milestone_contract": "pooled_AP080_milestones_20261105_policy.json"
+}

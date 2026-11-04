@@ -127,10 +127,11 @@ class GeometryMSATests(unittest.TestCase):
                 self.assertEqual(cfg["data"][key], parents[0]["data"][key])
             if name not in {"K7_G2_MSA_residue_mean", "K8_G2_MSA_pure_CE",
                             "K11_G2_MSA_twohop_pure_CE", "K13_G2_MSA_threehop_pure_CE",
-                            "K26_G2_MSA_twohop_preTCN_pure_CE"}:
+                            "K26_G2_MSA_twohop_preTCN_pure_CE", "K28_G2_MSA_twohop_residue_mean",
+                            "K29_G2_MSA_twohop_preTCN_residue_mean"}:
                 self.assertEqual((t["loss_reduction"], t["ratio_loss_weight"]), ("chain_mean", .75))
         self.assertEqual(parents, before)
-        self.assertEqual(len(outputs), 28)
+        self.assertEqual(len(outputs), 30)
         base = screen.build(*parents, Path("/tmp/geo_msa_test"), "K1_G2_MSA")
         for name, axis in (("K7_G2_MSA_residue_mean", "loss_reduction"), ("K8_G2_MSA_pure_CE", "ratio_loss_weight")):
             variant = screen.build(*parents, Path("/tmp/geo_msa_test"), name)
@@ -314,6 +315,27 @@ class GeometryMSATests(unittest.TestCase):
                                      "K25_G2_MSA_twohop_preTCN_ls002")["training"]["label_smoothing"], .02)
         self.assertEqual(screen.build(*parents, Path("/tmp/interactions"),
                                      "K26_G2_MSA_twohop_preTCN_pure_CE")["training"]["ratio_loss_weight"], 0.)
+
+    def test_twohop_aggregation_cells_keep_models_and_inputs(self):
+        geometry = module("prepare_geometry_screen")
+        msa = module("prepare_msa_factorial")
+        screen = module("prepare_geometry_msa_screen")
+        parents = (
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "B1_fixed91q"),
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "G2_edge_attention"),
+            msa.build_config(ROOT, Path("/tmp/msa_parent"), "D", "encoder", 49),
+        )
+        for reference, changed in (("K3_G2_MSA_twohop", "K28_G2_MSA_twohop_residue_mean"),
+                                   ("K18_G2_MSA_twohop_preTCN", "K29_G2_MSA_twohop_preTCN_residue_mean")):
+            first = screen.build(*parents, Path("/tmp/aggregation"), reference)
+            second = screen.build(*parents, Path("/tmp/aggregation"), changed)
+            self.assertEqual(first["data"], second["data"])
+            self.assertEqual(first["model"], second["model"])
+            self.assertEqual({k for k in first["training"] if first["training"][k] != second["training"][k]},
+                             {"output_dir", "loss_reduction"})
+            self.assertEqual(second["training"]["loss_reduction"], "residue_mean")
+            self.assertEqual(second["training"]["ratio_loss_weight"], .75)
+            self.assertEqual(second["training"]["label_smoothing"], 0.)
 
     def test_wide_msa_paths_receive_task_gradient_after_zero_init(self):
         x = payload()

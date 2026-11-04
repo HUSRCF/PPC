@@ -10,8 +10,10 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest import mock
 
 import gemmi
+import torch
 
 ROOT=Path(__file__).resolve().parents[1]
 SCRIPT=ROOT/"scripts/preparations/m18_union/run_rcsb_protenix_queue.py"
@@ -28,16 +30,21 @@ class RCSBProtenixQueueTests(unittest.TestCase):
             w=csv.DictWriter(f,fieldnames=list(rows[0]),delimiter="\t");w.writeheader();w.writerows(rows)
         return path,rows
 
-    def output(self,base,sequence,atom="CA"):
+    def output(self,work,sequence,atom="CA"):
         uid="useq_"+hashlib.sha256(sequence.encode()).hexdigest()
-        out=base/"seed_101/predictions";out.mkdir(parents=True)
+        directory=work/"outputs"/uid
+        out=directory/"seed_101/predictions";out.mkdir(parents=True)
         s=gemmi.Structure();s.add_model(gemmi.Model(1));c=gemmi.Chain("A")
         for i,aa in enumerate(sequence):
             r=gemmi.Residue();r.name={"A":"ALA","C":"CYS","X":"UNK"}[aa];r.seqid=gemmi.SeqId(i+1," ")
             a=gemmi.Atom();a.name=atom;a.element=gemmi.Element("C");a.pos=gemmi.Position(i*3.8,0,0);a.b_iso=80;r.add_atom(a);c.add_residue(r)
         s[0].add_chain(c);s.setup_entities();s.make_mmcif_document().write_file(str(out/(uid+"_sample_0.cif")))
         summary=out/(uid+"_summary_confidence_sample_0.json");summary.write_text(json.dumps(dict(plddt=80)))
-        return dict(unique_id=uid,sequence=sequence),summary
+        label=uid+"_1";esm=work/"esm_embeddings";cache=esm/"esm2-3b"/label;cache.mkdir(parents=True)
+        torch.save(torch.ones(len(sequence),2560),cache/(label+".pt"))
+        with (esm/"input_prot_sequences.csv").open("w",newline="") as f:
+            w=csv.DictWriter(f,fieldnames=["seq","seq_label","part_id"]);w.writeheader();w.writerow(dict(seq=sequence,seq_label=label,part_id=label))
+        return directory,dict(unique_id=uid,sequence=sequence),summary
 
     def test_short_and_unknown_residues_retained_exactly(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -59,19 +66,20 @@ class RCSBProtenixQueueTests(unittest.TestCase):
 
     def test_CIF_exact_sequence_CA_and_official_summary_required(self):
         with tempfile.TemporaryDirectory() as tmp:
-            base=Path(tmp);row,summary=self.output(base,"AXC")
-            self.assertIsNotNone(queue.validate(base,row))
-            self.assertIsNone(queue.validate(base,dict(row,sequence="AAC")))
+            base=Path(tmp);directory,row,summary=self.output(base,"AXC")
+            self.assertIsNotNone(queue.validate(directory,row))
+            self.assertIsNone(queue.validate(directory,dict(row,sequence="AAC")))
             summary.unlink();(summary.parent/"unrelated.json").write_text("{}")
-            self.assertIsNone(queue.validate(base,row))
+            self.assertIsNone(queue.validate(directory,row))
         with tempfile.TemporaryDirectory() as tmp:
-            base=Path(tmp);row,_=self.output(base,"AAA",atom="C")
-            self.assertIsNone(queue.validate(base,row))
+            base=Path(tmp);directory,row,_=self.output(base,"AAA",atom="C")
+            self.assertIsNone(queue.validate(directory,row))
 
     def test_existing_valid_output_is_reused_without_CLI_invocation(self):
         with tempfile.TemporaryDirectory() as tmp:
             base=Path(tmp);p,rows=self.manifest(base,["A"*50]);reuse=base/"reuse";reuse.mkdir()
-            directory=reuse/rows[0]["unique_id"];self.output(directory,"A"*50)
+            directory,_,_=self.output(base/"work","A"*50)
+            (reuse/rows[0]["unique_id"]).symlink_to(directory)
             run=base/"run"
             result=subprocess.run([sys.executable,str(SCRIPT),"--manifest",str(p),"--root",str(run),"--project",str(base),
                                    "--protenix-cli","/does/not/exist","--reuse",str(reuse)],capture_output=True,text=True)
@@ -80,6 +88,47 @@ class RCSBProtenixQueueTests(unittest.TestCase):
             contract=json.loads((run/"contract.json").read_text())
             self.assertEqual(contract["min_length"],50);self.assertFalse(contract["msa"])
             self.assertFalse((run/"attempts").exists())
+
+    def test_missing_or_zero_ESM_and_recorded_errors_cannot_count_as_coverage(self):
+        for change in ("missing","zeros","nonfinite","error","wrong_query"):
+            with self.subTest(change=change),tempfile.TemporaryDirectory() as tmp:
+                base=Path(tmp);directory,row,_=self.output(base,"AXC");label=row["unique_id"]+"_1"
+                p=base/"esm_embeddings/esm2-3b"/label/(label+".pt")
+                if change=="missing":p.unlink()
+                elif change=="zeros":torch.save(torch.zeros(3,2560),p)
+                elif change=="nonfinite":torch.save(torch.full((3,2560),float("nan")),p)
+                elif change=="error":
+                    error=base/"esm_embeddings/esm_error";error.mkdir();(error/(label+".txt")).write_text("SDK used a zero fallback")
+                else:
+                    f=base/"esm_embeddings/input_prot_sequences.csv";f.write_text(f.read_text().replace("AXC","AAC"))
+                self.assertIsNone(queue.validate(directory,row))
+
+    def test_QC_runtime_failure_stops_before_mutation_or_inference(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base=Path(tmp);p,_=self.manifest(base,["A"*50]);root=base/"run"
+            argv=[str(SCRIPT),"--manifest",str(p),"--root",str(root),"--project",str(base)]
+            with mock.patch.object(sys,"argv",argv),mock.patch.object(queue,"preflight_qc_runtime",side_effect=ImportError("broken Torch ABI")), \
+                    mock.patch.object(queue.subprocess,"Popen") as launch:
+                with self.assertRaises(ImportError):queue.main()
+                launch.assert_not_called();self.assertFalse(root.exists())
+                with self.assertRaises(ImportError):queue.validate(base,dict(sequence="A",unique_id="irrelevant"))
+
+    def test_ESM_error_diagnostics_keep_bounded_query_retries_not_infrastructure_abort(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base=Path(tmp);p,rows=self.manifest(base,["A"*50,"C"*50,"A"*51,"C"*51])
+            cli=base/"fake_cli"
+            cli.write_text("#!"+sys.executable+"\nimport sys,json\nfrom pathlib import Path\n"
+                           "items=json.loads(Path(sys.argv[sys.argv.index('--input')+1]).read_text())\n"
+                           "d=Path('esm_embeddings/esm_error');d.mkdir(parents=True)\n"
+                           "for r in items:(d/(r['name']+'_1.txt')).write_text('ESM input error')\nraise SystemExit(1)\n")
+            cli.chmod(0o755);run=base/"run"
+            result=subprocess.run([sys.executable,str(SCRIPT),"--manifest",str(p),"--root",str(run),"--project",str(base),
+                                   "--protenix-cli",str(cli),"--batch-size","1","--max-attempts","2"],capture_output=True,text=True,timeout=15)
+            self.assertEqual(result.returncode,2,result.stderr)
+            self.assertEqual(json.loads((run/"summary.json").read_text())["counts"],dict(failed=4))
+            events=[json.loads(x) for x in (run/"progress.jsonl").read_text().splitlines()]
+            failed=[x for x in events if x["status"]=="failed"]
+            self.assertEqual(len(failed),8);self.assertTrue(all(x["error_files"] for x in failed))
 
     def fake_cli(self,base,sleep=0):
         cli=base/"project/.venv/bin/protenix";cli.parent.mkdir(parents=True)

@@ -16,6 +16,19 @@ import gemmi
 
 
 PARENT_QUEUE_SHA256 = "0ac7ba922146322b14d69542bf1bd61f7abaaaa125a4c1d93070d3395ec8a85e"
+_QC_TORCH = None
+
+
+def preflight_qc_runtime():
+    global _QC_TORCH
+    if _QC_TORCH is None:
+        import torch
+        data = io.BytesIO()
+        torch.save(torch.ones(1), data); data.seek(0)
+        if not bool(torch.isfinite(torch.load(data, weights_only=True)).all()):
+            raise RuntimeError("QC tensor serialization is unavailable")
+        _QC_TORCH = torch
+    return _QC_TORCH
 
 
 def read_manifest(path, min_length=50):
@@ -33,7 +46,29 @@ def read_manifest(path, min_length=50):
     return sorted(rows, key=lambda r: r["unique_id"]), hashlib.sha256(raw).hexdigest()
 
 
+def valid_esm_input(directory, row):
+    if directory.parent.name != "outputs":
+        return False
+    work = directory.parent.parent
+    label = row["unique_id"]+"_1"
+    base = work/"esm_embeddings"
+    if (base/"esm_error"/(label+".txt")).exists():
+        return False
+    with (base/"input_prot_sequences.csv").open() as f:
+        matches = [r for r in csv.DictReader(f) if r["seq_label"] == label]
+    if (len(matches) != 1 or matches[0]["seq"] != row["sequence"]
+            or matches[0]["part_id"] != label):
+        return False
+    # The SDK catches ESM failures and can continue with zero features; reject that fallback.
+    torch = preflight_qc_runtime()
+    value = torch.load(base/"esm2-3b"/label/(label+".pt"), map_location="cpu", weights_only=True)
+    return (isinstance(value, torch.Tensor) and tuple(value.shape) == (len(row["sequence"]), 2560)
+            and not value.requires_grad and bool(torch.isfinite(value).all()) and bool(value.abs().sum() > 0))
+
+
 def validate(directory, row):
+    preflight_qc_runtime()
+    directory = directory.resolve()
     files = list(directory.glob("seed_101/predictions/*sample_0.cif"))
     if len(files) != 1:
         return None
@@ -55,6 +90,8 @@ def validate(directory, row):
             return None
         for path in confidence:
             json.loads(path.read_text())
+        if not valid_esm_input(directory, row):
+            return None
         return str(files[0].resolve())
     except Exception:
         return None
@@ -73,6 +110,7 @@ def main():
     args = p.parse_args()
     if args.batch_size <= 0 or args.max_attempts <= 0 or args.min_length < 50:
         raise ValueError("Invalid process chunk,retry budget or minimum length")
+    preflight_qc_runtime()
     args.manifest = args.manifest.resolve(strict=True)
     args.project = args.project.resolve()
     if args.protenix_cli is not None:
@@ -206,6 +244,7 @@ def main():
             old = state[row["unique_id"]]
             cif = validate(Path(old["output_dir"]), row)
             errors = list((work / "outputs").rglob(row["unique_id"] + ".txt"))
+            errors += list((work/"esm_embeddings/esm_error").glob(row["unique_id"]+"_*.txt"))
             detail = "\n".join(x.read_text(errors="replace") for x in errors)
             if not detail and len(batch) == 1:
                 detail = text
@@ -217,7 +256,8 @@ def main():
                    error_files=[str(x) for x in errors], error_excerpt=detail[-2000:],
                    batch_oom_evidence="out of memory" in text.lower())
         summary()
-        infrastructure_failure = not success and code != 0 and not list((work / "outputs").rglob("*.txt"))
+        diagnostics = list((work/"outputs").rglob("*.txt")) + list((work/"esm_embeddings/esm_error").glob("*.txt"))
+        infrastructure_failure = not success and code != 0 and not diagnostics
         zero_batches = zero_batches + 1 if infrastructure_failure else 0
         if zero_batches >= 3:
             print("Three process-level failures without per-sequence diagnostics: stopping for infrastructure review", flush=True)

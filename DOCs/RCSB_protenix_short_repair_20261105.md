@@ -46,7 +46,13 @@ The chunk size is targets per CLI invocation,not a neural-network batch.
 
 Accepted outputs require one model and one chain,the exact unchanged query
 sequence,a C-alpha for each residue,finite atom coordinates/B_iso,and the
-official summary-confidence JSON. Unsupported or failed X inputs remain
+official summary-confidence JSON. The SDK can catch an ESM input error and
+continue with zero features. Acceptance therefore also requires the exact
+query/part mapping in the SDK CSV,a finite nonzero tensor of shape
+`[L,2560]`,and no ESM error record. A broken tensor/QC runtime stops the
+supervisor before it can mutate the queue or start inference. Per-query ESM
+diagnostics count as bounded query failures,not an infrastructure abort.
+Unsupported or failed X inputs remain
 explicit failures rather than successful coverage. No confidence threshold
 or PPIS score filters valid structures.
 
@@ -58,7 +64,26 @@ alive. Reused valid smoke outputs will not be folded again in the full queue.
 
 Review:gpt-6-luna max,read-only narrow review of queue/test files. Two P2
 issues (relative paths and orphan ownership) were fixed and regression-tested;
-re-review found no remaining issue. Six focused tests pass,including real
-CPU-only fake-CLI relative-path and hard-kill/lock-inheritance tests.
-Full suite148passed/2optional snapshot tests skipped. Actual GPU/SDK support
-must still be established by the new smoke before full queue launch.
+re-review found no remaining issue. A subsequent review of the ESM input guard
+also passed after adding runtime and error-diagnostic regression tests.
+Nine focused tests pass,including real CPU-only fake-CLI relative-path and
+hard-kill/lock-inheritance tests. Full suite151passed/2optional snapshot
+tests skipped,using the approved absolute AIAA Python;no library was changed.
+
+## Actual GPU Smoke
+
+Job800810 completed successfully in1m18s on an H10080GB using the unchanged
+approved fold environment. All four boundary queries produced exact-sequence
+CIFs and official confidence outputs,including partial-X and all-X queries.
+The predictor forward passes took approximately0.35--0.93s each;these are
+not end-to-end queue throughput estimates. ESM model loading/precomputation
+and process startup contribute additional cost. All-X output establishes
+runtime compatibility,not biological identifiability or model quality.
+
+The original smoke source and outputs remain immutable. The strengthened
+input-QC version will revalidate its saved ESM caches without refolding,and
+accepted smoke outputs can be reused. The full repair uses two independent
+acd_u jobs,13453queries each,process chunks of512 and at most two attempts
+per query. The chunk parameter amortizes CLI startup;it does not change the
+predictor's neural batch size. Each formal job has a12hour bound and a
+recoverable per-query ledger. The85historical long failures remain separate.

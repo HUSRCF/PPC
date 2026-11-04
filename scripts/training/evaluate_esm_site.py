@@ -60,6 +60,8 @@ def main() -> int:
     parser.add_argument("--manifest", default="features/contact_labels/manifest.csv", type=Path)
     parser.add_argument("--split-dir", default="features/contact_labels/splits_mmseq30_tmk_no_len_limit", type=Path)
     parser.add_argument("--sequence-feature-root", default=None, type=Path)
+    parser.add_argument("--geometry-feature-root", default=None, type=Path)
+    parser.add_argument("--require-geometry-features", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--primary-embedding-root", default=None, type=Path)
     parser.add_argument("--prottrans-embedding-root", default=None, type=Path)
     parser.add_argument("--chain-filter-manifest", default=None, type=Path)
@@ -147,6 +149,8 @@ def main() -> int:
         loader = _build_loader(
             esm_root=args.esm_root, label_root=args.label_root, ids=ids,
             sequence_feature_root=args.sequence_feature_root,
+            geometry_feature_root=args.geometry_feature_root,
+            require_geometry_features=args.require_geometry_features,
             primary_embedding_root=args.primary_embedding_root,
             contact_graph_root=args.contact_graph_root, aux_contact_graph_root=args.aux_contact_graph_root,
             prottrans_embedding_root=args.prottrans_embedding_root,

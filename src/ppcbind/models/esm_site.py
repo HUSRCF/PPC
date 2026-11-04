@@ -9,6 +9,7 @@ import math
 
 import torch
 from torch import nn
+from .geometry import GeometryGraphBlock, LinearAttentionContext
 
 
 def _sanitize(x: torch.Tensor, clip: float = 1.0e4) -> torch.Tensor:
@@ -86,6 +87,14 @@ class ESMSiteConfig:
     esm_layer_fusion: str = "concat"
     esm_layer_count: int = 1
     input_fusion_mode: str = "add"
+    local_mlp_blocks: int | None = None
+    geometry_mode: str = "none"
+    geometry_layers: int = 1
+    geometry_edge_dim: int = 30
+    geometry_vector_channels: int = 8
+    geometry_vector_hidden: int = 16
+    geometry_heads: int = 8
+    linear_attention_layers: int = 0
     use_chain_ratio_head: bool = False
     chain_ratio_head_hidden: int = 128
     chain_ratio_head_dropout: float = 0.10
@@ -1010,7 +1019,8 @@ class ESMSiteClassifier(nn.Module):
         )
         self.local_blocks = nn.ModuleList(
             ResidualMLPBlock(c.d_model, c.d_hidden, c.dropout)
-            for _ in range(max(1, 2 if c.n_transformer_layers <= 0 else 1))
+            for _ in range(max(1, int(c.local_mlp_blocks) if c.local_mlp_blocks is not None
+                               else (2 if c.n_transformer_layers <= 0 else 1)))
         )
         n_tcn_layers = max(0, int(c.tcn_layers)) if c.use_tcn_context else 0
         tcn_dilations = list(c.tcn_dilations or [1])
@@ -1033,6 +1043,14 @@ class ESMSiteClassifier(nn.Module):
             for _ in range(n_contact_layers)
         )
         n_sparse_layers = max(0, int(c.sparse_graph_layers)) if c.use_sparse_graph_transformer else 0
+        if c.geometry_mode not in {"none", "edge_mlp", "edge_attention", "gvp"}:
+            raise ValueError(f"Unsupported geometry_mode={c.geometry_mode}")
+        self.geometry_blocks = nn.ModuleList(
+            GeometryGraphBlock(c.d_model, c.geometry_edge_dim, c.geometry_mode, c.dropout,
+                               c.geometry_heads, c.geometry_vector_channels if i == 0 else c.geometry_vector_hidden,
+                               c.geometry_vector_hidden)
+            for i in range(max(0, c.geometry_layers) if c.geometry_mode != "none" else 0)
+        )
         self.sparse_graph_blocks = nn.ModuleList(
             SparseEdgeGraphTransformerBlock(
                 c.d_model,
@@ -1131,6 +1149,10 @@ class ESMSiteClassifier(nn.Module):
         else:
             self.context_encoder = None
 
+        self.linear_attention_blocks = nn.ModuleList(
+            LinearAttentionContext(c.d_model, c.n_heads, c.dropout)
+            for _ in range(max(0, c.linear_attention_layers))
+        )
         self.final_norm = nn.LayerNorm(c.d_model)
         self.classifier = nn.Sequential(
             nn.Linear(c.d_model, c.d_hidden),
@@ -1170,6 +1192,11 @@ class ESMSiteClassifier(nn.Module):
         contact_edge_scores: torch.Tensor | None = None,
         aux_contact_edge_index: torch.Tensor | None = None,
         aux_contact_edge_scores: torch.Tensor | None = None,
+        geometry_vectors: torch.Tensor | None = None,
+        geometry_edge_index: torch.Tensor | None = None,
+        geometry_edge_features: torch.Tensor | None = None,
+        geometry_edge_vectors: torch.Tensor | None = None,
+        geometry_edge_scores: torch.Tensor | None = None,
     ) -> dict[str, torch.Tensor | None]:
         c = self.config
         mask = protein_mask.bool()
@@ -1322,6 +1349,11 @@ class ESMSiteClassifier(nn.Module):
         for block in self.contact_blocks:
             h = block(h, mask, contact_edge_index, contact_edge_scores)
 
+        gv = geometry_vectors
+        for block in self.geometry_blocks:
+            h, gv = block(h, gv, mask, geometry_edge_index, geometry_edge_features,
+                          geometry_edge_vectors, geometry_edge_scores)
+
         if self.aux_sparse_graph_blocks:
             h_primary = h
             for block in self.sparse_graph_blocks:
@@ -1380,6 +1412,8 @@ class ESMSiteClassifier(nn.Module):
             global_context = self.global_proj(torch.cat([mean_pool, max_pool], dim=-1))
             h = _sanitize(h + global_context.unsqueeze(1)).masked_fill(~mask.unsqueeze(-1), 0.0)
 
+        for block in self.linear_attention_blocks:
+            h = block(h, mask)
         if self.context_encoder is not None:
             h = self.context_encoder(h, src_key_padding_mask=~mask)
             h = h.masked_fill(~mask.unsqueeze(-1), 0.0)

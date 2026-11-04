@@ -48,6 +48,7 @@ PATH_KEYS = {
     "split_dir",
     "chain_filter_manifest",
     "sequence_feature_root",
+    "geometry_feature_root",
     "primary_embedding_root",
     "prottrans_embedding_root",
     "contact_graph_root",
@@ -356,6 +357,8 @@ def _build_loader(
     require_contact_graph: bool = False,
     require_aux_contact_graph: bool = False,
     chain_filter_manifest: Path | None = None,
+    geometry_feature_root: Path | None = None,
+    require_geometry_features: bool = False,
 ) -> DataLoader:
     dataset = ESMProteinSiteDataset(
         esm_root=esm_root,
@@ -381,6 +384,8 @@ def _build_loader(
         require_aux_contact_graph=require_aux_contact_graph,
         chain_filter_manifest=chain_filter_manifest,
         payload_cache_size=payload_cache_size,
+        geometry_feature_root=geometry_feature_root,
+        require_geometry_features=require_geometry_features,
     )
     use_length_batches = str(batching or "random").lower() != "random" or int(max_batch_tokens or 0) > 0
     loader_kwargs: dict[str, Any] = {
@@ -438,6 +443,10 @@ def _move_batch(batch: dict[str, Any], device: torch.device) -> tuple[dict[str, 
     if "prottrans_embeddings" in batch:
         inputs["prottrans_embeddings"] = batch["prottrans_embeddings"].to(device, non_blocking=True)
     for key in ("contact_edge_index", "contact_edge_scores", "aux_contact_edge_index", "aux_contact_edge_scores"):
+        if key in batch:
+            inputs[key] = batch[key].to(device, non_blocking=True)
+    for key in ("geometry_vectors", "geometry_edge_index", "geometry_edge_features",
+                "geometry_edge_vectors", "geometry_edge_scores"):
         if key in batch:
             inputs[key] = batch[key].to(device, non_blocking=True)
     labels = batch["labels"].to(device, non_blocking=True)
@@ -1088,6 +1097,8 @@ def main() -> int:
     parser.add_argument("--split-dir", default="features/contact_labels/splits_mmseq30_tmk_no_len_limit", type=Path)
     parser.add_argument("--chain-filter-manifest", default=None, type=Path)
     parser.add_argument("--sequence-feature-root", default=None, type=Path)
+    parser.add_argument("--geometry-feature-root", default=None, type=Path)
+    parser.add_argument("--require-geometry-features", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--primary-embedding-root", default=None, type=Path)
     parser.add_argument("--prottrans-embedding-root", default=None, type=Path)
     parser.add_argument("--contact-graph-root", default=None, type=Path)
@@ -1173,6 +1184,9 @@ def main() -> int:
 
     config = _load_yaml(args.config)
     model_config = _apply_config(args, config)
+    if model_config.get("geometry_mode", "none") != "none":
+        if args.geometry_feature_root is None or not args.require_geometry_features:
+            raise ValueError("Enabled geometry architecture requires strict geometry inputs")
     if args.output_dir is None:
         raise ValueError("training.output_dir must be set in YAML config")
     if args.save_eval_predictions and not args.eval_only:
@@ -1250,6 +1264,8 @@ def main() -> int:
         require_contact_graph=require_contact_graph,
         require_aux_contact_graph=args.require_aux_contact_graph,
         chain_filter_manifest=args.chain_filter_manifest,
+        geometry_feature_root=args.geometry_feature_root,
+        require_geometry_features=args.require_geometry_features,
     )
     eval_batch_size = int(args.eval_batch_size) if int(args.eval_batch_size) > 0 else int(args.batch_size)
     val_loader = _build_loader(
@@ -1286,6 +1302,8 @@ def main() -> int:
         require_contact_graph=require_contact_graph,
         require_aux_contact_graph=args.require_aux_contact_graph,
         chain_filter_manifest=args.chain_filter_manifest,
+        geometry_feature_root=args.geometry_feature_root,
+        require_geometry_features=args.require_geometry_features,
     )
     test_loader = (
         _build_loader(
@@ -1322,6 +1340,8 @@ def main() -> int:
             require_contact_graph=require_contact_graph,
             require_aux_contact_graph=args.require_aux_contact_graph,
             chain_filter_manifest=args.chain_filter_manifest,
+            geometry_feature_root=args.geometry_feature_root,
+            require_geometry_features=args.require_geometry_features,
         )
         if args.eval_test_each_epoch
         else None

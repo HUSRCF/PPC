@@ -10,6 +10,7 @@ from typing import Any, Callable
 
 import torch
 from torch.utils.data import Dataset
+from .geometry_features import load_geometry, crop_geometry
 
 
 AA_ORDER = "ACDEFGHIKLMNPQRSTVWY"
@@ -557,6 +558,8 @@ class ESMProteinSiteDataset(Dataset):
         require_aux_contact_graph: bool = False,
         chain_filter_manifest: str | Path | None = None,
         payload_cache_size: int = 0,
+        geometry_feature_root: str | Path | None = None,
+        require_geometry_features: bool = False,
     ) -> None:
         self.esm_root = Path(esm_root)
         self.label_root = Path(label_root) if label_root else None
@@ -579,6 +582,8 @@ class ESMProteinSiteDataset(Dataset):
         self.require_aux_contact_graph = bool(require_aux_contact_graph)
         self.chain_filter_manifest = Path(chain_filter_manifest) if chain_filter_manifest else None
         self.payload_cache_size = max(0, int(payload_cache_size))
+        self.geometry_feature_root = Path(geometry_feature_root) if geometry_feature_root else None
+        self.require_geometry_features = bool(require_geometry_features)
         self._payload_cache: OrderedDict[Path, Any] = OrderedDict()
         self.chain_filter_rows = (
             _load_chain_filter_manifest(self.chain_filter_manifest) if self.chain_filter_manifest is not None else None
@@ -745,6 +750,12 @@ class ESMProteinSiteDataset(Dataset):
         )
 
         residue_slice = self._select_slice(n_res)
+        geometry = None
+        if self.geometry_feature_root is not None or self.require_geometry_features:
+            geometry = load_geometry(self.geometry_feature_root, sample_id,
+                                     "".join(_norm_text(x) for x in residue_names),
+                                     self.require_geometry_features, self._load_payload)
+        geometry = crop_geometry(geometry, residue_slice, n_res)
         contact_edge_index, contact_edge_scores = _slice_contact_graph(contact_edge_index, contact_edge_scores, residue_slice)
         aux_contact_edge_index, aux_contact_edge_scores = _slice_contact_graph(
             aux_contact_edge_index,
@@ -769,6 +780,8 @@ class ESMProteinSiteDataset(Dataset):
         }
         if entry is not None:
             item["source_chain_id"] = str(entry["chain_id"])
+        if geometry is not None:
+            item.update(geometry)
         if prottrans_embeddings is not None:
             item["prottrans_embeddings"] = _slice_value(prottrans_embeddings, residue_slice)
         if residue_slice != slice(None):
@@ -839,6 +852,14 @@ def collate_esm_site_features(items: list[dict[str, Any]]) -> dict[str, Any]:
             [item["prottrans_embeddings"] for item in items], max_len, 0.0, torch.float32
         )
     batch["seq_features"] = _stack_padded([item["seq_features"] for item in items], max_len, 0.0, torch.float32)
+    if any("geometry_vectors" in item for item in items):
+        if not all("geometry_vectors" in item for item in items):
+            raise ValueError("Batch mixes missing geometry features")
+        batch["geometry_vectors"] = _stack_padded([item["geometry_vectors"] for item in items], max_len, 0., torch.float32)
+        batch["geometry_edge_index"], batch["geometry_edge_scores"] = _collate_contact_edges(
+            items, max_len, "geometry_edge_index", "geometry_edge_scores")
+        for key in ("geometry_edge_features", "geometry_edge_vectors"):
+            batch[key] = torch.cat([item[key].float() for item in items], dim=0)
     batch["chain_ids"] = _stack_padded([item["chain_ids"] for item in items], max_len, 0, torch.long)
     batch["chain_pos"] = _stack_padded([item["chain_pos"] for item in items], max_len, 0, torch.long)
     batch["chain_rel_pos"] = _stack_padded([item["chain_rel_pos"] for item in items], max_len, 0.0, torch.float32)

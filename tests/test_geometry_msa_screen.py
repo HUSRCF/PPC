@@ -126,10 +126,11 @@ class GeometryMSATests(unittest.TestCase):
             for key in screen.IDENTITY_KEYS:
                 self.assertEqual(cfg["data"][key], parents[0]["data"][key])
             if name not in {"K7_G2_MSA_residue_mean", "K8_G2_MSA_pure_CE",
-                            "K11_G2_MSA_twohop_pure_CE", "K13_G2_MSA_threehop_pure_CE"}:
+                            "K11_G2_MSA_twohop_pure_CE", "K13_G2_MSA_threehop_pure_CE",
+                            "K26_G2_MSA_twohop_preTCN_pure_CE"}:
                 self.assertEqual((t["loss_reduction"], t["ratio_loss_weight"]), ("chain_mean", .75))
         self.assertEqual(parents, before)
-        self.assertEqual(len(outputs), 25)
+        self.assertEqual(len(outputs), 28)
         base = screen.build(*parents, Path("/tmp/geo_msa_test"), "K1_G2_MSA")
         for name, axis in (("K7_G2_MSA_residue_mean", "loss_reduction"), ("K8_G2_MSA_pure_CE", "ratio_loss_weight")):
             variant = screen.build(*parents, Path("/tmp/geo_msa_test"), name)
@@ -287,6 +288,32 @@ class GeometryMSATests(unittest.TestCase):
         for name, value in post_model.state_dict().items():
             self.assertTrue(torch.equal(value, pre_model.state_dict()[name]), name)
         self.assertTrue(torch.equal(post_model(**x)["logits"], pre_model(**x)["logits"]))
+
+    def test_pre_tcn_interaction_cells_are_single_axis_controls(self):
+        geometry = module("prepare_geometry_screen")
+        msa = module("prepare_msa_factorial")
+        screen = module("prepare_geometry_msa_screen")
+        parents = (
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "B1_fixed91q"),
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "G2_edge_attention"),
+            msa.build_config(ROOT, Path("/tmp/msa_parent"), "D", "encoder", 49),
+        )
+        for post_name, pre_name in (
+            ("K23_G2_MSA_twohop_ls002", "K25_G2_MSA_twohop_preTCN_ls002"),
+            ("K11_G2_MSA_twohop_pure_CE", "K26_G2_MSA_twohop_preTCN_pure_CE"),
+            ("K15_G2_MSA_twohop_width256", "K27_G2_MSA_twohop_preTCN_width256"),
+        ):
+            post = screen.build(*parents, Path("/tmp/interactions"), post_name)
+            pre = screen.build(*parents, Path("/tmp/interactions"), pre_name)
+            self.assertEqual(pre["data"], post["data"])
+            self.assertEqual({k for k in pre["training"] if pre["training"][k] != post["training"][k]},
+                             {"output_dir"})
+            self.assertEqual({k for k in pre["model"] if pre["model"][k] != post["model"][k]},
+                             {"msa_residual_position"})
+        self.assertEqual(screen.build(*parents, Path("/tmp/interactions"),
+                                     "K25_G2_MSA_twohop_preTCN_ls002")["training"]["label_smoothing"], .02)
+        self.assertEqual(screen.build(*parents, Path("/tmp/interactions"),
+                                     "K26_G2_MSA_twohop_preTCN_pure_CE")["training"]["ratio_loss_weight"], 0.)
 
     def test_wide_msa_paths_receive_task_gradient_after_zero_init(self):
         x = payload()

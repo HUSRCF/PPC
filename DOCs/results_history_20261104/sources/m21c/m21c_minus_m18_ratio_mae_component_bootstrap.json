@@ -1,0 +1,20 @@
+{
+  "bootstrap_mean": -0.009248429651243376,
+  "bootstrap_unit": "paired test component_id",
+  "chain_manifest": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/pypropel_chain_filtered_no_len_limit/chain_manifest.csv",
+  "ci95": [
+    -0.022093397089668357,
+    0.006092054910885245
+  ],
+  "estimand": "left chain-macro ratio MAE minus right chain-macro ratio MAE",
+  "excludes_zero": false,
+  "left_method": "Ours_M21c_equal3_raw_residue_mean",
+  "left_per_chain": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/m21_locked_test_export_20260718/results/effect_site_ratio/m21c_effect_site_ratio_per_chain.csv",
+  "n_chains": 2392,
+  "n_components": 43,
+  "point_difference": -0.008843078053185826,
+  "replicates": 10000,
+  "right_method": "Ours_ESMC_M18_5seed_val_locked",
+  "right_per_chain": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/effect_site_ratio/m18_effect_site_ratio_per_chain.csv",
+  "seed": 42
+}

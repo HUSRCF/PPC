@@ -1,0 +1,172 @@
+{
+  "collected_on": "2026-11-04",
+  "policy": "Read-only recovery of pre-existing summaries; source files copied verbatim. No new training or inference.",
+  "artifacts": [
+    {
+      "path": "sources/m18/locked_five_seed_test_summary.json",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/results/main_model/frozen_sources/locked_five_seed_test_summary.json",
+      "sha256": "6ce516f46b59371b53efdb6b556fc7adee0691f3e162878284537b460c00ae04",
+      "size_bytes": 4535
+    },
+    {
+      "path": "sources/m18/validation_selection_summary.json",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/results/main_model/frozen_sources/validation_selection_summary.json",
+      "sha256": "0fe4bb8e22e28d34e2d36b6ac4c1fc9230664cedad12db3754cc7c210506d618",
+      "size_bytes": 9360
+    },
+    {
+      "path": "sources/m18/CHECKPOINTS.tsv",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/.index/CHECKPOINTS.tsv",
+      "sha256": "1e638ddf06c3980ca822fceb842865c8388e0221f5419c7b1404c9aada98b47d",
+      "size_bytes": 972
+    },
+    {
+      "path": "sources/progression/model_progression_validation_locked.csv",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/results/ablations/model_progression_validation_locked.csv",
+      "sha256": "1d59cc311b968a7e08951f93dd7401958e17260f18f6046fbb563e04837cc661",
+      "size_bytes": 2391
+    },
+    {
+      "path": "sources/progression/model_progression_validation_locked.md",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/results/ablations/model_progression_validation_locked.md",
+      "sha256": "92397e0d37359b3c461e969f10b9e84a3b7e5cdcb40433bbff61deeed13cc9a4",
+      "size_bytes": 4954
+    },
+    {
+      "path": "sources/m21c/metrics.json",
+      "source_host": "local",
+      "source_path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/m21c_locked_equal3_20260718/metrics.json",
+      "sha256": "4223cc61f7086e386e2b7bfa17d0cf06b57c5255073b3ef6bc8f52d4fa7036d6",
+      "size_bytes": 68061
+    },
+    {
+      "path": "sources/m21c/M21C_LOCKED_ENSEMBLE_TEST_20260718.md",
+      "source_host": "local",
+      "source_path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/m21c_locked_equal3_20260718/M21C_LOCKED_ENSEMBLE_TEST_20260718.md",
+      "sha256": "6ecaab4d5c59e79c0f9b9222042450cf4117f76d075de690cc299d0d89e99d44",
+      "size_bytes": 9256
+    },
+    {
+      "path": "sources/m21c/m21c_minus_m18_ratio_mae_component_bootstrap.json",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/results/main_model/m21c_minus_m18_ratio_mae_component_bootstrap.json",
+      "sha256": "87eb83fa1b91e9b92747248c69168be41cc4b9827dcc1bb241ceb981c45f2fef",
+      "size_bytes": 1047
+    },
+    {
+      "path": "sources/controlled_ablation/controlled_ablation_summary.json",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/results/ablations/m18_controlled_equal5_20260825/controlled_ablation_summary.json",
+      "sha256": "6cda16bd59ab6bf940556f8b9dc747af44cd491ce048a98ecb9482590a66894a",
+      "size_bytes": 34179
+    },
+    {
+      "path": "sources/controlled_ablation/controlled_ablation_metrics.csv",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/results/ablations/m18_controlled_equal5_20260825/controlled_ablation_metrics.csv",
+      "sha256": "5e3329cae854920e25551bcb7b071138cebfd1bc6ce72171210bff721dc7aa1f",
+      "size_bytes": 2631
+    },
+    {
+      "path": "sources/controlled_ablation/findings.md",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/results/ablations/m18_controlled_equal5_20260825/findings.md",
+      "sha256": "99cd72966f8722d25f670bd8d9fdb0df1bf8defd3a6ebce7c64bd312138433bf",
+      "size_bytes": 2706
+    },
+    {
+      "path": "sources/controlled_ablation/paired_component_bootstrap.csv",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/results/ablations/m18_controlled_equal5_20260825/paired_component_bootstrap.csv",
+      "sha256": "40d69e23909b859ee55c6d42cb6ad7582ac38b3b974135903fb99f50cd7d986b",
+      "size_bytes": 4706
+    },
+    {
+      "path": "sources/controlled_ablation/alignment_audit.json",
+      "source_host": "local",
+      "source_path": "/home/husrcf/Code/ProtBind/paper/results/ablations/m18_controlled_equal5_20260825/alignment_audit.json",
+      "sha256": "8a23d02b68ac6ad74ce32d265afe4c1e19fdcc5dc25c5d782405d64146ed2129",
+      "size_bytes": 689
+    },
+    {
+      "path": "sources/m14/M14_CONDITIONAL_GAIN_SUMMARY.md",
+      "source_host": "local",
+      "source_path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/m14_20260714/M14_CONDITIONAL_GAIN_SUMMARY.md",
+      "sha256": "d60e5e2681bffd6829bffb8a6f46248bcd460dcb976d93f571336e8c3521255d",
+      "size_bytes": 8108
+    },
+    {
+      "path": "sources/m14/grouped_oof_residue_weighted.json",
+      "source_host": "local",
+      "source_path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/m14_20260714/grouped_oof_residue_weighted.json",
+      "sha256": "5cea319ac7b0c769bfebf3e56b306068eda40ac9ea0e08d32508ab48482962b8",
+      "size_bytes": 4113
+    },
+    {
+      "path": "sources/m14/locked_valfit_test_metrics.json",
+      "source_host": "local",
+      "source_path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/m14_20260714/locked_valfit_test_metrics.json",
+      "sha256": "b5ff634507e907175d49f826c2718f8d8f0b9d1ad80de295bf73cd1e47c0091f",
+      "size_bytes": 5480
+    },
+    {
+      "path": "sources/hpc2/m7_confirmation/m7_confirmation_per_seed.tsv",
+      "source_host": "hpc2",
+      "source_path": "/hpc2hdd/home/shuang886/jhspoolers/PPC/benchmark/reports/summary/esmc_matrix_20260712/m7_confirmation/m7_confirmation_per_seed.tsv",
+      "source_sha256": "fad191202c9efaba4cdebe11a4ee83b391aca3b42763fd6afacca26363097e17",
+      "sha256": "fad191202c9efaba4cdebe11a4ee83b391aca3b42763fd6afacca26363097e17",
+      "size_bytes": 462
+    },
+    {
+      "path": "sources/hpc2/m7_confirmation/m7_confirmation_summary.json",
+      "source_host": "hpc2",
+      "source_path": "/hpc2hdd/home/shuang886/jhspoolers/PPC/benchmark/reports/summary/esmc_matrix_20260712/m7_confirmation/m7_confirmation_summary.json",
+      "source_sha256": "f9473fd34a5598e6601470b997db29923c1dcefddbb36bf40100f81943091b40",
+      "sha256": "f9473fd34a5598e6601470b997db29923c1dcefddbb36bf40100f81943091b40",
+      "size_bytes": 6624
+    },
+    {
+      "path": "sources/hpc2/m7_confirmation/m7_confirmation_summary.md",
+      "source_host": "hpc2",
+      "source_path": "/hpc2hdd/home/shuang886/jhspoolers/PPC/benchmark/reports/summary/esmc_matrix_20260712/m7_confirmation/m7_confirmation_summary.md",
+      "source_sha256": "19edfbfa1c2ee11543d68a30e45c54efdbf4879f691a56967bd34eec5c5ae230",
+      "sha256": "19edfbfa1c2ee11543d68a30e45c54efdbf4879f691a56967bd34eec5c5ae230",
+      "size_bytes": 464
+    },
+    {
+      "path": "sources/hpc2/m8_screen/m8_screen_summary.json",
+      "source_host": "hpc2",
+      "source_path": "/hpc2hdd/home/shuang886/jhspoolers/PPC/benchmark/reports/summary/esmc_matrix_20260712/m8_screen/m8_screen_summary.json",
+      "source_sha256": "54e7e2dad7f2470aa1fb4d1ce71ac468123776675d4fba2876849930ebd2381f",
+      "sha256": "54e7e2dad7f2470aa1fb4d1ce71ac468123776675d4fba2876849930ebd2381f",
+      "size_bytes": 5861
+    },
+    {
+      "path": "sources/hpc2/m8_screen/m8_screen_summary.md",
+      "source_host": "hpc2",
+      "source_path": "/hpc2hdd/home/shuang886/jhspoolers/PPC/benchmark/reports/summary/esmc_matrix_20260712/m8_screen/m8_screen_summary.md",
+      "source_sha256": "eef42ed9310fc9806278761e55b9141bc05839e2439b7dea7047d1fcccb01b29",
+      "sha256": "eef42ed9310fc9806278761e55b9141bc05839e2439b7dea7047d1fcccb01b29",
+      "size_bytes": 787
+    },
+    {
+      "path": "sources/hpc2/m8_screen/m8_screen_summary.tsv",
+      "source_host": "hpc2",
+      "source_path": "/hpc2hdd/home/shuang886/jhspoolers/PPC/benchmark/reports/summary/esmc_matrix_20260712/m8_screen/m8_screen_summary.tsv",
+      "source_sha256": "71db669620bdc682861e68867381aa041e3068786c7e6bd5c39f44d76dc227a6",
+      "sha256": "71db669620bdc682861e68867381aa041e3068786c7e6bd5c39f44d76dc227a6",
+      "size_bytes": 1158
+    }
+  ],
+  "star_run_export": {
+    "path": "star_m9_m21_runs.json",
+    "source_host": "star",
+    "source_directory": "/home/husrcf/Code/PPC/runs",
+    "description": "Compact export; per-run config/metrics hashes and original paths are in each record."
+  }
+}

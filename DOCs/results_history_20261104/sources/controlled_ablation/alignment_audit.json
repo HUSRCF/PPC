@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "canonical_source": "A_full_m18 seed46",
+  "validation_chains": 3796,
+  "test_chains": 2392,
+  "validation_residues": 1427257,
+  "test_residues": 1036256,
+  "test_components": 43,
+  "methods": [
+    "A_full_m18",
+    "B_no_esmfold",
+    "C_esmc_only",
+    "D_no_contact",
+    "E_no_tcn"
+  ],
+  "seeds": [
+    46,
+    47,
+    48,
+    49,
+    50
+  ],
+  "checks": [
+    "identical chain universe across methods and seeds",
+    "identical per-chain residue lengths across methods and seeds",
+    "torch.equal-equivalent binary labels across methods and seeds",
+    "finite probabilities in [0,1]",
+    "prediction universe equals chain manifest for val and test"
+  ]
+}

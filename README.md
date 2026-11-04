@@ -4,6 +4,13 @@ PPC contains the single-chain M18 residue-level protein-protein interaction-site
 model and its benchmark tools. The separate partner-conditioned/pairwise project
 is [TMINTER3](https://github.com/sunnylab-cb/TMINTER3); it is not this model.
 
+## Results Index
+
+**[All model results: M0-M21, locked M18, controlled ablations, and union/OF3](DOCs/RESULTS_INDEX.md).**
+The old M7/M8 documents are historical plans, not the end of the experiment history.
+The original M18 five-seed test result and the November union/OpenFold3 validation
+experiments use different label/sample contracts and are indexed separately.
+
 ## Current Union/OpenFold3 Recipe
 
 ```text

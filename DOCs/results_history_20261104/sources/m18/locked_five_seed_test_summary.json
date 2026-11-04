@@ -1,0 +1,127 @@
+{
+  "coverage": {
+    "test_chains": 2392,
+    "test_positives": 293051,
+    "test_residues": 1036256
+  },
+  "frozen_validation_threshold": 0.61,
+  "locked_seed_weights": {
+    "seed46": 0.13499999999999998,
+    "seed47": 0.15749999999999997,
+    "seed48": 0.15749999999999997,
+    "seed49": 0.275,
+    "seed50": 0.275
+  },
+  "method": "M18_hierarchical_five_seed_validation_locked",
+  "predictions": {
+    "path": "tmp/m18_five_seed_test_v2_20260716/locked_five_seed_test_predictions.npz",
+    "sha256": "52f41ee897f1f3c802b85eaffd17bae1609ed08bb6161febfb8b2a17a6b11446"
+  },
+  "selection_policy": "seed weights and operating threshold copied unchanged from validation_selection_summary.json; test used only once for evaluation; oracle diagnostics are descriptive and never fed back",
+  "sources": {
+    "seed46": {
+      "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m17_seed_panel_20260715/evaluation/seed46/test_scores.npz",
+      "sha256": "a714934a287a57979f0d802c0a898c377b7f906ff719367d394f5f50b718a510"
+    },
+    "seed47": {
+      "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m17_seed_panel_20260715/evaluation/seed47/test_scores.npz",
+      "sha256": "53155a04a49b3fb75e34c0c963e15f0ec6a2ac772a883fbd41d505e951bd74ad"
+    },
+    "seed48": {
+      "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m17_seed_panel_20260715/evaluation/seed48/test_scores.npz",
+      "sha256": "20fd8426fa30fdc17711df427639bb8d7c68e2e692d5786fb8f5e55f275c3429"
+    },
+    "seed49": {
+      "path": "tmp/m18_test_exports_20260716/seed49/test_scores.npz",
+      "sha256": "b0c28f8bbcdf514acfba16e150a57e301a5146148591650d6081b32f268499aa"
+    },
+    "seed50": {
+      "path": "tmp/m18_test_exports_20260716/seed50/test_scores.npz",
+      "sha256": "9b3ae0b635ab5c7f14fa762dd98412c3b975d0bf4d806de8a17e5c57a4cb320e"
+    }
+  },
+  "test": {
+    "AP": 0.7594906048407593,
+    "AUPRC": 0.7594859469215007,
+    "AUROC": 0.8778761133629113,
+    "L/10_ACC_macro": 0.7952694281019265,
+    "L/10_ACC_micro": 0.7788754095802778,
+    "L/20_ACC_macro": 0.8446314022085092,
+    "L/20_ACC_micro": 0.8371376668509597,
+    "L/5_ACC_macro": 0.7099912294033437,
+    "L/5_ACC_micro": 0.6767498558044175,
+    "chain_ap_macro": 0.7148713868371979,
+    "chain_ap_n_chains": 2392,
+    "frozen_validation_threshold": {
+      "f1": 0.6741720302557682,
+      "fn": 108909,
+      "fp": 69083,
+      "mcc": 0.5611366691553784,
+      "precision": 0.7271872840359365,
+      "recall": 0.6283616162374467,
+      "threshold": 0.61,
+      "tn": 674122,
+      "tp": 184142
+    },
+    "oracle_diagnostics": {
+      "F1_at_best_MCC_threshold": 0.6964451637318132,
+      "MCC_at_best_F1_threshold": 0.5690068646298897,
+      "best_F1": 0.6964791940669004,
+      "best_F1_threshold": 0.3582120514845421,
+      "best_MCC": 0.5689923196730873,
+      "best_MCC_threshold": 0.359,
+      "label": "test-oracle diagnostic; not used for selection"
+    },
+    "ratio_MAE_frozen_threshold": 0.07346515123131274,
+    "ratio_MAE_raw": 0.07028691409628826,
+    "ratio_Pearson_raw": 0.8581536956726152,
+    "ratio_RMSE_raw": 0.09866445644129512,
+    "ratio_Spearman_raw": 0.8495291159637224,
+    "ratio_bias_raw": 0.036126773877863234,
+    "threshold_0_5": {
+      "f1": 0.6877793522583195,
+      "fn": 94779,
+      "fp": 85234,
+      "mcc": 0.5676411644053152,
+      "precision": 0.6993573328254076,
+      "recall": 0.6765784795138048,
+      "threshold": 0.5,
+      "tn": 657971,
+      "tp": 198272
+    },
+    "threshold_0_6": {
+      "f1": 0.675715055878539,
+      "fn": 107551,
+      "fp": 70497,
+      "mcc": 0.5619330109033857,
+      "precision": 0.7246178666156244,
+      "recall": 0.6329956219224641,
+      "threshold": 0.6,
+      "tn": 672708,
+      "tp": 185500
+    }
+  },
+  "validation_reference": {
+    "path": "tmp/m18_five_seed_selection_20260716/validation_selection_summary.json",
+    "selected_alpha_new_group": 0.55,
+    "selected_validation": {
+      "AP": 0.7876680751455631,
+      "AUPRC": 0.7876658221239328,
+      "AUROC": 0.8826298286972064,
+      "alpha_new_group": 0.55,
+      "chain_ap_macro": 0.7648111917867716,
+      "chain_ap_n_chains": 3796,
+      "ratio_MAE_chain_macro": 0.07845370199960501,
+      "selected_threshold": {
+        "f1": 0.7072390110907782,
+        "fn": 116465,
+        "fp": 120631,
+        "mcc": 0.5912994458080678,
+        "threshold": 0.61,
+        "tn": 903778,
+        "tp": 286383
+      }
+    },
+    "sha256": "0fe4bb8e22e28d34e2d36b6ac4c1fc9230664cedad12db3754cc7c210506d618"
+  }
+}

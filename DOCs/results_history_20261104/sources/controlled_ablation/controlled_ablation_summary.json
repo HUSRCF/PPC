@@ -1,0 +1,771 @@
+{
+  "analysis_contract": {
+    "ensemble": "equal-five logit mean",
+    "seeds": [
+      46,
+      47,
+      48,
+      49,
+      50
+    ],
+    "threshold_selection": "maximize pooled validation F1 on 0.01:0.99:0.01 grid",
+    "test_policy": "apply each method's frozen validation threshold once",
+    "split": "global pairwise DeepTMInter SI30, chain-filtered, no length limit",
+    "label": "5.5 A heavy-atom inter-chain residue contact"
+  },
+  "alignment_audit": {
+    "status": "PASS",
+    "canonical_source": "A_full_m18 seed46",
+    "validation_chains": 3796,
+    "test_chains": 2392,
+    "validation_residues": 1427257,
+    "test_residues": 1036256,
+    "test_components": 43,
+    "methods": [
+      "A_full_m18",
+      "B_no_esmfold",
+      "C_esmc_only",
+      "D_no_contact",
+      "E_no_tcn"
+    ],
+    "seeds": [
+      46,
+      47,
+      48,
+      49,
+      50
+    ],
+    "checks": [
+      "identical chain universe across methods and seeds",
+      "identical per-chain residue lengths across methods and seeds",
+      "torch.equal-equivalent binary labels across methods and seeds",
+      "finite probabilities in [0,1]",
+      "prediction universe equals chain manifest for val and test"
+    ]
+  },
+  "methods": [
+    {
+      "method": "A_full_m18",
+      "label": "A: Full M18",
+      "inputs": {
+        "esmfold_90d": true,
+        "esm2_contact": true,
+        "tcn": true
+      },
+      "ensemble": "equal-weight arithmetic mean of five per-residue logits",
+      "seeds": [
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "validation": {
+        "n_chains": 3796,
+        "n_residues": 1427257,
+        "selected_threshold": 0.63,
+        "selected_f1": 0.7059675396487066,
+        "selected_mcc": 0.5896331992981626
+      },
+      "test": {
+        "n_chains": 2392,
+        "n_residues": 1036256,
+        "AP": 0.7602773909728439,
+        "AUPRC": 0.7602711921094879,
+        "AUROC": 0.8779668524725518,
+        "chain_AP_macro": 0.7148500710201561,
+        "frozen_validation_threshold": 0.63,
+        "F1_frozen_validation_threshold": 0.6745649447541628,
+        "MCC_frozen_validation_threshold": 0.5617106140153584,
+        "F1_at_0.5": 0.6889935239873294,
+        "MCC_at_0.5": 0.5673560531662694,
+        "ratio_MAE_raw": 0.07183130663036431,
+        "ratio_RMSE_raw": 0.10033995887331927,
+        "ratio_bias_raw": 0.04187798436465069,
+        "ratio_Pearson_raw": 0.861298585810558,
+        "ratio_Spearman_raw": 0.8535088434223497,
+        "L/20_precision_macro": 0.8429781503901633,
+        "L/20_precision_micro": 0.8352129970718806,
+        "L/10_precision_macro": 0.7940592947028252,
+        "L/10_precision_micro": 0.777815986550512,
+        "L/5_precision_macro": 0.7094178930872392,
+        "L/5_precision_micro": 0.6759082723015968,
+        "confusion_frozen_validation_threshold": {
+          "tp": 184222,
+          "fp": 68922,
+          "tn": 674283,
+          "fn": 108829
+        },
+        "confusion_at_0.5": {
+          "tp": 200761,
+          "fp": 88954,
+          "tn": 654251,
+          "fn": 92290
+        }
+      }
+    },
+    {
+      "method": "B_no_esmfold",
+      "label": "B: No ESMFold 90D",
+      "inputs": {
+        "esmfold_90d": false,
+        "esm2_contact": true,
+        "tcn": true
+      },
+      "ensemble": "equal-weight arithmetic mean of five per-residue logits",
+      "seeds": [
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "validation": {
+        "n_chains": 3796,
+        "n_residues": 1427257,
+        "selected_threshold": 0.51,
+        "selected_f1": 0.6547060668444721,
+        "selected_mcc": 0.5105584851780778
+      },
+      "test": {
+        "n_chains": 2392,
+        "n_residues": 1036256,
+        "AP": 0.6738581237736696,
+        "AUPRC": 0.6738505559341847,
+        "AUROC": 0.8321060100335822,
+        "chain_AP_macro": 0.6421251627609509,
+        "frozen_validation_threshold": 0.51,
+        "F1_frozen_validation_threshold": 0.6054403308134652,
+        "MCC_frozen_validation_threshold": 0.46997848946570514,
+        "F1_at_0.5": 0.6076648923012085,
+        "MCC_at_0.5": 0.470837271148691,
+        "ratio_MAE_raw": 0.08746654905648481,
+        "ratio_RMSE_raw": 0.11648951995535939,
+        "ratio_bias_raw": 0.006273372278919158,
+        "ratio_Pearson_raw": 0.7574864196144988,
+        "ratio_Spearman_raw": 0.7868853540740078,
+        "L/20_precision_macro": 0.7480474773769208,
+        "L/20_precision_micro": 0.7422877113441012,
+        "L/10_precision_macro": 0.714048702831895,
+        "L/10_precision_micro": 0.697759055479138,
+        "L/5_precision_macro": 0.6432179162905834,
+        "L/5_precision_micro": 0.6109256813543043,
+        "confusion_frozen_validation_threshold": {
+          "tp": 163982,
+          "fp": 84662,
+          "tn": 658543,
+          "fn": 129069
+        },
+        "confusion_at_0.5": {
+          "tp": 165812,
+          "fp": 86872,
+          "tn": 656333,
+          "fn": 127239
+        }
+      }
+    },
+    {
+      "method": "C_esmc_only",
+      "label": "C: ESMC only",
+      "inputs": {
+        "esmfold_90d": false,
+        "esm2_contact": false,
+        "tcn": true
+      },
+      "ensemble": "equal-weight arithmetic mean of five per-residue logits",
+      "seeds": [
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "validation": {
+        "n_chains": 3796,
+        "n_residues": 1427257,
+        "selected_threshold": 0.48000000000000004,
+        "selected_f1": 0.6516113935726002,
+        "selected_mcc": 0.5016229433855104
+      },
+      "test": {
+        "n_chains": 2392,
+        "n_residues": 1036256,
+        "AP": 0.6733184539873571,
+        "AUPRC": 0.6733091655326918,
+        "AUROC": 0.8264485830581715,
+        "chain_AP_macro": 0.6446016813178242,
+        "frozen_validation_threshold": 0.48000000000000004,
+        "F1_frozen_validation_threshold": 0.6215560466147274,
+        "MCC_frozen_validation_threshold": 0.47383208363320806,
+        "F1_at_0.5": 0.6188840873189843,
+        "MCC_at_0.5": 0.47286585037891943,
+        "ratio_MAE_raw": 0.088951270522256,
+        "ratio_RMSE_raw": 0.10944885036013306,
+        "ratio_bias_raw": 0.019484118159230904,
+        "ratio_Pearson_raw": 0.8063252261955309,
+        "ratio_Spearman_raw": 0.771250461309362,
+        "L/20_precision_macro": 0.7560056847090983,
+        "L/20_precision_micro": 0.7512609804477189,
+        "L/10_precision_macro": 0.7200033645227017,
+        "L/10_precision_micro": 0.7035190279688216,
+        "L/5_precision_macro": 0.6504082634407109,
+        "L/5_precision_micro": 0.6147820866850763,
+        "confusion_frozen_validation_threshold": {
+          "tp": 180861,
+          "fp": 108050,
+          "tn": 635155,
+          "fn": 112190
+        },
+        "confusion_at_0.5": {
+          "tp": 177871,
+          "fp": 103890,
+          "tn": 639315,
+          "fn": 115180
+        }
+      }
+    },
+    {
+      "method": "D_no_contact",
+      "label": "D: No ESM2 contact",
+      "inputs": {
+        "esmfold_90d": true,
+        "esm2_contact": false,
+        "tcn": true
+      },
+      "ensemble": "equal-weight arithmetic mean of five per-residue logits",
+      "seeds": [
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "validation": {
+        "n_chains": 3796,
+        "n_residues": 1427257,
+        "selected_threshold": 0.42000000000000004,
+        "selected_f1": 0.7040198591969721,
+        "selected_mcc": 0.5808887425873945
+      },
+      "test": {
+        "n_chains": 2392,
+        "n_residues": 1036256,
+        "AP": 0.7588720176726271,
+        "AUPRC": 0.7588662456450671,
+        "AUROC": 0.8748739114032679,
+        "chain_AP_macro": 0.7086273148744969,
+        "frozen_validation_threshold": 0.42000000000000004,
+        "F1_frozen_validation_threshold": 0.6809537634542666,
+        "MCC_frozen_validation_threshold": 0.5637483582584084,
+        "F1_at_0.5": 0.672215281826342,
+        "MCC_at_0.5": 0.561426691334773,
+        "ratio_MAE_raw": 0.060975355204816443,
+        "ratio_RMSE_raw": 0.09062211016707306,
+        "ratio_bias_raw": -0.0013681960618406525,
+        "ratio_Pearson_raw": 0.8601910285036432,
+        "ratio_Spearman_raw": 0.85479480799173,
+        "L/20_precision_macro": 0.8247238371390114,
+        "L/20_precision_micro": 0.8224804004911684,
+        "L/10_precision_macro": 0.7861598535314323,
+        "L/10_precision_micro": 0.770432141219624,
+        "L/5_precision_macro": 0.7035526131106701,
+        "L/5_precision_micro": 0.6697994957377836,
+        "confusion_frozen_validation_threshold": {
+          "tp": 191157,
+          "fp": 77231,
+          "tn": 665974,
+          "fn": 101894
+        },
+        "confusion_at_0.5": {
+          "tp": 181604,
+          "fp": 65660,
+          "tn": 677545,
+          "fn": 111447
+        }
+      }
+    },
+    {
+      "method": "E_no_tcn",
+      "label": "E: No TCN",
+      "inputs": {
+        "esmfold_90d": true,
+        "esm2_contact": true,
+        "tcn": false
+      },
+      "ensemble": "equal-weight arithmetic mean of five per-residue logits",
+      "seeds": [
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "validation": {
+        "n_chains": 3796,
+        "n_residues": 1427257,
+        "selected_threshold": 0.49,
+        "selected_f1": 0.6955027044785226,
+        "selected_mcc": 0.5681623585385064
+      },
+      "test": {
+        "n_chains": 2392,
+        "n_residues": 1036256,
+        "AP": 0.7444501802124285,
+        "AUPRC": 0.7444447146249841,
+        "AUROC": 0.8661585400118968,
+        "chain_AP_macro": 0.7010586536672593,
+        "frozen_validation_threshold": 0.49,
+        "F1_frozen_validation_threshold": 0.6704095946135503,
+        "MCC_frozen_validation_threshold": 0.5458076379403927,
+        "F1_at_0.5": 0.6700387965483598,
+        "MCC_at_0.5": 0.5466277764449489,
+        "ratio_MAE_raw": 0.07989547084534782,
+        "ratio_RMSE_raw": 0.10162214445873644,
+        "ratio_bias_raw": 0.030320552015215826,
+        "ratio_Pearson_raw": 0.8394648631260938,
+        "ratio_Spearman_raw": 0.8323138338755374,
+        "L/20_precision_macro": 0.8252901077967081,
+        "L/20_precision_micro": 0.8190611126853689,
+        "L/10_precision_macro": 0.7836716311557298,
+        "L/10_precision_micro": 0.769314534617148,
+        "L/5_precision_macro": 0.6965659325379471,
+        "L/5_precision_micro": 0.6632440869252011,
+        "confusion_frozen_validation_threshold": {
+          "tp": 191174,
+          "fp": 86095,
+          "tn": 657110,
+          "fn": 101877
+        },
+        "confusion_at_0.5": {
+          "tp": 189890,
+          "fp": 83862,
+          "tn": 659343,
+          "fn": 103161
+        }
+      }
+    }
+  ],
+  "bootstrap": {
+    "unit": "paired test SI30 component_id",
+    "n_components": 43,
+    "replicates": 10000,
+    "seed": 20260825,
+    "resampling": "sample 43 components with replacement using one shared draw matrix for all methods; retain all chains and residues within each sampled component",
+    "metrics": {
+      "chain_AP_macro": "positive favors left",
+      "F1_frozen_validation_threshold": "positive favors left",
+      "MCC_frozen_validation_threshold": "positive favors left",
+      "ratio_MAE_raw": "negative favors left"
+    },
+    "path": "paired_component_bootstrap.csv"
+  },
+  "provenance": {
+    "chain_manifest": {
+      "path": "/media/990Pro/ProtBind/PPC/features/contact_labels_5p5A/splits_pairwise_global_si30_deeptminter_tmk_no_len_limit_20260708/pypropel_chain_filtered_no_len_limit/chain_manifest.csv",
+      "size_bytes": 5332408,
+      "sha256": "aa1a6f4a645e81dab23f1ccc2f0e4149de81de126ef10d38fa16c50b3637179d"
+    },
+    "prediction_inputs": [
+      {
+        "method": "A_full_m18",
+        "split": "val",
+        "seed": 46,
+        "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/evaluation/seed46/val_scores.npz",
+        "size_bytes": 2614919,
+        "sha256": "edca1a67efc7674072116332e8a914baf23743b1ca5bd5947f599bc180dd77c0"
+      },
+      {
+        "method": "A_full_m18",
+        "split": "val",
+        "seed": 47,
+        "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/evaluation/seed47/val_scores.npz",
+        "size_bytes": 2678453,
+        "sha256": "5fa7671e14a50ef98931d4178440d11ade3dc8611c61f464430f09863f019d08"
+      },
+      {
+        "method": "A_full_m18",
+        "split": "val",
+        "seed": 48,
+        "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/evaluation/seed48/val_scores.npz",
+        "size_bytes": 2665519,
+        "sha256": "009b92f2feb71ec925f0bb14d99576026bdf4db44d14b6b5b3233b4cddd4f6ff"
+      },
+      {
+        "method": "A_full_m18",
+        "split": "val",
+        "seed": 49,
+        "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/evaluation/seed49/val_scores.npz",
+        "size_bytes": 2629360,
+        "sha256": "e6e11bd7d81fa71edde0705f205f225604890696cd795ef4860062a0db91aafb"
+      },
+      {
+        "method": "A_full_m18",
+        "split": "val",
+        "seed": 50,
+        "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/evaluation/seed50/val_scores.npz",
+        "size_bytes": 2675373,
+        "sha256": "79750fb8960f58e309e37020b1c0c91b966afe8f12bb6c49726364ee14eae061"
+      },
+      {
+        "method": "A_full_m18",
+        "split": "test",
+        "seed": 46,
+        "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/evaluation/seed46/test_scores.npz",
+        "size_bytes": 2100199,
+        "sha256": "a714934a287a57979f0d802c0a898c377b7f906ff719367d394f5f50b718a510"
+      },
+      {
+        "method": "A_full_m18",
+        "split": "test",
+        "seed": 47,
+        "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/evaluation/seed47/test_scores.npz",
+        "size_bytes": 2133784,
+        "sha256": "53155a04a49b3fb75e34c0c963e15f0ec6a2ac772a883fbd41d505e951bd74ad"
+      },
+      {
+        "method": "A_full_m18",
+        "split": "test",
+        "seed": 48,
+        "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/evaluation/seed48/test_scores.npz",
+        "size_bytes": 2123274,
+        "sha256": "20fd8426fa30fdc17711df427639bb8d7c68e2e692d5786fb8f5e55f275c3429"
+      },
+      {
+        "method": "A_full_m18",
+        "split": "test",
+        "seed": 49,
+        "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/evaluation/seed49/test_scores.npz",
+        "size_bytes": 2100565,
+        "sha256": "b0c28f8bbcdf514acfba16e150a57e301a5146148591650d6081b32f268499aa"
+      },
+      {
+        "method": "A_full_m18",
+        "split": "test",
+        "seed": 50,
+        "path": "/media/990Pro/ProtBind/PPC/benchmark/reports/summary/esmc_m18_five_seed_panel_20260716/evaluation/seed50/test_scores.npz",
+        "size_bytes": 2111772,
+        "sha256": "9b3ae0b635ab5c7f14fa762dd98412c3b975d0bf4d806de8a17e5c57a4cb320e"
+      },
+      {
+        "method": "B_no_esmfold",
+        "split": "val",
+        "seed": 46,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_b_no_esmfold_contact_seed46_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "45d5f556933cc23ca7a8a42215b6b9b983746b160994ff6ff80d107885b48305"
+      },
+      {
+        "method": "B_no_esmfold",
+        "split": "val",
+        "seed": 47,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_b_no_esmfold_contact_seed47_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "ae6e07f4ff15056c4afcc7fbc722c4a5f970584a8235cdd2507ca801131a22ad"
+      },
+      {
+        "method": "B_no_esmfold",
+        "split": "val",
+        "seed": 48,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_b_no_esmfold_contact_seed48_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "0cba150d203c4d2ad7e7fa8238aefbdc375bc9683aceaccbf90c8fcda7de8e96"
+      },
+      {
+        "method": "B_no_esmfold",
+        "split": "val",
+        "seed": 49,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_b_no_esmfold_contact_seed49_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "dfea84b4e409e6742a920d639f4dd4e2f3fb9cd27759b34d0c07568804c4a535"
+      },
+      {
+        "method": "B_no_esmfold",
+        "split": "val",
+        "seed": 50,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_b_no_esmfold_contact_seed50_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "7157b76fba8d1706f64561a7051410d54c12dcbd49b3ab9608534cbc7a3c53d9"
+      },
+      {
+        "method": "B_no_esmfold",
+        "split": "test",
+        "seed": 46,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_b_no_esmfold_contact_seed46_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "2ccd875472c79fbaa738fd5fda39a5181602ba07b118b904dfad160b7a492d88"
+      },
+      {
+        "method": "B_no_esmfold",
+        "split": "test",
+        "seed": 47,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_b_no_esmfold_contact_seed47_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "8cd3a0218c974d9d4849739f9319372b55a916e8f53132934e907302625405f8"
+      },
+      {
+        "method": "B_no_esmfold",
+        "split": "test",
+        "seed": 48,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_b_no_esmfold_contact_seed48_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "9c4b6a615765a33508844e647d7894a5873e9aa1bdd707cd7fa37233f7d06ce6"
+      },
+      {
+        "method": "B_no_esmfold",
+        "split": "test",
+        "seed": 49,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_b_no_esmfold_contact_seed49_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "cd87cc5c50b35056646585e546d5f7fa957ba7364eb8888aa5ef0636010cc4a2"
+      },
+      {
+        "method": "B_no_esmfold",
+        "split": "test",
+        "seed": 50,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_b_no_esmfold_contact_seed50_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "c4b29de5987616a59d64d273507f02e081e5d63e386a91e076a4a61acd499c49"
+      },
+      {
+        "method": "C_esmc_only",
+        "split": "val",
+        "seed": 46,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_c_esmc_only_seed46_locked_eval_20260721_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "824f5ed0763019b905a2caf34031bcf939fa21a19509692e7631d6e253a3f493"
+      },
+      {
+        "method": "C_esmc_only",
+        "split": "val",
+        "seed": 47,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_c_esmc_only_seed47_locked_eval_20260721_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "bc9a0727d3f7df441a8717f67ba392d6208e862f7edd89af85d5056ab83facb7"
+      },
+      {
+        "method": "C_esmc_only",
+        "split": "val",
+        "seed": 48,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_c_esmc_only_seed48_locked_eval_20260721_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "6de3d646f0e1f1ce71ba587ebf82bca17f86d0278affcbd40f6c9e28dd623ad0"
+      },
+      {
+        "method": "C_esmc_only",
+        "split": "val",
+        "seed": 49,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_c_esmc_only_seed49_locked_eval_20260721_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "5e3227a4462bc8e74aad3e3084ec2736e57a4525894fc24fd665b13a205bb63a"
+      },
+      {
+        "method": "C_esmc_only",
+        "split": "val",
+        "seed": 50,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_c_esmc_only_seed50_locked_eval_20260721_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "8f0ae1990f69d83e4e2d0374ee4e461eea4bacd2a4b8195f48d1c9ec038dd161"
+      },
+      {
+        "method": "C_esmc_only",
+        "split": "test",
+        "seed": 46,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_c_esmc_only_seed46_locked_eval_20260721_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "ad21c21d366e85000e556326672d48fd9599020117a42689392aa7dae57601c8"
+      },
+      {
+        "method": "C_esmc_only",
+        "split": "test",
+        "seed": 47,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_c_esmc_only_seed47_locked_eval_20260721_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "d3e993eeb61ff1d835fdc1e1de76fb72b77f18713e4481d3aec59d427a096c1f"
+      },
+      {
+        "method": "C_esmc_only",
+        "split": "test",
+        "seed": 48,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_c_esmc_only_seed48_locked_eval_20260721_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "f5174f9f5d1beba3df94ea3d78b57b1902a83a47cdcec59343d0a0795baf63f6"
+      },
+      {
+        "method": "C_esmc_only",
+        "split": "test",
+        "seed": 49,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_c_esmc_only_seed49_locked_eval_20260721_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "74f07bb7cde14bf8464a5ab31f5b8eb5cf2d798bc615820be76f42d73593fd25"
+      },
+      {
+        "method": "C_esmc_only",
+        "split": "test",
+        "seed": 50,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_c_esmc_only_seed50_locked_eval_20260721_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "ad0a42d38dd826b98d22ed85ea9cf9f055fabf10c794b8a360cae869b32efc78"
+      },
+      {
+        "method": "D_no_contact",
+        "split": "val",
+        "seed": 46,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_d_no_contact_seed46_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "0ba5870b837fff5fc740158997ac71deb2d9949cd88861b87aeceaceaeb9da19"
+      },
+      {
+        "method": "D_no_contact",
+        "split": "val",
+        "seed": 47,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_d_no_contact_seed47_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "6a01ccda83c27703fa519d91cf6edcd37c988bef3ee53dcd171ccef9879f7fb6"
+      },
+      {
+        "method": "D_no_contact",
+        "split": "val",
+        "seed": 48,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_d_no_contact_seed48_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "e7e90424fab37ceb79445b1dde49e167b4340b6de95f1365bf557016db451e80"
+      },
+      {
+        "method": "D_no_contact",
+        "split": "val",
+        "seed": 49,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_d_no_contact_seed49_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "0c408834b1d5a63876499b22d3b09bb58908f353cb16849397081bcdde38d107"
+      },
+      {
+        "method": "D_no_contact",
+        "split": "val",
+        "seed": 50,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_d_no_contact_seed50_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "12171056dc44e46daabf0a86c0973b5bb12d98ee3a02da6b5f912c49aafe5142"
+      },
+      {
+        "method": "D_no_contact",
+        "split": "test",
+        "seed": 46,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_d_no_contact_seed46_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "67319514c34e3476a451e6992324d168a5259c32963945c96b79d2c3ae08fb8d"
+      },
+      {
+        "method": "D_no_contact",
+        "split": "test",
+        "seed": 47,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_d_no_contact_seed47_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "b71b982eb667b4acaec98f71c0db1c1b2a27b6015c81a9871719451897826efc"
+      },
+      {
+        "method": "D_no_contact",
+        "split": "test",
+        "seed": 48,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_d_no_contact_seed48_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "80f7229aa68cefde0256c2ac204bb522759d3d08a58bc25b31f8c3880ecba79f"
+      },
+      {
+        "method": "D_no_contact",
+        "split": "test",
+        "seed": 49,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_d_no_contact_seed49_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "657f5e8f9cfd2c73b00a440b158f5cf23b7cf0c351afa1f8e9b17f2776ee8aee"
+      },
+      {
+        "method": "D_no_contact",
+        "split": "test",
+        "seed": 50,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_d_no_contact_seed50_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "0521f408cbfa2cb3f63af62c3a89f5be4e924154bf83ebfa62ea68a67f774118"
+      },
+      {
+        "method": "E_no_tcn",
+        "split": "val",
+        "seed": 46,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_e_no_tcn_seed46_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "bef590cd60b810f4d352f891b0b1ef3cfc237b462a3280b088baecf19a7425a7"
+      },
+      {
+        "method": "E_no_tcn",
+        "split": "val",
+        "seed": 47,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_e_no_tcn_seed47_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "23549a3394c450831a866367bfd00e6705e85e2f818805cca045272681120a6a"
+      },
+      {
+        "method": "E_no_tcn",
+        "split": "val",
+        "seed": 48,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_e_no_tcn_seed48_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "e73c4be658150eb633f93ae8a609c2b756e3292f16d763fe49a843bfe223566c"
+      },
+      {
+        "method": "E_no_tcn",
+        "split": "val",
+        "seed": 49,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_e_no_tcn_seed49_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "37076137869788f1e99a4b90446d319998681db3e6999c78aecb0788ddffcc87"
+      },
+      {
+        "method": "E_no_tcn",
+        "split": "val",
+        "seed": 50,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_e_no_tcn_seed50_prediction_export_20260825_hpc2/predictions/val.pt",
+        "size_bytes": 18958519,
+        "sha256": "d1a8773736849de27ae176b55803a98532df5bf185e82d1b060ea794cae1fb2f"
+      },
+      {
+        "method": "E_no_tcn",
+        "split": "test",
+        "seed": 46,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_e_no_tcn_seed46_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "31051b1792917a37e44a728efcce2081a327624a865294935ebd46b0060496a5"
+      },
+      {
+        "method": "E_no_tcn",
+        "split": "test",
+        "seed": 47,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_e_no_tcn_seed47_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "b4ce0f395a449e6af250f5b35130d7beb87da6f5add0635483220d6812e7e235"
+      },
+      {
+        "method": "E_no_tcn",
+        "split": "test",
+        "seed": 48,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_e_no_tcn_seed48_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "f38f8432dfc33fcdbdcfae3287ba3ab4bb0de5145132f19bbbbd275535083dd7"
+      },
+      {
+        "method": "E_no_tcn",
+        "split": "test",
+        "seed": 49,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_e_no_tcn_seed49_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "64260fc0137d38dc79ece7d721c34d8123a3c424139c9909c59635c90afbd12a"
+      },
+      {
+        "method": "E_no_tcn",
+        "split": "test",
+        "seed": 50,
+        "path": "/home/husrcf/Code/ProtBind/pypropel_unibio/benchmark_pipeline_tmp/hpc2_controlled_ablation_20260825/collected_prediction_exports/remote_runs/contact_site_cfsi30_m18_ablation_e_no_tcn_seed50_prediction_export_20260825_hpc2/predictions/test.pt",
+        "size_bytes": 13590405,
+        "sha256": "103d249489b3a2ade993b7417a61191f848987805e412b259cd875305cc8ce2f"
+      }
+    ]
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "candidate": {
+    "chain_ap_macro": {
+      "max": 0.7449632922648082,
+      "mean": 0.7390480633716955,
+      "min": 0.7327502730718605,
+      "std": 0.006115490526054505
+    },
+    "f1_best_threshold": {
+      "max": 0.689315380665793,
+      "mean": 0.6868143353062734,
+      "min": 0.6847248882851363,
+      "std": 0.0023227602046565206
+    },
+    "mcc_at_best_f1_threshold": {
+      "max": 0.559228533975664,
+      "mean": 0.556483561040394,
+      "min": 0.5547892949713757,
+      "std": 0.0023988954590373488
+    },
+    "pr_auc": {
+      "max": 0.7656264543208879,
+      "mean": 0.7573449552126101,
+      "min": 0.7526490545974467,
+      "std": 0.007193442382535638
+    }
+  },
+  "candidate_name": "M7c",
+  "control": {
+    "chain_ap_macro": {
+      "max": 0.7235540262534663,
+      "mean": 0.7195073625292664,
+      "min": 0.7156309936460391,
+      "std": 0.003964260545705233
+    },
+    "f1_best_threshold": {
+      "max": 0.6831237650653137,
+      "mean": 0.6798172833540482,
+      "min": 0.6779865734754822,
+      "std": 0.002868991326982443
+    },
+    "mcc_at_best_f1_threshold": {
+      "max": 0.5517570640298937,
+      "mean": 0.544621343904692,
+      "min": 0.5410497227566279,
+      "std": 0.006179716047252513
+    },
+    "pr_auc": {
+      "max": 0.7503223326375501,
+      "mean": 0.7465558159016235,
+      "min": 0.7442990523620222,
+      "std": 0.0032832137235872926
+    }
+  },
+  "control_name": "M7a",
+  "gate_checks": {
+    "mean_macro_delta_at_least_gate": true,
+    "mean_pooled_delta_within_tolerance": true
+  },
+  "macro_gate": 0.005,
+  "n_seeds": 3,
+  "paired": [
+    {
+      "candidate": {
+        "best_threshold": 0.53,
+        "chain_ap_macro": 0.7394306247784181,
+        "checkpoint": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7c_m2_chainmean_tcn2_seed42_e30_20260712_hpc2/best.pt",
+        "checkpoint_sha256": "ff87a8832704b0f332099204f2c8333a8a7d47bfddffb4ab6982aba49d5a6434",
+        "epoch": 20,
+        "f1_best_threshold": 0.6864027369678913,
+        "mcc_at_best_f1_threshold": 0.5547892949713757,
+        "pr_auc": 0.7537593567194961,
+        "run_dir": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7c_m2_chainmean_tcn2_seed42_e30_20260712_hpc2"
+      },
+      "control": {
+        "best_threshold": 0.62,
+        "chain_ap_macro": 0.7235540262534663,
+        "checkpoint": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7a_m2_macro_select_seed42_e30_20260712_hpc2/best.pt",
+        "checkpoint_sha256": "bd4d8fdc741877b96c495a9e896332e4fb29ba0adf3a617b5f953cda853313cf",
+        "epoch": 11,
+        "f1_best_threshold": 0.6831237650653137,
+        "mcc_at_best_f1_threshold": 0.5517570640298937,
+        "pr_auc": 0.7503223326375501,
+        "run_dir": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7a_m2_macro_select_seed42_e30_20260712_hpc2"
+      },
+      "delta_chain_ap_macro": 0.015876598524951824,
+      "delta_f1_best_threshold": 0.003278971902577643,
+      "delta_pr_auc": 0.0034370240819460163,
+      "seed": 42
+    },
+    {
+      "candidate": {
+        "best_threshold": 0.57,
+        "chain_ap_macro": 0.7327502730718605,
+        "checkpoint": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7c_m2_chainmean_tcn2_seed43_e30_20260712_confirm_hpc2/best.pt",
+        "checkpoint_sha256": "6b33c6e9d8c1841e83604a574832b351a9b23dff1d966f2b4f84a7e55f12bf03",
+        "epoch": 16,
+        "f1_best_threshold": 0.6847248882851363,
+        "mcc_at_best_f1_threshold": 0.5554328541741421,
+        "pr_auc": 0.7526490545974467,
+        "run_dir": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7c_m2_chainmean_tcn2_seed43_e30_20260712_confirm_hpc2"
+      },
+      "control": {
+        "best_threshold": 0.65,
+        "chain_ap_macro": 0.7193370676882938,
+        "checkpoint": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7a_m2_macro_select_seed43_e30_20260712_confirm_hpc2/best.pt",
+        "checkpoint_sha256": "c2fa4081ff58255b07ea9f1fbef8669ac52a47d2ce6d4ea6bef22a5b674ca842",
+        "epoch": 15,
+        "f1_best_threshold": 0.6783415115213489,
+        "mcc_at_best_f1_threshold": 0.5410572449275544,
+        "pr_auc": 0.7442990523620222,
+        "run_dir": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7a_m2_macro_select_seed43_e30_20260712_confirm_hpc2"
+      },
+      "delta_chain_ap_macro": 0.013413205383566718,
+      "delta_f1_best_threshold": 0.006383376763787418,
+      "delta_pr_auc": 0.00835000223542448,
+      "seed": 43
+    },
+    {
+      "candidate": {
+        "best_threshold": 0.39,
+        "chain_ap_macro": 0.7449632922648082,
+        "checkpoint": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7c_m2_chainmean_tcn2_seed44_e30_20260712_confirm_hpc2/best.pt",
+        "checkpoint_sha256": "a66e424a3a408588c1b3f5cc4289cf844b18c18417f4a57eca55e7646f3e3bfd",
+        "epoch": 13,
+        "f1_best_threshold": 0.689315380665793,
+        "mcc_at_best_f1_threshold": 0.559228533975664,
+        "pr_auc": 0.7656264543208879,
+        "run_dir": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7c_m2_chainmean_tcn2_seed44_e30_20260712_confirm_hpc2"
+      },
+      "control": {
+        "best_threshold": 0.74,
+        "chain_ap_macro": 0.7156309936460391,
+        "checkpoint": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7a_m2_macro_select_seed44_e30_20260712_confirm_hpc2/best.pt",
+        "checkpoint_sha256": "e5030c94ca2ba630997f6b17f95828a3ef4f79b9b2d3579c451aac142526074f",
+        "epoch": 14,
+        "f1_best_threshold": 0.6779865734754822,
+        "mcc_at_best_f1_threshold": 0.5410497227566279,
+        "pr_auc": 0.745046062705298,
+        "run_dir": "/hpc2hdd/home/shuang886/jhspoolers/PPC/runs/contact_site_cfsi30_m7screen_m7a_m2_macro_select_seed44_e30_20260712_confirm_hpc2"
+      },
+      "delta_chain_ap_macro": 0.02933229861876907,
+      "delta_f1_best_threshold": 0.011328807190310819,
+      "delta_pr_auc": 0.020580391615589888,
+      "seed": 44
+    }
+  ],
+  "paired_delta": {
+    "chain_ap_macro_mean": 0.019540700842429204,
+    "chain_ap_macro_positive_seeds": 3,
+    "chain_ap_macro_std": 0.00856875817738333,
+    "pr_auc_mean": 0.010789139310986795,
+    "pr_auc_positive_seeds": 3,
+    "pr_auc_std": 0.008828125783734377
+  },
+  "pooled_regression_tolerance": 0.002,
+  "promote_candidate": true,
+  "protocol": "paired seeds; validation chain-macro-AP checkpoints; test hidden",
+  "seeds": [
+    42,
+    43,
+    44
+  ]
+}

@@ -1,5 +1,8 @@
 # M7 / M7+ Validation-Locked Experiment Plan (2026-07-12)
 
+> Historical plan. Completed M7 confirmation, M8 screen, M9-M21 runs and final
+> M18/M21C results are now linked in [the results index](RESULTS_INDEX.md).
+
 ## Objective
 
 Improve single-chain residue effect-site ranking without changing the global-SI30

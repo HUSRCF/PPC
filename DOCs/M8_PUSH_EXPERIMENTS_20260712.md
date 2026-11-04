@@ -1,5 +1,8 @@
 # M8 Validation-Only Push Experiments (2026-07-12)
 
+> Historical plan. This file is not the current run status. See
+> [the results index](RESULTS_INDEX.md) for completed M8 and subsequent results.
+
 ## Locked Baseline
 
 M8 starts from M7c seed 42, selected only by validation chain-macro AP:

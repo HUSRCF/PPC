@@ -1,0 +1,129 @@
+{
+  "purpose": "Only predeclared K21 K22 K23 fixed thirds after successful50epochs",
+  "observed_UTC": "2026-11-04T19:42:16.100491+00:00",
+  "policy_sha256": "7ef214fe6b6b5215733a13bd0cc8aa9d318052a7d05cf388ad3551c4f75ef7be",
+  "completed_receipts": [
+    {
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K21_G2_MSA_twohop_wd003_seed49",
+      "job": "800313_2",
+      "state": [
+        "COMPLETED",
+        "0:0"
+      ],
+      "epochs": 50,
+      "consecutive": true,
+      "coverage": true,
+      "test_seen": false,
+      "selected": {
+        "epoch": 27,
+        "chain_ap_macro": 0.7567802187503185,
+        "pooled_ap": 0.785465248617836,
+        "auroc": 0.8926131825439023,
+        "f1_best_threshold": 0.7101494913445474,
+        "best_threshold": 0.39,
+        "mcc_best_threshold": 0.5982924662160412,
+        "best_mcc_threshold": 0.46,
+        "chain_ratio_mae_raw": 0.050948038168771324
+      },
+      "metrics_sha256": "b1e0241babaa70950ec06249758e9e8f8d59f865b73bb15c69c09788da38fe74",
+      "AMP_skips": 1,
+      "sanitized_gradient_elements": 1
+    },
+    {
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K22_G2_MSA_twohop_wd020_seed49",
+      "job": "800313_3",
+      "state": [
+        "COMPLETED",
+        "0:0"
+      ],
+      "epochs": 50,
+      "consecutive": true,
+      "coverage": true,
+      "test_seen": false,
+      "selected": {
+        "epoch": 25,
+        "chain_ap_macro": 0.7545994605777946,
+        "pooled_ap": 0.7841994428305026,
+        "auroc": 0.8875595833624237,
+        "f1_best_threshold": 0.7024462538859877,
+        "best_threshold": 0.62,
+        "mcc_best_threshold": 0.5935405464811793,
+        "best_mcc_threshold": 0.82,
+        "chain_ratio_mae_raw": 0.07589268510251544
+      },
+      "metrics_sha256": "6bc88e041bfee013ee987cc16c2cd80c892f6c78ac2271d1573eb3e5b38095fb",
+      "AMP_skips": 1,
+      "sanitized_gradient_elements": 1
+    },
+    {
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K23_G2_MSA_twohop_ls002_seed49",
+      "job": "800313_4",
+      "state": [
+        "COMPLETED",
+        "0:0"
+      ],
+      "epochs": 50,
+      "consecutive": true,
+      "coverage": true,
+      "test_seen": false,
+      "selected": {
+        "epoch": 32,
+        "chain_ap_macro": 0.7604762491022333,
+        "pooled_ap": 0.7903642797571038,
+        "auroc": 0.8935091682009328,
+        "f1_best_threshold": 0.713711341111199,
+        "best_threshold": 0.48,
+        "mcc_best_threshold": 0.6062306936222968,
+        "best_mcc_threshold": 0.62,
+        "chain_ratio_mae_raw": 0.057390830414586286
+      },
+      "metrics_sha256": "257b3e3a3cd1e80345830751fb0ef0592428f2b74cd96cc328becf064a0495a2",
+      "AMP_skips": 2,
+      "sanitized_gradient_elements": 2
+    }
+  ],
+  "points": {
+    "G2": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl"
+    },
+    "MSA_D": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl"
+    },
+    "K21": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K21_G2_MSA_twohop_wd003_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K21_G2_MSA_twohop_wd003_seed49/metrics.jsonl"
+    },
+    "K22": {
+      "epoch": 25,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K22_G2_MSA_twohop_wd020_seed49/predictions/val_epoch_025.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K22_G2_MSA_twohop_wd020_seed49/metrics.jsonl"
+    },
+    "K23": {
+      "epoch": 32,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K23_G2_MSA_twohop_ls002_seed49/predictions/val_epoch_032.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K23_G2_MSA_twohop_ls002_seed49/metrics.jsonl"
+    }
+  },
+  "blends": {
+    "G2_plus_MSA_D_plus_K21": [
+      "G2",
+      "MSA_D",
+      "K21"
+    ],
+    "G2_plus_MSA_D_plus_K22": [
+      "G2",
+      "MSA_D",
+      "K22"
+    ],
+    "G2_plus_MSA_D_plus_K23": [
+      "G2",
+      "MSA_D",
+      "K23"
+    ]
+  }
+}

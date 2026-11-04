@@ -1,0 +1,111 @@
+{
+  "purpose": "Only predeclared K19 and K20 fixed thirds after successful50epochs",
+  "observed_UTC": "2026-11-04T19:38:10.298747+00:00",
+  "runs": [
+    {
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K19_G2_MSA_twohop_dropout_low_seed49",
+      "job": "800313_0",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "epochs": 50,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "test_seen": false,
+      "metrics_sha256": "ef242d67746ef99b07d523865104daddb5a27af91d00a33c4056c98876e1854e",
+      "AMP_skips": 1,
+      "sanitized_gradient_elements": 4,
+      "selected": {
+        "epoch": 25,
+        "chain_ap_macro": 0.7568933455907605,
+        "pooled_ap": 0.7866476841734893,
+        "auroc": 0.8925446748149486,
+        "f1_best_threshold": 0.7099657656153181,
+        "best_threshold": 0.25,
+        "mcc_best_threshold": 0.5996264137776938,
+        "best_mcc_threshold": 0.36,
+        "chain_ratio_mae_raw": 0.05555643283870331
+      },
+      "macro_selected": {
+        "epoch": 25,
+        "chain_ap_macro": 0.7568933455907605,
+        "pooled_ap": 0.7866476841734893,
+        "auroc": 0.8925446748149486,
+        "f1_best_threshold": 0.7099657656153181,
+        "best_threshold": 0.25,
+        "mcc_best_threshold": 0.5996264137776938,
+        "best_mcc_threshold": 0.36,
+        "chain_ratio_mae_raw": 0.05555643283870331
+      }
+    },
+    {
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K20_G2_MSA_twohop_dropout_high_seed49",
+      "job": "800313_1",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "epochs": 50,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "test_seen": false,
+      "metrics_sha256": "4433df29d54857f989ba776dbe9979fcec52f3181965045d75ccbd102e6cf9a6",
+      "AMP_skips": 2,
+      "sanitized_gradient_elements": 3,
+      "selected": {
+        "epoch": 13,
+        "chain_ap_macro": 0.7589410876068085,
+        "pooled_ap": 0.7858941314396594,
+        "auroc": 0.8918810615684856,
+        "f1_best_threshold": 0.7099196140762306,
+        "best_threshold": 0.58,
+        "mcc_best_threshold": 0.6010785080878585,
+        "best_mcc_threshold": 0.7,
+        "chain_ratio_mae_raw": 0.06944461702780669
+      },
+      "macro_selected": {
+        "epoch": 12,
+        "chain_ap_macro": 0.7629596300535917,
+        "pooled_ap": 0.784242189373569,
+        "auroc": 0.8923823936250876,
+        "f1_best_threshold": 0.7042537147539697,
+        "best_threshold": 0.32,
+        "mcc_best_threshold": 0.5940597363408473,
+        "best_mcc_threshold": 0.44,
+        "chain_ratio_mae_raw": 0.05983829211183759
+      }
+    }
+  ],
+  "policy_sha256": "7ef214fe6b6b5215733a13bd0cc8aa9d318052a7d05cf388ad3551c4f75ef7be",
+  "points": {
+    "G2": {
+      "epoch": 27,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/predictions/val_epoch_027.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/architecture_screen_20261104/runs/G2_edge_attention_seed49/metrics.jsonl"
+    },
+    "MSA_D": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/msa_factorial_20261104/runs/D_encoder_seed49/metrics.jsonl"
+    },
+    "K19": {
+      "epoch": 25,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K19_G2_MSA_twohop_dropout_low_seed49/predictions/val_epoch_025.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K19_G2_MSA_twohop_dropout_low_seed49/metrics.jsonl"
+    },
+    "K20": {
+      "epoch": 13,
+      "prediction": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K20_G2_MSA_twohop_dropout_high_seed49/predictions/val_epoch_013.pt",
+      "metrics": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/regularization_screen_20261105/runs/K20_G2_MSA_twohop_dropout_high_seed49/metrics.jsonl"
+    }
+  },
+  "blends": {
+    "G2_plus_MSA_D_plus_K19": [
+      "G2",
+      "MSA_D",
+      "K19"
+    ],
+    "G2_plus_MSA_D_plus_K20": [
+      "G2",
+      "MSA_D",
+      "K20"
+    ]
+  }
+}

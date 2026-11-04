@@ -7,8 +7,10 @@ PDBTM validation pooled AP>=0.80. The best completed point is currently
 0.7997048805648456. **No real test inference or test scoring has run.**
 
 `scripts/analysis/locked_union_evaluation.py` implements the lock/scoring
-core, not an end-to-end inference pipeline. A dedicated strict GPU inference
-producer and a full validation replay remain prerequisites before test use.
+core. A dedicated strict producer is now implemented in
+`scripts/analysis/run_locked_union_inference.py`;real GPU validation replay
+and the complete inference/scoring acceptance remain prerequisites before
+test use. Code/unit-test completion is not end-to-end runtime verification.
 Do not reuse the training script's relaxed warm-start or threshold-sweep path
 for the locked test evaluation.
 
@@ -62,6 +64,15 @@ atomic output reservation. The full local suite passed91tests with2optional
 snapshot tests skipped. Narrow read-only review used gpt-6-luna max and found
 no remaining blockers after two boundary fixes.
 
+The dedicated producer has eight additional focused tests for no optimizer,
+no gradient/model mutation, strict full-query loaders, validation replay
+tolerances, no Test on failed validation, checkpoint Path/JSON roundtrips,
+all-members-before-Test ordering, and actual metadata/hash/path selection
+audits. gpt-6-luna max review found and verified fixes for unbound sequence
+hashes, metadata-free inputs, relative roots and resolver-priority changes.
+The complete local suite passed99tests with2optional skips before the later
+configuration-only interaction test was added. Actual GPU replay is pending.
+
 The negative probe on the actual best **validation-only** NPZ must fail before
 shared cohort metadata or any checkpoint/test tensor is opened. Its receipt
 is stored alongside this document; no real test data is needed for that probe.
@@ -69,8 +80,12 @@ is stored alongside this document; no real test data is needed for that probe.
 ## Remaining Before Real Test
 
 1. Reach0.80 at full precision under the existing eligibility rules.
-2. Implement/review a dedicated no-optimizer GPU producer, with strict loading,
-   model.eval/no-grad, state hashes and source/config/feature provenance.
+2. Use the reviewed dedicated no-optimizer producer, with
+   strict loading, model.eval/no-grad, state hashes and input-file provenance.
+   It verifies actual sequence metadata against the frozen query hash across
+   all input sources, rejects metadata-free tensors/relative roots, and
+   re-resolves/re-hashes selected paths after inference. Full model state must
+   remain unchanged. No optimizer or training loader is constructed.
 3. Replay every member on validation and reproduce locked source predictions
    within predeclared numerical tolerances; reproduce the combined milestone.
 4. Verify feature/normalization compatibility and full test-cohort readiness.

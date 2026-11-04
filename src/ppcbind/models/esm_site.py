@@ -100,6 +100,7 @@ class ESMSiteConfig:
     geometry_vector_channels: int = 8
     geometry_vector_hidden: int = 16
     geometry_heads: int = 8
+    geometry_msa_edge_bias: bool = False
     linear_attention_layers: int = 0
     use_chain_ratio_head: bool = False
     chain_ratio_head_hidden: int = 128
@@ -1051,10 +1052,16 @@ class ESMSiteClassifier(nn.Module):
         n_sparse_layers = max(0, int(c.sparse_graph_layers)) if c.use_sparse_graph_transformer else 0
         if c.geometry_mode not in {"none", "edge_mlp", "edge_attention", "gvp"}:
             raise ValueError(f"Unsupported geometry_mode={c.geometry_mode}")
+        if c.geometry_msa_edge_bias and (
+                c.geometry_mode != "edge_attention" or c.geometry_layers < 1
+                or c.prottrans_residual_dim < 1
+                or not c.use_prottrans_embeddings or not conditional_residual):
+            raise ValueError("Evolutionary geometry attention requires geometry and the MSA residual projector")
         self.geometry_blocks = nn.ModuleList(
             GeometryGraphBlock(c.d_model, c.geometry_edge_dim, c.geometry_mode, c.dropout,
                                c.geometry_heads, c.geometry_vector_channels if i == 0 else c.geometry_vector_hidden,
-                               c.geometry_vector_hidden)
+                               c.geometry_vector_hidden,
+                               evolution_dim=c.prottrans_residual_dim if c.geometry_msa_edge_bias else 0)
             for i in range(max(0, c.geometry_layers) if c.geometry_mode != "none" else 0)
         )
         self.sparse_graph_blocks = nn.ModuleList(
@@ -1381,7 +1388,8 @@ class ESMSiteClassifier(nn.Module):
         gv = geometry_vectors
         for block in self.geometry_blocks:
             h, gv = block(h, gv, mask, geometry_edge_index, geometry_edge_features,
-                          geometry_edge_vectors, geometry_edge_scores)
+                          geometry_edge_vectors, geometry_edge_scores,
+                          evolutionary_features=prottrans_branch if c.geometry_msa_edge_bias else None)
 
         if c.msa_residual_position == "post_geometry":
             h = self._apply_msa_residual(h, prottrans_branch, mask)

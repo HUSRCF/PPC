@@ -17,6 +17,8 @@ VARIANTS = {
     "K6_G2_MSA_fullcontext": {"use_global_context": False, "n_transformer_layers": 1},
     "K7_G2_MSA_residue_mean": {},
     "K8_G2_MSA_pure_CE": {},
+    "K9_G2_MSA_evo_edges": {"geometry_msa_edge_bias": True},
+    "K10_G2_MSA_evo_edges_twohop": {"geometry_msa_edge_bias": True, "geometry_layers": 2},
 }
 MSA_KEYS = (
     "use_prottrans_embeddings", "d_prottrans", "prottrans_layer_count",
@@ -32,6 +34,10 @@ def sha(path):
 
 def load(path):
     return json.loads(Path(path).read_text())
+
+
+def absolute_path(value):
+    return Path(value).expanduser().resolve()
 
 
 def build(b1, g2, msa, experiment, name):
@@ -125,21 +131,25 @@ def main():
     sub = p.add_subparsers(dest="mode", required=True)
     prep = sub.add_parser("prepare")
     for name in ("b1", "g2", "msa", "repo", "experiment"):
-        prep.add_argument("--" + name, type=Path, required=True)
+        prep.add_argument("--" + name, type=absolute_path, required=True)
+    prep.add_argument("--variants", nargs="+", choices=tuple(VARIANTS))
     check = sub.add_parser("verify")
     for name in ("repo", "experiment"):
-        check.add_argument("--" + name, type=Path, required=True)
+        check.add_argument("--" + name, type=absolute_path, required=True)
     check.add_argument("--task", type=int, required=True)
     a = p.parse_args()
     if a.mode == "verify":
         print(verify(a.repo, a.experiment, a.task), flush=True)
         return
+    variants = a.variants or list(VARIANTS)
+    if len(variants) != len(set(variants)):
+        raise ValueError("Duplicate variants")
     parents = {key: {"path": str(getattr(a, key)), "sha256": sha(getattr(a, key))}
                for key in ("b1", "g2", "msa")}
     b1, g2, msa = (load(getattr(a, key)) for key in ("b1", "g2", "msa"))
     (a.experiment / "configs").mkdir(parents=True, exist_ok=False)
     jobs = []
-    for name in VARIANTS:
+    for name in variants:
         cfg = build(b1, g2, msa, a.experiment, name)
         path = a.experiment / "configs" / f"{name}_seed49.json"
         path.write_text(json.dumps(cfg, indent=2) + "\n")
@@ -163,7 +173,8 @@ def main():
         epochs=50, seed=49, from_scratch=True, test_evaluated=False,
         labels="exact-sequence ever-observed union5.5A",
         feature_contract="Corrected91D OF3, ESM-C MLC3456D, frozen768D MSA Transformer",
-        architecture_rows="K0-K6 use identical D loss; K7 changes CE aggregation only; K8 removes ratio loss only",
+        architecture_rows="K0-K6/K9/K10 use D loss; K7 changes CE aggregation only; K8 removes ratio loss only",
+        selected_variants=variants,
         checkpoints="Retain every epoch and both AP-best checkpoints; never combine scores from different epochs",
         concurrency="No artificial array throttle; scheduler/account quotas apply",
         promotion="Exploratory validation screen only; later seed/holdout confirmation required",

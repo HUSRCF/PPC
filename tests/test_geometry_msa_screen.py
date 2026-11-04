@@ -128,7 +128,7 @@ class GeometryMSATests(unittest.TestCase):
             if name not in {"K7_G2_MSA_residue_mean", "K8_G2_MSA_pure_CE"}:
                 self.assertEqual((t["loss_reduction"], t["ratio_loss_weight"]), ("chain_mean", .75))
         self.assertEqual(parents, before)
-        self.assertEqual(len(outputs), 9)
+        self.assertEqual(len(outputs), 11)
         base = screen.build(*parents, Path("/tmp/geo_msa_test"), "K1_G2_MSA")
         for name, axis in (("K7_G2_MSA_residue_mean", "loss_reduction"), ("K8_G2_MSA_pure_CE", "ratio_loss_weight")):
             variant = screen.build(*parents, Path("/tmp/geo_msa_test"), name)
@@ -147,6 +147,10 @@ class GeometryMSATests(unittest.TestCase):
         encoder["data"]["split_dir"] = "/different/split"
         with self.assertRaises(ValueError):
             screen.build(b1, g2, encoder, Path("/tmp/geo_msa_test"), "K1_G2_MSA")
+
+    def test_preparation_paths_are_normalized(self):
+        screen = module("prepare_geometry_msa_screen")
+        self.assertTrue(screen.absolute_path(".").is_absolute())
 
 
 if __name__ == "__main__":

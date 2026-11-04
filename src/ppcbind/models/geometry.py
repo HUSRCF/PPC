@@ -9,6 +9,30 @@ from torch import nn
 from torch.nn import functional as F
 
 
+class EvolutionaryEdgeBias(nn.Module):
+    """Bounded, zero-initialized MSA similarity prior on existing sparse edges."""
+
+    def __init__(self, dim: int, heads: int, rank: int = 8):
+        super().__init__()
+        self.dim, self.heads, self.rank = dim, heads, rank
+        self.norm = nn.LayerNorm(dim)
+        self.query = nn.Linear(dim, heads * rank, bias=False)
+        self.key = nn.Linear(dim, heads * rank, bias=False)
+        self.scale = nn.Parameter(torch.zeros(heads))
+
+    def forward(self, features, mask, edge_index):
+        if features is None or features.shape != (*mask.shape, self.dim):
+            raise ValueError("Evolutionary edge bias requires aligned projected MSA features")
+        features = features.masked_fill(~mask[..., None], 0)
+        x = self.norm(features).reshape(-1, self.dim)
+        q = self.query(x).reshape(-1, self.heads, self.rank)
+        k = self.key(x).reshape(-1, self.heads, self.rank)
+        q, k = (F.normalize(t.float(), dim=-1, eps=1.e-6) for t in (q, k))
+        src, dst = edge_index.long()
+        similarity = (q[dst] * k[src]).sum(-1)
+        return 4. * self.scale.float().tanh() * similarity
+
+
 class VectorPerceptron(nn.Module):
     """Scalar/vector channel mixing following the GVP construction (Jing et al.)."""
 
@@ -33,7 +57,8 @@ class GeometryGraphBlock(nn.Module):
     """Query-conditioned edge MLP, edge attention, or GVP-style message passing."""
 
     def __init__(self, dim: int, edge_dim: int, mode: str, dropout: float = .25,
-                 heads: int = 8, vector_in: int = 8, vector_hidden: int = 16):
+                 heads: int = 8, vector_in: int = 8, vector_hidden: int = 16,
+                 evolution_dim: int = 0):
         super().__init__()
         if mode not in {"edge_mlp", "edge_attention", "gvp"} or dim % heads:
             raise ValueError((mode, dim, heads))
@@ -57,8 +82,15 @@ class GeometryGraphBlock(nn.Module):
                                     nn.SiLU(), nn.Dropout(dropout), nn.Linear(2 * dim, dim))
         nn.init.zeros_(self.update[-1].weight)
         nn.init.zeros_(self.update[-1].bias)
+        self.evolution_bias = None
+        if evolution_dim:
+            if mode != "edge_attention" or evolution_dim < 1:
+                raise ValueError("MSA edge bias requires edge_attention and positive feature width")
+            with torch.random.fork_rng(devices=[]):
+                self.evolution_bias = EvolutionaryEdgeBias(evolution_dim, heads)
 
-    def forward(self, h, vectors, mask, edge_index, edge_features, edge_vectors, edge_scores):
+    def forward(self, h, vectors, mask, edge_index, edge_features, edge_vectors, edge_scores,
+                evolutionary_features=None):
         batch, length, dim = h.shape
         n = batch * length
         if any(x is None for x in (edge_index, vectors, edge_features, edge_vectors, edge_scores)):
@@ -75,6 +107,8 @@ class GeometryGraphBlock(nn.Module):
                   or not bool((src // length == dst // length).all())
                   or not bool((flat_mask[src] & flat_mask[dst]).all())):
             raise ValueError("Geometry edges cross samples, padding, or bounds")
+        extra_bias = (self.evolution_bias(evolutionary_features, mask, edge_index)
+                      if self.evolution_bias is not None else None)
         h = h.masked_fill(~mask.unsqueeze(-1), 0)
         flat = self.norm(h).reshape(n, dim)
         if self.mode == "gvp":
@@ -101,6 +135,8 @@ class GeometryGraphBlock(nn.Module):
             key = self.key(flat).reshape(n, self.heads, dh)
             scores = (query[dst].float() * key[src].float()).sum(-1) / math.sqrt(dh)
             scores = scores + self.edge_bias(ef).float() + weights.log()[:, None]
+            if extra_bias is not None:
+                scores = scores + extra_bias
             maxima = torch.full((n, self.heads), -torch.inf, device=h.device)
             maxima.scatter_reduce_(0, dst[:, None].expand_as(scores), scores, reduce="amax", include_self=True)
             numer = (scores - maxima[dst]).exp()

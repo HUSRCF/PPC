@@ -1,0 +1,40 @@
+{
+  "observed_UTC": "2026-11-04T21:26:25.101179+00:00",
+  "scope": "Read-only exact-sequence lower-bound overlap preview;not a homology audit or split change",
+  "RCSB_native_sequences": 251267,
+  "PDBTM_sequences": 6667,
+  "exact_overlap_contingency": {
+    "train": {
+      "train": 4010,
+      "val": 287,
+      "test": 281,
+      "not_in_native_exact_universe": 282,
+      "not_in_ge50_length_below50": 8
+    },
+    "val": {
+      "train": 769,
+      "not_in_native_exact_universe": 92,
+      "test": 75,
+      "val": 139
+    },
+    "test": {
+      "train": 455,
+      "not_in_native_exact_universe": 87,
+      "test": 92,
+      "val": 90
+    }
+  },
+  "RCSB_sequences_in_native_components_touched_by_PDBTM_val_or_test_exact_matches": {
+    "train": 156639,
+    "val": 417,
+    "test": 358
+  },
+  "touched_components": 61,
+  "test_labels_read": false,
+  "training_started": false,
+  "inputs_sha256": {
+    "/data/user/shuang886/Folding/Dataset/derived/tminter3_rcsb_ppis_ge50_v1/training/ppis_ge50_v1/split/unique_split.tsv": "8a8f2c34073e83b3aada046a707e6f02b3aab68afd93655ab4768aca7e1d1798",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/data/sequence_groups.tsv": "44129de1f7f3b1eba3c6651070df3a9220506639e0721a8931b65686c3a1c57c",
+    "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/data/unique_sequences.fasta": "7f42554c934366734837fc1c55f8bb6930b71b53e8067cac9f5756cd64ba0d5a"
+  }
+}

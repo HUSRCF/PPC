@@ -1,0 +1,51 @@
+{
+  "lock_sha256": "01839ba58a2b7a4f9d929f720bf44f75d177534b8f539728865387b3b9bd14d7",
+  "members": {
+    "G2": {
+      "max_score_error": 2.980232238769531e-07,
+      "score_RMSE": 2.6500362164138814e-08,
+      "actual": {
+        "pooled_AP": 0.7802500440544962,
+        "macro_AP": 0.746794848067588
+      },
+      "expected": {
+        "pooled_AP": 0.7802500425571836,
+        "macro_AP": 0.7467948466002535
+      }
+    },
+    "MSA_D": {
+      "max_score_error": 2.384185791015625e-07,
+      "score_RMSE": 2.6173476249661567e-08,
+      "actual": {
+        "pooled_AP": 0.76076035842067,
+        "macro_AP": 0.7343365538749322
+      },
+      "expected": {
+        "pooled_AP": 0.7607603624886583,
+        "macro_AP": 0.7343365679087196
+      }
+    },
+    "K26": {
+      "max_score_error": 4.470348358154297e-07,
+      "score_RMSE": 3.537997739355459e-08,
+      "actual": {
+        "pooled_AP": 0.7862070764974243,
+        "macro_AP": 0.7550347145435751
+      },
+      "expected": {
+        "pooled_AP": 0.7862070787197295,
+        "macro_AP": 0.7550346663360386
+      }
+    }
+  },
+  "metrics": {
+    "pooled_AP": 0.800546877708932,
+    "macro_AP": 0.7684925298590854
+  },
+  "tolerances": {
+    "max_score_error": 2e-05,
+    "score_RMSE": 2e-06,
+    "absolute_AP": 2e-06
+  },
+  "test_read": false
+}

@@ -1,6 +1,6 @@
 {
-  "observed_UTC": "2026-11-04T21:16:20.154267+00:00",
-  "stage": "locked_test_evaluation_submitted",
+  "observed_UTC": "2026-11-04T21:51:05.811849+00:00",
+  "stage": "RCSB_preparation_after_locked_test",
   "target_pooled_AP": 0.8,
   "target_verified": true,
   "leading_validation_point": {
@@ -12,7 +12,7 @@
     "evidence": "preTCN_interactions_20261105/K26/summary.json",
     "interpretation": "First verified declared ensemble crossing operational validation target;adaptive validation,not independent-test evidence"
   },
-  "test_evaluated": false,
+  "test_evaluated": true,
   "test_model_selection": false,
   "test_threshold_search": false,
   "RCSB_whole_training_started_in_this_stage": false,
@@ -29,8 +29,8 @@
   "interaction_tasks": 3,
   "interaction_latest_observed_epochs": {
     "K25": 50,
-    "K26": 42,
-    "K27": 40
+    "K26": 50,
+    "K27": 50
   },
   "interaction_policy": "preTCN_interactions_20261105_fixed_blends.json",
   "interaction_latest_acceptance": "preTCN_interactions_20261105_progress_2044UTC.json",
@@ -61,9 +61,10 @@
   "CPU_diagnostic_is_not_test_acceptance": true,
   "RCSB_asset_preflight": "RCSB_single_union_asset_preflight_20261105.md",
   "next_steps": [
-    "Verify locked-system validation replay and fixed test evaluation",
-    "Archive full fixed test metrics/coverage/no-gradient integrity regardless of outcome",
-    "Audit and attempt whole-RCSB single-chain union training without test-guided model changes"
+    "Verify new RCSB feature smoke and repair missing frozen features without recomputing existing bank",
+    "Build full observed-sequence all-partner union labels before feature/partner filtering",
+    "Resolve RCSB native-vs-protected evaluation contract without using locked test performance",
+    "Complete full label/feature/mapping audit and train-only normalization;attempt whole-RCSB single-chain training"
   ],
   "contract": "pooled_AP080_milestones_20261105_policy.json",
   "tcn_context_job": "800559",
@@ -114,8 +115,38 @@
     }
   },
   "test_evaluation_job": "800590",
-  "test_evaluation_status": "submitted;full validation replay and final test coverage/terminal state still required",
-  "locked_system_GPU_replay_pending": true,
-  "test_input_read_stage": "Inspect guarded producer receipts;do not infer current read stage from job submission",
-  "additional_trials_role": "May finish as validation-only evidence;cannot replace locked system based on test feedback"
+  "test_evaluation_status": "COMPLETED exit0;724queries/352746residues;allmember no-gradient/state/hash checks passed",
+  "locked_system_GPU_replay_pending": false,
+  "test_input_read_stage": "Fixed locked test inference and scoring completed;no test-driven model/gate change",
+  "additional_trials_role": "Remaining PDBTM jobs may finish as validation-only evidence;no new test evaluation or test-guided replacement",
+  "test_result": {
+    "pooled_AP": 0.7693981218125034,
+    "macro_AP": 0.7229288213502325,
+    "AUROC": 0.8994801406308129,
+    "F1_at_validation_gate_0p50": 0.6930926510397823,
+    "MCC_at_validation_gate_0p61": 0.5958782173993233,
+    "chain_ratio_MAE": 0.054777780901446894,
+    "metrics": "locked_AP080_K26_20261105/test_evaluation/metrics.json",
+    "completion": "locked_AP080_K26_20261105/evaluation_completed.json",
+    "test_npz": "locked_AP080_K26_20261105/test_evaluation/test.npz"
+  },
+  "RCSB_preparation": {
+    "root": "/data/user/shuang886/PPC_RCSB_single_union/20261105",
+    "native_target_sequences": 251267,
+    "initial_ESMC_filename_missing": 37170,
+    "initial_PS_filename_missing": 26991,
+    "missing_requests_QC_complete": true,
+    "ESMC_smoke_job": "800636",
+    "environment_changed": false,
+    "split_preference_question_pending": true,
+    "union_labels_complete": false,
+    "full_tensor_audit_complete": false,
+    "ESMC_smoke_passed": true,
+    "ESMC_formal_job_array": "800645",
+    "ESMC_formal_partition": "acd_u",
+    "ESMC_formal_shards": 2,
+    "ESMC_formal_status": "submitted;actual success/coverage still to be verified",
+    "Protenix_missing_requests_ready": true,
+    "full_union_label_build_started": false
+  }
 }

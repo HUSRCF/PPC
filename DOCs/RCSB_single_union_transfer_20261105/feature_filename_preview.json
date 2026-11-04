@@ -1,0 +1,59 @@
+{
+  "observed_UTC": "2026-11-04T21:31:14.550548+00:00",
+  "scope": "Filename presence only against native ge50 universe;not a tensor/sequence/content or union-label audit",
+  "native_sequences": 251267,
+  "native_ge100": 224361,
+  "ESMC": {
+    "files": 214097,
+    "distinct_ids": 214097,
+    "duplicate_names": 0,
+    "unexpected_nested_dirs": []
+  },
+  "Protenix": {
+    "files": 224276,
+    "distinct_ids": 224276,
+    "duplicate_names": 0,
+    "unexpected_nested_dirs": []
+  },
+  "coverage": {
+    "ESMC": 214097,
+    "Protenix": 224276,
+    "both": 214097
+  },
+  "unexpected_ESMC": 0,
+  "unexpected_Protenix": 0,
+  "missing": {
+    "ESMC": {
+      "test": 3157,
+      "train": 30548,
+      "val": 3465
+    },
+    "Protenix": {
+      "test": 2317,
+      "train": 22129,
+      "val": 2545
+    },
+    "either": {
+      "test": 3157,
+      "train": 30548,
+      "val": 3465
+    }
+  },
+  "missing_by_length": {
+    "ESMC": {
+      "50_to_99": 26906,
+      "ge100": 10264
+    },
+    "Protenix": {
+      "50_to_99": 26906,
+      "ge100": 85
+    },
+    "either": {
+      "50_to_99": 26906,
+      "ge100": 10264
+    }
+  },
+  "split_sha256": "8a8f2c34073e83b3aada046a707e6f02b3aab68afd93655ab4768aca7e1d1798",
+  "test_labels_read": false,
+  "training_started": false
+}

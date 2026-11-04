@@ -1,0 +1,51 @@
+{
+  "observed_UTC": "2026-11-04T21:40:02.213210+00:00",
+  "job": "800590",
+  "state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed": "00:12:10",
+  "node": "ACD1-19",
+  "test_queries": 724,
+  "test_residues": 352746,
+  "lock_sha256": "01839ba58a2b7a4f9d929f720bf44f75d177534b8f539728865387b3b9bd14d7",
+  "test_metrics_sha256": "3fc7f46fc6df0abc3af522fca86c42ca7bee4a3866aed4d78b779b5ba66e9265",
+  "test_npz_sha256": "8255088469a3abe81d748e82951a9c5c77fe83146c7d331b6dd467090c8bbab2",
+  "validation_reproduction_sha256": "f59e4abba20d7695132e16acc5b136979c59fa1a6201711165ccb4164ac31686",
+  "proof": {
+    "G2": {
+      "prediction_sha256": "0d8ace4eae4cd03ac5469f17f263c33ba7217e51a3158bd68c73db55a02a8e28",
+      "receipt_sha256": "36137ba0db028d0bbe6ac9b37001a0b56a0dd9f257174da8579bc16a5ea49c8a",
+      "model_state_unchanged": true,
+      "optimizer_steps": 0,
+      "gradients": false
+    },
+    "MSA_D": {
+      "prediction_sha256": "54ee4bd5e255d402690e6d59a2da77fd0b98de21d0edc5b8e11c1af20e6ea70d",
+      "receipt_sha256": "2eaae06b2b7bf2fbb6131d3efad375ee63deae4c63b6982e5f7c1d8bd63af1df",
+      "model_state_unchanged": true,
+      "optimizer_steps": 0,
+      "gradients": false
+    },
+    "K26": {
+      "prediction_sha256": "fd0f1695e65cf5fdb54cafbd90d53d82a2d610b7a89a02391d96933a3b7e0f85",
+      "receipt_sha256": "69208629a088063c4c3fbc704cecae98ba02369fb3788bd80fddc327ff96c56c",
+      "model_state_unchanged": true,
+      "optimizer_steps": 0,
+      "gradients": false
+    }
+  },
+  "artifact_mtimes_UTC": {
+    "selection_freeze.json": "2026-11-04T21:14:53.279207+00:00",
+    "lock.json": "2026-11-04T21:15:01.444323+00:00",
+    "evaluation_launch.json": "2026-11-04T21:16:20.162812+00:00",
+    "inference/validation_reproduction.json": "2026-11-04T21:24:28.408246+00:00",
+    "inference/G2_test.pt": "2026-11-04T21:26:38.837372+00:00",
+    "inference/MSA_D_test.pt": "2026-11-04T21:27:48.816504+00:00",
+    "inference/K26_test.pt": "2026-11-04T21:28:15.713477+00:00",
+    "test_evaluation/metrics.json": "2026-11-04T21:28:29.927021+00:00",
+    "test_evaluation/test.npz": "2026-11-04T21:28:30.016412+00:00"
+  },
+  "test_model_selection": false,
+  "test_threshold_search": false,
+  "locked_model_replaced": false
+}

@@ -1,0 +1,38 @@
+{
+  "status": "complete",
+  "contract": "observed-polymer-heavy-atom-5p5-assembly-v2",
+  "task": "single-chain exact-sequence all-partner ever-observed binary union",
+  "native_queries": 251267,
+  "queries": 251267,
+  "residues": 74646793,
+  "union_positive": 17893579,
+  "all_positive_queries": 459,
+  "contact_contexts": 988743,
+  "source_entries": 144731,
+  "raw_snapshot_chain_map_rows": 1072528,
+  "short_partner_directional_contributions": 110461,
+  "outside_native_partner_directional_contributions": 110461,
+  "partner_length_or_feature_filter": false,
+  "contexts_scope": "Contact-participating snapshot contexts;adding zero masks cannot change a binary OR",
+  "residue_axis": "Original observed sequence index,including insertion-coded residues;no gap filling",
+  "layout": "labels.npy uint8 CSR;queries.tsv gives offset,length,sequence and both sequence hashes",
+  "normalization_fitted": false,
+  "model_trained": false,
+  "final_split_changed": false,
+  "heldout_labels_materialized_as_dataset_creation": true,
+  "labels_used_for_model_selection": false,
+  "inputs_sha256": {
+    "/data/user/shuang886/Folding/Dataset/derived/tminter3_rcsb_ppis_ge50_v1/sequences/observed_full_success_v1/unique_sequences.tsv": "2e6cc81a3deff4863ed7584b079d34c2a8e90b3d42f7a52bd5343d52f518d87a",
+    "/data/user/shuang886/Folding/Dataset/derived/tminter3_rcsb_ppis_ge50_v1/training/ppis_ge50_v1/split/unique_split.tsv": "8a8f2c34073e83b3aada046a707e6f02b3aab68afd93655ab4768aca7e1d1798",
+    "/data/user/shuang886/Folding/Dataset/derived/tminter3_rcsb_ppis_ge50_v1/sequences/observed_full_success_v1/chain_to_unique.tsv": "acc34bac9f7abf68f2423cb9b529ef118c836a68975d3c149a985e4e6a955909"
+  },
+  "source_code_sha256": "ddb7a1808d76461d76d5aa949c32a3c7842df3b883294809da7b0769565bf01c",
+  "files_sha256": {
+    "contexts.tsv": "ac5ccb2707ad375c431ee952f98931eed179c76ef562a8ca8b12060650c2c060",
+    "entry_audit.tsv": "ef3ab39abd7e9a3385fefbd9a0d2b5250ee8cfd022464486b3d49f050585466c",
+    "labels.npy": "fbb88d95330fd9e6480b99d04fd3b9ffe3fbbe5642040fbbdb1025dd878d64d0",
+    "queries.tsv": "69804c1e2172ce1576b28c58608c07530b6ab3e503cf6f69f44909f81c573dda",
+    "source_maps.tsv": "64a80ef27c26202732a60406342f25c7c7a62ded9c63f902ec0d0077be6f4bca"
+  },
+  "seconds": 257.77376012306195
+}

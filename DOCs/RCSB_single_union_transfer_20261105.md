@@ -114,9 +114,71 @@ and skipped,not regenerated. Per-shard locks and atomic writes preserve
 restart safety. An OOM fails explicitly and is retained in logs;do not
 silently count it as completed coverage or restart a live shard.
 
-This is feature extraction,not RCSB model training. Formal coverage and tensor
-content acceptance still need verification after both shards terminate. The
-Protenix missing list and full raw union-label build remain outstanding.
+Both shards now completed successfully:800645_0 in9m21s and800645_1 in6m35s.
+All37170missing outputs were produced with full-length finite tensor checks
+inside the unchanged extractor. A post-run native filename audit found
+251267present,zero missing,zero unexpected,zero duplicate and zero misplaced
+files. Independent selected boundary rereads also passed at50and4579aa.
+This is not yet an independent full-bank tensor reread;the new loader-input
+packer will perform that audit before publishing formal training readiness.
+
+This is feature extraction,not RCSB model training. The Protenix missing
+list remains outstanding. The full raw union-label build has now completed
+separately;see `RCSB_single_union_label_build_20261105.md`.
 Launch,environment and smoke acceptance receipts are under the document's
 matching directory. Neither PDBTM test performance nor a new split choice is
 used by these frozen,label-free requests.
+
+## Whole-Sequence Training Preparation
+
+The new input packer is an explicit ESM-C-only preparation path,not a claim
+that complete M18 geometry/MSA inputs already cover the whole RCSB universe.
+It reuses the existing frozen ESM-C bank through links,checks every tensor
+and its exact label alignment,and writes conventional compact metadata and
+labels for the unchanged PPC loader. It does not modify embedding values,
+invent missing MSA/structure features or fit normalization on held-out data.
+An ESM-C-only whole-RCSB pretraining baseline can precede geometry/MSA
+adaptation;it must be reported under that input condition.
+
+The full raw union and input preparation can serve either split choice
+discussed above. Actual model training,its final train/val IDs,and any
+subsequent membrane adaptation still require an explicit frozen run contract.
+The PDBTM target/test system will not be replaced using its test scores.
+
+For a native-RCSB validation/test claim,the downstream PPC network must start
+from scratch,not warm-start a PDBTM-supervised checkpoint:the exact-overlap
+preview already places287PDBTM train sequences in native RCSB val and281in
+native RCSB test. Frozen unsupervised PLM weights are a separate input
+condition. A PDBTM-initialized RCSB run could be exploratory only unless its
+evaluation partitions are rebuilt to exclude all corresponding supervised
+training overlap and homologous components.
+
+## Input Packer Acceptance Contract
+
+`pack_rcsb_sequence_inputs.py` independently reads every original ESM-C
+payload,checks sequence/hash/length/layers/revision/normalization,finite
+float32[L,3456] tensors,and the exact CSR label hash. It records each feature
+content SHA-256 plus device/inode/size/mtime/ctime,and checks this inventory
+and the resolved links again before publishing readiness. Every mandatory
+union artifact fingerprint must exist and match before/after processing.
+All original PDB contexts and native components must stay split-disjoint.
+
+This avoids copying the approximately1.03TB float32 embedding values. The
+feature bank must remain immutable throughout the reference lifetime,including
+training;training preflight must recheck the inventory. This is not a
+hostile-root-proof filesystem snapshot. The known ESM-C extraction jobs are
+terminal before packing. No other producer may rewrite this bank during use.
+
+Packer review:gpt-6-luna max PASS after two fixes and regressions for a
+post-audit source rewrite and missing mandatory context fingerprints.
+6focused tests pass,including strict existing PPC loader/collation and spawn
+execution. Full local suite136passed/2optional snapshot tests skipped.
+The existing training/model code is unchanged.
+
+A planned3epoch,seed49,whole-native-train/validation ESM-C-only pilot is in
+`configs/experiments/20261105_rcsb_single_union/`. It uses the existing
+256D gated-depthwise TCN/MLP backbone,plain chain-mean CE,batch64/token65536,
+8workers/prefetch4/pinning,scratch initialization,and validation-only
+checkpoint selection. It is not a full-convergence result or an isolated
+data-size ablation. The planned job may launch only after complete packer
+acceptance,configuration review and a real GPU smoke. No test is enabled.

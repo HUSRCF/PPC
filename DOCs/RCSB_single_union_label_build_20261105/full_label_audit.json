@@ -1,0 +1,35 @@
+{
+  "split_summary": {
+    "train": {
+      "queries": 201013,
+      "residues": 59492599,
+      "positives": 14612574,
+      "all_positive": 338,
+      "positive_ratio": 0.24562003082097658
+    },
+    "val": {
+      "queries": 25127,
+      "residues": 7785070,
+      "positives": 1650508,
+      "all_positive": 29,
+      "positive_ratio": 0.21200939747491032
+    },
+    "test": {
+      "queries": 25127,
+      "residues": 7369124,
+      "positives": 1630497,
+      "all_positive": 92,
+      "positive_ratio": 0.22126062745042693
+    }
+  },
+  "native_components": 10886,
+  "cross_split_components": 0,
+  "cross_split_exact_sequences": 0,
+  "source_maps": 769128,
+  "maps_with_insertion": 14002,
+  "insertion_coded_residues": 109906,
+  "maps_with_internal_gap": 210389,
+  "full_summary_sha256": "8b5d0a722fd8650099b128065acb0faf7aeb2021b149272c160b3c2f2c4f0f94",
+  "scope": "Label and provenance table audit only;features and loader not yet accepted",
+  "test_performance_used": false
+}

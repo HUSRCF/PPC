@@ -1,0 +1,36 @@
+{
+  "UTC": "2026-11-04T22:21:59.290472+00:00",
+  "command": [
+    "/data/user/shuang886/.conda/envs/openfold/bin/python",
+    "-u",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/label_build/code/scripts/preparations/m18_union/build_rcsb_sequence_union.py",
+    "--raw-sequences",
+    "/data/user/shuang886/Folding/Dataset/derived/tminter3_rcsb_ppis_ge50_v1/sequences/observed_full_success_v1/unique_sequences.tsv",
+    "--native-split",
+    "/data/user/shuang886/Folding/Dataset/derived/tminter3_rcsb_ppis_ge50_v1/training/ppis_ge50_v1/split/unique_split.tsv",
+    "--chain-map",
+    "/data/user/shuang886/Folding/Dataset/derived/tminter3_rcsb_ppis_ge50_v1/sequences/observed_full_success_v1/chain_to_unique.tsv",
+    "--tags-root",
+    "/data/user/shuang886/tminter3/artifacts/rcsb_tags_v1/entries",
+    "--expected-sequences",
+    "251267",
+    "--output",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/label_build/smoke_8entries",
+    "--workers",
+    "2",
+    "--limit-entries",
+    "8"
+  ],
+  "exit_code": 0,
+  "source_commit": "936059507d2ccb313c60b6cbce80412ebfc6765e",
+  "archive_sha256": "d1b0a6f233a5aa59c03658951cf0e4dc087d418eed975e3c8a9a03c090fe2ec2",
+  "review": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "verdict": "PASS"
+  },
+  "local_tests": {
+    "passed": 130,
+    "optional_skipped": 2
+  }
+}

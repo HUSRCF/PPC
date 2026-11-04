@@ -1,5 +1,5 @@
 {
-  "observed_UTC": "2026-11-04T21:51:05.811849+00:00",
+  "observed_UTC": "2026-11-04T22:36:59+00:00",
   "stage": "RCSB_preparation_after_locked_test",
   "target_pooled_AP": 0.8,
   "target_verified": true,
@@ -61,10 +61,10 @@
   "CPU_diagnostic_is_not_test_acceptance": true,
   "RCSB_asset_preflight": "RCSB_single_union_asset_preflight_20261105.md",
   "next_steps": [
-    "Verify new RCSB feature smoke and repair missing frozen features without recomputing existing bank",
-    "Build full observed-sequence all-partner union labels before feature/partner filtering",
+    "Complete independent full-bank ESM-C content/label/loader audit without copying or modifying existing embeddings",
     "Resolve RCSB native-vs-protected evaluation contract without using locked test performance",
-    "Complete full label/feature/mapping audit and train-only normalization;attempt whole-RCSB single-chain training"
+    "Freeze and smoke the planned scratch ESM-C-only whole-data pilot;then attempt native RCSB single-chain training without test",
+    "Repair remaining Protenix structures and add geometry/MSA as explicitly separate later input conditions"
   ],
   "contract": "pooled_AP080_milestones_20261105_policy.json",
   "tcn_context_job": "800559",
@@ -78,14 +78,14 @@
   "tcn_context_full_validation_acceptance_pending": true,
   "latest_job_states": {
     "800442_0": "COMPLETED",
-    "800442_1": "RUNNING",
-    "800442_2": "RUNNING",
-    "800533_0": "RUNNING",
-    "800533_1": "RUNNING",
-    "800559_0": "RUNNING",
+    "800442_1": "COMPLETED",
+    "800442_2": "COMPLETED",
+    "800533_0": "COMPLETED",
+    "800533_1": "COMPLETED",
+    "800559_0": "COMPLETED",
     "800559_1": "RUNNING"
   },
-  "latest_observation_scope": "Startup/ongoing jobs only;completed readouts still require successful50epochs and provenance checks",
+  "latest_observation_scope": "Terminal job accounting updated;K28-K31 validation readouts remain separate from the fixed target/test system",
   "previous_validation_leader": {
     "name": "G2_plus_MSA_D_plus_K18",
     "macro_AP": 0.7689864022799697,
@@ -139,14 +139,24 @@
     "ESMC_smoke_job": "800636",
     "environment_changed": false,
     "split_preference_question_pending": true,
-    "union_labels_complete": false,
+    "union_labels_complete": true,
     "full_tensor_audit_complete": false,
     "ESMC_smoke_passed": true,
     "ESMC_formal_job_array": "800645",
     "ESMC_formal_partition": "acd_u",
     "ESMC_formal_shards": 2,
-    "ESMC_formal_status": "submitted;actual success/coverage still to be verified",
+    "ESMC_formal_status": "Both COMPLETED exit0;37170gap outputs produced;native filename coverage251267/251267",
     "Protenix_missing_requests_ready": true,
-    "full_union_label_build_started": false
+    "full_union_label_build_started": true,
+    "full_union_label_root": "/data/user/shuang886/PPC_RCSB_single_union/20261105/label_build/full_v1",
+    "full_union_residues": 74646793,
+    "full_union_positive_residues": 17893579,
+    "full_union_source_PDBs": 144731,
+    "full_union_contexts": 988743,
+    "short_partner_directional_contributions_retained": 110461,
+    "native_split_counts": {"train": 201013, "val": 25127, "test": 25127},
+    "input_packer_review": "gpt-6-luna max PASS with immutable-bank lifetime contract",
+    "planned_training_input": "ESM-C-only scratch;explicitly not full M18 geometry/MSA system",
+    "planned_training_config": "configs/experiments/20261105_rcsb_single_union/R0_esmc_only_pilot_seed49.json"
   }
 }

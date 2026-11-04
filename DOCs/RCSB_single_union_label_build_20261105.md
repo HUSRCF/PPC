@@ -87,3 +87,35 @@ single-threaded numerical libraries, and retain a PID/log/launch receipt.
 Feature completeness, train-only normalization, loader acceptance and an
 actual RCSB model training attempt are still required. This label build
 alone is not a completed training experiment.
+
+## Actual Full Build Result
+
+Source commit: `936059507d2ccb313c60b6cbce80412ebfc6765e`.
+CPU launch PID994875 on ACD-Login-3,16workers,nice10,no GPU.
+Real-input smoke:8PDB entries,16queries,8122residues,exit0.
+Full build completed without failure in257.77seconds:
+
+| Scope | Queries | Observed residues | Union-positive residues | Positive fraction |
+|---|---:|---:|---:|---:|
+| Train | 201013 | 59492599 | 14612574 | 0.24562 |
+| Validation | 25127 | 7785070 | 1650508 | 0.21201 |
+| Test | 25127 | 7369124 | 1630497 | 0.22126 |
+| Total | 251267 | 74646793 | 17893579 | 0.23971 |
+
+The source comprises144731PDB entries and988743qualified query contexts.
+110461directional contributions from partners below50aa were retained.
+459all-positive sequence unions were retained and reported. The native
+10886components and exact sequences have zero cross-split assignments.
+This is not a new exhaustive global pairwise SI proof.
+
+769128source-residue maps retain their original hash/provenance. Of those,
+14002maps contain insertion-coded residues,with109906such residue records;
+210389maps have internal observed-coordinate gaps. These are source-map
+record counts,not deduplicated counts of unique inserted positions.
+
+Full output:
+`/data/user/shuang886/PPC_RCSB_single_union/20261105/label_build/full_v1`.
+Full summary SHA-256:
+`8b5d0a722fd8650099b128065acb0faf7aeb2021b149272c160b3c2f2c4f0f94`.
+Split/insertion audit is archived as`full_label_audit.json` beside that output.
+The label build does not fit features,train a model,or evaluate test scores.

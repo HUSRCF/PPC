@@ -10,6 +10,7 @@ import math
 import torch
 from torch import nn
 from .geometry import GeometryGraphBlock, LinearAttentionContext
+from .sequence_context import PostFusionSequenceContext
 
 
 def _sanitize(x: torch.Tensor, clip: float = 1.0e4) -> torch.Tensor:
@@ -45,6 +46,11 @@ class ESMSiteConfig:
     prottrans_residual_dim: int = 64
     prottrans_residual_hidden: int = 64
     prottrans_residual_dropout: float = 0.0
+    msa_residual_position: str = "post_tcn"
+    post_fusion_context_mode: str = "none"
+    post_fusion_context_hidden: int = 128
+    post_fusion_context_dropout: float = 0.1
+    post_fusion_context_scale: float = 0.1
     use_position_features: bool = True
     use_global_context: bool = True
     use_contact_graph: bool = False
@@ -1179,6 +1185,34 @@ class ESMSiteClassifier(nn.Module):
                 nn.init.zeros_(ratio_output.weight)
                 nn.init.constant_(ratio_output.bias, math.log(init_ratio / (1.0 - init_ratio)))
 
+        if c.msa_residual_position not in {"pre_tcn", "post_tcn"}:
+            raise ValueError(f"Unsupported msa_residual_position={c.msa_residual_position}")
+        if c.msa_residual_position == "pre_tcn" and (
+                not c.use_prottrans_embeddings or c.prottrans_fusion_mode != "zero_init_pre_contact_residual"):
+            raise ValueError("Pre-TCN MSA placement requires the frozen-embedding residual adapter")
+        self.post_fusion_context = None
+        if c.post_fusion_context_mode != "none":
+            # Keep all pre-existing weights and the subsequent training RNG matched to the control.
+            with torch.random.fork_rng(devices=[]):
+                self.post_fusion_context = PostFusionSequenceContext(
+                    c.d_model, c.post_fusion_context_mode, c.post_fusion_context_hidden,
+                    c.post_fusion_context_dropout, c.post_fusion_context_scale)
+
+    def _apply_msa_residual(self, h, prottrans_branch, mask):
+        if self.config.prottrans_fusion_mode != "zero_init_pre_contact_residual" or prottrans_branch is None:
+            if self.config.msa_residual_position == "pre_tcn":
+                raise ValueError("Required pre-TCN MSA branch is missing")
+            return h
+        assert self.prottrans_residual_main_norm is not None
+        assert self.prottrans_residual_feature_norm is not None
+        assert self.prottrans_residual_adapter is not None
+        residual_input = torch.cat([
+            self.prottrans_residual_main_norm(h.detach()),
+            self.prottrans_residual_feature_norm(prottrans_branch),
+        ], dim=-1)
+        delta_h = self.prottrans_residual_adapter(residual_input).to(dtype=h.dtype)
+        return _sanitize(h + delta_h).masked_fill(~mask.unsqueeze(-1), 0.0)
+
     def forward(
         self,
         esm_embeddings: torch.Tensor,
@@ -1328,23 +1362,16 @@ class ESMSiteClassifier(nn.Module):
         for block in self.local_blocks:
             h = block(h).masked_fill(~mask.unsqueeze(-1), 0.0)
 
+        if c.msa_residual_position == "pre_tcn":
+            h = self._apply_msa_residual(h, prottrans_branch, mask)
         for block in self.tcn_blocks:
             h = block(h, mask)
 
-        if c.prottrans_fusion_mode == "zero_init_pre_contact_residual" and prottrans_branch is not None:
-            assert self.prottrans_residual_main_norm is not None
-            assert self.prottrans_residual_feature_norm is not None
-            assert self.prottrans_residual_adapter is not None
-            main_context = h.detach()
-            residual_input = torch.cat(
-                [
-                    self.prottrans_residual_main_norm(main_context),
-                    self.prottrans_residual_feature_norm(prottrans_branch),
-                ],
-                dim=-1,
-            )
-            delta_h = self.prottrans_residual_adapter(residual_input).to(dtype=h.dtype)
-            h = _sanitize(h + delta_h).masked_fill(~mask.unsqueeze(-1), 0.0)
+        if c.msa_residual_position == "post_tcn":
+            h = self._apply_msa_residual(h, prottrans_branch, mask)
+
+        if self.post_fusion_context is not None:
+            h = self.post_fusion_context(h, mask, chain_ids)
 
         for block in self.contact_blocks:
             h = block(h, mask, contact_edge_index, contact_edge_scores)

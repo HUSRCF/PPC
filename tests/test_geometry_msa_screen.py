@@ -129,7 +129,7 @@ class GeometryMSATests(unittest.TestCase):
                             "K11_G2_MSA_twohop_pure_CE", "K13_G2_MSA_threehop_pure_CE"}:
                 self.assertEqual((t["loss_reduction"], t["ratio_loss_weight"]), ("chain_mean", .75))
         self.assertEqual(parents, before)
-        self.assertEqual(len(outputs), 18)
+        self.assertEqual(len(outputs), 19)
         base = screen.build(*parents, Path("/tmp/geo_msa_test"), "K1_G2_MSA")
         for name, axis in (("K7_G2_MSA_residue_mean", "loss_reduction"), ("K8_G2_MSA_pure_CE", "ratio_loss_weight")):
             variant = screen.build(*parents, Path("/tmp/geo_msa_test"), name)
@@ -215,6 +215,38 @@ class GeometryMSATests(unittest.TestCase):
     def test_preparation_paths_are_normalized(self):
         screen = module("prepare_geometry_msa_screen")
         self.assertTrue(screen.absolute_path(".").is_absolute())
+
+    def test_fusion_position_depth_factorial_changes_no_other_inputs(self):
+        geometry = module("prepare_geometry_screen")
+        msa = module("prepare_msa_factorial")
+        screen = module("prepare_geometry_msa_screen")
+        parents = (
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "B1_fixed91q"),
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "G2_edge_attention"),
+            msa.build_config(ROOT, Path("/tmp/msa_parent"), "D", "encoder", 49),
+        )
+        for post_name, pre_name, depth in (
+            ("K1_G2_MSA", "K2_G2_MSA_preTCN", 1),
+            ("K3_G2_MSA_twohop", "K18_G2_MSA_twohop_preTCN", 2),
+        ):
+            post = screen.build(*parents, Path("/tmp/position_depth"), post_name)
+            pre = screen.build(*parents, Path("/tmp/position_depth"), pre_name)
+            self.assertEqual(post["data"], pre["data"])
+            self.assertEqual({k for k in post["training"] if post["training"][k] != pre["training"][k]},
+                             {"output_dir"})
+            self.assertEqual({k for k in post["model"] if post["model"][k] != pre["model"][k]},
+                             {"msa_residual_position"})
+            self.assertEqual(pre["model"]["geometry_layers"], depth)
+        x = payload()
+        torch.manual_seed(49)
+        post_model = ESMSiteClassifier(small_config(geometry_layers=2)).eval()
+        rng = torch.get_rng_state()
+        torch.manual_seed(49)
+        pre_model = ESMSiteClassifier(small_config(geometry_layers=2, msa_residual_position="pre_tcn")).eval()
+        self.assertTrue(torch.equal(rng, torch.get_rng_state()))
+        for name, value in post_model.state_dict().items():
+            self.assertTrue(torch.equal(value, pre_model.state_dict()[name]), name)
+        self.assertTrue(torch.equal(post_model(**x)["logits"], pre_model(**x)["logits"]))
 
     def test_wide_msa_paths_receive_task_gradient_after_zero_init(self):
         x = payload()

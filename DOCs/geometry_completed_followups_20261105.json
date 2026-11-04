@@ -99,6 +99,37 @@
         "best_mcc_threshold": 0.37,
         "chain_ratio_mae_raw": 0.05798947286987027
       }
+    },
+    "K2": {
+      "run": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/geometry_msa_screen_20261104_round2/runs/K2_G2_MSA_preTCN_seed49",
+      "epochs": 50,
+      "metrics_sha256": "354886267cec0001864083d254b8457b95c2a3a85d2b302118b802daec2079de",
+      "test_seen": false,
+      "coverage_ok_all_epochs": true,
+      "validation_skips": 0,
+      "AMP_skips": 2,
+      "pooled_selected": {
+        "epoch": 19,
+        "chain_ap_macro": 0.7540817002938798,
+        "pooled_ap": 0.7878384560605473,
+        "auroc": 0.8919813041793214,
+        "f1_best_threshold": 0.7092287012964043,
+        "best_threshold": 0.16,
+        "mcc_best_threshold": 0.6011600219809998,
+        "best_mcc_threshold": 0.26,
+        "chain_ratio_mae_raw": 0.07532035683563282
+      },
+      "macro_selected": {
+        "epoch": 15,
+        "chain_ap_macro": 0.7545417981023314,
+        "pooled_ap": 0.7766234778473006,
+        "auroc": 0.8876320312735217,
+        "f1_best_threshold": 0.6975764605335449,
+        "best_threshold": 0.46,
+        "mcc_best_threshold": 0.5828927621168717,
+        "best_mcc_threshold": 0.59,
+        "chain_ratio_mae_raw": 0.06393922368281109
+      }
     }
   },
   "jobs": {
@@ -123,6 +154,13 @@
       "elapsed": "00:35:15",
       "source_commit": "7499b4264215c41f3c14277c44c4fc5bf9db8164",
       "retry": "Original terminal pin-memory failure;unchanged training hyperparameters, fresh output, exclude ACD1-28"
+    },
+    "K2": {
+      "id": "799902_2",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "01:58:45",
+      "source_commit": "6a8bad521ceaf916b5689c32389cb0c0e3a7f84e"
     }
   }
 }

@@ -1,0 +1,16 @@
+{
+  "scope": "Prospective within adaptive selected-validation campaign;not independent confirmation",
+  "arm": "K18_G2_MSA_twohop_preTCN",
+  "execute_only_after": "Slurm COMPLETED exit0,50consecutiveepochs,full1075queries/404267residues,no validation skips,no test evaluation",
+  "selection": "Maximum validation pooled AP with same-checkpoint macro AP>=0.7417948466002535;ties earliest;no eligible epoch means unavailable without relaxing guardrail",
+  "fixed_sources": {
+    "G2": {"run": "architecture_screen_20261104/runs/G2_edge_attention_seed49", "epoch": 27},
+    "MSA_D": {"run": "msa_factorial_20261104/runs/D_encoder_seed49", "epoch": 13}
+  },
+  "fixed_blends": {"G2_plus_MSA_D_plus_K18": ["G2", "MSA_D", "K18"]},
+  "averaging": "Equal clipped-probability logit mean;epsilon1e-7",
+  "alpha_search": false,
+  "test_evaluation": false,
+  "target_pooled_AP": 0.8,
+  "baseline": {"system": "G2_plus_MSA_D_plus_K3", "macro_AP": 0.7660679415925195, "pooled_AP": 0.798613220715041}
+}

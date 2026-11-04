@@ -1,5 +1,6 @@
 import hashlib
 import importlib.util
+import copy
 from pathlib import Path
 import sys
 import unittest
@@ -15,6 +16,28 @@ SPEC.loader.exec_module(MODULE)
 
 
 class ValidationErrorTests(unittest.TestCase):
+    def test_existing_blends_are_opt_in_and_only_use_original_sources(self):
+        summary = dict(sources={"a": {}, "b": {}}, fixed_blends={"blend": ["a", "b"]})
+        self.assertEqual(MODULE.selected_systems(summary), ["a", "b"])
+        self.assertEqual(MODULE.selected_systems(summary, True), ["a", "b", "blend"])
+        for definition in (["a", "a"], ["a", "missing"], ["a", "blend"], "ab", ["a", 1]):
+            changed = copy.deepcopy(summary)
+            changed["fixed_blends"]["blend"] = definition
+            with self.assertRaises(ValueError):
+                MODULE.selected_systems(changed, True)
+        with self.assertRaises(ValueError):
+            MODULE.selected_systems(dict(sources={"a": {}, "b": {}}, fixed_blends={"a": ["a", "b"]}), True)
+
+    def test_fixed_blends_are_reconstructed_not_only_ap_checked(self):
+        scores = {"a": np.array([.1, .3, .6]), "b": np.array([.4, .7, .9])}
+        expected = MODULE.combine(scores, ["a", "b"])
+        numerator = np.sqrt(scores["a"] * scores["b"])
+        formula = numerator / (numerator + np.sqrt((1 - scores["a"]) * (1 - scores["b"])))
+        np.testing.assert_allclose(expected, formula, rtol=1.e-14)
+        MODULE.check_fixed_blend(expected, scores, ["a", "b"])
+        with self.assertRaises(ValueError):
+            MODULE.check_fixed_blend(expected + .001, scores, ["a", "b"])
+
     def test_cached_points_reject_wrong_order_labels_and_values(self):
         ids = np.asarray(["a", "b"])
         lengths = np.asarray([2, 3])

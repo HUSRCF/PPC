@@ -11,6 +11,28 @@ from scipy.stats import rankdata
 from sklearn.metrics import average_precision_score
 
 from analyze_union_msa_complementarity import csv_rows, grouped_bootstrap, sha, write_csv
+from analyze_union_fixed_blends import combine
+
+
+def selected_systems(summary, include_fixed_blends=False):
+    names = list(summary["sources"])
+    if not include_fixed_blends:
+        return names
+    blends = summary.get("fixed_blends", {})
+    if set(names) & set(blends):
+        raise ValueError("Source and fixed-blend names overlap")
+    for members in blends.values():
+        if (not isinstance(members, list) or len(members) < 2
+                or not all(isinstance(name, str) for name in members)
+                or len(set(members)) != len(members)
+                or not set(members) <= set(names)):
+            raise ValueError("Fixed blends must contain distinct original sources")
+    return names + list(blends)
+
+
+def check_fixed_blend(values, scores, members):
+    if not np.array_equal(values, combine(scores, members)):
+        raise ValueError("Fixed-blend NPZ does not reproduce its declared equal-logit rule")
 
 
 def check_arrays(data, ids, lengths, groups, labels=None):
@@ -93,6 +115,8 @@ def main():
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--bootstrap", type=int, default=2000)
     p.add_argument("--workers", type=int, default=8)
+    p.add_argument("--include-fixed-blends", action="store_true",
+                   help="Verify and diagnose existing fixed ensembles; do not search new combinations")
     a = p.parse_args()
     if a.bootstrap < 100 or a.workers < 1:
         raise ValueError("Invalid bootstrap budget")
@@ -119,11 +143,13 @@ def main():
     if len(cov) != len(cov_rows) or set(cov) != set(ids):
         raise ValueError("Wrong or duplicate MSA covariates")
     scores, ap, means, sources, y = {}, {}, {}, {}, None
-    for name in summary["sources"]:
+    for name in selected_systems(summary, a.include_fixed_blends):
         path = a.points / f"{name}_val.npz"
         with np.load(path, allow_pickle=False) as data:
             labels, values = check_arrays(data, ids, lengths, groups, y)
         y = labels
+        if name not in summary["sources"]:
+            check_fixed_blend(values, scores, summary["fixed_blends"][name])
         scores[name] = values
         ap[name] = np.asarray([average_precision_score(y[i:j], values[i:j]) for i, j in zip(offsets[:-1], offsets[1:])])
         means[name] = np.asarray([values[i:j].mean() for i, j in zip(offsets[:-1], offsets[1:])])
@@ -131,7 +157,10 @@ def main():
         if (abs(ap[name].mean() - raw["chain_ap_macro"]) > 1.e-8
                 or abs(average_precision_score(y, values) - raw["average_precision"]) > 1.e-8):
             raise ValueError("Point NPZ does not reproduce source AP")
-        sources[name] = dict(npz_sha256=sha(path), original=summary["sources"][name])
+        sources[name] = dict(npz_sha256=sha(path), **(
+            dict(original=summary["sources"][name]) if name in summary["sources"] else
+            dict(existing_fixed_blend_members=summary["fixed_blends"][name],
+                 fixed_blend_reconstruction="exact equal clipped-probability logit mean")))
     if a.reference not in scores:
         raise ValueError("Missing reference")
     table = []
@@ -177,9 +206,11 @@ def main():
     write_csv(a.output / "pairwise.csv", pairwise(scores, lengths))
     result = dict(reference=a.reference, validation_sequences=len(ids), validation_residues=len(y), test_read=False,
                   sources=sources, effects=effects, bootstrap=boot, new_blends_computed=False,
+                  included_fixed_blends=a.include_fixed_blends,
                   covariates_sha256=sha(a.covariates), points_summary_sha256=sha(a.points / "summary.json"),
                   source_code_sha256=sha(__file__),
                   bootstrap_helper_sha256=sha(Path(__file__).with_name("analyze_union_msa_complementarity.py")),
+                  blend_helper_sha256=sha(Path(__file__).with_name("analyze_union_fixed_blends.py")),
                   interpretation="Descriptive selected-validation diagnostics;MSA depth is Kish,not HHsuite Neff;no seed uncertainty or multiple-selection correction")
     (a.output / "summary.json").write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
     print(json.dumps(dict(effects=effects, components=boot["components"], output=str(a.output))), flush=True)

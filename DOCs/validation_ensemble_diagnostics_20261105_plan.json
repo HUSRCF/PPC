@@ -1,0 +1,26 @@
+{
+  "purpose": "Diagnose existing frozen K3 ensembles;not generate or select new models or blends",
+  "input_points": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_diagnostics_20261105/fixed_K3_blends",
+  "input_summary_sha256": "333f7bc84a729a17247ce64ca79d5816ec5e29d133035c58828b83ceebb17bea",
+  "source_spec_sha256": "bb239079593eb05628983072ffe2ae8dea7e8df0f3e87170639bcc727ca507e3",
+  "reproduction": "Reuse the original frozen source specification;rebuild only the same two blends from raw PT predictions,compare original source hashes and every cached NPZ array before diagnosing reproduced_points",
+  "diagnostic_points": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_ensemble_diagnostics_20261105/reproduced_points",
+  "covariates": "/data/user/shuang886/PPC_M18/sequence_union_v2_20261030/validation_diagnostics_20261105/covariates.csv",
+  "expected_sources": ["G2", "MSA_D", "K3"],
+  "expected_fixed_blends": {
+    "G2_plus_K3": ["G2", "K3"],
+    "G2_plus_MSA_D_plus_K3": ["G2", "MSA_D", "K3"]
+  },
+  "reference": "K3",
+  "validation_sequences": 1075,
+  "validation_residues": 404267,
+  "bootstrap_unit": "Original SI30 components;retain whole chains and residues",
+  "bootstrap_repeats": 2000,
+  "bootstrap_workers": 8,
+  "bootstrap_seed": 20261104,
+  "coverage_checks": "Frozen UIDs,lengths,residue offsets,union-label hashes,labels,score bounds,source AP reconstruction,exact declared fixed-blend reconstruction",
+  "outputs": ["summary.json", "per_chain.csv", "stratified.csv", "pairwise.csv"],
+  "new_blend_or_weight_search": false,
+  "test_evaluation": false,
+  "interpretation": "Conditional selected-validation uncertainty;no checkpoint/model selection correction,seed variance,or independent confirmation"
+}

@@ -34,6 +34,7 @@ VARIANTS = {
     "K17_G2_MSA_twohop_capacity256": {
         "geometry_layers": 2, "prottrans_residual_dim": 64, "prottrans_residual_hidden": 428,
     },
+    "K18_G2_MSA_twohop_preTCN": {"geometry_layers": 2, "msa_residual_position": "pre_tcn"},
 }
 MSA_KEYS = (
     "use_prottrans_embeddings", "d_prottrans", "prottrans_layer_count",

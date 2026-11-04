@@ -125,10 +125,11 @@ class GeometryMSATests(unittest.TestCase):
             self.assertEqual(cfg["model"]["d_prottrans"], 768)
             for key in screen.IDENTITY_KEYS:
                 self.assertEqual(cfg["data"][key], parents[0]["data"][key])
-            if name not in {"K7_G2_MSA_residue_mean", "K8_G2_MSA_pure_CE"}:
+            if name not in {"K7_G2_MSA_residue_mean", "K8_G2_MSA_pure_CE",
+                            "K11_G2_MSA_twohop_pure_CE", "K13_G2_MSA_threehop_pure_CE"}:
                 self.assertEqual((t["loss_reduction"], t["ratio_loss_weight"]), ("chain_mean", .75))
         self.assertEqual(parents, before)
-        self.assertEqual(len(outputs), 11)
+        self.assertEqual(len(outputs), 14)
         base = screen.build(*parents, Path("/tmp/geo_msa_test"), "K1_G2_MSA")
         for name, axis in (("K7_G2_MSA_residue_mean", "loss_reduction"), ("K8_G2_MSA_pure_CE", "ratio_loss_weight")):
             variant = screen.build(*parents, Path("/tmp/geo_msa_test"), name)
@@ -136,6 +137,30 @@ class GeometryMSATests(unittest.TestCase):
             self.assertEqual(base["model"], variant["model"])
             different = {key for key in base["training"] if base["training"][key] != variant["training"][key]}
             self.assertEqual(different, {"output_dir", axis})
+
+    def test_depth_ratio_factorial_has_single_loss_axis(self):
+        geometry = module("prepare_geometry_screen")
+        msa = module("prepare_msa_factorial")
+        screen = module("prepare_geometry_msa_screen")
+        parents = (
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "B1_fixed91q"),
+            geometry.build(ROOT, Path("/tmp/geo_parent"), "G2_edge_attention"),
+            msa.build_config(ROOT, Path("/tmp/msa_parent"), "D", "encoder", 49),
+        )
+        pairs = (
+            ("K1_G2_MSA", "K8_G2_MSA_pure_CE", 1),
+            ("K3_G2_MSA_twohop", "K11_G2_MSA_twohop_pure_CE", 2),
+            ("K12_G2_MSA_threehop", "K13_G2_MSA_threehop_pure_CE", 3),
+        )
+        for regular, pure, depth in pairs:
+            a = screen.build(*parents, Path("/tmp/factorial_test"), regular)
+            b = screen.build(*parents, Path("/tmp/factorial_test"), pure)
+            self.assertEqual(a["model"], b["model"])
+            self.assertEqual(a["data"], b["data"])
+            self.assertEqual(a["model"]["geometry_layers"], depth)
+            diff = {k for k in a["training"] if a["training"][k] != b["training"][k]}
+            self.assertEqual(diff, {"output_dir", "ratio_loss_weight"})
+            self.assertEqual((a["training"]["ratio_loss_weight"], b["training"]["ratio_loss_weight"]), (.75, 0.))
 
     def test_incompatible_parent_split_is_rejected(self):
         geometry = module("prepare_geometry_screen")

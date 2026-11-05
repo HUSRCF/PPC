@@ -1,0 +1,48 @@
+{
+  "source_commit": "432c045",
+  "source_sha256": "6cf9adccdc89538eed7a8d7b3b6f6149849d192284d64186d849c210dbd0907b",
+  "archive_sha256": "7d3077fc3a20c719debe67aade5c77f462e71171c81c61f7a4c416ba9f6de19f",
+  "review": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "verdict": "PASS"
+  },
+  "tests": {
+    "run": 183,
+    "passed": 181,
+    "optional_skips": 2,
+    "focused_passed": 8
+  },
+  "query_truncation": false,
+  "installed_package_changes": false,
+  "unchanged_stock_CLI_inference_parameters": true,
+  "unaccepted_output_staging_only": true,
+  "existing_training_or_folding_cancelled": false,
+  "UTC": "2026-11-05T02:33:55.979335+00:00",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--job-name=rcsb_long_v2",
+    "--partition=acd_ue",
+    "--gres=gpu:1",
+    "--cpus-per-task=12",
+    "--mem=128G",
+    "--time=12:00:00",
+    "--chdir=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/code_432c045",
+    "--output=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/logs/smoke_v2_%j.out",
+    "--error=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/logs/smoke_v2_%j.err",
+    "--wrap",
+    "env -u PYTHONPATH PATH=/data/user/shuang886/.conda/envs/fold/bin:/usr/local/bin:/usr/bin:/bin PROTENIX_ROOT_DIR=/data/user/shuang886/Folding/protenix_stage0_pkg/v1_1/runtime LAYERNORM_TYPE=torch OMP_NUM_THREADS=12 MKL_NUM_THREADS=12 OPENBLAS_NUM_THREADS=12 MAX_JOBS=4 /data/user/shuang886/.conda/envs/fold/bin/python -u -c 'from pathlib import Path\nimport os,sys,hashlib,json,subprocess,runpy,time\nr=Path('\"'\"'/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair'\"'\"');f=Path('\"'\"'/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/code_432c045/scripts/preparations/m18_union/protenix_full_esm.py'\"'\"');q=Path('\"'\"'/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/code_432c045/scripts/preparations/m18_union/run_rcsb_protenix_queue.py'\"'\"');m=r/'\"'\"'inputs/smoke_v2.tsv'\"'\"'\nassert hashlib.sha256(f.read_bytes()).hexdigest()=='\"'\"'6cf9adccdc89538eed7a8d7b3b6f6149849d192284d64186d849c210dbd0907b'\"'\"'\nassert hashlib.sha256(q.read_bytes()).hexdigest()=='\"'\"'29352b1dfa24123e77da20e6f5f4fc4c3fbb5876eaeea86f041fc3086a883327'\"'\"'\nassert hashlib.sha256(m.read_bytes()).hexdigest()=='\"'\"'879f4115a5ced15dff5fba8f34b8a568090a48f0b0ed9af09eaa753578f35510'\"'\"'\nsubprocess.run([sys.executable,'\"'\"'-u'\"'\"',str(f),'\"'\"'prepare'\"'\"','\"'\"'--manifest'\"'\"',str(m),'\"'\"'--root'\"'\"',str(r/'\"'\"'cache_smoke_v2'\"'\"')],check=True)\nenv={**os.environ,'\"'\"'PPC_FULL_ESM_ROOT'\"'\"':str(r/'\"'\"'cache_smoke_v2'\"'\"'),'\"'\"'PPC_FULL_ESM_READY_SHA256'\"'\"':hashlib.sha256((r/'\"'\"'cache_smoke_v2/ready.json'\"'\"').read_bytes()).hexdigest()}\nsubprocess.run([sys.executable,'\"'\"'-u'\"'\"',str(q),'\"'\"'--manifest'\"'\"',str(m),'\"'\"'--root'\"'\"',str(r/'\"'\"'queue_smoke_v2'\"'\"'),'\"'\"'--project'\"'\"','\"'\"'/data/user/shuang886/Folding/protenix_stage0_pkg/v1_1/site'\"'\"','\"'\"'--protenix-cli'\"'\"',str(f),'\"'\"'--batch-size'\"'\"','\"'\"'1'\"'\"','\"'\"'--max-attempts'\"'\"','\"'\"'2'\"'\"','\"'\"'--min-length'\"'\"','\"'\"'50'\"'\"'],env=env,check=True)\ns=json.loads((r/'\"'\"'queue_smoke_v2/summary.json'\"'\"').read_text());assert s['\"'\"'total'\"'\"']==2 and s['\"'\"'counts'\"'\"']=={'\"'\"'ok'\"'\"':2}\nreceipt={'\"'\"'job'\"'\"':os.environ['\"'\"'SLURM_JOB_ID'\"'\"'],'\"'\"'time'\"'\"':time.time(),'\"'\"'queries'\"'\"':2,'\"'\"'max_length'\"'\"':4579,'\"'\"'short_length'\"'\"':4103,'\"'\"'full_sequence_input'\"'\"':True,'\"'\"'installed_packages_modified'\"'\"':False,'\"'\"'test_labels_read'\"'\"':False,'\"'\"'queue_summary_sha256'\"'\"':hashlib.sha256((r/'\"'\"'queue_smoke_v2/summary.json'\"'\"').read_bytes()).hexdigest(),'\"'\"'cache_ready_sha256'\"'\"':env['\"'\"'PPC_FULL_ESM_READY_SHA256'\"'\"']}\n(r/'\"'\"'smoke_v2_completed.json'\"'\"').write_text(json.dumps(receipt,indent=2));print(json.dumps(receipt),flush=True)\n'"
+  ],
+  "scope": "two canonical historical long targets;ambiguous3 separately retained",
+  "targets": [
+    4103,
+    4579
+  ],
+  "previous_failed_job": "801071",
+  "previous_failure_before_model": true,
+  "returncode": 0,
+  "stdout": "801103\n",
+  "stderr": "",
+  "job": "801103"
+}

@@ -1,0 +1,207 @@
+{
+  "UTC": "2026-11-05T02:33:55.973281+00:00",
+  "original_queries": 85,
+  "canonical_long_queries": 82,
+  "ambiguous_queries": 3,
+  "original_universe_unchanged": true,
+  "RCSB_training_queries_unchanged": true,
+  "ambiguous_sequences_not_replaced": true,
+  "previous_smoke_job": "801071",
+  "previous_smoke_failure": "Strict input alphabet QC before model initialization;not GPU OOM",
+  "native_ambiguous": [
+    {
+      "unique_id": "useq_40bfc79b368f03282ad4d3218adc5c809e3a61678228b19636ce5a3014a56abb",
+      "n_residues": "232",
+      "seq_sha256": "40bfc79b368f03282ad4d3218adc5c809e3a61678228b19636ce5a3014a56abb",
+      "noncanonical_positions": [
+        [
+          200,
+          "B"
+        ],
+        [
+          202,
+          "B"
+        ]
+      ]
+    },
+    {
+      "unique_id": "useq_055052489513be1970abcec1369d2042dec3d12151aa9f23388a30ae2d0126f1",
+      "n_residues": "305",
+      "seq_sha256": "055052489513be1970abcec1369d2042dec3d12151aa9f23388a30ae2d0126f1",
+      "noncanonical_positions": [
+        [
+          234,
+          "B"
+        ]
+      ]
+    },
+    {
+      "unique_id": "useq_1054ebb75c128053deb41cae9f59151d9e81437de8742cd4bf6fe68006f5fdbf",
+      "n_residues": "402",
+      "seq_sha256": "1054ebb75c128053deb41cae9f59151d9e81437de8742cd4bf6fe68006f5fdbf",
+      "noncanonical_positions": [
+        [
+          5,
+          "Z"
+        ],
+        [
+          7,
+          "Z"
+        ],
+        [
+          13,
+          "Z"
+        ],
+        [
+          21,
+          "Z"
+        ],
+        [
+          28,
+          "Z"
+        ],
+        [
+          29,
+          "B"
+        ],
+        [
+          39,
+          "B"
+        ],
+        [
+          68,
+          "Z"
+        ],
+        [
+          71,
+          "B"
+        ],
+        [
+          72,
+          "Z"
+        ],
+        [
+          94,
+          "B"
+        ],
+        [
+          119,
+          "Z"
+        ],
+        [
+          130,
+          "B"
+        ],
+        [
+          134,
+          "Z"
+        ],
+        [
+          136,
+          "Z"
+        ],
+        [
+          149,
+          "Z"
+        ],
+        [
+          154,
+          "Z"
+        ],
+        [
+          163,
+          "Z"
+        ],
+        [
+          164,
+          "B"
+        ],
+        [
+          168,
+          "Z"
+        ],
+        [
+          199,
+          "B"
+        ],
+        [
+          204,
+          "Z"
+        ],
+        [
+          208,
+          "B"
+        ],
+        [
+          236,
+          "B"
+        ],
+        [
+          240,
+          "Z"
+        ],
+        [
+          267,
+          "Z"
+        ],
+        [
+          268,
+          "Z"
+        ],
+        [
+          270,
+          "B"
+        ],
+        [
+          275,
+          "Z"
+        ],
+        [
+          278,
+          "Z"
+        ],
+        [
+          289,
+          "Z"
+        ],
+        [
+          306,
+          "B"
+        ],
+        [
+          310,
+          "Z"
+        ],
+        [
+          329,
+          "B"
+        ],
+        [
+          345,
+          "Z"
+        ],
+        [
+          362,
+          "B"
+        ],
+        [
+          384,
+          "B"
+        ]
+      ]
+    }
+  ],
+  "new_smoke_queries": [
+    {
+      "unique_id": "useq_dff919455337c3df32371af9f4990b8a7f24d25550b42e5cb6525156862f4d34",
+      "n_residues": "4103",
+      "seq_sha256": "dff919455337c3df32371af9f4990b8a7f24d25550b42e5cb6525156862f4d34"
+    },
+    {
+      "unique_id": "useq_6b468c49489df5f3c9b606ebba1b70f7d276565f3958086549a97c272d48feb7",
+      "n_residues": "4579",
+      "seq_sha256": "6b468c49489df5f3c9b606ebba1b70f7d276565f3958086549a97c272d48feb7"
+    }
+  ],
+  "new_smoke_manifest_sha256": "879f4115a5ced15dff5fba8f34b8a568090a48f0b0ed9af09eaa753578f35510"
+}

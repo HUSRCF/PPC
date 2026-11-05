@@ -1,0 +1,47 @@
+{
+  "UTC": "2026-11-05T02:02:50.124497+00:00",
+  "job": "801016_0",
+  "completed_process_chunks": 1,
+  "chunk_summaries": [
+    {
+      "total": 13453,
+      "counts": {
+        "ok": 1026,
+        "pending": 12427
+      },
+      "time": 1793843762.165697
+    },
+    {
+      "total": 13453,
+      "counts": {
+        "ok": 1538,
+        "pending": 11915
+      },
+      "time": 1793844077.1298711
+    }
+  ],
+  "previous_summaries": [
+    {
+      "total": 13453,
+      "counts": {
+        "pending": 13451,
+        "ok": 2
+      },
+      "time": 1793840606.2895422
+    },
+    {
+      "total": 13453,
+      "counts": {
+        "ok": 514,
+        "pending": 12939
+      },
+      "time": 1793842581.764655
+    }
+  ],
+  "parameters_unchanged": true,
+  "not_matched_query_timing_comparison": true,
+  "old_ledger_sha256_at_upgrade": "f22fd73e2e24d021f01014a2d14dac16bdb23c5da46f060c0da708b9fe29f799",
+  "new_512_query_cycle_seconds": 314.9641740322113,
+  "new_queries_per_hour": 5852.094149004694,
+  "old_first_512_cycle_seconds": 1975.475112915039
+}

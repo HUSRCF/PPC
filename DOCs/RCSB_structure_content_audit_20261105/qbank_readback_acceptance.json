@@ -1,0 +1,21 @@
+{
+  "UTC": "2026-11-05T02:42:17.146014+00:00",
+  "status": "complete_existing_scope_readback",
+  "queries": 224276,
+  "residues": 72210441,
+  "per_query_confidence_hashes_matched": 224276,
+  "split_counts": {
+    "train": 178884,
+    "test": 22810,
+    "val": 22582
+  },
+  "ready_sha256": "3f47c6d1fccf16aa97daea730fca45dd4205088620f2a55d3640b352a66a552a",
+  "file_hashes_matched": {
+    "audit.jsonl": "607ca73880bdd167a2f5efad2a7607706e6a9ffbff7916e78adda6cf18e0d88d",
+    "absolute_CA_plddt_div100.npy": "a55437cd26c74ed465c4128c260d4d6f0a5988e2f9d6dbc1f436204d3d50eecf"
+  },
+  "sources_unchanged": true,
+  "full_native_structure_coverage": false,
+  "model_or_label_data_used": false,
+  "seconds": 4.6982925980119035
+}

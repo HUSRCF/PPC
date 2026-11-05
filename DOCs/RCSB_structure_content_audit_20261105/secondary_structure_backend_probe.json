@@ -1,0 +1,203 @@
+{
+  "UTC": "2026-11-05T02:18:07.646552+00:00",
+  "scope": "First12alphabeticalexistingrawqueries;not full-bank backend census",
+  "queries": [
+    {
+      "uid": "useq_00005e8fcc7c0377a142e435176a99faebe623b9173e9e7c00cc57f6b2087b2e",
+      "length": 208,
+      "raw_file_sha256": "249c949ccfe3872e9f258ff322ba3a5c5495381b8dd01c54b67b1636503734e2",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        15.0,
+        2.0,
+        97.0,
+        8.0,
+        0.0,
+        18.0,
+        15.0,
+        53.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_0000add4570d783989acdad8888fccd52f042869b1e6927c42ca4adc11b5dd39",
+      "length": 900,
+      "raw_file_sha256": "2107c30f9378c664045aab6b807f54441ae691a14559f516eed4c17a60b2a08d",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        367.0,
+        7.0,
+        180.0,
+        36.0,
+        10.0,
+        105.0,
+        72.0,
+        123.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_00010f2d4bf1531294ab4b72a7eb61dc450554328f51ae7c81d82da1c7703a62",
+      "length": 313,
+      "raw_file_sha256": "03abaa7bb8b41f7b3013c3975c0d0758eaae0438dad8190908af7b3ef1bc365b",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        116.0,
+        0.0,
+        55.0,
+        15.0,
+        0.0,
+        47.0,
+        25.0,
+        55.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_00018fcc12997165ad25b889f99f4c7c04dd3d36ce3b657989c99900578beca9",
+      "length": 294,
+      "raw_file_sha256": "ee4a84f116a82a72a1643e3696b1f84bc748f64da81869d02f8cbe2d5dbc8ab7",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        117.0,
+        2.0,
+        49.0,
+        12.0,
+        0.0,
+        35.0,
+        24.0,
+        55.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_000191e6628d6b025f9ce55cef178e5154aaabdc78c95fc86acfa69cbbdd2317",
+      "length": 402,
+      "raw_file_sha256": "010e1849f8cee2f1d013c2dc4a49451a67d809e12f94dd7d46f5870cb06bcc89",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        115.0,
+        2.0,
+        84.0,
+        9.0,
+        0.0,
+        45.0,
+        30.0,
+        117.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_000262d39fcc175395c90712d8382523d6771c03ef819f8a86e0aa82a218c342",
+      "length": 150,
+      "raw_file_sha256": "5ae0618cb0961a69bba808bdb2ed9c2426f3afb7107fc2f635a01cee3d80e6c1",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        45.0,
+        2.0,
+        18.0,
+        0.0,
+        0.0,
+        12.0,
+        23.0,
+        50.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_0002b35bf51fa9ddabf19c8c7ee8bcc6d1e70e6b560d15ad21aa2da44e3e56f3",
+      "length": 203,
+      "raw_file_sha256": "b80de0c5b4eb87003bcc06a4b2c4951422c63cedd89a5fb404643d5aecc1d8c0",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        74.0,
+        3.0,
+        54.0,
+        0.0,
+        0.0,
+        19.0,
+        16.0,
+        37.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_0002c9b176a6f66aa1cef34dff25535c4b6b7888e237d3bb2380f4bf857493df",
+      "length": 278,
+      "raw_file_sha256": "a4e20824b161ff4efa406648b23a8fa27531e6866d18b4a42c60482ba5bf04be",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        65.0,
+        3.0,
+        71.0,
+        9.0,
+        0.0,
+        34.0,
+        18.0,
+        78.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_0002f58126119273c695cf52c6401b39ac9d157ff98d02a333f82bf0edab8041",
+      "length": 496,
+      "raw_file_sha256": "b0897af1ecef1a9732900b64f29a55d830672a8d1e519216a44e7227bf20775f",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        229.0,
+        3.0,
+        67.0,
+        16.0,
+        0.0,
+        65.0,
+        34.0,
+        82.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_00031b98317f4548827332b303e9f57be320cbfcf584238c90df0eba24f1df42",
+      "length": 223,
+      "raw_file_sha256": "0ab52c17d52ea1112e1b7bd4827dad7602b12e768c04d08acc34b256fac69546",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        118.0,
+        2.0,
+        36.0,
+        0.0,
+        0.0,
+        18.0,
+        10.0,
+        39.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_00032a75da5fbc95687dfa034da14bd37c698c0344eea7868516297b566fb5d7",
+      "length": 349,
+      "raw_file_sha256": "69f239ece4a1e2ffb79df77928f257d7099d6c56129fa96ee33beb25d2c92ecc",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        161.0,
+        0.0,
+        49.0,
+        22.0,
+        0.0,
+        32.0,
+        20.0,
+        65.0
+      ],
+      "states_outside_H_E_coil_present": true
+    },
+    {
+      "uid": "useq_0003ff07a6ecd2ab3358ec10d16de4a4a8c7adc0c2710226a2fe0a0dac910f5a",
+      "length": 226,
+      "raw_file_sha256": "381ea5d4f6413d9bef9751ff957de1d63297a954b707d0c583c0a49e7f1c1b11",
+      "columns_20_to27_H_B_E_G_I_T_S_coil_counts": [
+        83.0,
+        0.0,
+        65.0,
+        3.0,
+        0.0,
+        21.0,
+        21.0,
+        33.0
+      ],
+      "states_outside_H_E_coil_present": true
+    }
+  ],
+  "all12_have_genuine8state_channels": true,
+  "HPC3_checked_existing_env_mkdssp_paths_found": [],
+  "new_short_feature_backend_equivalence": false,
+  "new_packages_installed": false,
+  "decision": "Do not silently mix available3statepyDSSP with these8statefeatures;need compatible8statebackend for repairs"
+}

@@ -1,0 +1,11 @@
+{
+  "time": 1793849414.6371593,
+  "source_manifest_sha256": "5d6bed041ee7a30969e215155fec1b6b439006301bfb2b5ac15881f318f81166",
+  "manifest": "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/inputs/lowmem_max_v1.tsv",
+  "manifest_sha256": "19b3f93fe9b11a853749a0f006a69bec8068508fc6ee32b39896972868036e53",
+  "full_length": 4579,
+  "query_count": 1,
+  "native_split": "train",
+  "sequence_changed": false,
+  "cache_ready_sha256": "f6adbea13818b06ea081a34054b806a4afe827fc098c8e51366a20db79f53890"
+}

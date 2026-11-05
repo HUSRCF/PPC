@@ -1,0 +1,38 @@
+{
+  "UTC": "2026-11-05T03:33:34.025997+00:00",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--job-name=rcsb_lowmem_4579",
+    "--partition=acd_ue",
+    "--gres=gpu:1",
+    "--cpus-per-task=12",
+    "--mem=128G",
+    "--time=12:00:00",
+    "--chdir=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/code_lowmem_a73b74e/scripts/preparations/m18_union",
+    "--output=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/logs/lowmem_%j.out",
+    "--error=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/logs/lowmem_%j.err",
+    "--wrap",
+    "env -u PYTHONPATH PATH=/data/user/shuang886/.conda/envs/fold/bin:/usr/local/bin:/usr/bin:/bin PROTENIX_ROOT_DIR=/data/user/shuang886/Folding/protenix_stage0_pkg/v1_1/runtime LAYERNORM_TYPE=torch OMP_NUM_THREADS=12 MKL_NUM_THREADS=12 OPENBLAS_NUM_THREADS=12 MAX_JOBS=4 PPC_LOWMEM_RUNNER_SOURCE_SHA256=5562c7bf1456c027c8463afde5962975669949b057d26968fc37b5b7fb57f688 /data/user/shuang886/.conda/envs/fold/bin/python -u /data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/code_lowmem_a73b74e/scripts/preparations/m18_union/run_rcsb_lowmem_smoke.py --work-root /data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/lowmem_relpos_v1 --code-root /data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/code_lowmem_a73b74e/scripts/preparations/m18_union --manifest /data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/inputs/lowmem_max_v1.tsv --cache-root /data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_long_repair/cache_smoke_v2 --manifest-sha256 19b3f93fe9b11a853749a0f006a69bec8068508fc6ee32b39896972868036e53 --cache-ready-sha256 f6adbea13818b06ea081a34054b806a4afe827fc098c8e51366a20db79f53890"
+  ],
+  "source_sha256": "5562c7bf1456c027c8463afde5962975669949b057d26968fc37b5b7fb57f688",
+  "review": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "verdict": "PASS"
+  },
+  "tests": {
+    "wrapper_regressions_passed": 2,
+    "operator_focused_passed": 6
+  },
+  "query_count": 1,
+  "full_length": 4579,
+  "operator_full_length_equivalence_gate_required": true,
+  "existing_jobs_cancelled": false,
+  "weights_or_sampling_changed": false,
+  "installed_packages_changed": false,
+  "returncode": 0,
+  "stdout": "801226\n",
+  "stderr": "",
+  "job": "801226"
+}

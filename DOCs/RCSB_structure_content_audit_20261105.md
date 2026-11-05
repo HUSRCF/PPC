@@ -171,3 +171,38 @@ and no Python, Torch, CUDA packages or removals. The new prefix was not
 created. Actual installation was requested for user approval, not performed.
 See `dssp_tools_dry_run.json`. Compatibility/output checks remain required
 before extracting new short-chain features.
+
+## Full4579 Allocation-Equivalent Retry
+
+The original long smoke 801103 is terminal: the complete 4,103-aa CIF
+passed strict queue QC, while the 4,579-aa query exhausted two OOM attempts.
+The overall smoke therefore failed rather than claiming both succeeded.
+See `long_smoke_v2_terminal_summary.json`. Both full-query ESM caches remain
+valid and are reused without recalculating or truncating sequence input.
+
+Commit `a73b74e` implements the same relative-position integer formulas
+using 64-row allocation chunks. The complete float32 result remains
+4,579 by 4,579 by 139. No weights, inference sampling, random numbers,
+installed package files or input sequence are changed. The temporary
+in-process method replacement is restored before output publication.
+
+The isolated orchestrator in commit `eb76770` snapshots the exact validated
+manifest bytes and uses absolute proof paths. Independent gpt-6-luna max
+review found and verified fixes to both issues; the regressions also
+verify that failed proof never launches folding. Eight focused tests and
+189 full-suite tests passed, with two optional skips.
+
+Job **801226**, one H100 on `acd_ue`, 12 CPUs and 128 GB RAM, first ran
+the actual stock operator on CPU and the chunked operator on GPU. Exact
+equality passed for every element of the complete 4,579-by-4,579-by-139
+tensor, along with small mixed/batched cases, dtype, contiguity and
+unchanged random-number state checks. This is not merely a comparison
+against a copied test formula. The proof is archived as
+`lowmem_operator_equivalence.json`, SHA-256
+`bc58f5561b2dd0f2c2aa6a2b5d07f4236d176d919d3468fae48ddfa5f638cff6`.
+
+The actual longest-query model retry has started only after this proof.
+It remains unaccepted until final sequence/coordinate/confidence/cache
+and source checks pass. The proof alone does not establish that later
+model operations fit in memory. Submission and input receipts are
+`submitted_lowmem_v1.json` and `lowmem_max_v1_receipt.json`.

@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "source_sha256": "bff0cb35af17da83a3791a038af17e03cc848eba830aacfc9e9bda20987aee71",
+  "base_source_sha256": "6cf9adccdc89538eed7a8d7b3b6f6149849d192284d64186d849c210dbd0907b",
+  "stock_embedders_sha256": "05e9e8d7bc8e9f917a6cadb3534b4b95764ea9968c19bc38d4743a29daf982f8",
+  "chunk_rows": 64,
+  "cases": [
+    {
+      "n": 1,
+      "batch_shape": [],
+      "r_max": 32,
+      "s_max": 2,
+      "dtype": "torch.int64",
+      "CPU_equal": true,
+      "GPU_equal": true
+    },
+    {
+      "n": 7,
+      "batch_shape": [],
+      "r_max": 3,
+      "s_max": 0,
+      "dtype": "torch.int32",
+      "CPU_equal": true,
+      "GPU_equal": true
+    },
+    {
+      "n": 13,
+      "batch_shape": [
+        2
+      ],
+      "r_max": 0,
+      "s_max": 1,
+      "dtype": "torch.int64",
+      "CPU_equal": true,
+      "GPU_equal": true
+    },
+    {
+      "n": 17,
+      "batch_shape": [
+        2
+      ],
+      "r_max": 32,
+      "s_max": 2,
+      "dtype": "torch.int64",
+      "CPU_equal": true,
+      "GPU_equal": true
+    }
+  ],
+  "full_n": 4579,
+  "full_width": 139,
+  "full_CPU_stock_vs_GPU_chunked_equal": true,
+  "RNG_unchanged": true,
+  "dtype": "torch.float32",
+  "contiguous": true,
+  "original_CPU_seconds": 2.251564220059663,
+  "chunked_GPU_seconds": 0.07267412904184312,
+  "chunked_GPU_peak_bytes": 12486220288,
+  "model_weights_or_input_changed": false,
+  "time": 1793849640.3499415,
+  "scope": "Operator equivalence only;not a structure-folding success"
+}

@@ -133,6 +133,36 @@ does not cancel the subsequent acceptance pass.
 The full tensor-content acceptance is archived as
 `RCSB_single_union_transfer_20261105/input_pack/ready.json`.
 
+At2026-11-05T00:32:34UTC,all502534metadata/label payload identities had
+been written. The same live controller was in the final reference-inventory
+pass;its feature-audit reader was at105209856of127394831bytes by00:35:55UTC.
+No seal or submission receipt had yet been published. This final observation
+is still preparation,not a claim that RCSB training was queued or running.
+
+## Actual Formal Submission
+
+The controller completed all acceptance passes and submitted job800877at
+2026-11-05T00:36:56UTC. Its terminal process state is expected;the real
+`submitted.json`receipt and scheduler state confirm submission rather than
+an inferred success from PID disappearance. The job was PENDING(Priority)
+on acd_u at00:38UTC,requesting1GPU,12CPUs,128GiB and12hours.
+The model had not begun training at that observation.
+
+The sealed ready receipt SHA-256 is
+`ea8530341646bc22c0ecb71bb97c19c31d03868047003b394c90342f98400d38`.
+The502534payload identity table SHA-256 is
+`de9797821c62652897bb4bfcc9ffdbf40117851d8f59f0678cc322abd48dc933`.
+The seal SHA-256 is
+`2c792a02b8cc05b5e373d1952ac9e971f08cbbd615663e5dcfbd0f8a4026ea2c`.
+All bind the original plan and unchanged native/full/scratch/no-test contract.
+The three small submission/seal receipts are archived in this document's
+matching directory;the large identity table stays in the immutable HPC3 state.
+
+At00:38UTC,the scheduler estimated a19:08UTC+8start,not a guaranteed start
+time. A preference question about moving the primary pilot to acd_ue was
+sent;no scheduler change was made without a reply. No alternate seed,
+checkpoint,threshold or test evaluation was introduced.
+
 Controller log/state:
 `/data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/`.
 The plan and launch receipt are archived in this document's matching directory.

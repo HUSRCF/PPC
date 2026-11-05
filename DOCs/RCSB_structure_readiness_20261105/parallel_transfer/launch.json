@@ -1,0 +1,169 @@
+{
+  "UTC": "2026-11-05T00:29:58.480132+00:00",
+  "previous_transfer_superseded": true,
+  "previous_group_confirmed_stopped": true,
+  "commands": [
+    [
+      "rsync",
+      "-a",
+      "--partial",
+      "--partial-dir=.rsync-partial",
+      "--protect-args",
+      "--stats",
+      "--info=progress2",
+      "--files-from=/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_0.txt",
+      "star:/data1/wholeset/RCSBprot/protenix/",
+      "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/star_cif_snapshot/"
+    ],
+    [
+      "rsync",
+      "-a",
+      "--partial",
+      "--partial-dir=.rsync-partial",
+      "--protect-args",
+      "--stats",
+      "--info=progress2",
+      "--files-from=/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_1.txt",
+      "star:/data1/wholeset/RCSBprot/protenix/",
+      "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/star_cif_snapshot/"
+    ],
+    [
+      "rsync",
+      "-a",
+      "--partial",
+      "--partial-dir=.rsync-partial",
+      "--protect-args",
+      "--stats",
+      "--info=progress2",
+      "--files-from=/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_2.txt",
+      "star:/data1/wholeset/RCSBprot/protenix/",
+      "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/star_cif_snapshot/"
+    ],
+    [
+      "rsync",
+      "-a",
+      "--partial",
+      "--partial-dir=.rsync-partial",
+      "--protect-args",
+      "--stats",
+      "--info=progress2",
+      "--files-from=/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_3.txt",
+      "star:/data1/wholeset/RCSBprot/protenix/",
+      "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/star_cif_snapshot/"
+    ],
+    [
+      "rsync",
+      "-a",
+      "--partial",
+      "--partial-dir=.rsync-partial",
+      "--protect-args",
+      "--stats",
+      "--info=progress2",
+      "--files-from=/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_4.txt",
+      "star:/data1/wholeset/RCSBprot/protenix/",
+      "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/star_cif_snapshot/"
+    ],
+    [
+      "rsync",
+      "-a",
+      "--partial",
+      "--partial-dir=.rsync-partial",
+      "--protect-args",
+      "--stats",
+      "--info=progress2",
+      "--files-from=/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_5.txt",
+      "star:/data1/wholeset/RCSBprot/protenix/",
+      "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/star_cif_snapshot/"
+    ],
+    [
+      "rsync",
+      "-a",
+      "--partial",
+      "--partial-dir=.rsync-partial",
+      "--protect-args",
+      "--stats",
+      "--info=progress2",
+      "--files-from=/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_6.txt",
+      "star:/data1/wholeset/RCSBprot/protenix/",
+      "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/star_cif_snapshot/"
+    ],
+    [
+      "rsync",
+      "-a",
+      "--partial",
+      "--partial-dir=.rsync-partial",
+      "--protect-args",
+      "--stats",
+      "--info=progress2",
+      "--files-from=/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_7.txt",
+      "star:/data1/wholeset/RCSBprot/protenix/",
+      "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/star_cif_snapshot/"
+    ]
+  ],
+  "manifests": [
+    {
+      "shard": 0,
+      "queries": 8675,
+      "files": 17350,
+      "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_0.txt",
+      "sha256": "1bd219a2ea0800617f1be6c64228c6f8ce08f0f03c805ce1100f8d5737412fd9"
+    },
+    {
+      "shard": 1,
+      "queries": 8675,
+      "files": 17350,
+      "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_1.txt",
+      "sha256": "1d1441ec17ea434cc08980d1c51fa14b25dbd5dddfdaec48c1d0ca816ecd6333"
+    },
+    {
+      "shard": 2,
+      "queries": 8675,
+      "files": 17350,
+      "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_2.txt",
+      "sha256": "7015a1575e1c412de89e788319fcf584cdaa67742ced6a6848ed6b3dc22e8cdb"
+    },
+    {
+      "shard": 3,
+      "queries": 8675,
+      "files": 17350,
+      "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_3.txt",
+      "sha256": "db14ac040c27ffcbc68a1e48808d1b82b215c52f997c3e0c5bc599f0bc3677ba"
+    },
+    {
+      "shard": 4,
+      "queries": 8675,
+      "files": 17350,
+      "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_4.txt",
+      "sha256": "0be831b96e4af4d1b9dcf29e8b8ef4f18ed5382a3df9ac2e4d42ab728b37f093"
+    },
+    {
+      "shard": 5,
+      "queries": 8675,
+      "files": 17350,
+      "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_5.txt",
+      "sha256": "e5d37f73e6b31dcaf00010faf9b4848186fef0f62a56a371e98806fe92bd23ef"
+    },
+    {
+      "shard": 6,
+      "queries": 8675,
+      "files": 17350,
+      "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_6.txt",
+      "sha256": "7d8014dfd9d77cda8c1aa9e72f55f01328b07c9f518ecc6cc6773abe053a5973"
+    },
+    {
+      "shard": 7,
+      "queries": 8675,
+      "files": 17350,
+      "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1/files_7.txt",
+      "sha256": "3e313f444152c1abd839cdf5f770921a7e4fb3c850bec3026ca9202bad6a2a1b"
+    }
+  ],
+  "queries": 69400,
+  "files": 138800,
+  "concurrent_streams": 8,
+  "bandwidth_limit": null,
+  "source_read_only": true,
+  "content_accepted": false,
+  "wrapper_sha256": "c9fdeb90a816dd3da74682fb7f77062b98d76dfc647f03c4624888259f7832ad",
+  "pid": 3364891
+}

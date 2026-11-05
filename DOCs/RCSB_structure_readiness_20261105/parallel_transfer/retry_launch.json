@@ -1,0 +1,12 @@
+{
+  "UTC": "2026-11-05T00:31:05.061958+00:00",
+  "previous_controller_pid": 3364891,
+  "previous_state": "Exited with SyntaxError before creating any rsync child",
+  "old_log_sha256": "5e02a76069cad30dda92c92f2c615661186511336eefc84d75ff1d7ad68f65f9",
+  "program": "import datetime,hashlib,json,pathlib,subprocess,time\nroot=pathlib.Path('/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/parallel_transfer_v1')\nplan=json.loads((root/\"attempt.json\").read_text())\nassert not list(root.glob(\"shard_*_launch.json\"))\nfor row in plan[\"manifests\"]:\n    assert hashlib.sha256(pathlib.Path(row[\"path\"]).read_bytes()).hexdigest()==row[\"sha256\"]\nactive={};records=[]\nfor i,cmd in enumerate(plan[\"commands\"]):\n    handle=(root/(\"shard_\"+str(i)+\".log\")).open(\"a\")\n    p=subprocess.Popen(cmd,stdout=handle,stderr=subprocess.STDOUT)\n    active[i]=(p,handle,time.monotonic())\n    record={\"UTC\":datetime.datetime.now(datetime.timezone.utc).isoformat(),\"shard\":i,\"pid\":p.pid,\"command\":cmd}\n    (root/(\"shard_\"+str(i)+\"_launch.json\")).write_text(json.dumps(record,indent=2)+chr(10))\nwhile active:\n    for i,(p,handle,start)in list(active.items()):\n        code=p.poll()\n        if code is None:continue\n        handle.close()\n        row={\"UTC\":datetime.datetime.now(datetime.timezone.utc).isoformat(),\"shard\":i,\"pid\":p.pid,\"returncode\":code,\"seconds\":time.monotonic()-start,\"transport_only\":True,\"CIF_content_accepted\":False}\n        (root/(\"shard_\"+str(i)+\"_completed.json\")).write_text(json.dumps(row,indent=2)+chr(10))\n        records.append(row);del active[i]\n    if active:time.sleep(5)\nresult={\"UTC\":datetime.datetime.now(datetime.timezone.utc).isoformat(),\"all_transports_exit0\":all(x[\"returncode\"]==0 for x in records),\"shards\":sorted(records,key=lambda x:x[\"shard\"]),\"CIF_content_accepted\":False}\n(root/\"completed.json\").write_text(json.dumps(result,indent=2)+chr(10))\nraise SystemExit(0 if result[\"all_transports_exit0\"]else 2)\n",
+  "program_sha256": "91d7c49f0a4f8d24e3edb627d4fb139ab742083e929b70a3386f371f1ce0c7b4",
+  "source_plan_sha256": "5a5d5a5927dd28bcc72a34bee1c998ea38260fdb0f056993df62fb2a3e8643b9",
+  "compile_passed": true,
+  "source_scope_unchanged": true,
+  "pid": 3382956
+}

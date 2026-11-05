@@ -1,0 +1,24 @@
+[
+  {
+    "extra": [],
+    "files": 2048,
+    "returncode": 0,
+    "seconds": 0.7087505549425259,
+    "cpu_seconds": 0.424894,
+    "stdout": "\nNumber of files: 5,140 (reg: 2,048, dir: 3,092)\nNumber of created files: 5,140 (reg: 2,048, dir: 3,092)\nNumber of deleted files: 0\nNumber of regular files transferred: 2,048\nTotal file size: 253,809,829 bytes\nTotal transferred file size: 253,809,829 bytes\nLiteral data: 0 bytes\nMatched data: 0 bytes\nFile list size: 274,284\nFile list generation time: 0.346 seconds\nFile list transfer time: 0.000 seconds\nTotal bytes sent: 534,705\nTotal bytes received: 289,727\n\nsent 534,705 bytes  received 289,727 bytes  549,621.33 bytes/sec\ntotal size is 253,809,829  speedup is 307.86 (DRY RUN)\n",
+    "stderr": "",
+    "files_copied": false
+  },
+  {
+    "extra": [
+      "--no-implied-dirs"
+    ],
+    "files": 2048,
+    "returncode": 0,
+    "seconds": 0.6810986889759079,
+    "cpu_seconds": 0.389758,
+    "stdout": "\nNumber of files: 5,140 (reg: 2,048, dir: 3,092)\nNumber of created files: 2,048 (reg: 2,048)\nNumber of deleted files: 0\nNumber of regular files transferred: 2,048\nTotal file size: 253,809,829 bytes\nTotal transferred file size: 253,809,829 bytes\nLiteral data: 0 bytes\nMatched data: 0 bytes\nFile list size: 274,292\nFile list generation time: 0.308 seconds\nFile list transfer time: 0.000 seconds\nTotal bytes sent: 525,425\nTotal bytes received: 280,451\n\nsent 525,425 bytes  received 280,451 bytes  1,611,752.00 bytes/sec\ntotal size is 253,809,829  speedup is 314.95 (DRY RUN)\n",
+    "stderr": "",
+    "files_copied": false
+  }
+]

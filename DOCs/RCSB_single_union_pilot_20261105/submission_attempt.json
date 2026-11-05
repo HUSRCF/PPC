@@ -1,0 +1,19 @@
+{
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--job-name=ppc_rcsb_R0",
+    "--partition=acd_u",
+    "--gres=gpu:1",
+    "--cpus-per-task=12",
+    "--mem=128G",
+    "--time=12:00:00",
+    "--chdir=/data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/code",
+    "--output=/data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/state/train_%j.out",
+    "--error=/data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/state/train_%j.err",
+    "--wrap",
+    "env OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 /data/user/shuang886/.conda/envs/openfold/bin/python -u /data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/code/scripts/preparations/m18_union/submit_rcsb_union_pilot.py --plan /data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/plan.json --plan-sha256 24081be8a3b0164ad5fa5a822105a303559e58d1d3eec772c28f4907f247261b --run --seal-sha256 2c792a02b8cc05b5e373d1952ac9e971f08cbbd615663e5dcfbd0f8a4026ea2c"
+  ],
+  "plan_sha256": "24081be8a3b0164ad5fa5a822105a303559e58d1d3eec772c28f4907f247261b",
+  "time": 1793839014.5964105
+}

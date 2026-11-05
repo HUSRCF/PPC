@@ -1,0 +1,29 @@
+[
+  {
+    "files": 4096,
+    "returncode": 0,
+    "seconds": 3.578623387031257,
+    "cpu_seconds": 2.825929,
+    "stdout": "\nNumber of files: 10,276 (reg: 4,096, dir: 6,180)\nNumber of created files: 10,276 (reg: 4,096, dir: 6,180)\nNumber of deleted files: 0\nNumber of regular files transferred: 4,096\nTotal file size: 521,685,842 bytes\nTotal transferred file size: 521,685,842 bytes\nLiteral data: 0 bytes\nMatched data: 0 bytes\nFile list size: 548,239\nFile list generation time: 2.743 seconds\nFile list transfer time: 0.000 seconds\nTotal bytes sent: 1,069,373\nTotal bytes received: 579,086\n\nsent 1,069,373 bytes  received 579,086 bytes  366,324.22 bytes/sec\ntotal size is 521,685,842  speedup is 316.47 (DRY RUN)\n",
+    "stderr": "",
+    "files_copied": false
+  },
+  {
+    "files": 8192,
+    "returncode": 0,
+    "seconds": 12.187845457927324,
+    "cpu_seconds": 11.832865,
+    "stdout": "\nNumber of files: 20,550 (reg: 8,192, dir: 12,358)\nNumber of created files: 20,550 (reg: 8,192, dir: 12,358)\nNumber of deleted files: 0\nNumber of regular files transferred: 8,192\nTotal file size: 1,040,339,204 bytes\nTotal transferred file size: 1,040,339,204 bytes\nLiteral data: 0 bytes\nMatched data: 0 bytes\nFile list size: 1,096,401\nFile list generation time: 11.768 seconds\nFile list transfer time: 0.000 seconds\nTotal bytes sent: 2,138,711\nTotal bytes received: 1,158,082\n\nsent 2,138,711 bytes  received 1,158,082 bytes  263,743.44 bytes/sec\ntotal size is 1,040,339,204  speedup is 315.56 (DRY RUN)\n",
+    "stderr": "",
+    "files_copied": false
+  },
+  {
+    "files": 16384,
+    "returncode": 0,
+    "seconds": 49.9436964179622,
+    "cpu_seconds": 49.426187999999996,
+    "stdout": "\nNumber of files: 41,094 (reg: 16,384, dir: 24,710)\nNumber of created files: 41,094 (reg: 16,384, dir: 24,710)\nNumber of deleted files: 0\nNumber of regular files transferred: 16,384\nTotal file size: 2,061,410,379 bytes\nTotal transferred file size: 2,061,410,379 bytes\nLiteral data: 0 bytes\nMatched data: 0 bytes\nFile list size: 2,192,525\nFile list generation time: 49.466 seconds\nFile list transfer time: 0.000 seconds\nTotal bytes sent: 4,277,379\nTotal bytes received: 2,315,846\n\nsent 4,277,379 bytes  received 2,315,846 bytes  130,558.91 bytes/sec\ntotal size is 2,061,410,379  speedup is 312.66 (DRY RUN)\n",
+    "stderr": "",
+    "files_copied": false
+  }
+]

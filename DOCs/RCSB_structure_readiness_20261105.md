@@ -76,6 +76,52 @@ The full catalog and transfer live under
 An rsync success receipt will mean transport completion only,not acceptance
 for geometry training.
 
+### Measured File-List Bottleneck And Exact-Scope Parallelization
+
+HPC3 rsync3.1.3 showed approximately quadratic preparation cost over the
+tested deeply nested file lists. CPU-only dry runs copied no files:
+
+| Explicit files | Wall seconds | Local child CPU seconds |
+|---|---:|---:|
+|4096|3.58|2.83|
+|8192|12.19|11.83|
+|16384|49.94|49.43|
+
+Removing implied-directory metadata did not materially improve the2048file
+probe. The original full-list process remained CPU-active but had not
+created any entry in the destination at replacement time. This was a
+measured performance decision,not a restart inferred from an empty log or
+an observation timeout. Its entire process group was confirmed stopped.
+
+The same138800files were partitioned into eight disjoint lists,each8675
+queries/17350files. CIF/confidence pairs stay together. The union is exactly
+the original file set;no local indexed CIF is added,no source is modified,
+and no bandwidth limit is imposed. The first parallel controller exited
+with a quoting SyntaxError before creating any rsync child. It was fixed,
+compiled before launch,and the original error/launch records were retained.
+The replacement controller PID3382956had eight real rsync children:
+3382962,3382965,3382970,3382972,3382974,3382976,3382978,3382980.
+All were live and copying by00:33:53UTC. Their cumulative progress counters
+then summed to about1.05GB;this was not a completion or acceptance receipt.
+
+Receipts and benchmarks are archived under
+`RCSB_structure_readiness_20261105/parallel_transfer/`. Live per-stream
+logs/completion records are in`structure_source_catalog/parallel_transfer_v1`.
+
+### Transferred-Content Probe
+
+Eight actually transferred CIF/confidence pairs were compared with their
+existing raw feature payloads. Exact sequence hashes and the original CIF
+source path matched for every query. Maximum coordinate differences were
+0.000494--0.000501Angstrom,consistent with the original temporary PDB's
+coordinate rounding. The raw89D values matched the unnormalized field and
+had positive SASA observations. C-alpha confidence and official global
+confidence were finite and in0--100range. No feature was recomputed or
+changed. Hashes are in`transferred_content_probe.json`.
+
+This eight-query probe does not substitute for the full geometry-content
+audit. It also does not retrospectively verify the original ESM2 caches.
+
 ## Required Acceptance Before Geometry Training
 
 1. Keep a frozen candidate-source table and hashes of native queries,

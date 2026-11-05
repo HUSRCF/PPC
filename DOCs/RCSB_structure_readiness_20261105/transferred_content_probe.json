@@ -1,0 +1,161 @@
+{
+  "UTC": "2026-11-05T00:35:16.545535+00:00",
+  "queries": [
+    {
+      "unique_id": "useq_2a48de9afaf5e4cc5bbc63d6d4cef24a279ceda6b37e5f02999afa8a616d7ce5",
+      "length": 339,
+      "exact_sequence": true,
+      "raw_source_path_exact": true,
+      "CA_max_abs_difference": 0.0004999935626983643,
+      "CA_confidence_range": [
+        47.5,
+        96.30999755859375
+      ],
+      "raw_scalar_shape": [
+        339,
+        89
+      ],
+      "SASA_positive_residues": 312,
+      "CIF_sha256": "a26366eeaf9d4cc96fec727d47d26041f47dd72735ce269743182477d446cb03",
+      "raw_feature_sha256": "0a0964b8f102ff8d76c016a8ef34b42044fad26d3210f69de41f8e8dce16f526",
+      "confidence_sha256": "57a32a55e99edbe035129710a2c5c9cada31b9db4baf71c42ff20a8945e3ccf5"
+    },
+    {
+      "unique_id": "useq_2ab628f239a72367980172d1b27086f79c4d68b36d02bad26569d64d07c07b35",
+      "length": 121,
+      "exact_sequence": true,
+      "raw_source_path_exact": true,
+      "CA_max_abs_difference": 0.0004987716674804688,
+      "CA_confidence_range": [
+        63.939998626708984,
+        98.47000122070312
+      ],
+      "raw_scalar_shape": [
+        121,
+        89
+      ],
+      "SASA_positive_residues": 115,
+      "CIF_sha256": "b610a6c61eefc414d1091007b3506a525faf9b4c7ccb34277f3316b58af2c7a8",
+      "raw_feature_sha256": "ba31f21f3be933ea1c791225d7d54175ee026c5477be58d98f8c97c57cb3ca7b",
+      "confidence_sha256": "15f47a90ffc7495bbe63cc9a07323b1486b10dae2643aff95e8c96c959667121"
+    },
+    {
+      "unique_id": "useq_2ad7be4014670bcffaf3eafb461c2d90bd7f96df44e375783568dc5775248770",
+      "length": 123,
+      "exact_sequence": true,
+      "raw_source_path_exact": true,
+      "CA_max_abs_difference": 0.0005000829696655273,
+      "CA_confidence_range": [
+        48.380001068115234,
+        98.54000091552734
+      ],
+      "raw_scalar_shape": [
+        123,
+        89
+      ],
+      "SASA_positive_residues": 110,
+      "CIF_sha256": "17ce93a7dfa23653e967e48f46c53acf4264e8dc7e9e4d6f6365f8d41e1e29bd",
+      "raw_feature_sha256": "dc99bf6fd29fb39a40b8a980b118f64cfbfe208726893029cb35ace6813c004e",
+      "confidence_sha256": "163991c1cb4a0434601d2946494bb85430bf396413feefe94599f7993a591952"
+    },
+    {
+      "unique_id": "useq_2b20ce805f3208f1f1478d42a79936f4f94c8e8c8cf237ec30cdfde2d956a870",
+      "length": 960,
+      "exact_sequence": true,
+      "raw_source_path_exact": true,
+      "CA_max_abs_difference": 0.0005002021789550781,
+      "CA_confidence_range": [
+        18.190000534057617,
+        95.37999725341797
+      ],
+      "raw_scalar_shape": [
+        960,
+        89
+      ],
+      "SASA_positive_residues": 820,
+      "CIF_sha256": "5fcbe25e3e58635f755484a12d0f97e467069943ebdbdac64638e1c73a9abcdf",
+      "raw_feature_sha256": "9d26ad232af3a1eec75d73a104ce0713d9597ac4da7697ba3501d18b5999fe61",
+      "confidence_sha256": "5ef0d10437ed36b5478154fd1e88abbedf33fe632c417083cd319e4e0a211ab6"
+    },
+    {
+      "unique_id": "useq_2b6486b9e63a2f0be3976c80f1337cb9b017aed965d5355602e2ec79a3e99a2a",
+      "length": 257,
+      "exact_sequence": true,
+      "raw_source_path_exact": true,
+      "CA_max_abs_difference": 0.0004978179931640625,
+      "CA_confidence_range": [
+        28.649999618530273,
+        98.04000091552734
+      ],
+      "raw_scalar_shape": [
+        257,
+        89
+      ],
+      "SASA_positive_residues": 228,
+      "CIF_sha256": "51e71b7678be3c6b96f056c965c6bcbfa12a4e6f7c1f2b415cd2bf2c36b9c62f",
+      "raw_feature_sha256": "ffdd76f8c24285d1715f8d18a27a5f352ed78bc2ea672dc2187ffbceae90291f",
+      "confidence_sha256": "9b745110db81c9de08e52535c8e71889016313a076e10db75878fad6a03bceb2"
+    },
+    {
+      "unique_id": "useq_2bc98169d35d0eee69e85a5258b90ac08d6c8660f36bc1cae35e8bceadd8c134",
+      "length": 246,
+      "exact_sequence": true,
+      "raw_source_path_exact": true,
+      "CA_max_abs_difference": 0.000499725341796875,
+      "CA_confidence_range": [
+        75.72000122070312,
+        98.95999908447266
+      ],
+      "raw_scalar_shape": [
+        246,
+        89
+      ],
+      "SASA_positive_residues": 205,
+      "CIF_sha256": "3e75c0841c8823aa3640b03eb505c329e425fd117bb06b9c8d716e9c6618720f",
+      "raw_feature_sha256": "0e93c5f385d011229bae210350f69e1823d9cf5c2226465c78fccf616097fcc8",
+      "confidence_sha256": "dfa29fe3c3f7491f888df68eaa3378876c281da1b392709c9e1719c77cc73d07"
+    },
+    {
+      "unique_id": "useq_2c5428e57a9c76c77a9e043e286c0d0648cd1a1ff6bb853c7883a2d9baa01499",
+      "length": 1277,
+      "exact_sequence": true,
+      "raw_source_path_exact": true,
+      "CA_max_abs_difference": 0.0005006790161132812,
+      "CA_confidence_range": [
+        22.510000228881836,
+        89.77999877929688
+      ],
+      "raw_scalar_shape": [
+        1277,
+        89
+      ],
+      "SASA_positive_residues": 1209,
+      "CIF_sha256": "9379d124e4dc18c8e158c46d7de93a5d5cd2cc654255c90b1281a1d230c47826",
+      "raw_feature_sha256": "60fbec897e7f0ec559fbde7f7973bf923ec4917e6c47dfbed42447fe75d4f400",
+      "confidence_sha256": "e0ce7acf54cca191accb8802e4e48bcd97d352b06cae7a6f89b00f5316a92957"
+    },
+    {
+      "unique_id": "useq_2c309551d2b279053b28618a0bb6fe142c5dd4c541ec6d807dc01d15ccaa597c",
+      "length": 114,
+      "exact_sequence": true,
+      "raw_source_path_exact": true,
+      "CA_max_abs_difference": 0.0004941225051879883,
+      "CA_confidence_range": [
+        76.98999786376953,
+        98.41000366210938
+      ],
+      "raw_scalar_shape": [
+        114,
+        89
+      ],
+      "SASA_positive_residues": 101,
+      "CIF_sha256": "7fea9fcdea08e7be1b46a3dba3155c3a1c857d9f141c78f0bb967f2c2bc3c6be",
+      "raw_feature_sha256": "941266fb45f1b0ae6f0f4b6b31c8a74642629ebbdfb39396c9d36e4d75995022",
+      "confidence_sha256": "339d154a44417b0e93859e51dd2a1ae774d4244067dc4cb4074684788a306a4e"
+    }
+  ],
+  "scope": "Eight already transferred source/CIF/feature alignment probes;not full-bank acceptance",
+  "packages_changed": false,
+  "full_bank_accepted": false,
+  "ESM_input_cache_audited": false
+}

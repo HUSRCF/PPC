@@ -1,0 +1,28 @@
+{
+  "UTC": "2026-11-05T00:17:41.357587+00:00",
+  "operation_host": "HPC3",
+  "command": [
+    "rsync",
+    "-a",
+    "--partial",
+    "--partial-dir=.rsync-partial",
+    "--protect-args",
+    "--stats",
+    "--info=progress2",
+    "--files-from=/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/catalog_v1/star_files_with_confidence.txt",
+    "star:/data1/wholeset/RCSBprot/protenix/",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/star_cif_snapshot/"
+  ],
+  "source_catalog_sha256": "b22c26c91ee2b3ba9800631b9d0af885f96f6bb2c1d4693688fc30ce6b031cd7",
+  "transfer_list_sha256": "738d9e8f5875571b6c3eec7be3584f9644a307e54909262147649f9ceadeec07",
+  "queries": 69400,
+  "files": 138800,
+  "existing_local_index_reused": 154876,
+  "source_read_only": true,
+  "content_accepted": false,
+  "speed_limit": null,
+  "completion_path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/cif_transfer_completed.json",
+  "log": "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/cif_transfer.log",
+  "pid": 3130359,
+  "wrapper_sha256": "64f9c3eb218dd3764caf2624236a280b23536fe9526796adeae7a37151fcd7a7"
+}

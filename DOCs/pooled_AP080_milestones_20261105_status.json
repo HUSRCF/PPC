@@ -1,5 +1,5 @@
 {
-  "observed_UTC": "2026-11-04T23:59:42+00:00",
+  "observed_UTC": "2026-11-05T00:19:31+00:00",
   "stage": "RCSB_full_content_audit_complete_final_payload_sealing",
   "target_pooled_AP": 0.8,
   "target_verified": true,
@@ -166,7 +166,7 @@
     "input_pack_latest_elapsed_seconds": 4239.234277175041,
     "input_pack_formal_ready": true,
     "input_pack_acceptance": "RCSB_single_union_transfer_20261105/input_pack/ready.json",
-    "submission_payload_identity_count": 91727,
+    "submission_payload_identity_count": 331631,
     "submission_payload_identity_total": 502534,
     "GPU_smoke_job": "800714",
     "GPU_smoke_passed": true,
@@ -184,6 +184,17 @@
     "short_structure_repair_queries": 26906,
     "short_structure_repair_status": "Both PENDING(Priority);not yet claimed as running",
     "short_structure_repair_strict_smoke_accepted": true,
-    "historical_long_PS_failures_remaining": 85
+    "historical_long_PS_failures_remaining": 85,
+    "existing_CIF_source_catalog_complete": true,
+    "existing_CIF_local_index_queries": 154876,
+    "existing_CIF_Star_transfer_queries": 69400,
+    "existing_CIF_source_unresolved_queries": 0,
+    "CIF_transfer_controller_PID": 3130359,
+    "CIF_transfer_rsync_PID": 3130368,
+    "CIF_transfer_complete": false,
+    "CIF_content_accepted": false,
+    "structure_feature_probe_queries_passed": 4,
+    "structure_feature_probe_packages_changed": false,
+    "structure_secondary_backend_equivalence_unresolved": true
   }
 }

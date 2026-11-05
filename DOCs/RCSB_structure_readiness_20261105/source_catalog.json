@@ -1,0 +1,40 @@
+{
+  "status": "candidate_catalog_complete",
+  "native_queries": 251267,
+  "claimed_existing_features": 224276,
+  "missing_structure_queries": 26991,
+  "counts": {
+    "star_candidates": 69400,
+    "local_index": 154876
+  },
+  "transfer_files": 69400,
+  "unresolved_queries": [],
+  "additional_candidates": 0,
+  "unknown_index_records_ignored": {},
+  "star_root": "/data1/wholeset/RCSBprot/protenix",
+  "source_files_sha256": {
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/requests/protenix_missing.tsv": "fae3ff2654df51f661e8d690c59f23346f4077e0f91522f1cf73e9b10c266f4e",
+    "/data/user/shuang886/tminter3_folding/sync_star/index.jsonl": "17ca8fc9c42f2f3923a9765eb0e4e3f9da24b540d43fa81934711317b5528c9f",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/runs/balanced_round2_v1/shard_0/progress.jsonl": "2944edd182071e5896b3e2f537c7ccb8235fccf1f8fe6480b9a91454f06b8fc2",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/runs/balanced_round2_v1/shard_1/progress.jsonl": "3ee03b059ff0a4ee9f7ebc9c5c117537261c5ccc88ec8c39d6d447c14f106274",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/runs/ge100_alphabetical_v1/progress.jsonl": "48dee94da079a72afeb20ea5ba156d7d7188a3aa879ec76e643c02cc171f3d77",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/runs/ge100_dual_v1/shard_0/progress.jsonl": "463bf86bbcd893966ac168241a0b7a032c7e793a7449deffe1715127156154db",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/runs/ge100_dual_v1/shard_1/progress.jsonl": "47fbbb1db9cfa671f9cf395f74efb563e56424dd791057d1c9eabb1b9c704ee3",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/runs/ge100_dual_v1/shard_2/progress.jsonl": "2b8eb94dbe4c78af6714277eedba1b774cee906dd41c749b91dd54a5d9dcc015",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/transfers/balanced_round2_v1/retained.jsonl": "66a5e5e45e43c9362045a32e8977523da62479d66122c85b91c12b7a57625389",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/transfers/hpc3_shard1_20261012/retained_on_star.jsonl": "fdffba7d396e26c209d1e7f0a1ec8484e8693158b84dc9eba9c134960e240b52"
+  },
+  "retained_records_without_length": 36495,
+  "source_code_sha256": "ad1a7ed42c86889c5d90766610a5c4cdb23ef5201517a1e57b52adc08451d506",
+  "file_existence_checked": false,
+  "CIF_content_accepted": false,
+  "raw_feature_CIF_equivalence_checked": false,
+  "labels_used_for_selection": false,
+  "source_files_modified": false,
+  "next_gate": "Exact query/finite coordinates/confidence and raw-descriptor coordinate equivalence before geometry use",
+  "outputs_sha256": {
+    "sources.tsv": "0c046fc370cbdfceb4759a027c87442470d5f94c2f563cf6ddb7cb2d547aa78e",
+    "star_files.txt": "cfc06ddb083790a9ce8a9a87db24d3cdbca96641e72cf6e59916852ba0d1fecf"
+  },
+  "native_queries_sha256": "69804c1e2172ce1576b28c58608c07530b6ab3e503cf6f69f44909f81c573dda"
+}

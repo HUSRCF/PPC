@@ -44,8 +44,37 @@ The local indexed CIFs are all within the existing-feature scope. The69400
 nonlocal candidates split into55287train,6968val,and7145testqueries.
 This is an input-location inventory,not test evaluation or a reason to
 change the native split. Six production ledgers on Star account for69134
-of these UIDs. The other266must be checked against the two retained-source
-indices;they are not automatically new folding failures.
+of these UIDs. The other266were resolved by the two retained-source indices.
+The full catalog therefore has154876local-index and69400Star-source
+queries,no unresolved UID,and no alternative CIF path per nonlocal UID.
+This still does not establish raw-feature/CIF coordinate equivalence.
+
+`catalog_rcsb_structures.py`was narrowly reviewed by gpt-6-luna max and
+passed six focused tests. The full suite passed157tests with2optional
+snapshot tests skipped. Native queries are pinned by SHA-256
+`69804c1e2172ce1576b28c58608c07530b6ab3e503cf6f69f44909f81c573dda`.
+The source table's SHA-256 is
+`0c046fc370cbdfceb4759a027c87442470d5f94c2f563cf6ddb7cb2d547aa78e`.
+Input-index fingerprints are checked before and after catalog construction.
+The summary explicitly retains false values for file-existence,content
+acceptance and raw-descriptor/CIF equivalence checks.
+
+## Actual Incremental Transfer
+
+On2026-11-05T00:17:41UTC,HPC3 launched an rsync pull of69400CIFs and their
+official summary-confidence JSONs,138800files in total. Source files on
+Star remain unchanged;no bandwidth limit is applied. The154876indexed
+local CIFs are not recopied. Partial transfers are retained for recovery.
+The transfer controller PID is3130359and its observed child rsync PID is
+3130368. Both were live at00:19:31UTC. Initial transfer-list processing was
+CPU-active;no transport or content completion was inferred from filenames.
+
+Receipts in`RCSB_structure_readiness_20261105/`include
+`source_catalog.json`,`catalog_launch.json`,and`cif_transfer_launch.json`.
+The full catalog and transfer live under
+`/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog`.
+An rsync success receipt will mean transport completion only,not acceptance
+for geometry training.
 
 ## Required Acceptance Before Geometry Training
 

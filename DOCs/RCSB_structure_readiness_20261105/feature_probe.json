@@ -1,0 +1,205 @@
+{
+  "scope": "Four accepted short-query structures; no full-bank coverage claim",
+  "packages_changed": false,
+  "FreeSASA_used": false,
+  "SASA_backend": "Bio.PDB.SASA.ShrakeRupley",
+  "secondary_structure_backend": "existing pydssp via existing biotite",
+  "code": {
+    "enhanced_features_v2.py": "3014dc18eadb31624060133fc14442dd83e959f441277dd213cec1c7661be4d4",
+    "physicochemical_features.py": "44799c41b2e3f4566e951a12b7d2e85008192fbd5eefab1c499d0d20ff02aff9",
+    "protein_features_v4.py": "38b65c2388102875c832d1e7b52c4370b2c6ef2e8d9af542d5916fdc7b311e0a",
+    "hbond_network_features.py": "426192fae0f7825e59cce04089a258fa0360cf002e9f090daab52bdc6188f610",
+    "structural_geometry_features.py": "b873aa66b50b1c49396f56583d22ca5bd1c6cd512014f22c9558ac395e212d76",
+    "surface_features.py": "1ddc894a2e2dc469cf4bd3023c97af930c45bfa864aa6af0c139331f9dad2497",
+    "extract_physchem_from_pdb.py": "a1cd45629943db78918b27d699e0bf5a2f49d84e596facc4f6bff7cb0c47ad8a",
+    "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "extract_pred_struct_complete_features.py": "141ed218c0be77e30947e29923c39fe0405e8046284cab44b751ac0bf75fc24a",
+    "fit_pred_complete_spatial_scalar_stats.py": "43c42694ab7d038408fa87c01b37ae9a11656bb286f56d22cb7ee2b98b697eb1"
+  },
+  "queries": [
+    {
+      "unique_id": "useq_0011323ab35876968dda2da99f2ab5d336deedc8cffd3f2d686f5bed42dedc9a",
+      "length": 99,
+      "X": 0,
+      "parsed_length": 99,
+      "exact_query_retained": true,
+      "sasa_positive_residues": 92,
+      "sasa_max": 0.7974655032157898,
+      "ss_argmax_counts": [
+        7,
+        0,
+        48,
+        0,
+        0,
+        0,
+        0,
+        44
+      ],
+      "finite_all_tensors": true,
+      "source_cif_sha256": "5c7f9bfb597fecca9f0d35df1bd1e678f09b1b27ba5eda9b13a3b197f2242027",
+      "feature_shapes": {
+        "physchem_features": [
+          99,
+          62
+        ],
+        "spatial_scalar_features": [
+          99,
+          89
+        ],
+        "spatial_scalar_raw_features": [
+          99,
+          89
+        ],
+        "spatial_vector_features": [
+          99,
+          8,
+          3
+        ],
+        "ca_coords": [
+          99,
+          3
+        ]
+      },
+      "status": "ok",
+      "seconds": 21.593596355058253
+    },
+    {
+      "unique_id": "useq_0073a8befb87f5b1643dbbe5edcff2c623557bd97fd3b61d565970a46b922e4f",
+      "length": 50,
+      "X": 0,
+      "parsed_length": 50,
+      "exact_query_retained": true,
+      "sasa_positive_residues": 50,
+      "sasa_max": 0.8098481893539429,
+      "ss_argmax_counts": [
+        32,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        18
+      ],
+      "finite_all_tensors": true,
+      "source_cif_sha256": "6ccb931949eabc349abb7a553145c058ca48c203705c51b6006e5bc2346f3dad",
+      "feature_shapes": {
+        "physchem_features": [
+          50,
+          62
+        ],
+        "spatial_scalar_features": [
+          50,
+          89
+        ],
+        "spatial_scalar_raw_features": [
+          50,
+          89
+        ],
+        "spatial_vector_features": [
+          50,
+          8,
+          3
+        ],
+        "ca_coords": [
+          50,
+          3
+        ]
+      },
+      "status": "ok",
+      "seconds": 0.23694213305134326
+    },
+    {
+      "unique_id": "useq_023a7366cb9e3abb13040fd9d8d4284876c3612855b25bc76cecdabcce3be47f",
+      "length": 68,
+      "X": 68,
+      "parsed_length": 68,
+      "exact_query_retained": true,
+      "sasa_positive_residues": 68,
+      "sasa_max": 0.435690313577652,
+      "ss_argmax_counts": [
+        57,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        11
+      ],
+      "finite_all_tensors": true,
+      "source_cif_sha256": "f9b2321bde22e7fa8ae67648269b6e024759cd2e463f8b3c4b1b62eecdc3d7d1",
+      "feature_shapes": {
+        "physchem_features": [
+          68,
+          62
+        ],
+        "spatial_scalar_features": [
+          68,
+          89
+        ],
+        "spatial_scalar_raw_features": [
+          68,
+          89
+        ],
+        "spatial_vector_features": [
+          68,
+          8,
+          3
+        ],
+        "ca_coords": [
+          68,
+          3
+        ]
+      },
+      "status": "ok",
+      "seconds": 0.13283797295298427
+    },
+    {
+      "unique_id": "useq_77fb1bc92282485b8dcab2fb8fbb8e8e23cec5dd7ba20b26a6aa8cfbaf29b4c8",
+      "length": 54,
+      "X": 53,
+      "parsed_length": 54,
+      "exact_query_retained": true,
+      "sasa_positive_residues": 54,
+      "sasa_max": 0.5323875546455383,
+      "ss_argmax_counts": [
+        42,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        12
+      ],
+      "finite_all_tensors": true,
+      "source_cif_sha256": "b4884cb83d9188e8f1236cc92b9d8166596e2885899414dd1ea20a5d94f7fbf9",
+      "feature_shapes": {
+        "physchem_features": [
+          54,
+          62
+        ],
+        "spatial_scalar_features": [
+          54,
+          89
+        ],
+        "spatial_scalar_raw_features": [
+          54,
+          89
+        ],
+        "spatial_vector_features": [
+          54,
+          8,
+          3
+        ],
+        "ca_coords": [
+          54,
+          3
+        ]
+      },
+      "status": "ok",
+      "seconds": 0.10436706303153187
+    }
+  ]
+}

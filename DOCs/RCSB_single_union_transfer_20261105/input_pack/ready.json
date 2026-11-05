@@ -1,0 +1,32 @@
+{
+  "status": "complete",
+  "queries": 251267,
+  "split_counts": {
+    "train": 201013,
+    "test": 25127,
+    "val": 25127
+  },
+  "residues": 74646793,
+  "union_summary_sha256": "8b5d0a722fd8650099b128065acb0faf7aeb2021b149272c160b3c2f2c4f0f94",
+  "source_code_sha256": "8006c150b71e4612de019797e328bd60bcdec46454b3215daf38d8d81178f574",
+  "original_union": "/data/user/shuang886/PPC_RCSB_single_union/20261105/label_build/full_v1",
+  "esmc_bank": "/data/user/shuang886/Folding/Dataset/derived/tminter3_rcsb_ppis_ge50_v1/TMINTER3-ESMC/features/unique",
+  "coordinate_axis": "canonical observed sequence;source author/insertion maps preserved in original union",
+  "input_mode": "ESM-C-only preparation;no structure or MSA fabricated",
+  "independent_full_feature_content_audit": true,
+  "embedding_values_modified": false,
+  "embedding_bank_immutability_required_through_training": true,
+  "embedding_inventory_rechecked_before_publication": true,
+  "inventory_check": "Device/inode/size/mtime/ctime and resolved links;audited content SHA-256 recorded per source",
+  "normalization_fitted": false,
+  "model_trained": false,
+  "test_evaluated": false,
+  "files_sha256": {
+    "feature_audit.tsv": "d7e49ac770d9229e3e4f8d9c4619f87e6f6e93d39809381eaa6d9a46b48a8b1b",
+    "manifest.csv": "35c2aea7e482028436d8148886f0847f1d8ada792e1191d1075e9ffdafa4162e",
+    "split/train_ids.txt": "69ca72895dfb4f8f13e9488afa4bb577b774c99fba96487c7fbdf1b8941171eb",
+    "split/val_ids.txt": "cc2d4e77eaa1605df6527f99750951c01c8d743efdeed0a9072f1d130129de20",
+    "split/test_ids.txt": "9dee90f4d113b04f41c3eb595de28648224d7700b8cf082b016ec4fda3c83ff6"
+  },
+  "seconds": 4239.234277175041
+}

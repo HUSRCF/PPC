@@ -1,0 +1,74 @@
+{
+  "UTC": "2026-11-04T23:20:58.940114+00:00",
+  "parent_manifest_sha256": "fae3ff2654df51f661e8d690c59f23346f4077e0f91522f1cf73e9b10c266f4e",
+  "short": {
+    "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/inputs/short_all.tsv",
+    "queries": 26906,
+    "residues": 2080123,
+    "SHA256": "abe7253beb940cc6d22737b2bf65550200e6c01cbc5bcfb6e567d1ec3162d79e"
+  },
+  "short_fasta": {
+    "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/inputs/short_all.fasta",
+    "SHA256": "c9213b3a972d2b477f9d36b5dc30120b4e66db63ff2b2d87d87a364ab454fda0",
+    "all_rows_roundtrip_exact": true
+  },
+  "shards": [
+    {
+      "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/inputs/shard_0.tsv",
+      "queries": 13453,
+      "residues": 1039294,
+      "SHA256": "e36e3d8a6e3923a61aa542e3a77fc920283add5a3d10ddc0c5ccbcb2ff8676d3"
+    },
+    {
+      "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/inputs/shard_1.tsv",
+      "queries": 13453,
+      "residues": 1040829,
+      "SHA256": "6d68da0192b01f36e219c1fc36f35624ee288959d4cf52212e139b9b2353dd73"
+    }
+  ],
+  "historical_long_failures": {
+    "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/inputs/historical_long_failures.tsv",
+    "queries": 85,
+    "residues": 356229,
+    "SHA256": "69fc00e04a61a6b04c873fa1c6930a7f00c76ee79fa5f929df49e2e944467ca1"
+  },
+  "smoke": {
+    "path": "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/inputs/smoke.tsv",
+    "queries": 4,
+    "residues": 271,
+    "SHA256": "1d46d85839619d4fcc887f6cb089110d3b36e5a34dc8e5d3a85f331b8477009f"
+  },
+  "smoke_queries": [
+    {
+      "unique_id": "useq_0073a8befb87f5b1643dbbe5edcff2c623557bd97fd3b61d565970a46b922e4f",
+      "length": 50,
+      "X": 0
+    },
+    {
+      "unique_id": "useq_0011323ab35876968dda2da99f2ab5d336deedc8cffd3f2d686f5bed42dedc9a",
+      "length": 99,
+      "X": 0
+    },
+    {
+      "unique_id": "useq_77fb1bc92282485b8dcab2fb8fbb8e8e23cec5dd7ba20b26a6aa8cfbaf29b4c8",
+      "length": 54,
+      "X": 53
+    },
+    {
+      "unique_id": "useq_023a7366cb9e3abb13040fd9d8d4284876c3612855b25bc76cecdabcce3be47f",
+      "length": 68,
+      "X": 68
+    }
+  ],
+  "input_min_length": 50,
+  "only_previously_uncovered_short_scope": true,
+  "existing_structures_recomputed": false,
+  "unknown_residue_queries": 347,
+  "all_X_queries": 50,
+  "residue_substitutions": false,
+  "shards_disjoint_and_complete": true,
+  "labels_read": false,
+  "model_or_Torch_changed": false,
+  "GPU_jobs_submitted": false,
+  "preparer": "structured request projection;no label or prediction scoring"
+}

@@ -1,0 +1,81 @@
+{
+  "UTC": "2026-11-04T23:31:23.452812+00:00",
+  "job": "800810",
+  "source_commit": "fd8d8e9361c7944ba4b6019149c6ed8aea3f1761",
+  "source_sha256": "4eae7b8f47475e377d1a5a539e3881ed51ee69977d0c15d265946571b0eb453f",
+  "archive_sha256": "788278b0b7bc1120771032daa9654b198f2df54943b15850430acb1988da9146",
+  "input_sha256": "1d46d85839619d4fcc887f6cb089110d3b36e5a34dc8e5d3a85f331b8477009f",
+  "queries": [
+    {
+      "unique_id": "useq_0073a8befb87f5b1643dbbe5edcff2c623557bd97fd3b61d565970a46b922e4f",
+      "length": 50,
+      "X": 0
+    },
+    {
+      "unique_id": "useq_0011323ab35876968dda2da99f2ab5d336deedc8cffd3f2d686f5bed42dedc9a",
+      "length": 99,
+      "X": 0
+    },
+    {
+      "unique_id": "useq_77fb1bc92282485b8dcab2fb8fbb8e8e23cec5dd7ba20b26a6aa8cfbaf29b4c8",
+      "length": 54,
+      "X": 53
+    },
+    {
+      "unique_id": "useq_023a7366cb9e3abb13040fd9d8d4284876c3612855b25bc76cecdabcce3be47f",
+      "length": 68,
+      "X": 68
+    }
+  ],
+  "predictor": "protenix_mini_esm_v0.5.0",
+  "samples": 1,
+  "seed": 101,
+  "MSA": false,
+  "templates": false,
+  "protein_only": true,
+  "packages_changed": false,
+  "review": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "verdict": "PASS after path/orphan-lock fixes"
+  },
+  "local_tests": {
+    "passed": 148,
+    "optional_skipped": 2
+  },
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--job-name=rcsb_short_smoke",
+    "--partition=acd_ue",
+    "--gres=gpu:1",
+    "--cpus-per-task=8",
+    "--mem=96G",
+    "--time=00:30:00",
+    "--chdir=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/code",
+    "--output=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/logs/smoke_%j.out",
+    "--error=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/logs/smoke_%j.err",
+    "--wrap",
+    "env -u PYTHONPATH PATH=/data/user/shuang886/.conda/envs/fold/bin:/data/user/shuang886/.local/bin:/data/user/shuang886/bin:/usr/share/Modules/bin:/usr/local/bin:/bin:/usr/bin:/share/apps/clustertech/chess/ng/bin:/usr/lpp/mmfs/bin PROTENIX_ROOT_DIR=/data/user/shuang886/Folding/protenix_stage0_pkg/v1_1/runtime LAYERNORM_TYPE=torch OMP_NUM_THREADS=8 MAX_JOBS=4 /data/user/shuang886/.conda/envs/fold/bin/python -u -c 'import torch,runpy,sys;assert torch.cuda.is_available();assert torch.__version__==\"2.7.1+cu128\";print({\"GPU\":torch.cuda.get_device_name(0),\"torch\":torch.__version__},flush=True);sys.argv=['\"'\"'/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/code/scripts/preparations/m18_union/run_rcsb_protenix_queue.py'\"'\"', '\"'\"'--manifest'\"'\"', '\"'\"'/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/inputs/smoke.tsv'\"'\"', '\"'\"'--root'\"'\"', '\"'\"'/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/smoke'\"'\"', '\"'\"'--project'\"'\"', '\"'\"'/data/user/shuang886/Folding/protenix_stage0_pkg/v1_1/site'\"'\"', '\"'\"'--protenix-cli'\"'\"', '\"'\"'/data/user/shuang886/.conda/envs/fold/bin/protenix'\"'\"', '\"'\"'--min-length'\"'\"', '\"'\"'50'\"'\"', '\"'\"'--batch-size'\"'\"', '\"'\"'4'\"'\"', '\"'\"'--max-attempts'\"'\"', '\"'\"'1'\"'\"'];runpy.run_path('\"'\"'/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/code/scripts/preparations/m18_union/run_rcsb_protenix_queue.py'\"'\"',run_name=\"__main__\")'"
+  ],
+  "queue_command": [
+    "/data/user/shuang886/.conda/envs/fold/bin/python",
+    "-u",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/code/scripts/preparations/m18_union/run_rcsb_protenix_queue.py",
+    "--manifest",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/inputs/smoke.tsv",
+    "--root",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/smoke",
+    "--project",
+    "/data/user/shuang886/Folding/protenix_stage0_pkg/v1_1/site",
+    "--protenix-cli",
+    "/data/user/shuang886/.conda/envs/fold/bin/protenix",
+    "--min-length",
+    "50",
+    "--batch-size",
+    "4",
+    "--max-attempts",
+    "1"
+  ],
+  "formal_repair_started": false
+}

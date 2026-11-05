@@ -120,13 +120,18 @@ SHA-256`24081be8a3b0164ad5fa5a822105a303559e58d1d3eec772c28f4907f247261b`.
 The plan pins153Python source files and verifies that package/trainer sources
 match the already successful GPU smoke's source snapshot.
 
-The controller is a real live CPU process waiting on the already live
-packer PID1313931,not an assumed state inferred only from a lock file.
-At its latest poll,the packer had completed122000of251267queries in1766.2s,
-with no failure marker and no full-ready receipt. No submission attempt or
-GPU job had yet been made. The controller will perform the remaining payload
-audit and submit one acd_u job after successful full acceptance. Its2hour
-observation bound does not terminate the producer if exceeded.
+At2026-11-04T23:59:42UTC,the packer had completed all251267queries and
+74646793residues in4239.23s,with the ready receipt published and no failure
+marker. The controller remained a real live CPU process,not an assumed
+state inferred only from a lock file. It was hashing the502534compact
+metadata/label payloads;91727payload identities had been written at that
+poll. No GPU submission attempt had yet been made. The controller will
+submit one acd_u job after the final payload/reference checks. Its2hour
+producer-observation bound does not terminate the producer if exceeded and
+does not cancel the subsequent acceptance pass.
+
+The full tensor-content acceptance is archived as
+`RCSB_single_union_transfer_20261105/input_pack/ready.json`.
 
 Controller log/state:
 `/data/user/shuang886/PPC_RCSB_single_union/20261105/whole_pilot_20261105/`.
@@ -140,9 +145,13 @@ sample has absolute confidence in B_iso (45.14--97.11),rather than assuming
 the chain-normalized descriptor is absolute pLDDT.
 
 The unfilled structure requests remain26991sequences:26906short chains and
-85longer historical failures. Of the short inputs,347contain ambiguous or
-unknown letters;their exact sequence/structure representation needs explicit
-QC rather than silent residue replacement. The original production queue
-filters at100aa and must not be reused unchanged for the short-chain repair.
+85longer historical failures. Of the short inputs,347contain unknown
+letters,including50all-X queries;no residue replacement is performed.
+The revised queue passed four real H100 boundary-query smokes and an
+independent saved-ESM-input audit. Two acd_u tasks800847_[0-1]were submitted
+for the26906short queries and were PENDING(Priority)at the above poll.
+They retain bounded retries,OOM/error ledgers,and reuse the four accepted
+smoke structures. This is preparation,not a claim of full new PS coverage.
+See`RCSB_protenix_short_repair_20261105.md`and its acceptance/launch receipts.
 Whole-RCSB MSA coverage is not yet established. None of these gaps are declared
 complete by the ESM-C-only pilot.

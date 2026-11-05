@@ -87,3 +87,15 @@ acd_u jobs,13453queries each,process chunks of512 and at most two attempts
 per query. The chunk parameter amortizes CLI startup;it does not change the
 predictor's neural batch size. Each formal job has a12hour bound and a
 recoverable per-query ledger. The85historical long failures remain separate.
+
+The stricter CPU re-audit of all four saved smoke outputs passed,including
+exact CSV query mappings and finite nonzero`[L,2560]`ESM2 tensors. The
+receipt binds the CIF,CSV and embedding content hashes. No second folding
+run was needed. Source commit`db17022`is frozen separately from the original
+smoke. Formal array`800847_[0-1]`was submitted on2026-11-04T23:58:35UTC;
+both tasks were PENDING(Priority)at23:59:42UTC,not claimed as running.
+
+Artifacts in`RCSB_protenix_short_repair_20261105/`:
+`summary.json`,`smoke_launch.json`,`smoke_inputqc_acceptance.json`,and
+`formal_launch.json`. The latter records the complete scheduler command,
+input/code hashes,resources and unchanged predictor settings.

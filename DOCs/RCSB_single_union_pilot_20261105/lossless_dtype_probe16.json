@@ -1,0 +1,217 @@
+{
+  "UTC": "2026-11-05T03:15:17.934774+00:00",
+  "scope": "16native-trainqueries only;no full-bank compressibility claim",
+  "records": [
+    {
+      "uid": "useq_00005e8fcc7c0377a142e435176a99faebe623b9173e9e7c00cc57f6b2087b2e",
+      "length": 208,
+      "shape": [
+        208,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.1075411579804495,
+      "source_file_bytes": 2879262
+    },
+    {
+      "uid": "useq_0000add4570d783989acdad8888fccd52f042869b1e6927c42ca4adc11b5dd39",
+      "length": 900,
+      "shape": [
+        900,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.017866292037069798,
+      "source_file_bytes": 12446174
+    },
+    {
+      "uid": "useq_00018fcc12997165ad25b889f99f4c7c04dd3d36ce3b657989c99900578beca9",
+      "length": 294,
+      "shape": [
+        294,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.006305644987151027,
+      "source_file_bytes": 4068190
+    },
+    {
+      "uid": "useq_000191e6628d6b025f9ce55cef178e5154aaabdc78c95fc86acfa69cbbdd2317",
+      "length": 402,
+      "shape": [
+        402,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.0067175100557506084,
+      "source_file_bytes": 5561310
+    },
+    {
+      "uid": "useq_000262d39fcc175395c90712d8382523d6771c03ef819f8a86e0aa82a218c342",
+      "length": 150,
+      "shape": [
+        150,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.004180589923635125,
+      "source_file_bytes": 2077406
+    },
+    {
+      "uid": "useq_0002b35bf51fa9ddabf19c8c7ee8bcc6d1e70e6b560d15ad21aa2da44e3e56f3",
+      "length": 203,
+      "shape": [
+        203,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.005001565092243254,
+      "source_file_bytes": 2810142
+    },
+    {
+      "uid": "useq_0002c57e4f7f342eb3c5e1b149a86d18441f6a8e48b50482a759c2f506ea2bea",
+      "length": 71,
+      "shape": [
+        71,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.0029313480481505394,
+      "source_file_bytes": 985246
+    },
+    {
+      "uid": "useq_0002c9b176a6f66aa1cef34dff25535c4b6b7888e237d3bb2380f4bf857493df",
+      "length": 278,
+      "shape": [
+        278,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.0054679709719493985,
+      "source_file_bytes": 3847006
+    },
+    {
+      "uid": "useq_0002f58126119273c695cf52c6401b39ac9d157ff98d02a333f82bf0edab8041",
+      "length": 496,
+      "shape": [
+        496,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.14572752395179123,
+      "source_file_bytes": 6860830
+    },
+    {
+      "uid": "useq_0003ff07a6ecd2ab3358ec10d16de4a4a8c7adc0c2710226a2fe0a0dac910f5a",
+      "length": 226,
+      "shape": [
+        226,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.051406529964879155,
+      "source_file_bytes": 3128094
+    },
+    {
+      "uid": "useq_0004430110aa220b22aed3725ae39f725992ba2da6386fe05d27b0ee52ea71f6",
+      "length": 236,
+      "shape": [
+        236,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.06851196591742337,
+      "source_file_bytes": 3266334
+    },
+    {
+      "uid": "useq_00048f355c894d5ef4af2943dee6dc21c2914f1d6cf7780fc265e059b1149e74",
+      "length": 176,
+      "shape": [
+        176,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.040902346023358405,
+      "source_file_bytes": 2436830
+    },
+    {
+      "uid": "useq_0005b7ab74a4772b7295aaf5dece32239c3e943dc1d0a50007d8e742f187efba",
+      "length": 106,
+      "shape": [
+        106,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.07972354302182794,
+      "source_file_bytes": 1469086
+    },
+    {
+      "uid": "useq_00060c760c6ddf462a1cd8008e8e179af5f0358a2cec81c91f8e0aac17ca4e7c",
+      "length": 197,
+      "shape": [
+        197,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.05033746303524822,
+      "source_file_bytes": 2727198
+    },
+    {
+      "uid": "useq_000627f08e09c907ac217750548195e482b4646ddd34fad18fd2a0e7684bbeaf",
+      "length": 356,
+      "shape": [
+        356,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.07165271404664963,
+      "source_file_bytes": 4925342
+    },
+    {
+      "uid": "useq_00063d8e0f43bdb5309284f5d070cb9c6f485d654a7d84fefb5fa79e68d384df",
+      "length": 214,
+      "shape": [
+        214,
+        3456
+      ],
+      "dtype": "torch.float32",
+      "bf16_roundtrip_equal": false,
+      "fp16_roundtrip_equal": false,
+      "load_and_roundtrip_seconds": 0.05761655804235488,
+      "source_file_bytes": 2962206
+    }
+  ],
+  "all16_bf16_exact": false,
+  "source_files_modified": false,
+  "running_training_changed": false
+}

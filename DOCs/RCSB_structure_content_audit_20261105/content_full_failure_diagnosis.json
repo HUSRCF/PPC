@@ -1,0 +1,21 @@
+{
+  "UTC": "2026-11-05T01:17:13.857979+00:00",
+  "previous_pid": 4049802,
+  "previous_group_confirmed_exited": true,
+  "previous_output_preserved": "content_full_v1",
+  "previous_ready_published": false,
+  "log_sha256": "d34ed3745f04c1db40bfd05a3e7fd3059d067d29623ddcd20649153bec2d9b04",
+  "evidence": "OpenBLAS attempted64threads per process;pthread_create failed;worker NumPy import failed before substantive audit",
+  "observed_login_cgroup_pids_max": 500,
+  "logged_RLIMIT_NPROC_soft": 2048,
+  "observed_login_memory_limit_bytes": 8589934592,
+  "root_cause": "BLAS thread oversubscription against process/thread limits",
+  "fixed_before_import": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "NumPy_or_Torch_reinstalled": false,
+  "numerical_smoke_byte_identical": true
+}

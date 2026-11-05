@@ -1,0 +1,16 @@
+{
+  "UTC": "2026-11-05T01:14:04.072271+00:00",
+  "queries": 8,
+  "workers": 8,
+  "all_ok": true,
+  "confidence_values_byte_identical_to_original_smoke": true,
+  "thread_caps": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "source_changed": false,
+  "packages_changed": false,
+  "summary_sha256": "f7351786f9a9d5aa0a76d660a4d2356ecc0917474b6646fa4b5f3bb023212b0c"
+}

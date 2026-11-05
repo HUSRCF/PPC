@@ -1,0 +1,28 @@
+{
+  "UTC": "2026-11-05T01:52:35.752149+00:00",
+  "old_array_terminal_and_locks_free": true,
+  "archives": [
+    {
+      "shard": 0,
+      "progress.jsonl_sha256": "f22fd73e2e24d021f01014a2d14dac16bdb23c5da46f060c0da708b9fe29f799",
+      "contract.json_sha256": "ab5768013e34dafd593497e72c29064450fc55c98bd689c9563247d3b9b7fd3c",
+      "states": {
+        "ok": 723,
+        "started": 303
+      },
+      "complete_events": 1747
+    },
+    {
+      "shard": 1,
+      "progress.jsonl_sha256": "e8693eec1d0446f248327df32fed59577bb88502f1066a96e02fd57cfcd47477",
+      "contract.json_sha256": "400dd2ceb43874097505bf016ac3e15eae71ff0dc40314091049194be2f927b2",
+      "states": {
+        "ok": 999,
+        "started": 27
+      },
+      "complete_events": 2023
+    }
+  ],
+  "scancel_exit_code": 0,
+  "new_submission_not_attempted_yet": true
+}

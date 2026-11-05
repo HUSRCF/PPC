@@ -1,0 +1,85 @@
+{
+  "UTC": "2026-11-05T01:51:45.312315+00:00",
+  "queries": [
+    {
+      "uid": "useq_00018649c145122c972d721be8fa39b3087069bdf89ab4c43678e26a7906b38b",
+      "length": 92,
+      "shard": 0,
+      "CIF_QC_identical": true,
+      "error_matches_identical": true
+    },
+    {
+      "uid": "useq_00073b01f2ca4c59a2278a7de5335d0a6742cac6573db63cffd994c92ae0fb0b",
+      "length": 72,
+      "shard": 0,
+      "CIF_QC_identical": true,
+      "error_matches_identical": true
+    },
+    {
+      "uid": "useq_000a9e743154a55a44bd4ca5a91ad01a26d6c6a7798f6ee632cbd6e26956346f",
+      "length": 56,
+      "shard": 0,
+      "CIF_QC_identical": true,
+      "error_matches_identical": true
+    },
+    {
+      "uid": "useq_000be057468b31506f1009ec117b295c9fd57840554a3e41710991b804038a30",
+      "length": 78,
+      "shard": 0,
+      "CIF_QC_identical": true,
+      "error_matches_identical": true
+    },
+    {
+      "uid": "useq_0002c57e4f7f342eb3c5e1b149a86d18441f6a8e48b50482a759c2f506ea2bea",
+      "length": 71,
+      "shard": 1,
+      "CIF_QC_identical": true,
+      "error_matches_identical": true
+    },
+    {
+      "uid": "useq_0009524b5d1183dfc93619dd13becfddb45e1c723c1e6b0ea9aab21c70e62a86",
+      "length": 52,
+      "shard": 1,
+      "CIF_QC_identical": true,
+      "error_matches_identical": true
+    },
+    {
+      "uid": "useq_000ad874462b7030e855cb822216b50a0006b1676fe2dc5bd1aa550d2c4a064b",
+      "length": 80,
+      "shard": 1,
+      "CIF_QC_identical": true,
+      "error_matches_identical": true
+    },
+    {
+      "uid": "useq_000c09c3f8fbeecbe349c8f69d8edfc691608699a8996c70ae2c2f8fb18996ee",
+      "length": 60,
+      "shard": 1,
+      "CIF_QC_identical": true,
+      "error_matches_identical": true
+    }
+  ],
+  "all_eight_passed": true,
+  "validation_function_ASTs_identical": [
+    "preflight_qc_runtime",
+    "read_manifest",
+    "valid_esm_input",
+    "validate"
+  ],
+  "GPU_used": false,
+  "folding_repeated": false,
+  "ledger_or_contract_modified": false,
+  "seconds": 41.55796355754137,
+  "source_commit": "22ee880",
+  "source_sha256": "29352b1dfa24123e77da20e6f5f4fc4c3fbb5876eaeea86f041fc3086a883327",
+  "review": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "verdict": "PASS"
+  },
+  "tests": {
+    "run": 175,
+    "passed": 173,
+    "skipped": 2,
+    "focused_passed": 14
+  }
+}

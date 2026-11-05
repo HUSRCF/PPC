@@ -1,0 +1,52 @@
+{
+  "UTC": "2026-11-05T01:56:12.589858+00:00",
+  "structure_audit": {
+    "latest_progress": {
+      "processed": 187000,
+      "expected": 224276,
+      "counts": {
+        "ok": 187000
+      },
+      "seconds": 2324.3960893269395
+    },
+    "existing_content_ready": false,
+    "failed_full_v1_left_unchanged": true
+  },
+  "RCSB_training": {
+    "latest_step": {
+      "event": "train_step",
+      "epoch": 1,
+      "step": 150,
+      "global_step": 150,
+      "lr": 1.3965930599369084e-05,
+      "loss": 0.5973670244216919,
+      "tp": 79,
+      "fp": 158,
+      "tn": 335057,
+      "fn": 111241,
+      "precision": 0.3333333333333333,
+      "recall": 0.0007096658282429034,
+      "f1": 0.0014163163225974166,
+      "accuracy": 0.7505257146696228,
+      "mcc": 0.004476453554247753
+    },
+    "epoch_metrics_exist": false,
+    "native_test_enabled": false
+  },
+  "folding": {
+    "0": {
+      "counts": {
+        "ok": 1026,
+        "started": 512
+      },
+      "error_index_upgrade_receipt": true
+    },
+    "1": {
+      "counts": {
+        "ok": 999,
+        "started": 27
+      },
+      "error_index_upgrade_receipt": false
+    }
+  }
+}

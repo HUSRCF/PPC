@@ -1,0 +1,52 @@
+{
+  "UTC": "2026-11-05T01:03:40.965429+00:00",
+  "source_commit": "81c5953",
+  "source_sha256": "555a591cdcd9dfa75be832ef2593c56b45191f9618bb969a3ba112f4b33acde5",
+  "helper_sha256": "ad1a7ed42c86889c5d90766610a5c4cdb23ef5201517a1e57b52adc08451d506",
+  "archive_sha256": "6453473b3f15c5a1083b62c16b6187682c10987083517cfcb803795fd4edddc3",
+  "explicit_smoke_ids_sha256": "62b1b70b12d502e15a2e2b2e5991accf5f66b47b365634edb332a8fd52dfdc13",
+  "queries": 8,
+  "local_index_queries": 4,
+  "transferred_queries": 4,
+  "command": [
+    "nice",
+    "-n",
+    "10",
+    "/data/user/shuang886/.conda/envs/openfold/bin/python",
+    "-u",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/code_content_81c5953/scripts/preparations/m18_union/audit_rcsb_structure_content.py",
+    "--catalog",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/catalog_v1",
+    "--catalog-sha256",
+    "b22c26c91ee2b3ba9800631b9d0af885f96f6bb2c1d4693688fc30ce6b031cd7",
+    "--expected-existing",
+    "224276",
+    "--expected-native",
+    "251267",
+    "--snapshot",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/star_cif_snapshot",
+    "--raw-bank",
+    "/data/user/shuang886/Folding/Dataset/derived/tminter3_rcsb_ppis_ge50_v1/protenix/features/complete_raw_v1/pt",
+    "--output",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/content_smoke_v1",
+    "--workers",
+    "4",
+    "--smoke-ids",
+    "/data/user/shuang886/PPC_RCSB_single_union/20261105/structure_source_catalog/content_audit_smoke_ids.txt"
+  ],
+  "review": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "verdict": "PASS after full-schema/duplicate-atom fixes"
+  },
+  "tests": {
+    "focused_passed": 11,
+    "full_passed": 168,
+    "optional_skipped": 2
+  },
+  "raw_schema_independently_compared_to_generator": true,
+  "GPU_requested": false,
+  "packages_changed": false,
+  "formal_existing_scope": 224276,
+  "native_scope": 251267
+}

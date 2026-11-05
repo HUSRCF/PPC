@@ -1,0 +1,14 @@
+{
+  "UTC": "2026-11-05T01:41:05.636677+00:00",
+  "host": "ACD1-17",
+  "existing_job": "800847_0",
+  "GPU_used_by_probe": false,
+  "work": "/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/shard_0/attempts/1793840606297806524",
+  "uid": "useq_00018649c145122c972d721be8fa39b3087069bdf89ab4c43678e26a7906b38b",
+  "legacy_per_query_error_search_seconds": [4.430706290528178, 1.7941512018442154, 1.9727144129574299],
+  "one_batch_index_seconds": 2.526502624154091,
+  "all_error_files": 0,
+  "indexed_matching_seconds": 9.55536961555481e-7,
+  "same_matches": true,
+  "interpretation": "Measured repeated recursive directory traversal dominates otherwise fast validation;this is not a measured end-to-end speedup yet"
+}

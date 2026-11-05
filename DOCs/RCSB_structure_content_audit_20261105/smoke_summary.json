@@ -1,0 +1,32 @@
+{
+  "status": "smoke_complete",
+  "queries": 8,
+  "residues": 3219,
+  "counts": {
+    "ok": 8
+  },
+  "native_queries": 251267,
+  "existing_feature_scope": 224276,
+  "full_native_structure_coverage": false,
+  "source_catalog_sha256": "b22c26c91ee2b3ba9800631b9d0af885f96f6bb2c1d4693688fc30ce6b031cd7",
+  "source_files_sha256": {
+    "audit_rcsb_structure_content.py": "555a591cdcd9dfa75be832ef2593c56b45191f9618bb969a3ba112f4b33acde5",
+    "catalog_rcsb_structures.py": "ad1a7ed42c86889c5d90766610a5c4cdb23ef5201517a1e57b52adc08451d506"
+  },
+  "confidence_axis": "canonical query residue order;CA B_iso divided by100",
+  "nonaccepted_confidence": "NaN;pending/failed rows are not usable inputs",
+  "geometry_training_inputs_published": false,
+  "normalization_fitted": false,
+  "raw_descriptor_math_recomputed": false,
+  "ESM_input_cache_audited": false,
+  "labels_read": false,
+  "sources_modified": false,
+  "source_bank_immutability_required": true,
+  "source_inventory_rechecked_before_publication": true,
+  "smoke": true,
+  "files_sha256": {
+    "audit.jsonl": "4b432ffcf39620daf25b23d2df62a07c86ff3c1316292f8590e4c8333f7bc5de",
+    "absolute_CA_plddt_div100.npy": "60d63e495b2e3aaf45a4f609c07a7b05c49e29cc09e47579f9f686c3a99126f3"
+  },
+  "seconds": 2.967802830040455
+}

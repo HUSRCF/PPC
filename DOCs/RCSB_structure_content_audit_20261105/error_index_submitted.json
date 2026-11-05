@@ -1,0 +1,45 @@
+{
+  "UTC": "2026-11-05T01:53:34.601632+00:00",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--job-name=rcsb_short_idx",
+    "--partition=acd_u",
+    "--array=0-1",
+    "--gres=gpu:1",
+    "--cpus-per-task=12",
+    "--mem=96G",
+    "--time=12:00:00",
+    "--chdir=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/code_errorindex_22ee880",
+    "--output=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/logs/repair_%A_%a.out",
+    "--error=/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair/logs/repair_%A_%a.err",
+    "--wrap",
+    "env -u PYTHONPATH PATH=/data/user/shuang886/.conda/envs/fold/bin:/usr/local/bin:/usr/bin:/bin PROTENIX_ROOT_DIR=/data/user/shuang886/Folding/protenix_stage0_pkg/v1_1/runtime LAYERNORM_TYPE=torch OMP_NUM_THREADS=12 MKL_NUM_THREADS=12 OPENBLAS_NUM_THREADS=12 MAX_JOBS=4 /data/user/shuang886/.conda/envs/fold/bin/python -u -c 'import hashlib,os,pathlib,runpy,sys,torch; r=pathlib.Path('\"'\"'/data/user/shuang886/PPC_RCSB_single_union/20261105/protenix_short_repair'\"'\"'); i=int(os.environ[\"SLURM_ARRAY_TASK_ID\"]); assert i in (0,1); p=r/\"code_errorindex_22ee880/scripts/preparations/m18_union/run_rcsb_protenix_queue.py\"; assert hashlib.sha256(p.read_bytes()).hexdigest()==\"29352b1dfa24123e77da20e6f5f4fc4c3fbb5876eaeea86f041fc3086a883327\"; m=r/(\"inputs/shard_\"+str(i)+\".tsv\"); assert hashlib.sha256(m.read_bytes()).hexdigest() in ['\"'\"'e36e3d8a6e3923a61aa542e3a77fc920283add5a3d10ddc0c5ccbcb2ff8676d3'\"'\"', '\"'\"'6d68da0192b01f36e219c1fc36f35624ee288959d4cf52212e139b9b2353dd73'\"'\"']; assert torch.cuda.is_available() and torch.__version__==\"2.7.1+cu128\"; print({\"GPU\":torch.cuda.get_device_name(0),\"Torch\":torch.__version__,\"shard\":i},flush=True); sys.argv=[str(p),\"--accept-error-index-upgrade\",\"--manifest\",str(m),\"--root\",str(r/(\"shard_\"+str(i))),\"--project\",\"/data/user/shuang886/Folding/protenix_stage0_pkg/v1_1/site\",\"--protenix-cli\",\"/data/user/shuang886/.conda/envs/fold/bin/protenix\",\"--reuse\",str(r/\"reuse_inputqc\"),\"--batch-size\",\"512\",\"--max-attempts\",\"2\",\"--min-length\",\"50\"]; runpy.run_path(str(p),run_name=\"__main__\")'"
+  ],
+  "source_commit": "22ee880",
+  "source_sha256": "29352b1dfa24123e77da20e6f5f4fc4c3fbb5876eaeea86f041fc3086a883327",
+  "archive_sha256": "aee1ab2575ff591aea3ceed5ce1fd5dd30e6fa386002ba65a16470bc32d09809",
+  "previous_array": "800847",
+  "previous_source_sha256": "f4a524ff1ee98e15dcae63efafa503c74739207ec23c919041baeff29da94122",
+  "real_acceptance_sha256": "b42c2100b858be6d4dbffdf619dcf96975f7d82f6533fd3dd4d2ee37d0e167d5",
+  "model_parameters_unchanged": true,
+  "query_scope_unchanged": true,
+  "strict_QC_and_retry_semantics_unchanged": true,
+  "all_existing_results_retained": true,
+  "training_job_800877_untouched": true,
+  "review": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "verdict": "PASS"
+  },
+  "tests": {
+    "run": 175,
+    "passed": 173,
+    "skipped": 2,
+    "focused_passed": 14
+  },
+  "returncode": 0,
+  "stdout": "801016\n",
+  "stderr": "",
+  "job": "801016"
+}

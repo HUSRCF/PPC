@@ -16,6 +16,7 @@ import gemmi
 
 
 PARENT_QUEUE_SHA256 = "0ac7ba922146322b14d69542bf1bd61f7abaaaa125a4c1d93070d3395ec8a85e"
+ERROR_INDEX_PARENT_SHA256 = "f4a524ff1ee98e15dcae63efafa503c74739207ec23c919041baeff29da94122"
 _QC_TORCH = None
 
 
@@ -97,6 +98,73 @@ def validate(directory, row):
         return None
 
 
+def index_error_files(work):
+    output = list((work / "outputs").rglob("*.txt"))
+    esm = list((work / "esm_embeddings/esm_error").glob("*.txt"))
+    by_name = {}
+    for path in output:
+        by_name.setdefault(path.name, []).append(path)
+    return by_name, esm, output + esm
+
+
+def query_error_files(index, uid):
+    by_name, esm, _ = index
+    return list(by_name.get(uid + ".txt", [])) + [p for p in esm if p.name.startswith(uid + "_")]
+
+
+def write_atomic(path, data):
+    temp = path.with_name(path.name + ".tmp")
+    with temp.open("wb") as f:
+        f.write(data)
+        f.flush()
+        os.fsync(f.fileno())
+    temp.replace(path)
+
+
+def ensure_contract(root, contract, allow_error_index_upgrade=False):
+    path = root / "contract.json"
+    if not path.exists():
+        path.write_text(json.dumps(contract, indent=2))
+        return
+    previous_bytes = path.read_bytes()
+    previous = json.loads(previous_bytes)
+    if previous == contract:
+        return
+    old_options = {k: v for k, v in previous.items() if k != "source_code_sha256"}
+    new_options = {k: v for k, v in contract.items() if k != "source_code_sha256"}
+    if (not allow_error_index_upgrade or old_options != new_options
+            or previous.get("source_code_sha256") != ERROR_INDEX_PARENT_SHA256):
+        raise ValueError("Changed queue contract")
+    # One pinned performance-only migration; the lock is held and every retry event is retained.
+    new_bytes = json.dumps(contract, indent=2).encode()
+    backup = root / "contract.before_error_index_upgrade.json"
+    if backup.exists():
+        if backup.read_bytes() != previous_bytes:
+            raise ValueError("Conflicting pre-upgrade contract archive")
+    else:
+        write_atomic(backup, previous_bytes)
+    receipt = dict(scope="Pinned error-file indexing optimization only;no inference/QC/retry changes",
+                   previous_source_sha256=ERROR_INDEX_PARENT_SHA256,
+                   current_source_sha256=contract["source_code_sha256"],
+                   previous_contract_sha256=hashlib.sha256(previous_bytes).hexdigest(),
+                   current_contract_sha256=hashlib.sha256(new_bytes).hexdigest(),
+                   ledger_sha256=hashlib.sha256((root / "progress.jsonl").read_bytes()).hexdigest()
+                   if (root / "progress.jsonl").exists() else None)
+    receipt_path = root / "error_index_upgrade.json"
+    if receipt_path.exists():
+        prepared_bytes = receipt_path.read_bytes()
+        prepared = json.loads(prepared_bytes)
+        if ({k: v for k, v in prepared.items() if k != "ledger_sha256"}
+                != {k: v for k, v in receipt.items() if k != "ledger_sha256"}):
+            raise ValueError("Conflicting error-index upgrade receipt")
+        if prepared != receipt:
+            # A pre-commit crash may have let the old queue advance its ledger normally.
+            history = root / ("error_index_upgrade.prepared_" + hashlib.sha256(prepared_bytes).hexdigest() + ".json")
+            write_atomic(history, prepared_bytes)
+    write_atomic(receipt_path, json.dumps(receipt, indent=2).encode())
+    write_atomic(path, new_bytes)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--manifest", type=Path, required=True)
@@ -107,6 +175,8 @@ def main():
     p.add_argument("--batch-size", type=int, default=128, help="Targets per CLI process,not a neural-network batch size")
     p.add_argument("--max-attempts", type=int, default=2)
     p.add_argument("--min-length", type=int, default=50)
+    p.add_argument("--accept-error-index-upgrade", action="store_true",
+                   help="Accept only the pinned prior queue's error-index performance update")
     args = p.parse_args()
     if args.batch_size <= 0 or args.max_attempts <= 0 or args.min_length < 50:
         raise ValueError("Invalid process chunk,retry budget or minimum length")
@@ -129,12 +199,7 @@ def main():
                     filter_policy="All manifest queries required;no length-based omission",
                     source_code_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                     parent_queue_sha256=PARENT_QUEUE_SHA256)
-    contract_path = args.root / "contract.json"
-    if contract_path.exists():
-        if json.loads(contract_path.read_text()) != contract:
-            raise ValueError("Changed queue contract")
-    else:
-        contract_path.write_text(json.dumps(contract, indent=2))
+    ensure_contract(args.root, contract, args.accept_error_index_upgrade)
     state = {}
     ledger = args.root / "progress.jsonl"
     if ledger.exists():
@@ -239,12 +304,12 @@ def main():
         if stopping:
             break
         text = (work / "inference.log").read_text(errors="replace")
+        error_index = index_error_files(work)
         success = 0
         for row in batch:
             old = state[row["unique_id"]]
             cif = validate(Path(old["output_dir"]), row)
-            errors = list((work / "outputs").rglob(row["unique_id"] + ".txt"))
-            errors += list((work/"esm_embeddings/esm_error").glob(row["unique_id"]+"_*.txt"))
+            errors = query_error_files(error_index, row["unique_id"])
             detail = "\n".join(x.read_text(errors="replace") for x in errors)
             if not detail and len(batch) == 1:
                 detail = text
@@ -256,7 +321,7 @@ def main():
                    error_files=[str(x) for x in errors], error_excerpt=detail[-2000:],
                    batch_oom_evidence="out of memory" in text.lower())
         summary()
-        diagnostics = list((work/"outputs").rglob("*.txt")) + list((work/"esm_embeddings/esm_error").glob("*.txt"))
+        diagnostics = error_index[2]
         infrastructure_failure = not success and code != 0 and not diagnostics
         zero_batches = zero_batches + 1 if infrastructure_failure else 0
         if zero_batches >= 3:

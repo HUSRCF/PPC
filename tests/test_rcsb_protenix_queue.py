@@ -22,6 +22,90 @@ queue=importlib.util.module_from_spec(spec);spec.loader.exec_module(queue)
 
 
 class RCSBProtenixQueueTests(unittest.TestCase):
+    def test_error_index_preserves_nested_output_and_ESM_matches_without_rescanning(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            work=Path(tmp);output=work/"outputs";esm=work/"esm_embeddings/esm_error"
+            (output/"a/nested").mkdir(parents=True);(output/"b").mkdir();esm.mkdir(parents=True)
+            for path in (output/"a/nested/uid.txt",output/"b/uid.txt",output/"b/uid_extra.txt",
+                         esm/"uid_1.txt",esm/"uid_2.txt",esm/"uid_other_1.txt",esm/"uid2_1.txt"):
+                path.write_text("diagnostic")
+            expected=list(output.rglob("uid.txt"))+list(esm.glob("uid_*.txt"))
+            index=queue.index_error_files(work)
+            with mock.patch.object(Path,"rglob",side_effect=AssertionError("Repeated scan")), \
+                    mock.patch.object(Path,"glob",side_effect=AssertionError("Repeated scan")):
+                self.assertEqual(queue.query_error_files(index,"uid"),expected)
+                self.assertEqual(queue.query_error_files(index,"absent"),[])
+            self.assertEqual(set(index[2]),set(output.rglob("*.txt"))|set(esm.glob("*.txt")))
+
+    def test_pinned_upgrade_retains_contract_and_retry_ledger_and_is_idempotent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);ledger=b'{"status":"failed","attempt":2}\n'
+            (root/"progress.jsonl").write_bytes(ledger)
+            previous=dict(source_code_sha256=queue.ERROR_INDEX_PARENT_SHA256,model="mini",max_attempts=2)
+            raw=json.dumps(previous,indent=2).encode();(root/"contract.json").write_bytes(raw)
+            current=dict(previous,source_code_sha256="new-performance-code")
+            with self.assertRaisesRegex(ValueError,"Changed queue contract"):
+                queue.ensure_contract(root,current)
+            self.assertFalse((root/"error_index_upgrade.json").exists())
+            queue.ensure_contract(root,current,True)
+            self.assertEqual((root/"progress.jsonl").read_bytes(),ledger)
+            self.assertEqual((root/"contract.before_error_index_upgrade.json").read_bytes(),raw)
+            self.assertEqual(json.loads((root/"contract.json").read_text()),current)
+            receipt=(root/"error_index_upgrade.json").read_bytes()
+            queue.ensure_contract(root,current,True)
+            self.assertEqual((root/"error_index_upgrade.json").read_bytes(),receipt)
+
+    def test_upgrade_cannot_change_other_options_or_accept_unrecognized_parent(self):
+        for old_hash,attempts in ((queue.ERROR_INDEX_PARENT_SHA256,3),("unreviewed",2)):
+            with self.subTest(old_hash=old_hash,attempts=attempts),tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);previous=dict(source_code_sha256=old_hash,max_attempts=2)
+                raw=json.dumps(previous).encode();(root/"contract.json").write_bytes(raw)
+                with self.assertRaisesRegex(ValueError,"Changed queue contract"):
+                    queue.ensure_contract(root,dict(source_code_sha256="new-code",max_attempts=attempts),True)
+                self.assertEqual((root/"contract.json").read_bytes(),raw)
+                self.assertFalse((root/"error_index_upgrade.json").exists())
+
+    def test_upgrade_recovers_after_interrupted_atomic_metadata_writes(self):
+        for target_name in ("contract.before_error_index_upgrade.json","error_index_upgrade.json","contract.json"):
+            with self.subTest(target=target_name),tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);previous=dict(source_code_sha256=queue.ERROR_INDEX_PARENT_SHA256,max_attempts=2)
+                raw=json.dumps(previous).encode();(root/"contract.json").write_bytes(raw)
+                (root/"progress.jsonl").write_text('{"status":"failed","attempt":2}\n')
+                current=dict(previous,source_code_sha256="new-performance-code")
+                real_write=queue.write_atomic
+                def interrupted(path,data):
+                    if path.name==target_name:
+                        path.with_name(path.name+".tmp").write_bytes(data[:5])
+                        raise RuntimeError("interrupted metadata write")
+                    real_write(path,data)
+                with mock.patch.object(queue,"write_atomic",side_effect=interrupted):
+                    with self.assertRaisesRegex(RuntimeError,"interrupted"):
+                        queue.ensure_contract(root,current,True)
+                self.assertEqual((root/"contract.json").read_bytes(),raw)
+                queue.ensure_contract(root,current,True)
+                self.assertEqual(json.loads((root/"contract.json").read_text()),current)
+                self.assertEqual(json.loads((root/"error_index_upgrade.json").read_text())["current_source_sha256"],current["source_code_sha256"])
+
+    def test_prepared_upgrade_can_recover_after_old_runner_advances_ledger(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);previous=dict(source_code_sha256=queue.ERROR_INDEX_PARENT_SHA256,max_attempts=2)
+            raw=json.dumps(previous).encode();(root/"contract.json").write_bytes(raw)
+            ledger=root/"progress.jsonl";ledger.write_text('{"status":"failed","attempt":2}\n')
+            current=dict(previous,source_code_sha256="new-performance-code");real_write=queue.write_atomic
+            def before_commit(path,data):
+                if path.name=="contract.json":raise RuntimeError("pre-commit crash")
+                real_write(path,data)
+            with mock.patch.object(queue,"write_atomic",side_effect=before_commit):
+                with self.assertRaisesRegex(RuntimeError,"pre-commit"):
+                    queue.ensure_contract(root,current,True)
+            prepared=(root/"error_index_upgrade.json").read_bytes()
+            with ledger.open("a") as f:f.write('{"status":"ok","attempt":1}\n')
+            all_events=ledger.read_bytes();queue.ensure_contract(root,current,True)
+            self.assertEqual(ledger.read_bytes(),all_events)
+            self.assertEqual(json.loads((root/"error_index_upgrade.json").read_text())["ledger_sha256"],hashlib.sha256(all_events).hexdigest())
+            archives=list(root.glob("error_index_upgrade.prepared_*.json"))
+            self.assertEqual(len(archives),1);self.assertEqual(archives[0].read_bytes(),prepared)
+
     def manifest(self,base,sequences):
         path=base/"manifest.tsv"
         rows=[dict(sequence=s,n_residues=len(s),seq_sha256=hashlib.sha256(s.encode()).hexdigest(),
